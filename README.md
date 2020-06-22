@@ -1,1 +1,1 @@
-#Open Sesame -- an Open Source Mentorship Platform
+Open Sesame -- an Open Source Mentorship Platform
