@@ -9,14 +9,14 @@ These script tags are all clearly commented in each HTML page that makes use of 
 ### JSX Preprocessing
 This platform makes use of React's [JSX](https://reactjs.org/docs/introducing-jsx.html). In order to use JSX, a [preprocessor](https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project) must run before the application is run or deployed.
 
-**The initial setup** (only needs to be run once):\
-Navigate to the directory containing `package.json` and run
+*Note: Must be in the directory containing `package.json` while working with npm*
+
+**The initial setup** (only needs to be run once):
 ```
 npm install
 ```
 
-**Before running a development server or deploying to production:**\
-Navigate to the directory containing `package.json` and run
+**Before running a development server or deploying to production:**
 ```
 npm run jsx-preprocessor
 ```
