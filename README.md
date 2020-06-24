@@ -7,11 +7,22 @@ in other areas of the web app, [React is loaded and run on a page-by-page basis]
 * **Be sure to replace all script tags with the React development scripts to the minified production versions** when the platform is being deployed to production.
 These script tags are all clearly commented in each HTML page that makes use of React.
 ### JSX Preprocessing
-This platform makes use of React's [JSX](https://reactjs.org/docs/introducing-jsx.html). In order to use JSX, a [preprocessor](https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project) must run before the application is run or deployed. This is set up as follows:
-* **JSX preprocessing relies on [NodeJS dependencies](https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project)** which can be acquired by running `npm install` from within the outermost directory of the repository.
-* For every directory containing React components, there exists a subdirectory called `jsx-processed`, which contains the JS files that have had their JSX parsed by the preprocessor. These are the JS files that should be imported with script tags.
-* **The parsing of JSX does not happen automatically**, and must instead be started with `npm run jsx-preprocessor` from within the outermost directory of the repository. This must be done before a development server is run or the application is deployed.
+This platform makes use of React's [JSX](https://reactjs.org/docs/introducing-jsx.html). In order to use JSX, a [preprocessor](https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project) must run before the application is run or deployed.
+
+**The initial setup** (only needs to be run once):\
+Navigate to the directory containing `package.json` and run
+```
+npm install
+```
+
+**Before running a development server or deploying to production:**\
+Navigate to the directory containing `package.json` and run
+```
+npm run jsx-preprocessor
+```
+
 * **There is a nifty shortcut** included that runs the JSX preprocessor and then immediately starts the development server from the cloud shell. Use this by running `npm run dev-server` in the outermost directory.
+* For every directory containing React components, there exists a subdirectory called `jsx-processed`, which contains the JS files that have had their JSX parsed by the preprocessor. These are the JS files that should be imported with script tags.
 
 ## File Structure
 Please refer to [this](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html) resource to learn more about what each project directory should be used for, and take a look at [this section](https://maven.apache.org/guides/getting-started/#how-do-i-make-my-first-maven-project) of the Maven getting started guide to see how the project naming scheme affects directory structure.
