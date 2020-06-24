@@ -2,7 +2,7 @@
 Open Sesame is a platform intended to make contributing to open source less intimidating by matching first-time contributors to experienced mentors.
 
 ## React Integration
-This platform makes use of the [React framework](https://reactjs.org/). In order to provide React functionality to the projects section while allowing for non-React HTML and JS
+This platform makes use of the [React framework](https://reactjs.org/). In order to provide React functionality to the project search page while allowing for non-React HTML and JS
 in other areas of the web app, [React is loaded and run on a page-by-page basis](https://reactjs.org/docs/add-react-to-a-website.html) (see `projects.html` for an example of this).
 * **Be sure to replace all script tags with the React development scripts to the minified production versions** when the platform is being deployed to production.
 These script tags are all clearly commented in each HTML page that makes use of React.
