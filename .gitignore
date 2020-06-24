@@ -123,6 +123,22 @@ fabric.properties
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+### JDK ###
+.idea
+out
+server
+node_modules
+*.vsix
+.DS_Store
+.vscode-test
+undefined
+dist
+bin/
+.settings
+.classpath
+.project
+.factorypath
+
 ### Maven ###
 target/
 pom.xml.tag
