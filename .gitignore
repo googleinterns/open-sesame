@@ -125,7 +125,6 @@ hs_err_pid*
 
 ### JDK ###
 .idea
-out
 server
 *.vsix
 .DS_Store
