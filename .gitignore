@@ -127,12 +127,9 @@ hs_err_pid*
 .idea
 out
 server
-node_modules
 *.vsix
 .DS_Store
-.vscode-test
 undefined
-dist
 bin/
 .settings
 .classpath
