@@ -2,11 +2,11 @@
   color: violet;
 }
 
-h1 {
+#home_header {
   margin-top: 100px; 
 }
 
-.form_button {
+button.btn {
   background-color: violet;
   border: none;
   border-radius: 8px;
@@ -17,6 +17,6 @@ h1 {
   width: 70%;
 }
 
-.form_button:hover {
+button.btn:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
