@@ -17,4 +17,4 @@ jobs:
           files: "src/**/*"
           # add stuff to ignore here.
           # ignore: "src/some-file-to-ignore.js"  
-          extensions: ".js,.ts"
+          extensions: ".js,.ts,.jsx"
