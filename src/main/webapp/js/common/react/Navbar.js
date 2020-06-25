@@ -1,3 +1,8 @@
+/**
+ * Returns a React navbar component.
+ * @param {{}} props The properties of the navbar.
+ * @return Returns the navbar.
+ */
 function Navbar(props) {
   const urls = [
     {
@@ -33,6 +38,11 @@ function Navbar(props) {
   );
 }
 
+/**
+ * Returns a React navbar link component.
+ * @param {{href: string, name: string}} The properties of the navbar link.
+ * @return Returns the navbar link.
+ */
 function NavbarLink(props) {
   let classes = "nav-item";
   if (props.href === window.location.pathname) {
