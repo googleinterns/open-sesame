@@ -2,18 +2,10 @@
   color: violet;
 }
 
-#home_header {
-  margin-top: 100px; 
-}
-
 button.btn {
   background-color: violet;
   border: none;
   border-radius: 8px;
-  font-size: xx-large;
-  left: 50%;
-  margin-top: 200px;
-  text-align: center;
   width: 70%;
 }
 
