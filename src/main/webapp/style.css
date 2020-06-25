@@ -6,7 +6,7 @@ h1 {
   margin-top: 100px; 
 }
 
-#form_button {
+.form_button {
   background-color: violet;
   border: none;
   border-radius: 8px;
