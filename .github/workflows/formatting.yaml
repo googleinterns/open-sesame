@@ -1,4 +1,4 @@
-name: JavaFormat
+name: Linting
 
 on:
   push:
@@ -6,8 +6,7 @@ on:
       - '**'
 
 jobs:
-
-  formatting:
+  JavaFormat:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # v2 minimum required
@@ -18,3 +17,12 @@ jobs:
       - uses: axel-op/googlejavaformat-action@v3
         with:
           args: "--replace"
+
+  ESLint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hallee/eslint-action@1.0.3
+        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}} Lint:
