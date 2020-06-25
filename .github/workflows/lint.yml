@@ -14,5 +14,7 @@ jobs:
         with:
           repo-token: ${{secrets.GITHUB_TOKEN}}
           eslint-rc: .eslintrc.js
-          execute-on-files:
-            - ./packages
+          files: "src/**/*"
+          # add stuff to ignore here.
+          # ignore: "src/some-file-to-ignore.js"  
+          extensions: ".js,.ts"
