@@ -1,9 +1,12 @@
-name: Lint
+name: Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - '**'
 
 jobs:
-  eslint:
+  Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
