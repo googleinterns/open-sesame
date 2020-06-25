@@ -13,8 +13,3 @@ jobs:
         if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
         with:
           repo-token: ${{secrets.GITHUB_TOKEN}}
-          eslint-rc: .eslintrc.js
-          files: "src/**/*"
-          # add stuff to ignore here.
-          # ignore: "src/some-file-to-ignore.js"  
-          extensions: ".js,.ts,.jsx"
