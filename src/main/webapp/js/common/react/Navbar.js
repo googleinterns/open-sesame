@@ -29,7 +29,7 @@ function Navbar(props) {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
+        <ul className="navbar-nav ml-auto">
           {urls.map((url, i) => 
               <NavbarLink key={i} href={url.href} name={url.name} />)}
         </ul>
