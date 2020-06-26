@@ -7,33 +7,33 @@ import ProjectList from './components/ProjectList.js';
 function getMockProjectPreviewData() {
   return [
     {
-      title: "Tensorflow",
-      shortDescription: "An Open Source Machine Learning "
-          + "Framework for Everyone",
+      title: 'Tensorflow',
+      shortDescription: 'An Open Source Machine Learning '
+          + 'Framework for Everyone',
       tags: [
         {
-          text: "tensorflow"
+          text: 'tensorflow'
         },
         {
-          text: "machine-learning"
+          text: 'machine-learning'
         },
         {
-          text: "python"
+          text: 'python'
         },
         {
-          text: "deep-learning"
+          text: 'deep-learning'
         },
         {
-          text: "deep-neural-networks"
+          text: 'deep-neural-networks'
         },
         {
-          text: "neural-network"
+          text: 'neural-network'
         },
         {
-          text: "ml"
+          text: 'ml'
         },
         {
-          text: "distributed"
+          text: 'distributed'
         }
       ],
       numMentors: 5,
@@ -41,7 +41,7 @@ function getMockProjectPreviewData() {
   ];
 }
 
-const projectsContainer = document.getElementById("projects-container");
+const projectsContainer = document.getElementById('projects-container');
 ReactDOM.render(
     <ProjectList projectPreviews={getMockProjectPreviewData()} />,
     projectsContainer);

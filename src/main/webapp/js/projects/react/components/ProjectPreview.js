@@ -1,4 +1,4 @@
-import ProjectTagList from "./ProjectTagList.js";
+import ProjectTagList from './ProjectTagList.js';
 
 /**
  * A card-based preview of a project.
