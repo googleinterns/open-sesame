@@ -34,7 +34,7 @@ function getMockProjectPreviewData() {
         },
         {
           text: 'distributed',
-        }
+        },
       ],
       numMentors: 5,
     },
