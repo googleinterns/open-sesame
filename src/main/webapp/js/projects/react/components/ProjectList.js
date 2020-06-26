@@ -25,5 +25,5 @@ export default function ProjectList(props) {
       {props.projectPreviews.map((projectPreview, i) =>
           <ProjectPreview key={i} projectPreview={projectPreview} />)}
     </div>
-  )
+  );
 }

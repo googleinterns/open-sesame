@@ -7,7 +7,7 @@ import ProjectTagList from './ProjectTagList.js';
  */
 export default function ProjectPreview(props) {
   const projectPreview = props.projectPreview;
-  
+
   return (
     <div className="p-1 col-lg-4">
       <div className="project-preview card h-100">
@@ -16,7 +16,8 @@ export default function ProjectPreview(props) {
           <ProjectTagList tags={projectPreview.tags} />
           <p>{projectPreview.shortDescription}</p>
         </div>
-        <div className="px-3 pb-3 mt-auto d-flex flex-wrap justify-content-center">
+        <div className=
+            "px-3 pb-3 mt-auto d-flex flex-wrap justify-content-center">
           <span>
             <strong className="h5 text-success mr-2">
               {projectPreview.numMentors}
