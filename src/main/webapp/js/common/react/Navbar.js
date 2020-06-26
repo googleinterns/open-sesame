@@ -20,7 +20,6 @@ function Navbar(props) {
       <a className="navbar-brand" href="#">Open Sesame</a>
       <button
           className="navbar-toggler"
-          type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
