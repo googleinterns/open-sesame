@@ -8,14 +8,13 @@ a:hover {
   color: rebeccapurple !important;
 }
 
-button.btn {
+.btn {
   background-color: violet;
   border: none;
   border-radius: 8px;
   width: 70%;
 }
 
-button.btn:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-
+.btn:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
