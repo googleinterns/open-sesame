@@ -8,7 +8,7 @@ function getMockProjectPreviewData() {
   return [
     {
       title: "Tensorflow",
-      shortDescription: "An Open Source Machine Learning " 
+      shortDescription: "An Open Source Machine Learning "
           + "Framework for Everyone",
       tags: [
         {
@@ -43,5 +43,5 @@ function getMockProjectPreviewData() {
 
 const projectsContainer = document.getElementById("projects-container");
 ReactDOM.render(
-    <ProjectList projectPreviews={getMockProjectPreviewData()} />, 
+    <ProjectList projectPreviews={getMockProjectPreviewData()} />,
     projectsContainer);

@@ -3,7 +3,7 @@ import ProjectTagList from "./ProjectTagList.js";
 /**
  * A card-based preview of a project.
  * @param {{projectPreview: ProjectPreviewData}} props
- * @return {React.Component} Returns a React component project preview card. 
+ * @return {React.Component} Returns a React component project preview card.
  */
 export default function ProjectPreview(props) {
   const projectPreview = props.projectPreview;
