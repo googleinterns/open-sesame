@@ -4,6 +4,4 @@
 
 .project-preview:hover {
   box-shadow: 0px 0px 5px 1px rgba(232,232,232,1);
-  -moz-box-shadow: 2px 2px 5px 1px rgba(232,232,232,1);
-  -webkit-box-shadow: 2px 2px 5px 1px rgba(232,232,232,1);
 }
