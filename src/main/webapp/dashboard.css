@@ -1,0 +1,15 @@
+@import url(style.css);
+
+small {
+  color: grey;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: small;
+}
+
+#user-name {
+  line-height: 20px;
+}
+
+a.active {
+  color: rebeccapurple !important;
+}

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 <!-- Custom styles -->
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="dashboard.css">
 
 <div class="container mt-3">
   <br>
@@ -30,8 +30,22 @@
   <div class="tab-content">
     <!-- About Me -->
     <div id="about-me" class="container tab-pane active"><br>
-      <h3>About Me</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div class="card col-12 ">
+        <div class="card-body">
+          <img class="card-img-top img-thumbnail w-25 p-2 m-2 mx-auto d-block" src="images/dior.jpg" alt="Card image">
+          <h4 id="user-name" class="card-title dark-emph">Dior<br>
+            <small id="user-location">Sunnyvale CA.</small>
+          </h4>
+          <p class="card-text">The cutest pug in The tech industry. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <a href="#" class="btn btn-primary" role="button">Github</a>
+          <div class="row p-3">
+            <div class="border border-muted text-muted mr-1 mb-1 badge">weekly</div>
+            <div class="border border-muted text-muted mr-1 mb-1 badge">30 mins</div>
+            <div class="border border-muted text-muted mr-1 mb-1 badge">Kubernetes</div>
+            <div class="border border-muted text-muted mr-1 mb-1 badge">documentation</div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Affiliated Projects -->
     <div id="affiliations" class="container tab-pane fade"><br>
