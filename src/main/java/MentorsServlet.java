@@ -2,14 +2,11 @@ package com.google.sps.servlets;
 
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 @WebServlet("/mentors")
 public class MentorsServlet extends HttpServlet {
