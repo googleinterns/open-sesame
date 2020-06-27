@@ -1,0 +1,7 @@
+.project-preview {
+  transition: .05s;
+}
+
+.project-preview:hover {
+  box-shadow: 0px 0px 5px 1px rgba(232,232,232,1);
+}
