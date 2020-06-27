@@ -1,4 +1,4 @@
-import { projectTagType } from '../prop_types.js';
+import {projectTagType} from '../prop_types.js';
 
 /**
  * A horizontal list of badge-based tags for a project.
