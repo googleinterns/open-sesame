@@ -1,3 +1,5 @@
+import { projectTagType } from '../prop_types.js';
+
 /**
  * A horizontal list of badge-based tags for a project.
  * @param {{tags: ProjectTag[]}} props
@@ -18,3 +20,7 @@ export default function ProjectTagList(props) {
     </div>
   );
 }
+
+ProjectTagList.propTypes = {
+  tags: PropTypes.arrayOf(projectTagType).isRequired,
+};

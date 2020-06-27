@@ -1,4 +1,5 @@
 import ProjectTagList from './ProjectTagList.js';
+import { projectPreviewType } from '../prop_types.js';
 
 /**
  * A card-based preview of a project.
@@ -29,3 +30,7 @@ export default function ProjectPreview(props) {
     </div>
   );
 }
+
+ProjectPreview.propTypes = {
+  projectPreview: projectPreviewType.isRequired,
+};
