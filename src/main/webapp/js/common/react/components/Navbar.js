@@ -1,4 +1,6 @@
+import checkTesting from '../tests/checkTesting.js';
 import NavbarLink from './NavbarLink.js';
+checkTesting();
 
 /**
  * @typedef NavbarUrl

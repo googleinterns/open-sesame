@@ -4,9 +4,9 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 
 describe('NavbarLink component', () => {
-  it('is rendered', () => {
+  it('is added to the DOM', () => {
     const elem = render(<NavbarLink href="/home.html" name="Home" />);
-    expect(elem.container).not.toBeNull();
+    expect(elem.container.firstChild).not.toBeNull();
   });
 
   it('displays the name', () => {

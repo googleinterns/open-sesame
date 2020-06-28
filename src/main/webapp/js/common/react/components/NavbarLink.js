@@ -1,4 +1,4 @@
-import checkTesting from '../../../react_test_check.js';
+import checkTesting from '../tests/checkTesting.js';
 checkTesting();
 
 /**
