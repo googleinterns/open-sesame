@@ -7,10 +7,10 @@
     "test": "jest",
     "dev-server": "npm run jsx-preprocessor && mvn package appengine:run || true",
     "jsx-preprocessor": "npm run jsx-projects && npm run jsx-common",
-    "jsx-projects": "npx babel src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/ --ignore *.test.js --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
-    "jsx-projects-live": "npx babel --watch src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
-    "jsx-common": "npx babel src/main/webapp/js/common/react/ --minified --ignore jsx-processed/ --ignore *.test.js --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod",
-    "jsx-common-live": "npx babel --watch src/main/webapp/js/common/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod"
+    "jsx-projects": "npx babel src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/,tests/ --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
+    "jsx-projects-live": "npx babel --watch src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/,tests/ --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
+    "jsx-common": "npx babel src/main/webapp/js/common/react/ --minified --ignore jsx-processed/,tests/ --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod",
+    "jsx-common-live": "npx babel --watch src/main/webapp/js/common/react/ --minified --ignore jsx-processed/,tests/ --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.1",
+    "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
