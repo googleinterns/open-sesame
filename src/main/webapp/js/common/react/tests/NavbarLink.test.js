@@ -10,12 +10,12 @@ describe('NavbarLink component', () => {
   });
 
   it('displays the name', () => {
-    const elem = render(<NavbarLink href="/home.html" name="Home" />);
+    render(<NavbarLink href="/home.html" name="Home" />);
     expect(screen.queryByText('Home')).not.toBeNull();
   });
 
   it('contains the intended href', () => {
-    const elem = render(<NavbarLink href="/home.html" name="Home" />);
+    render(<NavbarLink href="/home.html" name="Home" />);
     expect(screen.queryByText('Home')).toHaveAttribute('href', '/home.html');
   });
 });

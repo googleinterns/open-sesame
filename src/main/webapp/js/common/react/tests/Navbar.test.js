@@ -21,14 +21,14 @@ describe('Navbar component', () => {
   });
 
   it('displays the names of the urls', () => {
-    const elem = render(<Navbar urls={navbarUrls} />);
+    render(<Navbar urls={navbarUrls} />);
 
     expect(screen.queryByText('Home')).not.toBeNull();
     expect(screen.queryByText('Projects')).not.toBeNull();
   });
 
   it('contains both urls', () => {
-    const elem = render(<Navbar urls={navbarUrls} />);
+    render(<Navbar urls={navbarUrls} />);
 
     expect(screen.getByText('Home')).toHaveAttribute('href', '/');
     expect(screen.getByText('Projects'))
