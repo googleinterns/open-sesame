@@ -1,6 +1,3 @@
-// Global to mimic the global variables available within a browser environment.
-// For example, React and ReactDOM, which are normally loaded from the script
-// tags in the HTML.
 import React from 'react';
 import NavbarLink from '../components/NavbarLink.js';
 import '@testing-library/jest-dom/extend-expect';
