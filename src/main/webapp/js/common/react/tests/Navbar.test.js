@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar.js';
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen, getByText} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 
 const navbarUrls = [
   {
