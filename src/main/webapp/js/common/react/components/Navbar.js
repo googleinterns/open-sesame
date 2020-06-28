@@ -15,7 +15,7 @@ checkTesting();
 export default function Navbar(props) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="#">Open Sesame</a>
+      <a className="navbar-brand" href="/">Open Sesame</a>
       <button
           className="navbar-toggler"
           data-toggle="collapse"
