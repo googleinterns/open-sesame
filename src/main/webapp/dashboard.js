@@ -18,13 +18,13 @@ const dummyTags = ['Weekly', '30 mins', 'Kubernetes', 'Open Sesame',
 const dummyGitSrc = '#';
 
 /**
- * Creates a mentor container element from input text.
+ * Creates a card element containing information about a given user.
  * @param {String} name
  * @param {String} location
  * @param {String} bio
  * @param {String} imgSrc
  * @param {String List} tags
- * @return {HTMLElement} mentorContainer
+ * @return {HTMLElement} About me Card
  */
 function createAboutMe(name, location, bio, imgSrc, tags, gitSrc) {
   let AboutMeCard = document.createElement('div');
