@@ -43,7 +43,7 @@ function createAboutMe(name, location, bio, profileImgSrc, tags, gitSrc) {
   let userLocation = createLocation(location);
   USER_NAME_AND_LOCATION.append(userLocation);
 
-  USER_BIO.innerText = bio
+  USER_BIO.innerText = bio;
 
   USER_GITHUB_BUTTON.href = gitSrc;
 
