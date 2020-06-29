@@ -8,12 +8,14 @@ const aboutMeDiv = document.getElementById('about-me')
  */
 const dummyName = 'Dior';
 const dummyLocation = 'Sunnyvale CA.';
-const dummyBio = 'The cutest pug in The tech industry. Lorem ipsum dolor sit amet,' +
-  'consectetur adipisicing elit, sed do eiusmod tempor incididunt ut' +
+const dummyBio = 'The cutest pug in The tech industry. Lorem ipsum dolor sit ' +
+  'amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut' +
   ' labore et dolore magna aliqua.';
 const dummyImg = 'images/dior.jpg';
-const dummyTags = ['Weekly', '30 mins', 'Kubernetes', 'Open Sesame', 'Documentation'];
-const dummyGitSrc = '#'
+const dummyTags = ['Weekly', '30 mins', 'Kubernetes', 'Open Sesame',
+  'Documentation'
+];
+const dummyGitSrc = '#';
 
 /**
  * Creates a mentor container element from input text.
@@ -54,7 +56,7 @@ function createAboutMe(name, location, bio, imgSrc, tags, gitSrc) {
 
   let gitButton = document.createElement('a');
   gitButton.className = 'btn btn-primary';
-  gitButton.setAttribute('role', 'button')
+  gitButton.setAttribute('role', 'button');
   gitButton.innerText = 'Github';
   gitButton.href = gitSrc;
   AboutMeCardBody.append(gitButton);
@@ -66,7 +68,7 @@ function createAboutMe(name, location, bio, imgSrc, tags, gitSrc) {
     let tagElement = document.createElement('div');
     tagElement.className = 'border border-muted text-muted mr-1 mb-1 badge';
     tagElement.innerText = tag;
-    tagRow.append(tagElement)
+    tagRow.append(tagElement);
   }
 
   return AboutMeCard;
