@@ -28,7 +28,7 @@ const dummyGitSrc = '#';
  */
 function createAboutMe(name, location, bio, imgSrc, tags, gitSrc) {
   let AboutMeCard = document.createElement('div');
-  AboutMeCard.className = 'card col-12';
+  AboutMeCard.className = 'card card-holder col-12';
 
   let AboutMeCardBody = document.createElement('div');
   AboutMeCardBody.className = 'card-body';
@@ -80,6 +80,8 @@ function createAboutMe(name, location, bio, imgSrc, tags, gitSrc) {
 
   return AboutMeCard;
 }
+
+
 
 /**
  * Call functions to populate page sections with data.
