@@ -53,8 +53,7 @@ function createAboutMe(name, location, bio, profileImgSrc, tags, gitSrc) {
 }
 
 /**
- * Creates an edit button element containing that links to the action 
- * @param link.
+ * Creates an edit button element that links to the action @param link.
  * @param {String} link the href link to the action the edit button will perform
  * @return {HTMLElement} edit button
  */
@@ -79,7 +78,7 @@ function addTag(tagText, tagDiv) {
 }
 
 /**
- * Creates a small element with a given @param location 
+ * Creates a small element with a given @param location
  * @param {String} location text for a given location.
  * @return {HTMLElement} location small element
  */
