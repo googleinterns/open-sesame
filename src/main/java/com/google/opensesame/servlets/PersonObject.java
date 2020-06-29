@@ -9,14 +9,15 @@ public class PersonObject {
   private String gitHubID;
 
   public PersonObject(String nameInput, String gitHubIDInput) {
-    this(nameInput, gitHubIDInput, "", new ArrayList<String>());  
+    this(nameInput, gitHubIDInput, "", new ArrayList<String>());
   }
 
   public PersonObject(String nameInput, String gitHubIDInput, String descriptionInput) {
     this(nameInput, gitHubIDInput, descriptionInput, new ArrayList<String>());
   }
 
-  public PersonObject(String nameInput, String gitHubIDInput, String descriptionInput, ArrayList<String> tagInput) {
+  public PersonObject(
+      String nameInput, String gitHubIDInput, String descriptionInput, ArrayList<String> tagInput) {
     name = nameInput;
     gitHubID = gitHubIDInput;
     description = descriptionInput;
