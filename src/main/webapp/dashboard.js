@@ -37,7 +37,7 @@ function createAboutMe(name, location, bio, imgSrc, tags, gitSrc) {
   let editButton = document.createElement('a');
   editButton.className = 'float-right bold';
   editButton.innerText = 'Edit';
-  editButton.href = '#'
+  editButton.href = '#';
   AboutMeCardBody.append(editButton);
 
   let userImage = document.createElement('img');
