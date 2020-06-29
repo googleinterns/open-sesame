@@ -8,7 +8,7 @@ const USER_BIO = document.getElementById('user-bio');
 const USER_IMAGE = document.getElementById('user-image');
 const USER_NAME_AND_LOCATION = document.getElementById('user-name-location');
 const USER_TAG_ROW = document.getElementById('user-tag-row');
-const USER_GITHUB_BUTTON = document.getElementById('user-github')
+const USER_GITHUB_BUTTON = document.getElementById('user-github');
 
 /**
  * Fake information for the hardcoded stage.
