@@ -4,7 +4,6 @@
  * @type {HTMLElement}
  */
 const ABOUT_ME_CARD_DIV = document.getElementById('about-me-card-body');
-const ABOUT_ME_SECTION_DIV = document.getElementById('about-me');
 const USER_BIO = document.getElementById('user-bio');
 const USER_IMAGE = document.getElementById('user-image');
 const USER_NAME_AND_LOCATION = document.getElementById('user-name-location');
