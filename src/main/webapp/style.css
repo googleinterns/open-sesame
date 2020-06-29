@@ -1,5 +1,11 @@
-.emphasis {
+.emphasis,
+a {
   color: violet;
+}
+
+a.active,
+a:hover {
+  color: rebeccapurple !important;
 }
 
 button.btn {
