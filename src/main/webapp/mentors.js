@@ -5,7 +5,7 @@ function getMentors() {
   console.log("entering get mentors function/n");
   let url = new URL('/mentors', location.protocol + '//' + location.hostname);
 
-  fetch(url).then(response => response.json()).then(mentors => {
+  fetch(url).then(errorHandling(response)).then(response => response.json()).then(mentors => {
     console.log(mentors);
     const mentorsContainer = document.getElementById('mentors-container');
     mentorsContainer.innerHTML = '';
@@ -15,11 +15,18 @@ function getMentors() {
   });
 }
 
+function errorHandling(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+  return response;
+}
+
 /**
  * Creates a mentor container element from input text.
  * @param {String} name
  * @param {String} description
- * @return {<div class="p-1 col-lg-4">} mentorContainer
+ * @return {HTMLElement} mentorContainer
  */
 function createMentorElement(name, description) {
   const mentorContainer = document.createElement('div');
