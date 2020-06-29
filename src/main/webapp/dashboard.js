@@ -24,7 +24,7 @@ const dummyGitSrc = '#';
  * @param {String} bio
  * @param {String} imgSrc
  * @param {String List} tags
- * @return {<div class="p-1 col-lg-4">} mentorContainer
+ * @return {HTMLElement} mentorContainer
  */
 function createAboutMe(name, location, bio, imgSrc, tags, gitSrc) {
   let AboutMeCard = document.createElement('div');
