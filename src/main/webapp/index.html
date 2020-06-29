@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
+<div id="navbar-container"></div>
 <title>Open Sesame</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css">
 <script src="script.js"></script>
+
+<!-- Load React. -->
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<!-- Load React components -->
+<script type="module" src="./js/common/react/jsx-processed/Navbar.js"></script>
 
 <h1 class="display-1 mb-5 mt-5">The Open Source Community is for <span class="emphasis">Everyone</span></h1>
 <spacer class="space"></spacer>
