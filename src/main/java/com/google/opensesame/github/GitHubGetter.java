@@ -29,8 +29,8 @@ public final class GitHubGetter {
    * @throws IOException Throws IOException if there is an error building the GitHub interface.
    */
   private static void buildGitHubInterface() throws IOException {
-    String clientID = System.getenv("GITHUB_CLIENT_ID").trim();
-    String clientSecret = System.getenv("GITHUB_CLIENT_SECRET").trim();
+    String clientID = System.getenv("GITHUB_CLIENT_ID");
+    String clientSecret = System.getenv("GITHUB_CLIENT_SECRET");
 
     if (clientID == null || clientID.isEmpty() || clientSecret == null || clientSecret.isEmpty()) {
       System.err.println(
