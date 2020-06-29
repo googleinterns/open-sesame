@@ -34,6 +34,12 @@ function createAboutMe(name, location, bio, imgSrc, tags, gitSrc) {
   AboutMeCardBody.className = 'card-body';
   AboutMeCard.append(AboutMeCardBody);
 
+  let editButton = document.createElement('a');
+  editButton.className = 'float-right bold';
+  editButton.innerText = 'Edit'
+  editButton.href = '#'
+  AboutMeCardBody.append(editButton);
+
   let userImage = document.createElement('img');
   userImage.className = 'card-img-top img-thumbnail w-25 p-2 m-2 mx-auto' +
     ' d-block';
