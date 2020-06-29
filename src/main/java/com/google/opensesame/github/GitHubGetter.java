@@ -24,7 +24,7 @@ public final class GitHubGetter {
   /**
    * Builds the GitHub interface from environment variables.
    *
-   * <p>With AppEngine, the environment variables are set in the appengine-web.xml file.
+   * With AppEngine, the environment variables are set in the appengine-web.xml file.
    *
    * @throws IOException Throws IOException if there is an error building the GitHub interface.
    */
