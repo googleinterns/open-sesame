@@ -25,7 +25,10 @@ npm run jsx-preprocessor
 * For every directory containing React components, there exists a subdirectory called `jsx-processed`, which contains the JS files that have had their JSX parsed by the preprocessor. These are the JS files that should be imported with script tags.
 
 ## JavaScript Testing
-The JavaScript testing is done with [Jest](https://jestjs.io/).\
+JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest, additional functionality is added with:
+* [jest-dom](https://github.com/testing-library/jest-dom) for testing the DOM.
+* [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for testing React.
+
 **Run the tests** with:
 ```
 npm test
