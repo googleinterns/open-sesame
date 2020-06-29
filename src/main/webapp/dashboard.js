@@ -1,11 +1,3 @@
-// IDs
-/** 
- * The ids of the various elements in my document
- * @type {String}
- */
-
-
-
 // ELEMENTS_FOR_ABOUT_ME_SECTION
 /**
  * Elements from dashboard.html.
