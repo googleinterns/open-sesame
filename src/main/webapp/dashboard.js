@@ -1,7 +1,7 @@
 /**
  * Div of the About me tab.
  */
-const aboutMeDiv = document.getElementById('about-me')
+const aboutMeDiv = document.getElementById('about-me');
 
 /**
  * Fake information for the hardcoded stage.
@@ -13,7 +13,7 @@ const dummyBio = 'The cutest pug in The tech industry. Lorem ipsum dolor sit ' +
   ' labore et dolore magna aliqua.';
 const dummyImg = 'images/dior.jpg';
 const dummyTags = ['Weekly', '30 mins', 'Kubernetes', 'Open Sesame',
-  'Documentation'
+  'Documentation',
 ];
 const dummyGitSrc = '#';
 
@@ -35,7 +35,8 @@ function createAboutMe(name, location, bio, imgSrc, tags, gitSrc) {
   AboutMeCard.append(AboutMeCardBody);
 
   let userImage = document.createElement('img');
-  userImage.className = 'card-img-top img-thumbnail w-25 p-2 m-2 mx-auto d-block';
+  userImage.className = 'card-img-top img-thumbnail w-25 p-2 m-2 mx-auto' +
+    ' d-block';
   userImage.src = imgSrc;
   AboutMeCardBody.append(userImage);
 
