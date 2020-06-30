@@ -13,13 +13,27 @@ public class ProjectPreview {
    *
    * @param properties The properties of a project. This will most likely come from a datastore
    *     entity.
-   * @return Returns the creates ProjectPreview.
-   * @throws IOException
+   * @return Returns the created ProjectPreview.
+   * @throws IOException Throws when there is an error communicating with the GitHub API.
    */
   public static ProjectPreview fromProperties(Map<String, Object> properties) throws IOException {
     GitHub gitHub = GitHubGetter.getGitHub();
     GHRepository repository = gitHub.getRepository((String) properties.get("repositoryName"));
 
+    return fromPropertiesAndRepository(properties, repository);
+  }
+
+  /**
+   * Creates a ProjectPreview object from a set of project properties and it's associated GitHub
+   * repository.
+   * @param properties The properties of a project. This will most likely come from a datastore
+   *     entity.
+   * @param repository The GitHub repository associated with the project.
+   * @return Returns the created ProjectPreview
+   * @throws IOException Throws when there is an error communicating with the GitHub API.
+   */
+  public static ProjectPreview fromPropertiesAndRepository(
+      Map<String, Object> properties, GHRepository repository) throws IOException {
     return new ProjectPreview(
         repository.getName(),
         repository.getDescription(),
