@@ -25,7 +25,7 @@ public class ProjectPreviewsServlet extends HttpServlet {
     testEntity.setProperty("numMentors", 5);
 
     ArrayList<ProjectPreview> projectPreviews = new ArrayList<ProjectPreview>();
-    projectPreviews.add(ProjectPreview.fromEntity(testEntity));
+    projectPreviews.add(ProjectPreview.fromProperties(testEntity.getProperties()));
 
     String projectPreviewsJson = gson.toJson(projectPreviews);
     response.setStatus(HttpServletResponse.SC_OK);
