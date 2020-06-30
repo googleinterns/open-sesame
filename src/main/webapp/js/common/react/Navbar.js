@@ -1,9 +1,8 @@
 /**
  * Returns a React navbar component.
- * @param {{}} props The properties of the navbar.
  * @return {React.Component} Returns the navbar.
  */
-function Navbar(props) {
+function Navbar() {
   const urls = [
     {
       href: '/',
@@ -54,6 +53,11 @@ function NavbarLink(props) {
     </div>
   );
 }
+
+NavbarLink.propTypes = {
+  href: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 const navbarContainer = document.getElementById('navbar-container');
 ReactDOM.render(<Navbar />, navbarContainer);

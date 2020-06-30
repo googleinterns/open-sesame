@@ -1,4 +1,5 @@
 import ProjectPreview from './ProjectPreview.js';
+import {projectPreviewType} from '../prop_types.js';
 
 // ProjectTag is an object and not a string because of the upcoming
 // addition of different types of tags (to be indicated with a tagType property)
@@ -27,3 +28,7 @@ export default function ProjectList(props) {
     </div>
   );
 }
+
+ProjectList.propTypes = {
+  projectPreviews: PropTypes.arrayOf(projectPreviewType).isRequired,
+};
