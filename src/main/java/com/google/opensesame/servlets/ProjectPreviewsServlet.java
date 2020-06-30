@@ -1,16 +1,14 @@
 package com.google.opensesame.servlets;
 
+import com.google.appengine.api.datastore.Entity;
+import com.google.gson.Gson;
+import com.google.opensesame.projects.ProjectPreview;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.opensesame.projects.ProjectPreview;
-import com.google.appengine.api.datastore.Entity;
-import com.google.gson.Gson;
 
 @WebServlet("/project-previews")
 public class ProjectPreviewsServlet extends HttpServlet {
