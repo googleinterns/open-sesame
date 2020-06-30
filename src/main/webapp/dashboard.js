@@ -45,29 +45,25 @@ const dummyUser = {
 };
 
 /**
- * Populates the card element 'ABOUT_ME_CARD_DIV' with information about a
+ * Populate the card element 'ABOUT_ME_CARD_DIV' with information about a
  * given user.
- * @param {String} name
- * @param {String} location
- * @param {String} bio
- * @param {String} imgSrc
- * @param {String List} tags
+ * @param {User} user
  */
-function createAboutMe(name, location, bio, profileImgSrc, tags, gitSrc) {
+function createAboutMe(user) {
   let editButton = createEditButton('#');
   ABOUT_ME_CARD_DIV.prepend(editButton);
 
-  USER_IMAGE.src = profileImgSrc;
+  USER_IMAGE.src = user.image;
 
-  USER_NAME_AND_LOCATION.innerHTML = name + '<br>';
-  let userLocation = createLocation(location);
+  USER_NAME_AND_LOCATION.innerHTML = user.name + '<br>';
+  let userLocation = createLocation(user.location);
   USER_NAME_AND_LOCATION.append(userLocation);
 
-  USER_BIO.innerText = bio;
+  USER_BIO.innerText = user.bio;
 
-  USER_GITHUB_BUTTON.href = gitSrc;
+  USER_GITHUB_BUTTON.href = user.gitSrc;
 
-  for (tag of tags) {
+  for (tag of user.tags) {
     addTag(tag, USER_TAG_ROW);
   }
 }
