@@ -243,7 +243,7 @@ function createStarButton(link) {
 /**
  * Return a small image with the source @param imgSrc
  * @param {String} imgSrc
- * @returns {HTMLElement} image object
+ * @return {HTMLElement} image object
  */
 function createMenteeCardImage(imgSrc) {
   let menteeCardImage = document.createElement('img');
