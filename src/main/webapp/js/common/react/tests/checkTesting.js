@@ -1,6 +1,6 @@
 /**
  * Checks if the code is currently being run in a NodeJS environment, in which
- * case the React modules should be imported.
+ * case the React modules should be imported from NodeJS.
  *
  * The reason that this needs to be called from every React component file
  * boils down to the two environments where these React components will be run:
