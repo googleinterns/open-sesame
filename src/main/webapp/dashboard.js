@@ -22,7 +22,7 @@
  * @typedef {Object} Mentee
  * @property {String} image -the link to a mentee's image
  * @property {String} name - the name of the mentee
- * @property {String} starLink - the link to the action that rewards a given 
+ * @property {String} starLink - the link to the action that rewards a given
  *                               mentee with a star
  */
 
@@ -40,8 +40,7 @@
 /**
  * Fake information for the hardcoded stage.
  */
-
-/**@const {String} */
+/** @const {String} */
 const dummyName = 'Dior';
 const dummyLocation = 'Sunnyvale CA.';
 const dummyBio = 'The cutest pug in The tech industry. Lorem ipsum dolor sit ' +
@@ -66,6 +65,31 @@ const dummyUser = {
   gitSrc: dummyGitSrc,
 };
 
+/**@const {Mentee List} */
+const dummyMentees = [{
+    name: 'Richi',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
+  {
+    name: 'Obi',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
+  {
+    name: 'Sami',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
+];
+
+/** @const {Project} */
+const dummyProject = {
+  name: dummyProjectName,
+  mentees: dummyMentees,
+};
+
+// ELEMENTS_FOR_ABOUT_ME_SECTION
 /**
  * Elements from dashboard.html.
  * @type {HTMLElement}
@@ -105,7 +129,7 @@ function createAboutMe(user) {
 /**
  * Return an edit button element that links to the action @param link.
  * @param {String} link the href link to the action the edit button will perform
- * @returns {HTMLElement} edit button
+ * @return {HTMLElement} edit button
  */
 function createEditButton(link) {
   let editButton = document.createElement('a');
@@ -130,7 +154,7 @@ function addTag(tagText, tagDiv) {
 /**
  * Creates a small element with a given @param location
  * @param {String} location text for a given location.
- * @returns {HTMLElement} location small element
+ * @return {HTMLElement} location small element
  */
 function createLocation(location) {
   let userLocation = document.createElement('small');
@@ -144,9 +168,9 @@ function createLocation(location) {
  * @param {Project} projectObject
  */
 function addProject(projectObject) {
-  let projectCardElement = createProjectCard(projectObject.name)
+  let projectCardElement = createProjectCard(projectObject.name);
   AFFILIATIONS_DIV.append(projectCardElement);
-  menteeRow = createRowElement();
+  let menteeRow = createRowElement();
   for (mentee of projectObject.mentees) {
     menteeRow.append(createMenteeCard(mentee));
   }
@@ -156,7 +180,7 @@ function addProject(projectObject) {
 /**
  * Return a project card div element with the title @param projectName
  * @param {String} projectName
- * @returns {HTMLElement} div representing a project card with the 
+ * @return {HTMLElement} div representing a project card with the
  * title @param projectName
  */
 function createProjectCard(projectName) {
@@ -171,7 +195,7 @@ function createProjectCard(projectName) {
 /**
  * Return a bootstrap card-title div element with @param titleText
  * @param {String} titleText
- * @returns {HTMLElement} div representing a card title with @param titleText 
+ * @return {HTMLElement} div representing a card title with @param titleText
  */
 function createCardTitle(titleText) {
   let cardTitleElement = document.createElement('h4');
@@ -190,12 +214,12 @@ function createMenteeCard(mentee) {
   menteeCardBody.append(createMenteeCardImage(mentee.image));
   menteeCardBody.append(createCardTitle(mentee.name));
   menteeCardBody.append(createStarButton(mentee.starLink));
-  return menteeCardElement
+  return menteeCardElement;
 }
 
 /**
  * Return a bootstrap row element
- * @returns {HTMLElement} bootstrap row div 
+ * @return {HTMLElement} bootstrap row div
  */
 function createRowElement() {
   let rowElement = document.createElement('div');
@@ -204,13 +228,13 @@ function createRowElement() {
 }
 
 /**
- * Return an anchor of the class star that perform the acton @param link 
+ * Return an anchor of the class star that perform the acton @param link
  * @param {String} link
- * @returns {HTMLElement} anchor that performs the given action
+ * @return {HTMLElement} anchor that performs the given action
  */
 function createStarButton(link) {
   let starButton = document.createElement('a');
-  starButton.className = 'star'
+  starButton.className = 'star';
   starButton.innerText = 'Send star';
   starButton.href = link;
   return starButton;
@@ -218,7 +242,7 @@ function createStarButton(link) {
 
 /**
  * Return a small image with the source @param imgSrc
- * @param {String} imgSrc 
+ * @param {String} imgSrc
  * @returns {HTMLElement} image object
  */
 function createMenteeCardImage(imgSrc) {
