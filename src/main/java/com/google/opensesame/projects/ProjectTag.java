@@ -8,6 +8,7 @@ import org.kohsuke.github.GHRepository;
 public class ProjectTag {
   /**
    * Creates a list of ProjectTags from a GitHub repository's topics and primary language.
+   *
    * @param repository The GitHub repository.
    * @return Returns the list of ProjectTags.
    * @throws IOException
@@ -27,6 +28,7 @@ public class ProjectTag {
 
   /**
    * Creates a new ProjectTag.
+   *
    * @param tagText
    */
   public ProjectTag(String tagText) {
