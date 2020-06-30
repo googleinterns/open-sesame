@@ -9,6 +9,32 @@ small {
   line-height: 20px;
 }
 
+.project-card {
+  min-height: 20%;
+}
+
 a.active {
   color: darkblue !important;
+}
+
+.user-img {
+  height: 250px;
+  object-fit: cover;
+  width: 250px;
+}
+
+.mentee-card-img {
+  height: 250px;
+  object-fit: cover;
+  width: 250px;
+}
+
+.star,
+.star:hover {
+  color: gold;
+  text-decoration: none;
+}
+
+.star:hover {
+  color: rgb(221, 221, 12);
 }
