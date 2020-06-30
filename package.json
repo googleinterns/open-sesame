@@ -8,7 +8,8 @@
     "jsx-preprocessor": "npm run jsx-projects && npm run jsx-common",
     "jsx-projects": "npx babel src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
     "jsx-projects-live": "npx babel --watch src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
-    "jsx-common": "npx babel src/main/webapp/js/common/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod"
+    "jsx-common": "npx babel src/main/webapp/js/common/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod",
+    "jsx-common-live": "npx babel --watch src/main/webapp/js/common/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod"
   },
   "repository": {
     "type": "git",
