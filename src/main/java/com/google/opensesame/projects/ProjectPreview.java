@@ -10,8 +10,9 @@ import org.kohsuke.github.GitHub;
 public class ProjectPreview {
   /**
    * Creates a ProjectPreview object from a set of project properties.
+   *
    * @param properties The properties of a project. This will most likely come from a datastore
-   * entity.
+   *     entity.
    * @return Returns the creates ProjectPreview.
    * @throws IOException
    */
@@ -35,6 +36,7 @@ public class ProjectPreview {
 
   /**
    * Creates a new ProjectPreview object.
+   *
    * @param name
    * @param shortDescription
    * @param projectTags
