@@ -8,6 +8,13 @@ import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
 public class ProjectPreview {
+  /**
+   * Creates a ProjectPreview object from a set of project properties.
+   * @param properties The properties of a project. This will most likely come from a datastore
+   * entity.
+   * @return Returns the creates ProjectPreview.
+   * @throws IOException
+   */
   public static ProjectPreview fromProperties(Map<String, Object> properties) throws IOException {
     GitHub gitHub = GitHubGetter.getGitHub();
     GHRepository repository = gitHub.getRepository((String) properties.get("repositoryName"));
@@ -26,6 +33,14 @@ public class ProjectPreview {
   private final int numMentors;
   private final transient GHRepository repository;
 
+  /**
+   * Creates a new ProjectPreview object.
+   * @param name
+   * @param shortDescription
+   * @param projectTags
+   * @param numMentors
+   * @param repository
+   */
   public ProjectPreview(
       String name,
       String shortDescription,

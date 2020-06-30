@@ -42,6 +42,7 @@ public class ProjectPreviewTest {
 
   @Test
   public void populatesRepositoryInfo() throws IOException {
+    // Ensures that the project preview data is populated from the GitHub repository.
     ProjectPreview projectPreview = ProjectPreview.fromProperties(projectProperties);
 
     Assert.assertEquals("My first repository on GitHub!", projectPreview.getShortDescription());
