@@ -26,6 +26,7 @@ public class ProjectPreview {
   /**
    * Creates a ProjectPreview object from a set of project properties and it's associated GitHub
    * repository.
+   *
    * @param properties The properties of a project. This will most likely come from a datastore
    *     entity.
    * @param repository The GitHub repository associated with the project.
