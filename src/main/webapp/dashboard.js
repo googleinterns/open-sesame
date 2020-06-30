@@ -108,8 +108,7 @@ function createLocation(location) {
  * Call functions to populate page sections with data.
  */
 function setUpPage() {
-  createAboutMe(dummyName, dummyLocation, dummyBio, dummyImg, dummyTags,
-    dummyGitSrc);
+  createAboutMe(dummyUser);
 }
 
 window.onload = setUpPage;
