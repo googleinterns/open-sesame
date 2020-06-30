@@ -15,7 +15,7 @@ public final class GitHubGetter {
    */
   public static GitHub getGitHub() throws IOException {
     if (gitHub == null) {
-      buildGitHubInterface();
+      gitHub = buildGitHubInterface();
     }
 
     return gitHub;
@@ -28,7 +28,7 @@ public final class GitHubGetter {
    *
    * @throws IOException Throws IOException if there is an error building the GitHub interface.
    */
-  private static void buildGitHubInterface() throws IOException {
+  private static GitHub buildGitHubInterface() throws IOException {
     String clientID = System.getenv("GITHUB_CLIENT_ID");
     String clientSecret = System.getenv("GITHUB_CLIENT_SECRET");
 
@@ -36,19 +36,19 @@ public final class GitHubGetter {
       System.err.println(
           "GitHub authorization is not set. Please refer to the project README to"
               + " configure this. Using unauthorized GitHub API for now.");
-      gitHub = GitHub.connectAnonymously();
-      return;
+      return GitHub.connectAnonymously();
     }
 
-    gitHub = new GitHubBuilder().withPassword(clientID, clientSecret).build();
+    authenticatedGitHub = new GitHubBuilder().withPassword(clientID, clientSecret).build();
 
     try {
       gitHub.checkApiUrlValidity();
+      return authenticatedGitHub;
     } catch (IOException e) {
       System.err.println(
           "Invalid GitHub credentials. Please refer to the project README to"
               + " configure this. Using unauthorized GitHub API for now.");
-      gitHub = GitHub.connectAnonymously();
+     return GitHub.connectAnonymously();
     }
   }
 }
