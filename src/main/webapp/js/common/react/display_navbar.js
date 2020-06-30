@@ -5,7 +5,6 @@
  * Also, be sure to add a div with the ID "navbar-container". This
  * is where the Navbar will be rendered to.
  */
- 
 import Navbar from './components/Navbar.js';
 
 /**
