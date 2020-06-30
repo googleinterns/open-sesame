@@ -38,12 +38,12 @@ const dummyImg = 'images/dior.jpg';
 const dummyGitSrc = '#';
 const dummyProjectName = 'Kubernetes';
 
-/**@const {String List} */
+/** @const {String List} */
 const dummyTags = ['Weekly', '30 mins', 'Kubernetes', 'Open Sesame',
   'Documentation',
 ];
 
-/**@const {User} */
+/** @const {User} */
 const dummyUser = {
   name: dummyName,
   location: dummyLocation,
@@ -53,11 +53,22 @@ const dummyUser = {
   gitSrc: dummyGitSrc,
 };
 
-/**@const {Mentee List} */
-const dummyMentees = [
-  { name: 'Richi', starLink: '#givestar', image: dummyImg },
-  { name: 'Obi', starLink: '#givestar', image: dummyImg },
-  { name: 'Sami', starLink: '#givestar', image: dummyImg },
+/** @const {Mentee List} */
+const dummyMentees = [{
+    name: 'Richi',
+    starLink: '#givestar',
+    image: dummyImg
+  },
+  {
+    name: 'Obi',
+    starLink: '#givestar',
+    image: dummyImg
+  },
+  {
+    name: 'Sami',
+    starLink: '#givestar',
+    image: dummyImg
+  },
 ];
 
 /** @const {Project} */
