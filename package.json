@@ -4,12 +4,13 @@
   "description": "Open Sesame is a platform intended to make contributing to open source less intimidating by matching first-time contributors to experienced mentors.",
   "main": "index.js",
   "scripts": {
+    "test": "jest --testPathIgnorePatterns=target/",
     "dev-server": "npm run jsx-preprocessor && mvn package appengine:run || true",
     "jsx-preprocessor": "npm run jsx-projects && npm run jsx-common",
-    "jsx-projects": "npx babel src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
-    "jsx-projects-live": "npx babel --watch src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
-    "jsx-common": "npx babel src/main/webapp/js/common/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod",
-    "jsx-common-live": "npx babel --watch src/main/webapp/js/common/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod"
+    "jsx-projects": "npx babel src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/,*.test.js --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
+    "jsx-projects-live": "npx babel --watch src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/,*.test.js --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
+    "jsx-common": "npx babel src/main/webapp/js/common/react/ --minified --ignore jsx-processed/,*.test.js --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod",
+    "jsx-common-live": "npx babel --watch src/main/webapp/js/common/react/ --minified --ignore jsx-processed/,*.test.js --out-dir src/main/webapp/js/common/react/jsx-processed --presets react-app/prod"
   },
   "repository": {
     "type": "git",
@@ -22,21 +23,28 @@
     "url": "https://github.com/googleinterns/step22-2020/issues"
   },
   "homepage": "https://github.com/googleinterns/step22-2020#readme",
-  "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-react-app": "^3.1.2",
-    "eslint-config-google": "^0.7.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-react": "^7.10.1",
+    "@testing-library/jest-dom": "^5.11.0",
+    "@testing-library/react": "^10.4.3",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.1.0",
+    "babel-preset-react-app": "^3.1.2",
     "eslint": "^6.8.0",
+    "eslint-config-google": "^0.7.1",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-flowtype": "^4.7.0",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^2.5.1"
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "jest": "^26.1.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
