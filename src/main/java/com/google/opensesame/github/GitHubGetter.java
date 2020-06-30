@@ -30,7 +30,7 @@ public final class GitHubGetter {
    *
    * @throws IOException Throws IOException if there is an error building the GitHub interface.
    */
-  private static GitHub buildGitHubInterface(String clientId, String clientSecret) 
+  private static GitHub buildGitHubInterface(String clientId, String clientSecret)
       throws IOException {
     if (clientId == null || clientId.isEmpty() || clientSecret == null || clientSecret.isEmpty()) {
       System.err.println(
