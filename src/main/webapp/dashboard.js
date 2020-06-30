@@ -76,6 +76,15 @@ const USER_TAG_ROW = document.getElementById('user-tag-row');
 const USER_GITHUB_BUTTON = document.getElementById('user-github');
 const AFFILIATIONS_DIV = document.getElementById('affiliations');
 
+/**@const {User} */
+const dummyUser = {
+  name: dummyName,
+  location: dummyLocation,
+  image: dummyImg,
+  bio: dummyBio,
+  tags: dummyTags
+};
+
 /**
  * Populate the card element 'ABOUT_ME_CARD_DIV' with information about a
  * given user.
