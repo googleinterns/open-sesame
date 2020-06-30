@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.junit.Test;
 import org.kohsuke.github.GHRepository;
 import org.mockito.Mockito;
 
@@ -34,7 +34,7 @@ public class ProjectPreviewTest {
   public void populatesRepositoryInfo() throws IOException {
     // Ensures that the project preview data is properly populated from the GitHub repository and
     // datastore entity properties.
-    ProjectPreview projectPreview = 
+    ProjectPreview projectPreview =
         ProjectPreview.fromPropertiesAndRepository(projectProperties, mockRepository);
 
     Assert.assertEquals(MOCK_REPO_NAME, projectPreview.getName());
