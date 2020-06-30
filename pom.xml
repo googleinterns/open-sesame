@@ -35,6 +35,13 @@
       <artifactId>appengine-api-1.0-sdk</artifactId>
       <version>1.9.59</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.kohsuke/github-api -->
+    <dependency>
+      <groupId>org.kohsuke</groupId>
+      <artifactId>github-api</artifactId>
+      <version>1.114</version>
+    </dependency>
   </dependencies>
 
   <build>
