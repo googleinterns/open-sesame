@@ -35,6 +35,15 @@ const dummyTags = ['Weekly', '30 mins', 'Kubernetes', 'Open Sesame',
 ];
 const dummyGitSrc = '#';
 
+/**@const {User} */
+const dummyUser = {
+  name: dummyName,
+  location: dummyLocation,
+  image: dummyImg,
+  bio: dummyBio,
+  tags: dummyTags
+};
+
 /**
  * Populates the card element 'ABOUT_ME_CARD_DIV' with information about a
  * given user.
