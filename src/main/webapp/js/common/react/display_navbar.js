@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Adds a React-based Navbar to an HTML page.
+ * Before importing this script, be sure to add the React scripts
+ * as seen here: https://reactjs.org/docs/add-react-to-a-website.html#step-2-add-the-script-tags.
+ * Also, be sure to add a div with the ID "navbar-container". This
+ * is where the Navbar will be rendered to.
+ */
+ 
 import Navbar from './components/Navbar.js';
 
 /**
