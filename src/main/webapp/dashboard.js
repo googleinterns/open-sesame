@@ -65,17 +65,6 @@ const dummyUser = {
   tags: dummyTags
 };
 
-/**@const {Mentee List} */
-const dummyMentees = [
-  { name: 'Richi', starLink: '#givestar', image: dummyImg },
-  { name: 'Obi', starLink: '#givestar', image: dummyImg },
-  { name: 'Sami', starLink: '#givestar', image: dummyImg },
-];
-
-/**@const {Project} */
-const dummyProject = { name: 'Kubernetes', mentees: dummyMentees };
-
-// ELEMENTS_FOR_ABOUT_ME_SECTION
 /**
  * Elements from dashboard.html.
  * @type {HTMLElement}
