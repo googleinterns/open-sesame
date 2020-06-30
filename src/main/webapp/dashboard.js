@@ -55,13 +55,13 @@ const dummyUser = {
 
 /**@const {Mentee List} */
 const dummyMentees = [
-  {name: 'Richi', starLink: '#givestar', image: dummyImg},
-  {name: 'Obi', starLink: '#givestar', image: dummyImg},
-  {name: 'Sami', starLink: '#givestar', image: dummyImg},
+  { name: 'Richi', starLink: '#givestar', image: dummyImg },
+  { name: 'Obi', starLink: '#givestar', image: dummyImg },
+  { name: 'Sami', starLink: '#givestar', image: dummyImg },
 ];
 
 /** @const {Project} */
-const dummyProject = {name: dummyProjectName, mentees: dummyMentees};
+const dummyProject = { name: dummyProjectName, mentees: dummyMentees };
 
 // ELEMENTS_FOR_ABOUT_ME_SECTION
 /**
@@ -178,6 +178,12 @@ function createCardTitle(titleText) {
   return cardTitleElement;
 }
 
+/**
+ * Return a card with information about a given @param mentee object and
+ * a link to send @param mentee a star
+ * @param {Mentee} mentee
+ * @return {HTMLElement} card with information about a given mentee
+ */
 function createMenteeCard(mentee) {
   let menteeCardElement = document.createElement('div');
   menteeCardElement.className = 'card card-holder col-' +
