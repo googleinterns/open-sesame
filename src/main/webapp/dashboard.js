@@ -8,7 +8,7 @@
 /**
  * A mentee
  * @typedef {Object} Mentee
- * @property {String} image -the link to 
+ * @property {String} image -the link to a mentee's image
  * @property {String} name - the name of the mentee
  * @property {String} starLink - the link to the action that rewards a given 
  *                               mentee with a star
@@ -18,7 +18,7 @@
  * A User
  * @typedef {Object} User
  * @property {String} bio - The bio of the user
- * @property {String} gitSrc - The user's github page 
+ * @property {String} gitSrc - The user's github page
  * @property {String} image - The User's profile picture
  * @property {String} location - the location of the user
  * @property {String} name - the name of the user
@@ -50,7 +50,8 @@ const dummyUser = {
   location: dummyLocation,
   image: dummyImg,
   bio: dummyBio,
-  tags: dummyTags
+  tags: dummyTags,
+  gitSrc: dummyGitSrc,
 };
 
 /**@const {Mentee List} */
@@ -75,15 +76,6 @@ const USER_NAME_AND_LOCATION = document.getElementById('user-name-location');
 const USER_TAG_ROW = document.getElementById('user-tag-row');
 const USER_GITHUB_BUTTON = document.getElementById('user-github');
 const AFFILIATIONS_DIV = document.getElementById('affiliations');
-
-/**@const {User} */
-const dummyUser = {
-  name: dummyName,
-  location: dummyLocation,
-  image: dummyImg,
-  bio: dummyBio,
-  tags: dummyTags
-};
 
 /**
  * Populate the card element 'ABOUT_ME_CARD_DIV' with information about a
