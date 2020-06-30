@@ -1,4 +1,16 @@
 /**
+ * A User
+ * @typedef {Object} User
+ * @property {String} bio - The bio of the user
+ * @property {String} gitSrc - The user's github page 
+ * @property {String} image - The User's profile picture
+ * @property {String} location - the location of the user
+ * @property {String} name - the name of the user
+ * @property {String List} tags - The user's tags
+ */
+
+// ELEMENTS_FOR_ABOUT_ME_SECTION
+/**
  * A project
  * @typedef {Object} Project
  * @property {String} name - the name of a given project.
