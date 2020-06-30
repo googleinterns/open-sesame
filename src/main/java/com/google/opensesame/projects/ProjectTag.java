@@ -6,8 +6,12 @@ import java.util.List;
 import org.kohsuke.github.GHRepository;
 
 public class ProjectTag {
-  // ProjectTag class is used instead of just a string in anticipation of future tag types.
-
+  /**
+   * Creates a list of ProjectTags from a GitHub repository's topics and primary language.
+   * @param repository The GitHub repository.
+   * @return Returns the list of ProjectTags.
+   * @throws IOException
+   */
   public static List<ProjectTag> fromRepository(GHRepository repository) throws IOException {
     List<String> topics = repository.listTopics();
     String primaryLanguage = repository.getLanguage();
@@ -21,6 +25,10 @@ public class ProjectTag {
     return projectTags;
   }
 
+  /**
+   * Creates a new ProjectTag.
+   * @param tagText
+   */
   public ProjectTag(String tagText) {
     this.tagText = tagText;
   }

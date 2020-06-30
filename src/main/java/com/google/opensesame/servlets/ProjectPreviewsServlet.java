@@ -17,7 +17,6 @@ public class ProjectPreviewsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Add validation and database querying here.
     Entity testEntity = new Entity("Project");
     testEntity.setProperty("repositoryName", "tensorflow/tensorflow");
     testEntity.setProperty("numMentors", 5);
