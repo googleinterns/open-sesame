@@ -1,26 +1,23 @@
 package com.google.opensesame.projects;
 
+import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import com.google.opensesame.github.GitHubGetter;
-
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
 public class ProjectPreview {
   public static ProjectPreview fromProperties(Map<String, Object> properties) throws IOException {
     GitHub gitHub = GitHubGetter.getGitHub();
-    GHRepository repository = 
-        gitHub.getRepository((String) properties.get("repositoryName"));
+    GHRepository repository = gitHub.getRepository((String) properties.get("repositoryName"));
 
     return new ProjectPreview(
         repository.getName(),
         repository.getDescription(),
         ProjectTag.fromRepository(repository),
         (int) properties.get("numMentors"),
-        repository); 
+        repository);
   }
 
   private final String name;
@@ -28,12 +25,12 @@ public class ProjectPreview {
   private final List<ProjectTag> projectTags;
   private final int numMentors;
   private final transient GHRepository repository;
-  
+
   public ProjectPreview(
-      String name, 
-      String shortDescription, 
-      List<ProjectTag> projectTags, 
-      int numMentors, 
+      String name,
+      String shortDescription,
+      List<ProjectTag> projectTags,
+      int numMentors,
       GHRepository repository) {
     this.name = name;
     this.shortDescription = shortDescription;

@@ -3,7 +3,6 @@ package com.google.opensesame.projects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.kohsuke.github.GHRepository;
 
 public class ProjectTag {
