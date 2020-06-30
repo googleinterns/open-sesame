@@ -48,7 +48,7 @@ public final class GitHubGetter {
       System.err.println(
           "Invalid GitHub credentials. Please refer to the project README to"
               + " configure this. Using unauthorized GitHub API for now.");
-     return GitHub.connectAnonymously();
+      return GitHub.connectAnonymously();
     }
   }
 }
