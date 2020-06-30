@@ -56,7 +56,7 @@ const dummyUser = {
 /**@const {Mentee List} */
 const dummyMentees = [
   {name: 'Richi', starLink: '#givestar', image: dummyImg},
-  { name: 'Obi', starLink: '#givestar', image: dummyImg },
+  {name: 'Obi', starLink: '#givestar', image: dummyImg},
   {name: 'Sami', starLink: '#givestar', image: dummyImg},
 ];
 
