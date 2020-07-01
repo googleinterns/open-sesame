@@ -39,14 +39,16 @@ public class ProjectPreview {
     return new ProjectPreview(
         repository.getName(),
         repository.getDescription(),
-        ProjectTag.fromRepository(repository),
+        repository.listTopics(),
+        repository.getLanguage(),
         (int) properties.get("numMentors"),
         repository);
   }
 
   private final String name;
   private final String description;
-  private final List<ProjectTag> projectTags;
+  private final List<String> topicTags;
+  private final String primaryLanguage;
   private final int numMentors;
   private final transient GHRepository repository;
 
@@ -55,19 +57,21 @@ public class ProjectPreview {
    *
    * @param name
    * @param description
-   * @param projectTags
+   * @param topicTags
    * @param numMentors
    * @param repository
    */
   public ProjectPreview(
       String name,
       String description,
-      List<ProjectTag> projectTags,
+      List<String> topicTags,
+      String primaryLanguage,
       int numMentors,
       GHRepository repository) {
     this.name = name;
     this.description = description;
-    this.projectTags = projectTags;
+    this.topicTags = topicTags;
+    this.primaryLanguage = primaryLanguage;
     this.numMentors = numMentors;
     this.repository = repository;
   }
@@ -80,8 +84,12 @@ public class ProjectPreview {
     return description;
   }
 
-  public List<ProjectTag> getProjectTags() {
-    return projectTags;
+  public List<String> getTopicTags() {
+    return topicTags;
+  }
+  
+  public String getPrimaryLanguage() {
+    return primaryLanguage;
   }
 
   public int getNumMentors() {
