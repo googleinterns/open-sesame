@@ -87,7 +87,7 @@ public class ProjectPreview {
   public List<String> getTopicTags() {
     return topicTags;
   }
-  
+
   public String getPrimaryLanguage() {
     return primaryLanguage;
   }
