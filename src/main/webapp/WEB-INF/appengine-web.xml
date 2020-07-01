@@ -7,4 +7,8 @@
     <!-- prevent unwanted caching when accessing via the web preview server -->
     <include path="/**" expiration="0s" />
   </static-files>
+  <env-variables>
+    <env-var name="GITHUB_CLIENT_ID" value="" />
+    <env-var name="GITHUB_CLIENT_SECRET" value="" />
+  </env-variables>
 </appengine-web-app>
