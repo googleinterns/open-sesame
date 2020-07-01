@@ -44,20 +44,15 @@ public class MentorsServlet extends HttpServlet {
     ArrayList<String> RichiSkills = new ArrayList<String>();
     RichiSkills.add("Minecraft boss");
     RichiSkills.add("React wizard");
-<<<<<<< HEAD
     MentorObject Richi = new MentorBuilder()
                  .name("Richi")
                  .gitHubID("Richie78321")
-                 .description("Richi is cool.")
+                 .description("Richi is cool.
                  .interestTags(RichiSkills);
                  .projectIDs(projects);
                  .buildMentor();
     mentors.add(Richi);
-    
-=======
-    mentors.add(new MentorObject("Richi", "Richie78321", "Richi is cool.", RichiSkills, projects));
 
->>>>>>> cfc4caf944167dc735648558cead0996d8c35bf9
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
     response.getWriter().println(jsonMentors);
