@@ -16,6 +16,10 @@ function Navbar() {
       href: '/dashboard.html',
       name: 'Dashboard',
     },
+    {
+      href: '/mentors.html',
+      name: 'Mentors',
+    }
   ];
 
   return (
