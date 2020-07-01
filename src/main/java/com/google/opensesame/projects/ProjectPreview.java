@@ -11,8 +11,9 @@ public class ProjectPreview {
   /**
    * Creates a ProjectPreview object from a set of project properties.
    *
-   * @param properties The properties of a project. This will most likely come from a datastore
-   *     entity.
+   * @param properties The properties of a project entity. This can come directly from a datastore
+   *     entity, as datastore entities inherit a getProperty() method from PropertyContainer:
+   *     https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Entity
    * @return Returns the created ProjectPreview.
    * @throws IOException Throws when there is an error communicating with the GitHub API.
    */
