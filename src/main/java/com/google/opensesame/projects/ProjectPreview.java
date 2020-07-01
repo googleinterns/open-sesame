@@ -44,7 +44,7 @@ public class ProjectPreview {
   }
 
   private final String name;
-  private final String shortDescription;
+  private final String description;
   private final List<ProjectTag> projectTags;
   private final int numMentors;
   private final transient GHRepository repository;
@@ -53,19 +53,19 @@ public class ProjectPreview {
    * Creates a new ProjectPreview object.
    *
    * @param name
-   * @param shortDescription
+   * @param description
    * @param projectTags
    * @param numMentors
    * @param repository
    */
   public ProjectPreview(
       String name,
-      String shortDescription,
+      String description,
       List<ProjectTag> projectTags,
       int numMentors,
       GHRepository repository) {
     this.name = name;
-    this.shortDescription = shortDescription;
+    this.description = description;
     this.projectTags = projectTags;
     this.numMentors = numMentors;
     this.repository = repository;
@@ -75,8 +75,8 @@ public class ProjectPreview {
     return name;
   }
 
-  public String getShortDescription() {
-    return shortDescription;
+  public String getDescription() {
+    return description;
   }
 
   public List<ProjectTag> getProjectTags() {

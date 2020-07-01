@@ -38,7 +38,7 @@ public class ProjectPreviewTest {
         ProjectPreview.fromPropertiesAndRepository(projectProperties, mockRepository);
 
     Assert.assertEquals(MOCK_REPO_NAME, projectPreview.getName());
-    Assert.assertEquals(MOCK_REPO_DESCRIPTION, projectPreview.getShortDescription());
+    Assert.assertEquals(MOCK_REPO_DESCRIPTION, projectPreview.getDescription());
     Assert.assertEquals(MOCK_REPO_NUM_MENTORS, projectPreview.getNumMentors());
   }
 }
