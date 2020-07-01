@@ -19,14 +19,19 @@ public class ProjectPreviewsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    ArrayList<Entity> testProjectEntities = new ArrayList<Entity>();
     Entity testProjectEntity = new Entity("Project");
     testProjectEntity.setProperty("repositoryName", "tensorflow/tensorflow");
     testProjectEntity.setProperty("numMentors", 5);
+    testProjectEntities.add(testProjectEntity);
 
-    List<Entity> testDatastoreQuery = Arrays.asList(testProjectEntity);
+    testProjectEntity = new Entity("Project");
+    testProjectEntity.setProperty("repositoryName", "kubernetes/kubernetes");
+    testProjectEntity.setProperty("numMentors", 1);
+    testProjectEntities.add(testProjectEntity);
 
     ArrayList<ProjectPreview> projectPreviews = new ArrayList<ProjectPreview>();
-    for (Entity projectEntity : testDatastoreQuery) {
+    for (Entity projectEntity : testProjectEntities) {
       projectPreviews.add(ProjectPreview.fromProperties(projectEntity.getProperties()));
     }
 
