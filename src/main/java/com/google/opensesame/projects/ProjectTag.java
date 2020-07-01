@@ -15,7 +15,7 @@ public class ProjectTag {
    */
   public static List<ProjectTag> fromRepository(GHRepository repository) throws IOException {
     List<String> topics = repository.listTopics();
-    ArrayList<ProjectTag> projectTags = new ArrayList<ProjectTag>(topics.size() + 1);
+    ArrayList<ProjectTag> projectTags = new ArrayList<ProjectTag>();
 
     String primaryLanguage = repository.getLanguage();
     projectTags.add(new ProjectTag(primaryLanguage));
