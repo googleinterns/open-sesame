@@ -13,12 +13,12 @@ function Navbar() {
       name: 'Projects',
     },
     {
-      href: '/dashboard.html',
-      name: 'Dashboard',
-    },
-    {
       href: '/mentors.html',
       name: 'Mentors',
+    },
+    {
+      href: '/dashboard.html',
+      name: 'Dashboard',
     }
   ];
 
