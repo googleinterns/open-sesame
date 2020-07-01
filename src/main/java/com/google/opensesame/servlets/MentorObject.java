@@ -1,6 +1,7 @@
 package com.google.opensesame.servlets;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.unmodifiableList;
 
 public class MentorObject extends PersonObject {
