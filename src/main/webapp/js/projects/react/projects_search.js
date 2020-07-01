@@ -38,6 +38,42 @@ function getMockProjectPreviewData() {
       ],
       numMentors: 5,
     },
+    {
+      title: 'Kubernetes',
+      shortDescription: 'Production-Grade Container '
+          + 'Scheduling and Management',
+      tags: [
+        {
+          text: 'kubernetes',
+        },
+        {
+          text: 'go',
+        },
+        {
+          text: 'cncf',
+        },
+        {
+          text: 'containers',
+        },
+      ],
+      numMentors: 1,
+    },
+    {
+      title: 'open-sesame',
+      shortDescription: 'An open source mentorship platform',
+      tags: [
+        {
+          text: 'javascript',
+        },
+        {
+          text: 'mentorship',
+        },
+        {
+          text: 'react',
+        },
+      ],
+      numMentors: 3,
+    },
   ];
 }
 
