@@ -12,6 +12,9 @@ function getMentors() {
     for (const mentor of mentors) {
       mentorsContainer.appendChild(createMentorElement(mentor.name, mentor.description));
     }
+  })
+  .catch((error) => {
+    console.log(error);
   });
 }
 
