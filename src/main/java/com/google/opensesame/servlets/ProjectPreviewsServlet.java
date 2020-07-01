@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import com.google.opensesame.projects.ProjectPreview;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +19,16 @@ public class ProjectPreviewsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Entity testEntity = new Entity("Project");
-    testEntity.setProperty("repositoryName", "tensorflow/tensorflow");
-    testEntity.setProperty("numMentors", 5);
+    Entity testProjectEntity = new Entity("Project");
+    testProjectEntity.setProperty("repositoryName", "tensorflow/tensorflow");
+    testProjectEntity.setProperty("numMentors", 5);
+
+    List<Entity> testDatastoreQuery = Arrays.asList(testProjectEntity);
 
     ArrayList<ProjectPreview> projectPreviews = new ArrayList<ProjectPreview>();
-    projectPreviews.add(ProjectPreview.fromProperties(testEntity.getProperties()));
+    for (Entity projectEntity : testDatastoreQuery) {
+      projectPreviews.add(ProjectPreview.fromProperties(projectEntity.getProperties()));
+    }
 
     String projectPreviewsJson = gson.toJson(projectPreviews);
     response.setStatus(HttpServletResponse.SC_OK);
