@@ -23,13 +23,13 @@
   },
   "homepage": "https://github.com/googleinterns/step22-2020#readme",
   "dependencies": {
-    "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
     "eslint-config-google": "^0.7.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-config-react-app": "^5.2.1",

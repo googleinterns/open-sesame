@@ -3,8 +3,22 @@
 <title>Open Sesame</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
 
-<h1 class="display-1 mb-5 mt-5">The Open Source Community is for <span class="emphasis">Everyone</span></h1>
+<div id="navbar-container"></div>
+
+<h1 class="display-1 mb-5 mt-5">The Open Source Community is for
+  <span class="emphasis">Everyone</span>
+</h1>
 <spacer class="space"></spacer>
 <button class="btn mt-5 text-center"><span class="display-4">Mentorship Awaits</span></button>
+
+<!-- Load React. -->
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<!-- Load React prop validation. -->
+<!-- Note: when deploying, replace "prop-types.js" with "prop-types.min.js" -->
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+<!-- Load React components -->
+<script type="module" src="./js/common/react/jsx-processed/Navbar.js"></script>

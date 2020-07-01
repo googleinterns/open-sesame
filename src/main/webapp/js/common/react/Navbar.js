@@ -12,6 +12,10 @@ function Navbar() {
       href: '/projects.html',
       name: 'Projects',
     },
+    {
+      href: '/dashboard.html',
+      name: 'Dashboard',
+    },
   ];
 
   return (
