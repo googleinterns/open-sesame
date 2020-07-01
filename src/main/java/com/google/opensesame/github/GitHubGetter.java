@@ -12,7 +12,7 @@ public final class GitHubGetter {
    * available in the system environment variables, the builder will connect to the GitHub API using
    * those. Otherwise, it will connect anonymously.
    *
-   * <p>In AppEngine, the credentials can be set in appengine-web.xml
+   * <p>In AppEngine, the credentials can be set in appengine-web.xml.
    *
    * @return Returns the GitHub API interface.
    * @throws IOException Throws IOException if there is an error building the GitHub interface.
