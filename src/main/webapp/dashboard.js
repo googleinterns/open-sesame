@@ -75,42 +75,42 @@ const dummyMentees = [{
 const dummyProject = {
   name: dummyProjectName,
   mentees: dummyMentees,
-  };
+};
 
 // ELEMENTS_FOR_ABOUT_ME_SECTION
 /**
  * Elements from dashboard.html.
  * @type {HTMLElement}
  */
-const ABOUT_ME_CARD_DIV = document.getElementById('about-me-card-body');
-const USER_BIO = document.getElementById('user-bio');
-const USER_IMAGE = document.getElementById('user-image');
-const USER_NAME_AND_LOCATION = document.getElementById('user-name-location');
-const USER_TAG_ROW = document.getElementById('user-tag-row');
-const USER_GITHUB_BUTTON = document.getElementById('user-github');
-const AFFILIATIONS_DIV = document.getElementById('affiliations');
+const aboutMeCardDiv = document.getElementById('about-me-card-body');
+const userBioElement = document.getElementById('user-bio');
+const userImageElement = document.getElementById('user-image');
+const userNameAndLocationElement = document.getElementById('user-name-location');
+const userTagRow = document.getElementById('user-tag-row');
+const userGithubButton = document.getElementById('user-github');
+const affiliationsDiv = document.getElementById('affiliations');
 
 /**
- * Populate the card element 'ABOUT_ME_CARD_DIV' with information about a
+ * Populate the card element 'aboutMeCardDiv' with information about a
  * given user.
  * @param {User} user
  */
 function createAboutMe(user) {
   let editButton = createEditButton('#');
-  ABOUT_ME_CARD_DIV.prepend(editButton);
+  aboutMeCardDiv.prepend(editButton);
 
-  USER_IMAGE.src = user.image;
+  userImageElement.src = user.image;
 
-  USER_NAME_AND_LOCATION.innerHTML = user.name + '<br>';
+  userNameAndLocationElement.innerHTML = user.name + '<br>';
   let userLocation = createLocation(user.location);
-  USER_NAME_AND_LOCATION.append(userLocation);
+  userNameAndLocationElement.append(userLocation);
 
-  USER_BIO.innerText = user.bio;
+  userBioElement.innerText = user.bio;
 
-  USER_GITHUB_BUTTON.href = user.gitSrc;
+  userGithubButton.href = user.gitSrc;
 
   for (tag of user.tags) {
-    addTag(tag, USER_TAG_ROW);
+    addTag(tag, userTagRow);
   }
 }
 
@@ -157,7 +157,7 @@ function createLocation(location) {
  */
 function addProject(projectObject) {
   let projectCardElement = createProjectCard(projectObject.name);
-  AFFILIATIONS_DIV.append(projectCardElement);
+  affiliationsDiv.append(projectCardElement);
   let menteeRow = createRowElement();
   for (mentee of projectObject.mentees) {
     menteeRow.append(createMenteeCard(mentee));
