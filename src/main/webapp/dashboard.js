@@ -57,22 +57,25 @@ const dummyUser = {
 const dummyMentees = [{
     name: 'Richi',
     starLink: '#givestar',
-    image: dummyImg
+    image: dummyImg,
   },
   {
     name: 'Obi',
     starLink: '#givestar',
-    image: dummyImg
+    image: dummyImg,
   },
   {
     name: 'Sami',
     starLink: '#givestar',
-    image: dummyImg
+    image: dummyImg,
   },
 ];
 
 /** @const {Project} */
-const dummyProject = { name: dummyProjectName, mentees: dummyMentees };
+const dummyProject = {
+  name: dummyProjectName,
+  mentees: dummyMentees,
+  };
 
 // ELEMENTS_FOR_ABOUT_ME_SECTION
 /**
