@@ -599,6 +599,6 @@ MigrationBackup/
 .ionide/
 
 # Ignore jsx-processed directories
-jsx-processed/
+js-build/
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,visualstudio,intellij,node,react,maven,java
