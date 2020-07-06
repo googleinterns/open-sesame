@@ -20,7 +20,7 @@ public class MentorsServlet extends HttpServlet {
     ArrayList<String> ObiSkills = new ArrayList<String>();
     ObiSkills.add("Meme god");
     ObiSkills.add("HTML wrangler");
-    MentorObject Obi = new MentorBuilder()
+    MentorObject Obi = new PersonBuilder()
                  .name("Obi")
                  .gitHubID("Obinnabii")
                  .description("Obi is awesome.")
@@ -32,7 +32,7 @@ public class MentorsServlet extends HttpServlet {
     ArrayList<String> SamiSkills = new ArrayList<String>();
     SamiSkills.add("Stone carver");
     SamiSkills.add("Bootstrap convert");
-    MentorObject Sami = new MentorBuilder()
+    MentorObject Sami = new PersonBuilder()
                  .name("Sami")
                  .gitHubID("Sami-2000")
                  .description("Sami is fun.")
@@ -44,7 +44,7 @@ public class MentorsServlet extends HttpServlet {
     ArrayList<String> RichiSkills = new ArrayList<String>();
     RichiSkills.add("Minecraft boss");
     RichiSkills.add("React wizard");
-    MentorObject Richi = new MentorBuilder()
+    MentorObject Richi = new PersonBuilder()
                  .name("Richi")
                  .gitHubID("Richie78321")
                  .description("Richi is cool.")
