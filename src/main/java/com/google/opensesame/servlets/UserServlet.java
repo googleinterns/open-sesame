@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
-    String userString = request.getParameter("user");
-    List<PersonObject> people = new ArrayList<PersonObject>();
+  private List<PersonObject> people;
+
+  @Override 
+  public void init(){
+    people = new ArrayList<PersonObject>();
     ArrayList<String> projects = new ArrayList<String>();
     projects.add("OpenSesame");
 
@@ -57,6 +58,11 @@ public class UserServlet extends HttpServlet {
             .projectIDs(projects)
             .buildPerson();
     people.add(Richi);
+  }
+
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
+    String userString = request.getParameter("user");
 
     PersonObject result = people.stream()
       .filter( person -> userString.equals(person.getName()))
