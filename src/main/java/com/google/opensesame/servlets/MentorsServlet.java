@@ -57,6 +57,7 @@ public class MentorsServlet extends HttpServlet {
     mentors.add(Richi);
 
     String jsonMentors = new Gson().toJson(mentors);
+    System.out.println("HELLLLLLLOOOOO" + jsonMentors);
     response.setContentType("application/json;");
     response.getWriter().println(jsonMentors);
   }
