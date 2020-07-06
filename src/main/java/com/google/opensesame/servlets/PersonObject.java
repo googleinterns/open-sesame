@@ -7,8 +7,9 @@ public class PersonObject {
   private String description;
   private ArrayList<String> interestTags;
   private String gitHubID;
-  
-  public PersonObject(String name, String gitHubID, String description, ArrayList<String> interstTags) {
+
+  public PersonObject(
+      String name, String gitHubID, String description, ArrayList<String> interstTags) {
     this.name = name;
     this.gitHubID = gitHubID;
     this.description = description;
@@ -31,4 +32,3 @@ public class PersonObject {
     return gitHubID;
   }
 }
-

@@ -7,7 +7,12 @@ import java.util.List;
 public class MentorObject extends PersonObject {
   private ArrayList<String> projectIDs;
 
-  public MentorObject(String name, String gitHubID, String description, ArrayList<String> interestTags, ArrayList<String> projectIDs) {
+  public MentorObject(
+      String name,
+      String gitHubID,
+      String description,
+      ArrayList<String> interestTags,
+      ArrayList<String> projectIDs) {
     super(name, gitHubID, description, interestTags);
     this.projectIDs = projectIDs;
   }
