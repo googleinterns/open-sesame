@@ -5,7 +5,10 @@
  */
 function getUser(user) {
   console.log('entering get user function/n');
-  fetch('/user?user=' + user)
+  const params = new URLSearchParams();
+  params.append('user', user);
+
+  fetch('/user', { method: 'GET', body: params })
     .then(errorHandling).then((response) => response.json())
     .then((user) => {
       return user;
