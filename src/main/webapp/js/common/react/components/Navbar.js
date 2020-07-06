@@ -1,4 +1,4 @@
-import checkTesting from '../tests/checkTesting.js';
+import checkTesting from '../../../checkTesting.js';
 import NavbarLink from './NavbarLink.js';
 checkTesting();
 
