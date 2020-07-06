@@ -1,7 +1,8 @@
 package com.google.opensesame.servlets;
 
 import java.util.ArrayList;
-import java.util.unmodifiableList;
+import java.util.Collections;
+import java.util.List;
 
 public class MentorObject extends PersonObject {
   private ArrayList<String> projectIDs;

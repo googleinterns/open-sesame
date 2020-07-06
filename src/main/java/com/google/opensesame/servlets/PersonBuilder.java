@@ -6,7 +6,7 @@ public class PersonBuilder {
   private String name;
   private String gitHubID;
   private String description = "";
-  private ArrayList<String> interestTags = new ArrayList<String>;
+  private ArrayList<String> interestTags = new ArrayList<String>();
   
   public PersonBuilder() {}
 

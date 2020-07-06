@@ -24,8 +24,8 @@ public class MentorsServlet extends HttpServlet {
                  .name("Obi")
                  .gitHubID("Obinnabii")
                  .description("Obi is awesome.")
-                 .interestTags(ObiSkills);
-                 .projectIDs(projects);
+                 .interestTags(ObiSkills)
+                 .projectIDs(projects)
                  .buildMentor();
     mentors.add(Obi);
 
@@ -36,8 +36,8 @@ public class MentorsServlet extends HttpServlet {
                  .name("Sami")
                  .gitHubID("Sami-2000")
                  .description("Sami is fun.")
-                 .interestTags(SamiSkills);
-                 .projectIDs(projects);
+                 .interestTags(SamiSkills)
+                 .projectIDs(projects)
                  .buildMentor();
     mentors.add(Sami);
 
@@ -47,9 +47,9 @@ public class MentorsServlet extends HttpServlet {
     MentorObject Richi = new MentorBuilder()
                  .name("Richi")
                  .gitHubID("Richie78321")
-                 .description("Richi is cool.
-                 .interestTags(RichiSkills);
-                 .projectIDs(projects);
+                 .description("Richi is cool.")
+                 .interestTags(RichiSkills)
+                 .projectIDs(projects)
                  .buildMentor();
     mentors.add(Richi);
 
