@@ -1,13 +1,18 @@
 package com.google.opensesame.servlets;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.unmodifiableList;
 
 public class MentorObject extends PersonObject {
   private ArrayList<String> projectIDs;
 
-  public MentorObject(String name, String gitHubID, String description, ArrayList<String> interestTags, ArrayList<String> projectIDs) {
+  public MentorObject(
+      String name,
+      String gitHubID,
+      String description,
+      ArrayList<String> interestTags,
+      ArrayList<String> projectIDs) {
     super(name, gitHubID, description, interestTags);
     this.projectIDs = projectIDs;
   }
