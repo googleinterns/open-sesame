@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
-
-  // Dummy list of people @TODO deprecate this
+  
+  //Dummy list of people @TODO deprecate this
   private List<PersonObject> people;
 
-  @Override
-  // Instantiate the dummy list of people
-  public void init() {
+  @Override 
+  //Instantiate the dummy list of people
+  public void init(){
     people = new ArrayList<PersonObject>();
     ArrayList<String> projects = new ArrayList<String>();
     projects.add("OpenSesame");
@@ -63,9 +63,25 @@ public class UserServlet extends HttpServlet {
   }
 
   @Override
-  // get a specific user. return null if not found.
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userString = request.getParameter("user");
+  //get a specific user. return null if not found.
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
+    String userString = request.getParameter("githubID");
+
+    PersonObject result =
+        people.stream()
+            .filter(person -> userString.equals(person.getGitHubID()))
+            .findAny()
+            .orElse(null);
+
+    String jsonPerson = new Gson().toJson(result);
+    response.setContentType("application/json;");
+    response.getWriter().println(jsonPerson);
+  }
+
+  @Override
+  //get a specific user. return null if not found.
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {    
+    String userString = request.getParameter("gitHubID");
 
     PersonObject result =
         people.stream()
