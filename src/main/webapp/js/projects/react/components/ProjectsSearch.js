@@ -7,12 +7,12 @@ import standardizeFetchErrors from '../../../fetch_handler.js';
 
 /**
  * The main project search page react component.
- * @extends React.Component 
+ * @extends React.Component
  */
 export default class ProjectsSearch extends React.Component {
   /**
    * Create the projects search page react component.
-   * @param {{}} props 
+   * @param {{}} props
    */
   constructor(props) {
     super(props);
@@ -47,6 +47,7 @@ export default class ProjectsSearch extends React.Component {
   /**
    * Renders the list of project previews or a loading notification if the data
    * is still being loaded.
+   * @return {React.Component}
    */
   render() {
     if (this.state.isFetching) {
