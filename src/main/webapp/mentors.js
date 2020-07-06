@@ -5,12 +5,14 @@ function getMentors() {
   console.log('entering get mentors function/n');
   let url = new URL('/mentors', location.protocol + '//' + location.hostname);
 
-  fetch(url).then(errorHandling).then(response => response.json()).then(mentors => {
+  fetch(url).then(errorHandling).then((response) => response.json())
+      .then((mentors) => {
     console.log(mentors);
     const mentorsContainer = document.getElementById('mentors-container');
     mentorsContainer.innerHTML = '';
     for (const mentor of mentors) {
-      mentorsContainer.appendChild(createMentorElement(mentor.name, mentor.description));
+      mentorsContainer
+          .appendChild(createMentorElement(mentor.name, mentor.description));
     }
   })
   .catch((error) => {
@@ -18,6 +20,9 @@ function getMentors() {
   });
 }
 
+/**
+ * Basic error handling checks if fetch results are 'ok.'
+ */
 function errorHandling(response) {
   if (!response.ok) {
     throw Error(response.statusText);
