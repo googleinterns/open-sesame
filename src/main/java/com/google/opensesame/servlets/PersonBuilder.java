@@ -8,7 +8,7 @@ public class PersonBuilder {
   private String description = "";
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> projectIDs = new ArrayList<String>();
-  
+
   public PersonBuilder() {}
 
   public PersonObject buildPerson() {

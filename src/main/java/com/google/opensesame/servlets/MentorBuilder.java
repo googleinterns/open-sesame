@@ -9,7 +9,6 @@ public class MentorBuilder {
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> projectIDs = new ArrayList<String>();
 
-  
   public MentorBuilder() {}
 
   public MentorObject buildMentor() {
