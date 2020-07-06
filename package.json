@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --testPathIgnorePatterns=target/",
     "dev-server": "npm run jsx-preprocessor && mvn package appengine:run || true",
-    "jsx-preprocessor": "npm run jsx-projects && npm run jsx-common && npm run jsx-dashboard",
+    "jsx-preprocessor": "npm run jsx-projects && npm run jsx-common",
     "jsx-projects": "npx babel src/main/webapp/js/projects/react/ --minified --ignore jsx-processed/ --out-dir src/main/webapp/js/projects/react/jsx-processed --presets react-app/prod",
     "jsx-dashboard": "npx babel src/main/webapp/js/dashboard/react/ --minified --ignore jsx-processed/,*.test.js --out-dir src/main/webapp/js/dashboard/react/jsx-processed --presets react-app/prod",
     "jsx-dashboard-live": "npx babel --watch src/main/webapp/js/dashboard/react/ --minified --ignore jsx-processed/,*.test.js --out-dir src/main/webapp/js/dashboard/react/jsx-processed --presets react-app/prod",
