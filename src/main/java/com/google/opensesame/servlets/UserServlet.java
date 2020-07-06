@@ -3,6 +3,7 @@ package com.google.opensesame.servlets;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ public class UserServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
     String userString = request.getParameter("user");
-    ArrayList<PersonObject> people = new ArrayList<PersonObject>();
+    List<PersonObject> people = new ArrayList<PersonObject>();
     ArrayList<String> projects = new ArrayList<String>();
     projects.add("OpenSesame");
 
@@ -28,37 +29,43 @@ public class UserServlet extends HttpServlet {
             .description("Obi is awesome.")
             .interestTags(ObiSkills)
             .projectIDs(projects)
-            .buildMentor();
-    mentors.add(Obi);
+            .buildPerson();
+    people.add(Obi);
 
     ArrayList<String> SamiSkills = new ArrayList<String>();
     SamiSkills.add("Stone carver");
     SamiSkills.add("Bootstrap convert");
-    MentorObject Sami =
-        new MentorBuilder()
+    PersonObject Sami =
+        new PersonBuilder()
             .name("Sami")
             .gitHubID("Sami-2000")
             .description("Sami is fun.")
             .interestTags(SamiSkills)
             .projectIDs(projects)
-            .buildMentor();
-    mentors.add(Sami);
+            .buildPerson();
+    people.add(Sami);
 
     ArrayList<String> RichiSkills = new ArrayList<String>();
     RichiSkills.add("Minecraft boss");
     RichiSkills.add("React wizard");
-    MentorObject Richi =
-        new MentorBuilder()
+    PersonObject Richi =
+        new PersonBuilder()
             .name("Richi")
             .gitHubID("Richie78321")
             .description("Richi is cool.")
             .interestTags(RichiSkills)
             .projectIDs(projects)
-            .buildMentor();
-    mentors.add(Richi);
+            .buildPerson();
+    people.add(Richi);
 
-    String jsonMentors = new Gson().toJson(mentors);
+    PersonObject result = people.stream()
+      .filter( person -> userString.equals(person.getName()))
+      .findAny()
+      .orElse(null);
+
+    
+    String jsonPerson = new Gson().toJson(result);
     response.setContentType("application/json;");
-    response.getWriter().println(jsonMentors);
+    response.getWriter().println(jsonPerson);
   }
 }
