@@ -20,6 +20,10 @@ function initNavbar() {
       href: '/projects.html',
       name: 'Projects',
     },
+    {
+      href: '/mentors.html',
+      name: 'Mentors',
+    }
   ];
 
   const navbarContainer = document.getElementById('navbar-container');
