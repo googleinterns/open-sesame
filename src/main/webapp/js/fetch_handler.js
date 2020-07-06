@@ -1,8 +1,11 @@
 /**
- * @fileoverview Formats the error returned from a fetch to the Open Sesame API.
+ * @fileoverview Formats the errors from a fetch made to the Open Sesame API.
  * There are three different types of errors that are formatted here: a network
  * error from the Fetch API, a server error from the Open Sesame API, and a
  * defined API error from the Open Sesame API.
+ *
+ * All error responses from the Open Sesame API should contain a JSON body
+ * formatted to match the ErrorResponse object here. {@link ErrorResponse}.
  */
 /**
  * @typedef ErrorResponse
@@ -11,7 +14,7 @@
  * @property {string} userMessage
  */
 /**
- * Standardizes the errors of a fetch request to the Open Sesame backend
+ * Standardizes the errors of a fetch request made to the Open Sesame backend
  * for easier error handling.
  * {@link ErrorResponse}
  * @param {Promise} fetchRequest A fetch request to the Open Sesame backend.
@@ -25,8 +28,8 @@
 export default function standardizeFetchErrors(
     fetchRequest, fetchFailedUserMessage, genericServerErrorUserMessage) {
   return fetchRequest.catch((fetchError) => {
-    // Fetch encountered an error while making the request (most likely a
-    // network error).
+    // Fetch encountered an error while making the request (a network
+    // error).
     /** @type {ErrorResponse} */
     const errorResponse = {
       error: fetchError,
