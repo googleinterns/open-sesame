@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserServlet extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userString = request.getParameter("user");
     List<PersonObject> people = new ArrayList<PersonObject>();
     ArrayList<String> projects = new ArrayList<String>();
@@ -58,12 +58,12 @@ public class UserServlet extends HttpServlet {
             .buildPerson();
     people.add(Richi);
 
-    PersonObject result = people.stream()
-      .filter( person -> userString.equals(person.getName()))
-      .findAny()
-      .orElse(null);
+    PersonObject result =
+        people.stream()
+            .filter(person -> userString.equals(person.getName()))
+            .findAny()
+            .orElse(null);
 
-    
     String jsonPerson = new Gson().toJson(result);
     response.setContentType("application/json;");
     response.getWriter().println(jsonPerson);
