@@ -67,12 +67,12 @@ public class UserServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
     String userString = request.getParameter("user");
 
-    PersonObject result = people.stream()
-      .filter( person -> userString.equals(person.getName()))
-      .findAny()
-      .orElse(null);
+    PersonObject result =
+        people.stream()
+            .filter(person -> userString.equals(person.getName()))
+            .findAny()
+            .orElse(null);
 
-    
     String jsonPerson = new Gson().toJson(result);
     response.setContentType("application/json;");
     response.getWriter().println(jsonPerson);
