@@ -1,5 +1,6 @@
 /**
  * Get mentors from the mentor servlet.
+ * @param {String} response
  */
 function getMentors() {
   console.log('entering get mentors function/n');
@@ -14,8 +15,8 @@ function getMentors() {
         const propVal = mentor[propName];
         console.log(propName, propVal);
       }
-      mentorsContainer
-          .appendChild(createMentorElement(mentor.name, mentor.description, mentor.gitHubID, mentor.interestTags, mentor.projectIDs));
+      mentorsContainer.appendChild(createMentorElement(mentor.name, 
+          mentor.description, mentor.gitHubID, mentor.interestTags, mentor.projectIDs));
     }
   })
   .catch((error) => {
@@ -37,9 +38,13 @@ function errorHandling(response) {
  * Creates a mentor container element from input text.
  * @param {String} name
  * @param {String} description
+ * @param {String} gitHubID
+ * @param {String[]} interestTags
+ * @param {String[]} projectIDs
  * @return {HTMLElement} mentorContainer
  */
-function createMentorElement(name, description, gitHubID, interestTags, projectIDs) {
+function createMentorElement(name, description, gitHubID, 
+    interestTags, projectIDs) {
   const mentorContainer = document.createElement('div');
   mentorContainer.className = 'p-1 col-lg-4';
 
