@@ -5,11 +5,13 @@ const config = {
 };
 
 /**
- * Initialize firebase if firebase is not already initialized. This method can 
+ * Initialize firebase if firebase is not already initialized. This method can
  * be called as many times as we need without any side effects.
  */
 function initializeFirebase() {
-  if (firebase.apps.length === 0) { firebase.initializeApp(config); }
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(config);
+  }
 }
 
 /**
@@ -19,7 +21,7 @@ function toggleSignIn() {
   if (!firebase.auth().currentUser) {
     let provider = new firebase.auth.GithubAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function(result) {
-      // This gives you a GitHub Access Token. 
+      // This gives you a GitHub Access Token.
       // You can use it to access the GitHub API.
       const token = result.credential.accessToken;
       // The signed-in user info.
@@ -36,4 +38,7 @@ function toggleSignIn() {
   }
 }
 
-export { initializeFirebase, toggleSignIn }
+export {
+  initializeFirebase,
+  toggleSignIn,
+};
