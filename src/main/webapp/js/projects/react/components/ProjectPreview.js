@@ -8,7 +8,6 @@ import {projectPreviewType} from '../prop_types.js';
  */
 export default function ProjectPreview(props) {
   const projectPreview = props.projectPreview;
-
   const projectTags = projectPreview.topicTags;
   // Adds the primary language to the list of project tags. Should add
   // different types of tags in the future to make it easier to differentiate
