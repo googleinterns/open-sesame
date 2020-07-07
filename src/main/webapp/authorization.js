@@ -5,7 +5,7 @@
 const LOGIN_BTN = 'login-btn';
 
 // GCP Generated Github 'OAuth' configuration
-let config = {
+const config = {
   apiKey: 'AIzaSyAR88Giah8cCEAvT_zDSIREWvgIIAeS8yY',
   authDomain: 'step2020-279820.firebaseapp.com',
 };
