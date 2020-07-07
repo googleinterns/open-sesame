@@ -52,9 +52,13 @@ public class AuthServlet extends HttpServlet {
     if (userService.isUserLoggedIn()) {
       responseObject.addProperty("authorized", true);
 
-      UserData userData = new UserData(userService.getCurrentUser());
+      // User is logged in; add user data to the response 
+      JsonObject userData = new JsonObject();
+      User currentUser = userService.getCurrentUser();
+      userData.addProperty("email", currentUser.getEmail());
+      userData.addProperty("id", currentUser.getUserId());
 
-      responseObject.add("user", gson.toJsonTree(userData));
+      responseObject.add("user", userData);
     } else {
       responseObject.addProperty("authorized", false);
     }
@@ -64,26 +68,5 @@ public class AuthServlet extends HttpServlet {
     response.setStatus(HttpServletResponse.SC_OK);
     response.setContentType("application/json;");
     response.getWriter().println(responseJson);
-  }
-  
-  private class UserData {
-    private final String email;
-    private final String id;
-
-    /**
-     * Creates a user data object intended for JSON serialization.
-     */
-    public UserData(User user) {
-      this.email = user.getEmail();
-      this.id = user.getUserId();
-    }
-
-    public String getEmail() {
-      return this.email;
-    }
-
-    public String getId() {
-      return this.id;
-    }
   }
 }
