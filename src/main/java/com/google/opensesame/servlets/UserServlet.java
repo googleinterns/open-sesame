@@ -19,8 +19,8 @@ public class UserServlet extends HttpServlet {
   // Instantiate the dummy list of people
   public void init() {
     people = new ArrayList<PersonObject>();
-    ArrayList<String> projects = new ArrayList<String>();
-    projects.add("OpenSesame");
+    ArrayList<String> projectIDs = new ArrayList<String>();
+    projectIDs.add("OpenSesame");
 
     ArrayList<String> ObiSkills = new ArrayList<String>();
     ObiSkills.add("Meme god");
@@ -31,7 +31,7 @@ public class UserServlet extends HttpServlet {
             .gitHubID("Obinnabii")
             .description("Obi is awesome.")
             .interestTags(ObiSkills)
-            .projectIDs(projects)
+            .projectIDs(projectIDs)
             .buildPerson();
     people.add(Obi);
 
@@ -44,7 +44,7 @@ public class UserServlet extends HttpServlet {
             .gitHubID("Sami-2000")
             .description("Sami is fun.")
             .interestTags(SamiSkills)
-            .projectIDs(projects)
+            .projectIDs(projectIDs)
             .buildPerson();
     people.add(Sami);
 
@@ -57,7 +57,7 @@ public class UserServlet extends HttpServlet {
             .gitHubID("Richie78321")
             .description("Richi is cool.")
             .interestTags(RichiSkills)
-            .projectIDs(projects)
+            .projectIDs(projectIDs)
             .buildPerson();
     people.add(Richi);
   }
@@ -69,7 +69,7 @@ public class UserServlet extends HttpServlet {
 
     PersonObject result =
         people.stream()
-            .filter(person -> userString.equals(person.getName()))
+            .filter(person -> userString.equals(person.getGitHubID()))
             .findAny()
             .orElse(null);
 
