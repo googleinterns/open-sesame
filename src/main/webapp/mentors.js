@@ -1,12 +1,7 @@
-// TODO Remove this block when the function is actually called.
-if (false) {
-  getMentors();
-}
-
 /**
  * Get mentors from the mentor servlet.
  */
-function getMentors() {
+function getMentors() { // eslint-disable-line no-unused-vars
   console.log('entering get mentors function/n');
   let url = new URL(
       '/mentors', window.location.protocol + '//' + window.location.hostname);
