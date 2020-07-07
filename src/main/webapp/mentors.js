@@ -1,7 +1,11 @@
+// TODO Remove this block when the function is actually called.
+if (false) {
+  getMentors();
+}
+
 /**
  * Get mentors from the mentor servlet.
  */
-/*
 function getMentors() {
   console.log('entering get mentors function/n');
   let url = new URL(
@@ -64,4 +68,3 @@ function createMentorElement(name, description) {
 
   return mentorContainer;
 }
-*/
