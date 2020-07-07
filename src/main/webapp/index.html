@@ -7,7 +7,7 @@
 <div id="navbar-container"></div>
 <h1 class="display-1 mb-5 mt-5">The Open Source Community is for <span class="emphasis">Everyone</span></h1>
 <spacer class="space"></spacer>
-<button class="btn mt-5 text-center"><span class="display-4">Mentorship Awaits</span></button>
+<button id="login-btn" class="btn mt-5 text-center"><span class="display-4">Mentorship Awaits</span></button>
 
 <!-- Load React. -->
 <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
@@ -15,3 +15,7 @@
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 <!-- Load React components -->
 <script type="module" src="./js/common/react/jsx-processed/Navbar.js"></script>
+
+<!-- Github OAuth -->
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
+<script src="authorization.js"></script>
