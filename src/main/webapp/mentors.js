@@ -3,7 +3,7 @@
  */
 function getMentors() {
   console.log('entering get mentors function/n');
-  let url = new URL('/mentors', location.protocol + '//' + location.hostname);
+  let url = new URL('/mentors', window.location.protocol + '//' + window.location.hostname);
 
   fetch(url).then(errorHandling).then((response) => response.json())
       .then((mentors) => {
