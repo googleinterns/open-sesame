@@ -17,6 +17,8 @@ function getUser(user) {
 
 /**
  * Basic error handling checks if fetch results are 'ok.'
+ * @param {Response} response the HTTP response
+ * @return an 'ok' HTTP response
  */
 function errorHandling(response) {
   if (!response.ok) {
