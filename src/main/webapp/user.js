@@ -1,6 +1,6 @@
 /**
  * Get the user @param user from the user servlet.
- * @param {String} user
+ * @param {string} user
  * @return a user object
  */
 function getUser(user) {
