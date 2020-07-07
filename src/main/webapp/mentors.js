@@ -4,7 +4,8 @@
 /*
 function getMentors() {
   console.log('entering get mentors function/n');
-  let url = new URL('/mentors', window.location.protocol + '//' + window.location.hostname);
+  let url = new URL(
+      '/mentors', window.location.protocol + '//' + window.location.hostname);
 
   fetch(url).then(errorHandling).then((response) => response.json())
       .then((mentors) => {
@@ -20,7 +21,6 @@ function getMentors() {
     console.log(error);
   });
 }
-*/
 
 /**
  * Basic error handling checks if fetch results are 'ok.'
@@ -64,3 +64,4 @@ function createMentorElement(name, description) {
 
   return mentorContainer;
 }
+*/

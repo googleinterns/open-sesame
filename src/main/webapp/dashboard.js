@@ -85,7 +85,8 @@ const dummyProject = {
 const aboutMeCardDiv = document.getElementById('about-me-card-body');
 const userBioElement = document.getElementById('user-bio');
 const userImageElement = document.getElementById('user-image');
-const userNameAndLocationElement = document.getElementById('user-name-location');
+const userNameAndLocationElement =
+    document.getElementById('user-name-location');
 const userTagRow = document.getElementById('user-tag-row');
 const userGithubButton = document.getElementById('user-github');
 const affiliationsDiv = document.getElementById('affiliations');
