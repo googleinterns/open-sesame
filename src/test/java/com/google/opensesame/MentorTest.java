@@ -1,13 +1,15 @@
 package com.google.opensesame.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class PersonTests {
+public class MentorTest {
   private static final String MENTOR_NAME = "Mentor";
   private static final String MENTOR_GITHUB_ID = "Mentor_GitHub_ID";
   private static final String PROJECT_ID = "Project_ID";
@@ -20,7 +22,7 @@ public class PersonTests {
         .buildMentor();
     mentor.addProject(PROJECT_ID);
     
-    List<String> expected = new List<String>;
+    List<String> expected = new ArrayList<String>();
     expected.add(PROJECT_ID);
 
     List<String> actual = mentor.getProjectIDs();
