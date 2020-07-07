@@ -15,10 +15,10 @@ firebase.initializeApp(config);
  * Function called when clicking the Login/Logout button.
  */
 function toggleSignIn() {
-  //not logged in
+  // if not logged in
   if (!firebase.auth().currentUser) {
     let provider = new firebase.auth.GithubAuthProvider();
-    //sign in
+    // sign in
     firebase.auth().signInWithPopup(provider).then(function(result) {
       // This gives you a GitHub Access Token. You can use it to access the GitHub API.
       let token = result.credential.accessToken;
@@ -29,7 +29,7 @@ function toggleSignIn() {
       console.error(error);
     });
   }
-  //logged in 
+  // if logged in 
   else {
     // sign out
     firebase.auth().signOut();
