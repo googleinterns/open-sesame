@@ -1,9 +1,10 @@
 /**
  * Get mentors from the mentor servlet.
  */
+/*
 function getMentors() {
   console.log('entering get mentors function/n');
-  let url = new URL('/mentors', location.protocol + '//' + location.hostname);
+  let url = new URL('/mentors', window.location.protocol + '//' + window.location.hostname);
 
   fetch(url).then(errorHandling).then((response) => response.json())
       .then((mentors) => {
@@ -19,9 +20,12 @@ function getMentors() {
     console.log(error);
   });
 }
+*/
 
 /**
  * Basic error handling checks if fetch results are 'ok.'
+ * @param {Response} response - A fetch response.
+ * @return {Response} the response.
  */
 function errorHandling(response) {
   if (!response.ok) {

@@ -23,7 +23,7 @@ function initNavbar() {
     {
       href: '/mentors.html',
       name: 'Mentors',
-    }
+    },
   ];
 
   const navbarContainer = document.getElementById('navbar-container');
