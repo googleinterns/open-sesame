@@ -22,9 +22,9 @@ function toggleSignIn() {
     firebase.auth().signInWithPopup(provider).then(function(result) {
       // This gives you a GitHub Access Token. 
       // You can use it to access the GitHub API.
-      let token = result.credential.accessToken;
+      const token = result.credential.accessToken;
       // The signed-in user info.
-      let user = result.user;
+      const user = result.user;
     }).catch(function(error) {
       // Handle Errors here.
       console.error(error);
