@@ -18,7 +18,6 @@ function toggleSignIn() {
   // if not logged in
   if (!firebase.auth().currentUser) {
     let provider = new firebase.auth.GithubAuthProvider();
-    // sign in
     firebase.auth().signInWithPopup(provider).then(function(result) {
       // This gives you a GitHub Access Token. 
       // You can use it to access the GitHub API.
