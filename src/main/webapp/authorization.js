@@ -29,10 +29,8 @@ function toggleSignIn() {
       // Handle Errors here.
       console.error(error);
     });
-  }
-  // if logged in 
-  else {
-    // sign out
+  } else {
+    // if logged in, sign out
     firebase.auth().signOut();
   }
 }
