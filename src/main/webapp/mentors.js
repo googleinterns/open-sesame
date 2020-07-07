@@ -64,4 +64,3 @@ function createMentorElement(name, description) {
 
   return mentorContainer;
 }
-*/
