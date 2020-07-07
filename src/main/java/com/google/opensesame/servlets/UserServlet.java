@@ -93,4 +93,20 @@ public class UserServlet extends HttpServlet {
     response.setContentType("application/json;");
     response.getWriter().println(jsonPerson);
   }
+
+  @Override
+  // get a specific user. return null if not found.
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String userString = request.getParameter("gitHubID");
+
+    PersonObject result =
+        people.stream()
+            .filter(person -> userString.equals(person.getGitHubID()))
+            .findAny()
+            .orElse(null);
+
+    String jsonPerson = new Gson().toJson(result);
+    response.setContentType("application/json;");
+    response.getWriter().println(jsonPerson);
+  }
 }
