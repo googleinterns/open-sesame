@@ -21,7 +21,7 @@ public class MentorsServlet extends HttpServlet {
     ObiSkills.add("Meme god");
     ObiSkills.add("HTML wrangler");
     MentorObject Obi =
-        new MentorBuilder()
+        new PersonBuilder()
             .name("Obi")
             .gitHubID("Obinnabii")
             .description("Obi is awesome.")
@@ -34,7 +34,7 @@ public class MentorsServlet extends HttpServlet {
     SamiSkills.add("Stone carver");
     SamiSkills.add("Bootstrap convert");
     MentorObject Sami =
-        new MentorBuilder()
+        new PersonBuilder()
             .name("Sami")
             .gitHubID("Sami-2000")
             .description("Sami is fun.")
@@ -47,7 +47,7 @@ public class MentorsServlet extends HttpServlet {
     RichiSkills.add("Minecraft boss");
     RichiSkills.add("React wizard");
     MentorObject Richi =
-        new MentorBuilder()
+        new PersonBuilder()
             .name("Richi")
             .gitHubID("Richie78321")
             .description("Richi is cool.")
