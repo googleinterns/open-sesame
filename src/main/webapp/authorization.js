@@ -28,6 +28,8 @@ function toggleSignIn() {
     }).catch(function(error) {
       // Handle Errors here.
       console.error(error);
+      // Change this in future iterations
+      alert(error.message);
     });
   } else {
     // if logged in, sign out
