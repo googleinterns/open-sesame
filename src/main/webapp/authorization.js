@@ -1,15 +1,16 @@
-/**
- * The ID of the login button
- * @type {String}
- */
-const LOGIN_BTN = 'login-btn';
-
 // GCP Generated Github 'OAuth' configuration
 const config = {
   apiKey: 'AIzaSyAR88Giah8cCEAvT_zDSIREWvgIIAeS8yY',
   authDomain: 'step2020-279820.firebaseapp.com',
 };
-firebase.initializeApp(config);
+
+/**
+ * Initialize firebase if firebase is not already initialized. This method can 
+ * be called as many times as we need without any side effects.
+ */
+function initializeFirebase() {
+  if (firebase.apps.length === 0) { firebase.initializeApp(config); }
+}
 
 /**
  * Function called when clicking the Login/Logout button.
@@ -34,5 +35,4 @@ function toggleSignIn() {
   }
 }
 
-document.getElementById('login-btn')
-  .addEventListener('click', toggleSignIn, false);
+export { initializeFirebase, toggleSignIn }
