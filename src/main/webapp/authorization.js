@@ -16,7 +16,6 @@ function initializeFirebase() {
  * Function called when clicking the Login/Logout button.
  */
 function toggleSignIn() {
-  // if not logged in
   if (!firebase.auth().currentUser) {
     let provider = new firebase.auth.GithubAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function(result) {
