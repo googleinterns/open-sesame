@@ -1,4 +1,4 @@
-// GCP Generated Github 'OAuth' configuration
+// GCP Generated Github OAuth configuration
 const config = {
   apiKey: 'AIzaSyAR88Giah8cCEAvT_zDSIREWvgIIAeS8yY',
   authDomain: 'step2020-279820.firebaseapp.com',
