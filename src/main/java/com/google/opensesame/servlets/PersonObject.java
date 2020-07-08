@@ -3,6 +3,10 @@ package com.google.opensesame.servlets;
 import java.util.ArrayList;
 
 public class PersonObject {
+  public static String ENTITY_NAME = "User";
+  public static String GITHUB_ID_FIELD = "github-id";
+  public static String TAG_LIST_FIELD = "tags";
+  
   private String name;
   private String description;
   private ArrayList<String> interestTags;
