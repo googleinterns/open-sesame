@@ -9,8 +9,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate
-;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,9 +67,9 @@ public class UserServlet extends HttpServlet {
     sendData(new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPerson());
   }
 
-  public void sendData( PersonObject person ){
-    Entity personEntity = new Entity(PersonObject.ENTITY_NAME,person.getGitHubID());
-    personEntity.setProperty(PersonObject.GITHUB_ID_FIELD,person.getGitHubID());
+  public void sendData(PersonObject person) {
+    Entity personEntity = new Entity(PersonObject.ENTITY_NAME, person.getGitHubID());
+    personEntity.setProperty(PersonObject.GITHUB_ID_FIELD, person.getGitHubID());
     personEntity.setProperty(PersonObject.TAG_LIST_FIELD, person.getTags());
     datastore.put(personEntity);
   }
