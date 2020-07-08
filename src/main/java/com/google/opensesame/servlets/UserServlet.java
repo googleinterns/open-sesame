@@ -1,9 +1,18 @@
 package com.google.opensesame.servlets;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
@@ -11,18 +20,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.api.search.query.QueryParser.query_return;
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
@@ -40,7 +38,7 @@ public class UserServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGithub = request.getParameter("githubID");
     Key userKey = 
-    KeyFactory.createKey(PersonObject.ENTITY_NAME, userGithub)
+    KeyFactory.createKey(PersonObject.ENTITY_NAME, userGithub);
 
     PersonObject userObject;
 
@@ -73,9 +71,8 @@ public class UserServlet extends HttpServlet {
   }
 
   public void sendData( PersonObject person ){
-    Key key = 
-        KeyFactory.createKey(PersonObject.ENTITY_NAME, person.getGitHubID());
-    Entity personEntity = new Entity(PersonObject.ENTITY_NAME, key);
+    Entity personEntity = new Entity(PersonObject.ENTITY_NAME,person.getGitHubID());
+    System.out.println(personEntity);
     personEntity.setProperty(PersonObject.GITHUB_ID_FIELD,person.getGitHubID());
     personEntity.setProperty(PersonObject.TAG_LIST_FIELD, person.getTags());
     datastore.put(personEntity);
