@@ -10,18 +10,17 @@ import java.util.Map;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
-/**
- * The class used to interact with the project entities in data storage.
- */
+/** The class used to interact with the project entities in data storage. */
 public class ProjectEntity {
   public static final String REPOSITORY_ID_KEY = "repositoryId";
   public static final String NUM_MENTORS_KEY = "numMentors";
   public static final String NUM_INTERESTED_USERS_KEY = "numInterestedUsers";
   public static final String MENTOR_IDS_KEY = "mentorIds";
   public static final String INTERESTED_USER_IDS_KEY = "interestedUserIds";
-  
+
   /**
    * Creates a new ProjectEntity from a GitHub repository name.
+   *
    * @param repositoryName
    * @return Returns the new ProjectEntity or null if the repository name is invalid.
    * @throws IOException
@@ -40,8 +39,9 @@ public class ProjectEntity {
   }
 
   /**
-   * Creates a ProjectEntity from the properties of an existing entity in datastore.
-   * Assumes that that all of the required keys are populated in the properties. 
+   * Creates a ProjectEntity from the properties of an existing entity in datastore. Assumes that
+   * that all of the required keys are populated in the properties.
+   *
    * @param properties The properties of an existing datastore entity.
    * @return Returns the new ProjectEntity.
    */
@@ -49,10 +49,11 @@ public class ProjectEntity {
     // Warning is suppressed because it is a precondition that the properties are from a
     // project entity.
     @SuppressWarnings({"unchecked"})
-    ProjectEntity newEntity = new ProjectEntity(
-        (String)properties.get(REPOSITORY_ID_KEY),
-        (List<String>)properties.get(MENTOR_IDS_KEY),
-        (List<String>)properties.get(INTERESTED_USER_IDS_KEY));
+    ProjectEntity newEntity =
+        new ProjectEntity(
+            (String) properties.get(REPOSITORY_ID_KEY),
+            (List<String>) properties.get(MENTOR_IDS_KEY),
+            (List<String>) properties.get(INTERESTED_USER_IDS_KEY));
     return newEntity;
   }
 
@@ -62,15 +63,13 @@ public class ProjectEntity {
 
   /**
    * Creates a new ProjectEntity object.
-   * 
+   *
    * @param repositoryId
    * @param mentorIds
    * @param interestedUserIds
    */
   public ProjectEntity(
-      String repositoryId, 
-      List<String> mentorIds, 
-      List<String> interestedUserIds) {
+      String repositoryId, List<String> mentorIds, List<String> interestedUserIds) {
     this.repositoryId = repositoryId;
     this.mentorIds = mentorIds;
     this.interestedUserIds = interestedUserIds;
@@ -86,6 +85,7 @@ public class ProjectEntity {
 
   /**
    * Creates a map of properties from this ProjectEntity object.
+   *
    * @return Returns the map of properties.
    */
   public Map<String, Object> createProperties() {
@@ -103,12 +103,14 @@ public class ProjectEntity {
    * Adds the properties of this ProjectEntity object to a PropertyContainer, which will most likely
    * be a datastore entity, which is a child of PropertyContainer:
    * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Entity
+   *
    * @param propertyContainer The property container to add this ProjectEntity's properties to.
    */
   public void fillPropertyContainer(PropertyContainer propertyContainer) {
     Map<String, Object> projectEntityProperties = createProperties();
-    projectEntityProperties.forEach((String key, Object value) -> {
-      propertyContainer.setProperty(key, value);
-    });
+    projectEntityProperties.forEach(
+        (String key, Object value) -> {
+          propertyContainer.setProperty(key, value);
+        });
   }
 }

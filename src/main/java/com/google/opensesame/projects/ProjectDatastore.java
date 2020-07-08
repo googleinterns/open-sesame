@@ -14,6 +14,7 @@ public class ProjectDatastore {
   /**
    * Adds a project entity to the datastore, or overwrites a project entity if an entity with the
    * same repository ID exists.
+   *
    * @param projectEntity
    * @return Returns the key associated with the datastore entity;
    */
@@ -26,8 +27,9 @@ public class ProjectDatastore {
 
   /**
    * Gets a project entity by its repository ID.
+   *
    * @param repositoryId The repository ID to query for. The repository ID is the must precise way
-   *    to query for a project entity, as this is the ID associated with each datastore entity.
+   *     to query for a project entity, as this is the ID associated with each datastore entity.
    * @return Returns the ProjectEntity retrieved from datastore or null if there is none.
    */
   public static ProjectEntity getByRepositoryId(String repositoryId) {

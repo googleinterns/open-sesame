@@ -8,8 +8,8 @@ import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
 /**
- * A class containing basic project data for previewing a project. This is intended to be
- * serialized and sent to the client.
+ * A class containing basic project data for previewing a project. This is intended to be serialized
+ * and sent to the client.
  */
 public class ProjectPreviewData {
   /**
@@ -21,10 +21,11 @@ public class ProjectPreviewData {
    * @return Returns the created ProjectPreview.
    * @throws IOException Throws when there is an error communicating with the GitHub API.
    */
-  public static ProjectPreviewData fromProperties(Map<String, Object> properties) throws IOException {
+  public static ProjectPreviewData fromProperties(Map<String, Object> properties)
+      throws IOException {
     GitHub gitHub = GitHubGetter.getGitHub();
-    GHRepository repository = 
-        gitHub.getRepositoryById((String)properties.get(ProjectEntity.REPOSITORY_ID_KEY));
+    GHRepository repository =
+        gitHub.getRepositoryById((String) properties.get(ProjectEntity.REPOSITORY_ID_KEY));
 
     return fromPropertiesAndRepository(properties, repository);
   }
@@ -47,8 +48,8 @@ public class ProjectPreviewData {
         repository.getDescription(),
         repository.listTopics(),
         repository.getLanguage(),
-        (int)properties.get(ProjectEntity.NUM_MENTORS_KEY),
-        (String)properties.get(ProjectEntity.REPOSITORY_ID_KEY));
+        (int) properties.get(ProjectEntity.NUM_MENTORS_KEY),
+        (String) properties.get(ProjectEntity.REPOSITORY_ID_KEY));
   }
 
   private final String name;
