@@ -72,9 +72,21 @@ public class UserServlet extends HttpServlet {
             .filter(person -> userString.equals(person.getGitHubID()))
             .findAny()
             .orElse(null);
+    if (result == null){
+      sendRawTextError(response, HttpServletResponse.SC_BAD_REQUEST, 
+      "invalid user or user does not exist");
+    }
 
     String jsonPerson = new Gson().toJson(result);
     response.setContentType("application/json;");
     response.getWriter().println(jsonPerson);
+  }
+
+  /** Sends an error to the client as raw text instead of the default HTML page. */
+  private void sendRawTextError(HttpServletResponse response, int errorCode, String errorMsg)
+      throws IOException {
+    response.setStatus(errorCode);
+    response.setContentType("text/html;");
+    response.getWriter().println(errorMsg);
   }
 }
