@@ -108,7 +108,7 @@ public class ProjectEntity {
   public void fillPropertyContainer(PropertyContainer propertyContainer) {
     Map<String, Object> projectEntityProperties = createProperties();
     projectEntityProperties.forEach((String key, Object value) -> {
-      projectEntityProperties.put(key, value);
+      propertyContainer.setProperty(key, value);
     });
   }
 }
