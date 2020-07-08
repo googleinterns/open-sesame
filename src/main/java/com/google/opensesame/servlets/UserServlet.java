@@ -57,6 +57,11 @@ public class UserServlet extends HttpServlet {
   // get a specific user. return null if not found.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGitHubID = request.getParameter("gitHubID");
+    if (userGitHubID.isBlank()){
+      sendRawTextError(
+          response, HttpServletResponse.SC_BAD_REQUEST, "Invalid ID");
+      return;
+    }
     ArrayList<String> userTags =
         (ArrayList<String>) Arrays.asList(request.getParameterValues("tags"));
 
