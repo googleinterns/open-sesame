@@ -72,9 +72,9 @@ public class UserServlet extends HttpServlet {
             .filter(person -> userString.equals(person.getGitHubID()))
             .findAny()
             .orElse(null);
-    if (result == null){
-      sendRawTextError(response, HttpServletResponse.SC_BAD_REQUEST, 
-      "invalid user or user does not exist");
+    if (result == null) {
+      sendRawTextError(
+          response, HttpServletResponse.SC_BAD_REQUEST, "invalid user or user does not exist");
     }
 
     String jsonPerson = new Gson().toJson(result);
