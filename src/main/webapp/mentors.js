@@ -4,7 +4,7 @@
  */
 function getMentors() {
   console.log('entering get mentors function/n');
-  let url = new URL('/mentors', location.protocol + '//' + location.hostname);
+  let url = new URL('/mentors', window.location.protocol + '//' + window.location.hostname);
 
   fetch(url).then(errorHandling).then((response) => response.json())
       .then((mentors) => {
@@ -22,6 +22,8 @@ function getMentors() {
 
 /**
  * Basic error handling checks if fetch results are 'ok.'
+ * @param {Response} response
+ * @return {Response} response
  */
 function errorHandling(response) {
   if (!response.ok) {
@@ -30,7 +32,6 @@ function errorHandling(response) {
   return response;
 }
 
-//mentor.name,  mentor.description, mentor.gitHubID, mentor.interestTags, mentor.projectIDs
 /**
  * Creates a mentor container element from input text.
  * @param {Object} mentor
