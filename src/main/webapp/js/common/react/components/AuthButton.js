@@ -25,7 +25,7 @@ export default class AuthButton extends React.Component {
    * @override
    */
   componentDidMount() {
-     const fetchRequest = standardizeFetchErrors(fetch('/auth'),
+    const fetchRequest = standardizeFetchErrors(fetch('/auth'),
         'Failed to communicate with the server, please try again later.',
         'Encountered a server error, please try again later.');
 
