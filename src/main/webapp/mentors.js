@@ -11,12 +11,8 @@ function getMentors() {
     const mentorsContainer = document.getElementById('mentors-container');
     mentorsContainer.innerHTML = '';
     for (const mentor of mentors) {
-      for (const propName in mentor) {
-        const propVal = mentor[propName];
-        console.log(propName, propVal);
-      }
-      mentorsContainer.appendChild(createMentorElement(mentor.name, 
-          mentor.description, mentor.gitHubID, mentor.interestTags, mentor.projectIDs));
+      console.log(mentor);
+      mentorsContainer.appendChild(createMentorElement(mentor));
     }
   })
   .catch((error) => {
@@ -34,17 +30,13 @@ function errorHandling(response) {
   return response;
 }
 
+//mentor.name,  mentor.description, mentor.gitHubID, mentor.interestTags, mentor.projectIDs
 /**
  * Creates a mentor container element from input text.
- * @param {String} name
- * @param {String} description
- * @param {String} gitHubID
- * @param {String[]} interestTags
- * @param {String[]} projectIDs
+ * @param {Object} mentor
  * @return {HTMLElement} mentorContainer
  */
-function createMentorElement(name, description, gitHubID, 
-    interestTags, projectIDs) {
+function createMentorElement(mentor) {
   const mentorContainer = document.createElement('div');
   mentorContainer.className = 'p-1 col-lg-4';
 
@@ -56,18 +48,18 @@ function createMentorElement(name, description, gitHubID,
 
   const mentorName = document.createElement('h5');
   mentorName.className = 'card-title text-primary';
-  mentorName.innerHTML = name;
+  mentorName.innerHTML = mentor.name;
   mentorCardBody.appendChild(mentorName);
 
-  mentorCardBody.appendChild(createGitHubLink(gitHubID));
+  mentorCardBody.appendChild(createGitHubLink(mentor.gitHubID));
 
   const mentorDescription = document.createElement('p');
-  mentorDescription.innerHTML = description;
+  mentorDescription.innerHTML = mentor.description;
   mentorCardBody.appendChild(mentorDescription);
 
-  mentorCardBody.appendChild(createTagRow(interestTags));
+  mentorCardBody.appendChild(createTagRow(mentor.interestTags));
 
-  mentorCardBody.appendChild( createProjectsRow(projectIDs));
+  mentorCardBody.appendChild( createProjectsRow(mentor.projectIDs));
 
   mentorCard.appendChild(mentorCardBody);
   mentorContainer.appendChild(mentorCard);
@@ -81,8 +73,8 @@ function createMentorElement(name, description, gitHubID,
  * @return {HTMLElement} userGithubButton
  */
 function createGitHubLink(gitHubID) {
-  let gitSrc = 'https://github.com/';
-  const gitLink = gitSrc.concat(gitHubID);
+  let gitHubBaseUrl = 'https://github.com/';
+  const gitLink = gitHubBaseUrl.concat(gitHubID);
   let userGithubButton = document.createElement('a');
   userGithubButton.innerText = 'GitHub Profile';
   userGithubButton.className = 'btn btn-primary';
@@ -117,14 +109,14 @@ function createProjectsRow(projectIDs) {
   let projectsDiv = document.createElement('div');
   projectsDiv.className = 'row p-3';
   for (const projectID of projectIDs) {
-    let projElement = document.createElement('div');
-    projElement.className = 'card container card-holder col-12' +
+    let projectElement = document.createElement('div');
+    projectElement.className = 'card container card-holder col-12' +
         ' text-center project-card p-3 m-3';
     let cardTitleElement = document.createElement('h4');
     cardTitleElement.className = 'card-title dark-emph';
     cardTitleElement.innerText = projectID;
-    projElement.appendChild(cardTitleElement);
-    projectsDiv.append(projElement);
+    projectElement.appendChild(cardTitleElement);
+    projectsDiv.append(projectElement);
   }
   return projectsDiv;
 }
