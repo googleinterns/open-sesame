@@ -1,3 +1,5 @@
+importScripts("https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js")
+
 // GCP Generated Github OAuth configuration
 const config = {
   apiKey: 'AIzaSyAR88Giah8cCEAvT_zDSIREWvgIIAeS8yY',
@@ -9,15 +11,26 @@ const config = {
  * be called as many times as we need without any side effects.
  */
 function initializeFirebase() {
+  firebase = getFirebase();
   if (firebase.apps.length === 0) {
     firebase.initializeApp(config);
   }
 }
 
 /**
+ * Get firebase
+ * @return {Firebase}
+ */
+function getFirebase() {
+  return firebase; //eslint-disable-line
+}
+
+
+/**
  * Function called when clicking the Login/Logout button.
  */
 function toggleSignIn() {
+  firebase = getFirebase();
   if (!firebase.auth().currentUser) {
     let provider = new firebase.auth.GithubAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -41,4 +54,5 @@ function toggleSignIn() {
 export {
   initializeFirebase,
   toggleSignIn,
+  getFirebase,
 };
