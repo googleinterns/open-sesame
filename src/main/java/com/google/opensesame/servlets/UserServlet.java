@@ -81,24 +81,17 @@ public class UserServlet extends HttpServlet {
     datastore.put(personEntity);
   }
 
-  public ArrayList<PersonObject>  queryInDatabase( String userGithub ) {
-    ArrayList<PersonObject> users = new ArrayList<PersonObject>();
+  public PreparedQuery  queryInDatabase( Entity EntityName, 
+  String field, Object ThingToBeCompareTo, FilterOperator comparator ) {
 
-    Filter userFilterByGitHubID = 
-        new FilterPredicate(PersonObject.GITHUB_ID_FIELD, 
-            FilterOperator.EQUAL, 
-            userGithub);
+    Filter userFilter = 
+        new FilterPredicate(field, 
+            comparator, 
+            ThingToBeCompareTo);
     
-    Query queryByGitHubID = new Query(PersonObject.ENTITY_NAME)
-        .setFilter(userFilterByGitHubID);
-    PreparedQuery results = datastore.prepare(queryByGitHubID); 
-
-    for (Entity personEntity : results.asIterable()) {
-      PersonObject user = toPersonObject(personEntity);
-      users.add(user);
-    }
-
-    return users;
+    return datastore.prepare(
+      new Query(PersonObject.ENTITY_NAME)
+          .setFilter(userFilter)); 
   }
 
   public PersonObject toPersonObject (Entity personEntity) {
