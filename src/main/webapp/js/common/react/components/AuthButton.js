@@ -25,14 +25,7 @@ export default class AuthButton extends React.Component {
    * @override
    */
   componentDidMount() {
-    this.fetchAuthorizationStatus();
-  }
-
-  /**
-   * Fetches the authorization status of the user and updates the button.
-   */
-  fetchAuthorizationStatus() {
-    const fetchRequest = standardizeFetchErrors(fetch('/auth'),
+     const fetchRequest = standardizeFetchErrors(fetch('/auth'),
         'Failed to communicate with the server, please try again later.',
         'Encountered a server error, please try again later.');
 
