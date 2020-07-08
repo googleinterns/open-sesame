@@ -7,74 +7,81 @@
 <!-- Custom styles -->
 <link rel="stylesheet" href="style.css">
 
-<h1 class="display-4 mt-5">Sign Up for Open Sesame!</h1>
-<h4 class="emphasis mb-5">Looking to find a mentor within the open source community, or become a mentor to foster the next generation of open source contributors? Sign up here!</h4>
-<hr/>
-<form>
-  <div class="form-group">
-    <label for="exampleUsername" class="font-weight-bold">GitHub Username</label>
-    <input class="form-control" id="exampleUsername" aria-describedby="usernameHelp" placeholder="Enter GitHub Username">
-    <small id="usernameHelp" class="form-text text-muted">We will use your GitHub account to populate your name and bio, authenticate you, and message you when you match with a mentor/mentee.</small>
-  </div>
-  <div class="form-group">
-    <label for="interests" class="font-weight-bold">Interests</label>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="check1" value="python">
-      <label class="form-check-label" for="check1">
-          Python
-      </label>
+<div class="container">
+  <h1 class="display-4 mt-5">Sign Up for Open Sesame!</h1>
+  <h4 class="emphasis mb-5">Looking to find a mentor within the open source community, or become a mentor to foster the next generation of open source contributors? Sign up here!</h4>
+  <hr/>
+  <form>
+    <div class="form-group">
+      <button class="font-weight-bold">Link Your GitHub Account</button>
+      <small id="gitHubHelp" class="form-text text-muted">We will use your GitHub account to populate your name and bio, authenticate you, and message you when you match with a mentor/mentee.</small>
     </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="check2" value="c">
-      <label class="form-check-label" for="check2">
-          C/C++
-      </label>
+    <div class="form-group">
+      <label for="interests" class="font-weight-bold">Interests</label>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check1" value="python">
+        <label class="form-check-label" for="check1">
+            Python
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check2" value="c">
+        <label class="form-check-label" for="check2">
+            C/C++
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check3" value="java">
+        <label class="form-check-label" for="check3">
+            Java
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check4" value="javascript">
+        <label class="form-check-label" for="check4">
+            JavaScript
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check5" value="html">
+        <label class="form-check-label" for="check5">
+            html
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check6" value="machine-learning">
+        <label class="form-check-label" for="check6">
+            Machine Learning
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check7" value="mobile">
+        <label class="form-check-label" for="check7">
+            Mobile Apps
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check8" value="web-dev">
+        <label class="form-check-label" for="check8">
+            Web Development
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check9" value="ar-vr">
+        <label class="form-check-label" for="check9">
+            Augmented Reality / Virtual Reality
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="check9" value="documentation">
+        <label class="form-check-label" for="check9">
+            Documentation
+        </label>
+      </div>
     </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="check3" value="java">
-      <label class="form-check-label" for="check3">
-          Java
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="check4" value="javascript">
-      <label class="form-check-label" for="check4">
-          JavaScript
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="check5" value="html">
-      <label class="form-check-label" for="check5">
-          html
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="check6" value="machine-learning">
-      <label class="form-check-label" for="check6">
-          Machine Learning
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="check7" value="mobile">
-      <label class="form-check-label" for="check7">
-          Mobile Apps
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="check8" value="web-dev">
-      <label class="form-check-label" for="check8">
-          Web Development
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="check9" value="ar-vr">
-      <label class="form-check-label" for="check9">
-          Augmented Reality / Virtual Reality
-      </label>
-    </div>
-  </div>
-  <button class="btn">Submit</button>
-</form>
+    <button class="btn text-center">Submit</button>
+  </form>
+</div>
 
 <!-- Add Custom Scripts -->
 <script src="signup.js"></script>
