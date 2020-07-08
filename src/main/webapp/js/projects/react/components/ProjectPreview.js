@@ -8,14 +8,19 @@ import {projectPreviewType} from '../prop_types.js';
  */
 export default function ProjectPreview(props) {
   const projectPreview = props.projectPreview;
+  const projectTags = projectPreview.topicTags;
+  // Adds the primary language to the list of project tags. Should add
+  // different types of tags in the future to make it easier to differentiate
+  // topics from languages.
+  projectTags.unshift(projectPreview.primaryLanguage);
 
   return (
     <div className="p-1 col-lg-4">
       <div className="project-preview card h-100">
         <div className="card-body pb-0">
-          <h5 className="card-title text-primary">{projectPreview.title}</h5>
-          <ProjectTagList tags={projectPreview.tags} />
-          <p>{projectPreview.shortDescription}</p>
+          <h5 className="card-title text-primary">{projectPreview.name}</h5>
+          <ProjectTagList tags={projectTags} />
+          <p>{projectPreview.description}</p>
         </div>
         <div className=
             "px-3 pb-3 mt-auto d-flex flex-wrap justify-content-center">
