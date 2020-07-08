@@ -22,6 +22,7 @@ export default class AuthButton extends React.Component {
 
   /**
    * Loads user authorization data after React has initialized the component.
+   * @override
    */
   componentDidMount() {
     this.fetchAuthorizationStatus();
@@ -52,6 +53,7 @@ export default class AuthButton extends React.Component {
    * Renders the Login/Logout button. If the authorization data is still
    * loading, the button is disabled.
    * @return {React.Component}
+   * @override
    */
   render() { 
     let classList = 'btn btn-primary';
