@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Sign Up</title>
+<!-- Bootstrap CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<!-- Custom styles -->
+<link rel="stylesheet" href="style.css">
+
+<div class="container">
+  <h1 class="display-4 mt-5">Become a Mentor for Your Project!</h1>
+  <h4 class="emphasis mb-5">Enter the url of the GitHub repository for a project that you work on in order to become a mentor.</h4>
+  <hr/>
+  <form>
+    <div class="form-group">
+      <label for="inputRepo" class="text-weight-bold">Repository Url</label>
+      <input class="form-control" id="inputRepo" aria-describedby="repoHelp" placeholder="Enter repo url">
+      <small id="repoHelp" class="form-text text-muted">If this project is not already on OpenSesame, we will parse information about it from GitHub for our site.</small>
+    </div>
+    <button class="btn text-center">Submit</button>
+  </form>
+</div>
+
+<!-- Add Custom Scripts -->
+<script src="mentors.js"></script>
