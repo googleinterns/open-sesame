@@ -13,7 +13,7 @@ public class PersonObject {
   private String gitHubID;
 
   public PersonObject(
-      String name, String gitHubID, String description, ArrayList<String> interstTags) {
+      String name, String gitHubID, String description, ArrayList<String> interestTags) {
     this.name = name;
     this.gitHubID = gitHubID;
     this.description = description;
