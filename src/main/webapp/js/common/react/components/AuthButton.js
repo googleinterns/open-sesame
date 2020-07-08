@@ -10,7 +10,7 @@ checkTesting();
 export default class AuthButton extends React.Component {
   /**
    * Create the AuthButton react component.
-   * @param {{}} props 
+   * @param {{}} props
    */
   constructor(props) {
     super(props);
@@ -55,7 +55,7 @@ export default class AuthButton extends React.Component {
    * @return {React.Component}
    * @override
    */
-  render() { 
+  render() {
     let classList = 'btn btn-primary';
     if (this.state.isFetching) {
       // The button is disabled while the authorization data is being loaded.
