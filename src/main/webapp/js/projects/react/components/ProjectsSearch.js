@@ -24,6 +24,7 @@ export default class ProjectsSearch extends React.Component {
 
   /**
    * Loads the project preview data after React has initialized the component.
+   * @override
    */
   componentDidMount() {
     const fetchRequest = standardizeFetchErrors(
@@ -48,6 +49,7 @@ export default class ProjectsSearch extends React.Component {
    * Renders the list of project previews or a loading notification if the data
    * is still being loaded.
    * @return {React.Component}
+   * @override
    */
   render() {
     if (this.state.isFetching) {
