@@ -71,7 +71,7 @@ public class UserServlet extends HttpServlet {
    *
    * @param person a person object
    */
-  public void sendData(PersonObject person) {
+  public void storePersonObject(PersonObject person) {
     Entity personEntity = new Entity(PersonObject.ENTITY_NAME, person.getGitHubID());
     personEntity.setProperty(PersonObject.GITHUB_ID_FIELD, person.getGitHubID());
     personEntity.setProperty(PersonObject.TAG_LIST_FIELD, person.getTags());
