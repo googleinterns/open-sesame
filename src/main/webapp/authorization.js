@@ -97,15 +97,6 @@ class GithubAuthorizer {
       this.token = null;
     }
   }
-
-  /**
-   * Returns the current user if signed in and null if not. For all intents and
-   * purposes, this function will serve as a true/false value in an if
-   * statement.
-   */
-  isAuthorized() {
-    return this.firebase.auth().currentUser;
-  }
 }
 
 export default new GithubAuthorizer();
