@@ -1,6 +1,5 @@
 import checkTesting from '../../../checkTesting.js';
 import NavbarLink from './NavbarLink.js';
-import AuthButton from './AuthButton.js';
 checkTesting();
 
 /**
