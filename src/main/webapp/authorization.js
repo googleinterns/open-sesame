@@ -1,5 +1,5 @@
 // GCP Generated Github OAuth configuration
-const config = {
+const firebaseConfig = {
   apiKey: 'AIzaSyAR88Giah8cCEAvT_zDSIREWvgIIAeS8yY',
   authDomain: 'step2020-279820.firebaseapp.com',
 };
@@ -8,12 +8,14 @@ const config = {
  * Object used for Github authorization and as a wrapper for firebase.
  * It handles Firebase initialization on instantiation and holds nifty
  * functions for handling github authorization
+ * 
+ * make sure to include this script when using
  */
 class GithubAuthorizer {
   constructor() {
     initializeFirebase();
     this.token = "";
-    this.firebase = firebase;
+    this.firebase = firebase; // eslint-disable-line
   }
 
   /**
@@ -33,7 +35,7 @@ class GithubAuthorizer {
    * statement.
    */
   get user() {
-    firebase.auth().currentUser;;
+    this.firebase.auth().currentUser;;
   }
 
   /**
@@ -42,7 +44,7 @@ class GithubAuthorizer {
    */
   initializeFirebase() {
     if (firebase.apps.length === 0) { // eslint-disable-line
-      firebase.initializeApp(config); // eslint-disable-line
+      firebase.initializeApp(firebaseConfig); // eslint-disable-line
     }
   }
 
@@ -50,7 +52,7 @@ class GithubAuthorizer {
    * Get firebase instance used with this object
    */
   get firebase() {
-    return firebase; // eslint-disable-line
+    this.firebase;
   }
 
 
@@ -63,7 +65,7 @@ class GithubAuthorizer {
    * to the returned Github API accessToken if a token is returned.
    */
   toggleSignIn() {
-    firebase = getFirebase();
+    firebase = this.firebase;
     if (!firebase.auth().currentUser) {
       let provider = new firebase.auth.GithubAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -89,7 +91,7 @@ class GithubAuthorizer {
    * statement.
    */
   isSignedIn() {
-    return firebase.auth().currentUser;
+    return this.firebase.auth().currentUser;
   }
 }
 
