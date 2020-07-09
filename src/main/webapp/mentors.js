@@ -90,7 +90,7 @@ function createGitHubLink(gitHubID) {
  * @param {String[]} interestTags
  * @return {HTMLElement} tagDiv
  */
-function createTagRow(interestTags) {
+function createTagDiv(interestTags) {
   let tagDiv = document.createElement('div');
   tagDiv.className = 'row p-3';
   for (const tagText of interestTags) {
@@ -107,7 +107,7 @@ function createTagRow(interestTags) {
  * @param {String[]} projectIDs
  * @return {HTMLElement} projectsDiv
  */
-function createProjectsRow(projectIDs) {
+function createProjectsDiv(projectIDs) {
   let projectsDiv = document.createElement('div');
   projectsDiv.className = 'row p-3';
   for (const projectID of projectIDs) {
