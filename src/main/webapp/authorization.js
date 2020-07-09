@@ -8,7 +8,7 @@ const firebaseConfig = {
  * Object used for Github authorization and as a wrapper for firebase.
  * It handles Firebase initialization on instantiation and holds nifty
  * functions for handling github authorization. We are using a class to have
- * access tokens persist for ease opf use on the backend
+ * access tokens persist for ease of use on the backend
  *
  * Make sure to include the scripts below in any HTML File that uses this class
  *
