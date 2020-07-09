@@ -120,7 +120,7 @@ public class UserServlet extends HttpServlet {
     return userBuilder.buildPerson();
   }
 
-  //TODO: make this conform with Richie's error handling
+  // TODO: make this conform with Richie's error handling
   /**
    * Sends an error to the client as raw text instead of the default HTML page.
    *
