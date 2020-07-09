@@ -79,8 +79,8 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {string} the GitHub API access token, null if an error occurs or
-   * the given user is no longer authorized.
+   * @return {boolean} true if no errors occured during authorization, false
+   * otherwise
    */
   async toggleAuthorization() {
     const firebase = this.firebase;
@@ -98,13 +98,14 @@ class GitHubAuthorizer {
         // TODO: Change this in future iterations
         alert(error.message);
         this.token = null;
+        return false
       }
     } else {
       // if logged in, sign out
       firebase.auth().signOut();
       this.token = null;
     }
-    return this.token;
+    return true
   }
 
   /**
