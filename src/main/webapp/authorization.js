@@ -17,10 +17,18 @@ const firebaseConfig = {
  *
  * NOTE: The authorization.js file location might change.
  */
-class GithubAuthorizer {
+class GitHubAuthorizer {
   constructor() { // eslint-disable-line
-    GithubAuthorizer.initializeFirebase();
+    GitHubAuthorizer.initializeFirebase();
+
+    /** @type {string} github API token */
     this.token = null;
+
+    /**
+     * the firbase instance associated with a given 
+     * GitHubAuthorizer
+     * @type {Firebase} 
+     */
     this.firebase = firebase; // eslint-disable-line
   }
 
@@ -78,7 +86,7 @@ class GithubAuthorizer {
     const firebase = this.firebase;
     if (!firebase.auth().currentUser) {
       try {
-        let provider = new firebase.auth.GithubAuthProvider();
+        let provider = new firebase.auth.GitHubAuthProvider();
         let authorizationResults =
           await firebase.auth().signInWithPopup(provider);
         // This gives you a GitHub Access Token.
@@ -112,4 +120,4 @@ class GithubAuthorizer {
   }
 }
 
-export let githubAuthorizer = new GithubAuthorizer();
+export let gitHubAuthorizer = new GitHubAuthorizer();
