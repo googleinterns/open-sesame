@@ -42,8 +42,8 @@ public class UserServlet extends HttpServlet {
     try {
       userObject = toPersonObject(datastore.get(userKey));
     } catch (Exception e) {
-      sendRawTextError(
-          response, HttpServletResponse.SC_BAD_REQUEST, "Person does not exist in Datastore");
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, 
+          "Person does not exist in Datastore");
       userObject = null;
     }
 
@@ -57,7 +57,7 @@ public class UserServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGitHubID = request.getParameter("gitHubID");
     if (userGitHubID.isBlank()) {
-      sendRawTextError(response, HttpServletResponse.SC_BAD_REQUEST, "Invalid ID");
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID");
       return;
     }
     ArrayList<String> userTags =
@@ -119,20 +119,5 @@ public class UserServlet extends HttpServlet {
     userBuilder.interestTags(entityTagList);
     return userBuilder.buildPerson();
   }
-
-  //TODO: make this conform with Richie's error handling
-  /**
-   * Sends an error to the client as raw text instead of the default HTML page.
-   *
-   * @param response the response from a given fetch
-   * @param errorCode the error code to display when the error is flagged
-   * @param errorMsg the error message to display when the error is flagged
-   * @throws IOException
-   */
-  private void sendRawTextError(HttpServletResponse response, int errorCode, String errorMsg)
-      throws IOException {
-    response.setStatus(errorCode);
-    response.setContentType("text/html;");
-    response.getWriter().println(errorMsg);
-  }
+  //TODO: make error handling conform with Richie's error handling
 }
