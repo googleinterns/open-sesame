@@ -43,11 +43,9 @@ public class AuthServlet extends HttpServlet {
     JsonObject responseObject = new JsonObject();
 
     UserService userService = UserServiceFactory.getUserService();
-    String loginUrl = userService.createLoginURL(AUTH_URL_REDIRECT);
-    String logoutUrl = userService.createLogoutURL(AUTH_URL_REDIRECT);
 
-    responseObject.addProperty("loginUrl", loginUrl);
-    responseObject.addProperty("logoutUrl", logoutUrl);
+    responseObject.addProperty("loginUrl", userService.createLoginURL(AUTH_URL_REDIRECT));
+    responseObject.addProperty("logoutUrl", userService.createLogoutURL(AUTH_URL_REDIRECT));
 
     if (userService.isUserLoggedIn()) {
       responseObject.addProperty("authorized", true);
