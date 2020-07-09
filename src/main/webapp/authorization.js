@@ -20,7 +20,7 @@ const firebaseConfig = {
 class GithubAuthorizer {
   constructor() { // eslint-disable-line
     GithubAuthorizer.initializeFirebase();
-    this.token = '';
+    this.token = null;
     this.firebase = firebase; // eslint-disable-line
   }
 
