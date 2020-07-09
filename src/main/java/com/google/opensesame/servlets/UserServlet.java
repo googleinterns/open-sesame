@@ -32,7 +32,7 @@ public class UserServlet extends HttpServlet {
   }
 
   @Override
-  // Get a specific user. return null if not found. TODO: User Validation
+  // Get a specific user. Return null if not found. TODO: User Validation
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGithub = request.getParameter("githubID");
     Key userKey = KeyFactory.createKey(PersonObject.ENTITY_NAME, userGithub);
@@ -43,7 +43,7 @@ public class UserServlet extends HttpServlet {
       userObject = toPersonObject(datastore.get(userKey));
     } catch (Exception e) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Person does not exist in Datastore");
-      userObject = null;
+      return;
     }
 
     String jsonPerson = new Gson().toJson(userObject);
@@ -81,28 +81,26 @@ public class UserServlet extends HttpServlet {
 
   // TODO: use function in other servlets.
   /**
-   * Query datastore for entities. comparisons are done with @param field coming first. For
+   * Query datastore for entities. Comparisons are done with @param field coming first. For
    * example @param field EQUAL @param thingToBeComparedTo. Look at
    * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Query.FilterOperator
    * for more information on the @param operator
    *
    * @param EntityName the type of entity to be queried for
    * @param field the field that is being used to query
-   * @param thingToBeCompareTo the object that will be compared to @param field
+   * @param value the object that will be compared to @param field
    * @param operator the type of comparison to be made.
-   * @return
+   * @return {PreparedQuery} a Datastore prepared query.
    */
   public PreparedQuery queryInDatabase(
       Entity EntityName, String field, Object thingToBeCompareTo, FilterOperator operator) {
-
     Filter userFilter = new FilterPredicate(field, operator, thingToBeCompareTo);
-
     return datastore.prepare(new Query(PersonObject.ENTITY_NAME).setFilter(userFilter));
   }
 
-  // TODO: add this to the person object class
+  // TODO: Move this to the Person object class
   /**
-   * Convert an PersonObject.ENTITY_NAME entity retrieved from datastore into the person type.
+   * Convert an entity retrieved from Datastore into the Person type.
    *
    * @param personEntity PersonObject.ENTITY_NAME entity
    * @return PersonObject that corresponds to the entity retrieved from datastore

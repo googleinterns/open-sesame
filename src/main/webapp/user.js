@@ -8,8 +8,8 @@ function getUser(user) { //eslint-disable-line
   const params = new URLSearchParams();
   params.append('user', user);
 
-  //TODO: switch to standard fetch error handler
-  fetch('/user', {method: 'GET', body: params}) 
+  // TODO: switch to standard fetch error handler
+  fetch('/user', {method: 'GET', body: params})
     .then(errorHandling).then((response) => response.json())
     .then((user) => {
       return user;
