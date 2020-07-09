@@ -32,7 +32,7 @@ public class UserServlet extends HttpServlet {
   }
 
   @Override
-  // get a specific user. return null if not found. TODO: User Validation
+  // Get a specific user. return null if not found. TODO: User Validation
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGithub = request.getParameter("githubID");
     Key userKey = KeyFactory.createKey(PersonObject.ENTITY_NAME, userGithub);
