@@ -62,7 +62,8 @@ public class UserServlet extends HttpServlet {
     ArrayList<String> userTags =
         (ArrayList<String>) Arrays.asList(request.getParameterValues("tags"));
 
-    storePersonObject(new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPerson());
+    storePersonObject(
+        new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPerson());
   }
 
   // TODO: Add the person entity creation to the PersonObject/make it it's own class
