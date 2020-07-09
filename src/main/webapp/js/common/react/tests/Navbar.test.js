@@ -2,6 +2,8 @@ import React from 'react';
 import Navbar from '../components/Navbar.js';
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
+import fetchMock from 'fetch-mock-jest';
+import {makeRelativeUrlAbsolute} from '../../../fetch_handler.js';
 
 const navbarUrls = [
   {
@@ -13,6 +15,27 @@ const navbarUrls = [
     name: 'Projects',
   },
 ];
+
+beforeAll(() => {
+  const authData = {
+    authorized: false,
+    loginUrl: '/login',
+    logoutUrl: '/logout',
+    hasProfile: false,
+  };
+
+  fetchMock.get(makeRelativeUrlAbsolute('/auth'), {
+    body: JSON.stringify(authData),
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+});
+
+afterAll(() => {
+  fetchMock.restore();
+});
 
 describe('Navbar component', () => {
   it('is added to the DOM', () => {
