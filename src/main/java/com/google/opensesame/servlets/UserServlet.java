@@ -53,7 +53,7 @@ public class UserServlet extends HttpServlet {
   }
 
   @Override
-  // get a specific user. return null if not found.
+  // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGitHubID = request.getParameter("gitHubID");
     if (userGitHubID.isBlank()) {
