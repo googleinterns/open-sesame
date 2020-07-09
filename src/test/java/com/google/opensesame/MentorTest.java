@@ -4,9 +4,9 @@ import com.google.opensesame.servlets.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.junit.Test;
 
 @RunWith(JUnit4.class)
 public class MentorTest {

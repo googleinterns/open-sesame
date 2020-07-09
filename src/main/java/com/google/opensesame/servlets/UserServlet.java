@@ -42,8 +42,7 @@ public class UserServlet extends HttpServlet {
     try {
       userObject = toPersonObject(datastore.get(userKey));
     } catch (Exception e) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, 
-          "Person does not exist in Datastore");
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Person does not exist in Datastore");
       userObject = null;
     }
 
@@ -120,5 +119,5 @@ public class UserServlet extends HttpServlet {
     userBuilder.interestTags(entityTagList);
     return userBuilder.buildPerson();
   }
-  //TODO: make error handling conform with Richie's error handling
+  // TODO: make error handling conform with Richie's error handling
 }
