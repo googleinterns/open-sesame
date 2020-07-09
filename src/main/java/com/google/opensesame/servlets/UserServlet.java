@@ -66,10 +66,10 @@ public class UserServlet extends HttpServlet {
     sendData(new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPerson());
   }
 
-  //TODO: Add the person entity creation to the PersonObject/make it it's own class
+  // TODO: Add the person entity creation to the PersonObject/make it it's own class
   /**
-   * Send a person entity to datastore with information about a given
-   * PersonObject @param person.
+   * Send a person entity to datastore with information about a given PersonObject @param person.
+   *
    * @param person a person object
    */
   public void sendData(PersonObject person) {
@@ -79,17 +79,17 @@ public class UserServlet extends HttpServlet {
     datastore.put(personEntity);
   }
 
-  //TODO: use function in other servlets.
+  // TODO: use function in other servlets.
   /**
-   * Query datastore for entities. comparisons are done with @param field coming
-   * first. For example @param field EQUAL @param thingToBeComparedTo. Look at 
+   * Query datastore for entities. comparisons are done with @param field coming first. For
+   * example @param field EQUAL @param thingToBeComparedTo. Look at
    * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Query.FilterOperator
    * for more information on the @param operator
-   * 
+   *
    * @param EntityName the type of entity to be queried for
    * @param field the field that is being used to query
    * @param thingToBeCompareTo the object that will be compared to @param field
-   * @param operator the type of comparison to be made. 
+   * @param operator the type of comparison to be made.
    * @return
    */
   public PreparedQuery queryInDatabase(
@@ -101,11 +101,10 @@ public class UserServlet extends HttpServlet {
   }
 
   /**
-   * Convert an PersonObject.ENTITY_NAME entity retrieved from datastore into
-   * the person type. 
+   * Convert an PersonObject.ENTITY_NAME entity retrieved from datastore into the person type.
+   *
    * @param personEntity PersonObject.ENTITY_NAME entity
-   * @return PersonObject that corresponds to the entity retrieved from 
-   * datastore
+   * @return PersonObject that corresponds to the entity retrieved from datastore
    */
   public PersonObject toPersonObject(Entity personEntity) {
     PersonBuilder userBuilder = new PersonBuilder();
@@ -123,6 +122,7 @@ public class UserServlet extends HttpServlet {
 
   /**
    * Sends an error to the client as raw text instead of the default HTML page.
+   *
    * @param response the response from a given fetch
    * @param errorCode the error code to display when the error is flagged
    * @param errorMsg the error message to display when the error is flagged
