@@ -1,13 +1,13 @@
-// GCP Generated Github OAuth configuration
+// GCP Generated GitHub OAuth configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyAR88Giah8cCEAvT_zDSIREWvgIIAeS8yY',
   authDomain: 'step2020-279820.firebaseapp.com',
 };
 
 /**
- * Object used for Github authorization and as a wrapper for firebase.
+ * Object used for GitHub authorization and as a wrapper for firebase.
  * It handles Firebase initialization on instantiation and holds nifty
- * functions for handling github authorization. We are using a class to have
+ * functions for handling gitHub authorization. We are using a class to have
  * access tokens persist for ease of use on the backend
  *
  * Make sure to include the scripts below in any HTML File that uses this class
@@ -21,7 +21,7 @@ class GitHubAuthorizer {
   constructor() { // eslint-disable-line
     GitHubAuthorizer.initializeFirebase();
 
-    /** @type {string} github API token */
+    /** @type {string} gitHub API token */
     this.token = null;
 
     /**
@@ -33,7 +33,7 @@ class GitHubAuthorizer {
   }
 
   /**
-   * The most recent access token for the Github API. To refresh this, the user
+   * The most recent access token for the GitHub API. To refresh this, the user
    * must be signed out and signed in again. It is important to keep in mind
    * that this token expires and must be used swiftly after calling
    * toggleSignIn(). If authorization is yet to be toggled, this will return
@@ -70,12 +70,12 @@ class GitHubAuthorizer {
   }
 
   /**
-   * Function called when authorizing user to verify them as a github user.
+   * Function called when authorizing user to verify them as a gitHub user.
    * This function doubles as an opt out when the current user wants to leave
    * our site for good.
    *
    * Side Effects: when authorizing a user, it sets the current objects token
-   * to the returned Github API accessToken if a token is returned.
+   * to the returned GitHub API accessToken if a token is returned.
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
