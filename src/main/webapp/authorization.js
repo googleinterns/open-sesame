@@ -43,7 +43,7 @@ class GithubAuthorizer {
   }
 
   /**
-   * the current user if authorized and null if not. For all intents and
+   * The current user if authorized and null if not. For all intents and
    * purposes, this function will serve as a true/false value in an if
    * statement.
    *
