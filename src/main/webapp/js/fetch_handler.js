@@ -25,7 +25,7 @@
  * @return {Promise} Returns a promise that formats the errors from a fetch
  *    request.
  */
-export default function standardizeFetchErrors(
+export function standardizeFetchErrors(
     fetchRequest, fetchFailedUserMessage, genericServerErrorUserMessage) {
   return fetchRequest.catch((fetchError) => {
     // Fetch encountered an error while making the request (a network
