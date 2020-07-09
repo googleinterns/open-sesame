@@ -15,7 +15,7 @@ const firebaseConfig = {
  * <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
  * <script type="module" src="authorization.js"></script>
  *
- * NOTE: The authorization.js file location mighjt change.
+ * NOTE: The authorization.js file location might change.
  */
 class GithubAuthorizer {
   constructor() { // eslint-disable-line
@@ -38,7 +38,7 @@ class GithubAuthorizer {
    *
    * @return {string} most recent token or null
    */
-  get token() {
+  getToken() {
     return this.token;
   }
 
@@ -49,7 +49,7 @@ class GithubAuthorizer {
    *
    * @return {Firebase.User} current user or null
    */
-  get user() {
+  getUser() {
     return this.firebase.auth().currentUser;
   }
 
@@ -57,7 +57,7 @@ class GithubAuthorizer {
    * Get firebase instance used with this object
    * @return {Firebase} firebase instance
    */
-  get firebase() {
+  getFirebase() {
     return this.firebase;
   }
 
@@ -65,31 +65,38 @@ class GithubAuthorizer {
    * Function called when authorizing user to verify them as a github user.
    * This function doubles as an opt out when the current user wants to leave
    * our site for good.
-   * 
+   *
    * Side Effects: when authorizing a user, it sets the current objects token
    * to the returned Github API accessToken if a token is returned.
+   * 
+   * NOTE: this function is asynchronous and should be used with an await
+   *
+   * @return {string} the GitHub API access token, null if an error occurs or
+   * the given user is no longer athorized.
    */
-  toggleAuthorization() {
-    firebase = this.firebase;
+  async toggleAuthorization() {
+    const firebase = this.firebase;
     if (!firebase.auth().currentUser) {
-      let provider = new firebase.auth.GithubAuthProvider();
-      firebase.auth().signInWithPopup(provider).then(function(result) {
+      try {
+        let provider = new firebase.auth.GithubAuthProvider();
+        let authorizationResults =
+          await firebase.auth().signInWithPopup(provider);
         // This gives you a GitHub Access Token.
         // You can use it to access the GitHub API.
-        this.token = result.credential.accessToken;
-        console.log(token);
-      }).catch(function(error) {
-        this.token = null
-          // Handle Errors here.
+        this.token = await authorizationResults.credential.accessToken;
+      } catch (error) {
+        // Handle Errors here.
         console.error(error);
         // TODO: Change this in future iterations
         alert(error.message);
-      });
+        this.token = null;
+      }
     } else {
       // if logged in, sign out
       firebase.auth().signOut();
       this.token = null;
     }
+    return this.token;
   }
 
   /**
