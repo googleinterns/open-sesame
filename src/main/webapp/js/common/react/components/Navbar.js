@@ -32,9 +32,6 @@ export default function Navbar(props) {
               <NavbarLink key={i} href={url.href} name={url.name} />)}
         </ul>
       </div>
-      <div className="ml-1">
-        <AuthButton />
-      </div>
     </nav>
   );
 }
