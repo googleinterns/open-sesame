@@ -100,6 +100,7 @@ public class UserServlet extends HttpServlet {
     return datastore.prepare(new Query(PersonObject.ENTITY_NAME).setFilter(userFilter));
   }
 
+  // TODO: add this to the person object class
   /**
    * Convert an PersonObject.ENTITY_NAME entity retrieved from datastore into the person type.
    *
