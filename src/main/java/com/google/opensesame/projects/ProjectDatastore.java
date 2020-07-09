@@ -28,7 +28,7 @@ public class ProjectDatastore {
   /**
    * Gets a project entity by its repository ID.
    *
-   * @param repositoryId The repository ID to query for. The repository ID is the must precise way
+   * @param repositoryId The repository ID to query for. The repository ID is the most precise way
    *     to query for a project entity, as this is the ID associated with each datastore entity.
    * @return Returns the ProjectEntity retrieved from datastore or null if there is none.
    */
