@@ -68,7 +68,7 @@ class GithubAuthorizer {
    *
    * Side Effects: when authorizing a user, it sets the current objects token
    * to the returned Github API accessToken if a token is returned.
-   * 
+   *
    * NOTE: this function is asynchronous and should be used with an await
    *
    * @return {string} the GitHub API access token, null if an error occurs or
