@@ -11,16 +11,15 @@ const firebaseConfig = {
  * access tokens persist for ease opf use on the backend
  *
  * Make sure to include the scripts below in any HTML File that uses this class
- * 
+ *
  * <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
  * <script type="module" src="authorization.js"></script>
  *
  * NOTE: The authorization.js file location mighjt change.
  */
 class GithubAuthorizer {
-  /** @return {GithubAuthorizer} */
-  constructor() {
-    initializeFirebase();
+  constructor() { // eslint-disable-line
+    GithubAuthorizer.initializeFirebase();
     this.token = '';
     this.firebase = firebase; // eslint-disable-line
   }
@@ -51,17 +50,7 @@ class GithubAuthorizer {
    * @return {Firebase.User} current user or null
    */
   get user() {
-    return this.firebase.auth().currentUser;;
-  }
-
-  /**
-   * Initialize firebase if firebase is not already initialized. This method can
-   * be called as many times as we need without any side effects.
-   */
-  initializeFirebase() {
-    if (firebase.apps.length === 0) { // eslint-disable-line
-      firebase.initializeApp(firebaseConfig); // eslint-disable-line
-    }
+    return this.firebase.auth().currentUser;
   }
 
   /**
@@ -71,7 +60,6 @@ class GithubAuthorizer {
   get firebase() {
     return this.firebase;
   }
-
 
   /**
    * Function called when authorizing user to verify them as a github user.
@@ -101,6 +89,18 @@ class GithubAuthorizer {
       // if logged in, sign out
       firebase.auth().signOut();
       this.token = null;
+    }
+  }
+
+  /**
+   * Initialize firebase if firebase is not already initialized. This method can
+   * be called as many times as we need without any side effects.
+   *
+   * NOTE: This is not an instance function and will not be exported.
+   */
+  static initializeFirebase() {
+    if (firebase.apps.length === 0) { // eslint-disable-line
+      firebase.initializeApp(firebaseConfig); // eslint-disable-line
     }
   }
 }
