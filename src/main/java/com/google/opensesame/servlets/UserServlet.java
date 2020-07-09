@@ -121,6 +121,7 @@ public class UserServlet extends HttpServlet {
     return userBuilder.buildPerson();
   }
 
+  //TODO: make this conform with Richie's error handling
   /**
    * Sends an error to the client as raw text instead of the default HTML page.
    * @param response the response from a given fetch
