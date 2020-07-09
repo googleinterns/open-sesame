@@ -85,8 +85,8 @@ const dummyProject = {
 const aboutMeCardDiv = document.getElementById('about-me-card-body');
 const userBioElement = document.getElementById('user-bio');
 const userImageElement = document.getElementById('user-image');
-const userNameAndLocationElement = 
-  document.getElementById('user-name-location');
+const userNameAndLocationElement =
+    document.getElementById('user-name-location');
 const userTagRow = document.getElementById('user-tag-row');
 const userGithubButton = document.getElementById('user-github');
 const affiliationsDiv = document.getElementById('affiliations');
@@ -110,7 +110,7 @@ function createAboutMe(user) {
 
   userGithubButton.href = user.gitSrc;
 
-  for (tag of user.tags) {
+  for (let tag of user.tags) {
     addTag(tag, userTagRow);
   }
 }
@@ -160,7 +160,7 @@ function addProject(projectObject) {
   let projectCardElement = createProjectCard(projectObject.name);
   affiliationsDiv.append(projectCardElement);
   let menteeRow = createRowElement();
-  for (mentee of projectObject.mentees) {
+  for (let mentee of projectObject.mentees) {
     menteeRow.append(createMenteeCard(mentee));
   }
   projectCardElement.append(menteeRow);

@@ -1,17 +1,12 @@
 import ProjectPreview from './ProjectPreview.js';
 import {projectPreviewType} from '../prop_types.js';
 
-// ProjectTag is an object and not a string because of the upcoming
-// addition of different types of tags (to be indicated with a tagType property)
-/**
- * @typedef {Object} ProjectTag
- * @property {string} text
- */
 /**
  * @typedef {Object} ProjectPreviewData
- * @property {string} title
- * @property {string} shortDescription
- * @property {ProjectTag[]} tags
+ * @property {string} name
+ * @property {string} description
+ * @property {string[]} topicTags
+ * @property {string} primaryLanguage
  * @property {number} numMentors
  */
 /**
