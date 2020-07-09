@@ -1,8 +1,6 @@
-import {projectTagType} from '../prop_types.js';
-
 /**
  * A horizontal list of badge-based tags for a project.
- * @param {{tags: ProjectTag[]}} props
+ * @param {{tags: string[]}} props
  * @return {React.Component} Returns a React component list of tags for a
  * project.
  */
@@ -13,7 +11,7 @@ export default function ProjectTagList(props) {
         return (
           <div key={i}
               className="border border-muted text-muted mr-1 mb-1 badge">
-            {tag.text}
+            {tag}
           </div>
         );
       })}
@@ -22,5 +20,5 @@ export default function ProjectTagList(props) {
 }
 
 ProjectTagList.propTypes = {
-  tags: PropTypes.arrayOf(projectTagType).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
