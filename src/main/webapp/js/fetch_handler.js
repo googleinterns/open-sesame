@@ -49,6 +49,17 @@ export default function standardizeFetchErrors(
 }
 
 /**
+ * Makes a relative URL (like one to an Open Sesame endpoint) absolute. This
+ * needs to be done for all fetch requests that are going to be tested with
+ * NodeJS, as relative URLs are not supported on NodeJS.
+ * @param {string} relativeUrl 
+ * @return {URL} Returns the absolute URL.
+ */
+export function makeRelativeUrlAbsolute(relativeUrl) {
+  return new URL(relativeUrl, location.origin);
+}
+
+/**
  * Formats an API error response to match the ErrorResponse convention.
  * {@link ErrorResponse}
  * @param {Response} errorResponse
