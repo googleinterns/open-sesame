@@ -21,5 +21,6 @@ export default function checkTesting() {
   if ((typeof process !== 'undefined') && (process.release.name === 'node')) {
     global.PropTypes = require('prop-types');
     global.React = require('react');
+    global.fetch = require('fetch-mock-jest');
   }
 }
