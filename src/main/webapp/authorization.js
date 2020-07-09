@@ -9,18 +9,19 @@ const firebaseConfig = {
  * It handles Firebase initialization on instantiation and holds nifty
  * functions for handling github authorization. We are using a class to have
  * access tokens persist for ease opf use on the backend
- * 
+ *
  * Make sure to include the scripts below in any HTML File that uses this class
  * 
  * <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
  * <script type="module" src="authorization.js"></script>
- * 
+ *
  * NOTE: The authorization.js file location mighjt change.
  */
 class GithubAuthorizer {
+  /** @return {GithubAuthorizer} */
   constructor() {
     initializeFirebase();
-    this.token = "";
+    this.token = '';
     this.firebase = firebase; // eslint-disable-line
   }
 
@@ -28,25 +29,29 @@ class GithubAuthorizer {
    * The most recent access token for the Github API. To refresh this, the user
    * must be signed out and signed in again. It is important to keep in mind
    * that this token expires and must be used swiftly after calling
-   * toggleSignIn(). If authorization is yet to be toggled, this will return 
+   * toggleSignIn(). If authorization is yet to be toggled, this will return
    * null. If an error occurs during authorization, it will again be set to
    * null. This property will be set to null on sign out as well.
-   * 
+   *
    * NOTE: In the event that an access token times out, the token will still be
    * available here and so, a non-null token is not a good sign of a valid
-   * token. 
+   * token.
+   *
+   * @return {string} most recent token or null
    */
   get token() {
-    this.token;
+    return this.token;
   }
 
   /**
    * the current user if authorized and null if not. For all intents and
    * purposes, this function will serve as a true/false value in an if
    * statement.
+   *
+   * @return {Firebase.User} current user or null
    */
   get user() {
-    this.firebase.auth().currentUser;;
+    return this.firebase.auth().currentUser;;
   }
 
   /**
@@ -61,9 +66,10 @@ class GithubAuthorizer {
 
   /**
    * Get firebase instance used with this object
+   * @return {Firebase} firebase instance
    */
   get firebase() {
-    this.firebase;
+    return this.firebase;
   }
 
 
@@ -99,4 +105,4 @@ class GithubAuthorizer {
   }
 }
 
-export default new GithubAuthorizer();
+export let githubAuthorizer = new GithubAuthorizer();
