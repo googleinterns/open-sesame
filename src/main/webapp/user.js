@@ -3,7 +3,7 @@
  * UserServlet
  * @param {string} user
  */
-function getUser(user) {
+function getUser(user) { //eslint-disable-line
   console.log('entering get user function/n');
   fetch('/user?user=' + user)
     .then(errorHandling).then((response) => response.json())
