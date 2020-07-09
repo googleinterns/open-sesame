@@ -20,6 +20,7 @@ public class AuthServlet extends HttpServlet {
 
   /**
    * Gets the currently authorized user. Returns null if no user is currently authorized.
+   *
    * @return Returns the currently authorized user or null if there is no user currently authorized.
    */
   public static User getAuthorizedUser() {
@@ -34,12 +35,13 @@ public class AuthServlet extends HttpServlet {
   /**
    * Responds with the URLs for auth login and logout, along with information about the currently
    * authorized user if a user is logged in.
+   *
    * @param request
    * @param response
    * @throws IOException
    */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     JsonObject responseObject = new JsonObject();
 
     UserService userService = UserServiceFactory.getUserService();
@@ -50,7 +52,7 @@ public class AuthServlet extends HttpServlet {
     if (userService.isUserLoggedIn()) {
       responseObject.addProperty("authorized", true);
 
-      // User is logged in; add user data to the response 
+      // User is logged in; add user data to the response
       JsonObject userData = new JsonObject();
       User currentUser = userService.getCurrentUser();
       userData.addProperty("email", currentUser.getEmail());
@@ -62,7 +64,7 @@ public class AuthServlet extends HttpServlet {
     }
 
     String responseJson = gson.toJson(responseObject);
-    
+
     response.setStatus(HttpServletResponse.SC_OK);
     response.setContentType("application/json;");
     response.getWriter().println(responseJson);
