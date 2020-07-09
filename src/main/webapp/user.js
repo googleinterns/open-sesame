@@ -1,9 +1,9 @@
 /**
- * Get the user @param user from the user servlet.
+ * Get the user @param user from the user servlet. gets a user object from the
+ * UserServlet
  * @param {string} user
- * @return a user object
  */
-function getUser(user) {
+function getUser(user) { //eslint-disable-line
   console.log('entering get user function/n');
   const params = new URLSearchParams();
   params.append('user', user);
@@ -21,7 +21,7 @@ function getUser(user) {
 /**
  * Basic error handling checks if fetch results are 'ok.'
  * @param {Response} response the HTTP response
- * @return an 'ok' HTTP response
+ * @return {Response}an 'ok' HTTP response
  */
 function errorHandling(response) {
   if (!response.ok) {
