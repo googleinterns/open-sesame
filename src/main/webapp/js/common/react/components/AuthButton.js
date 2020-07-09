@@ -1,5 +1,8 @@
 import checkTesting from '../../../checkTesting.js';
-import standardizeFetchErrors from '../../../fetch_handler.js';
+import {
+  standardizeFetchErrors, 
+  makeRelativeUrlAbsolute
+} from '../../../fetch_handler.js';
 checkTesting();
 
 /**
@@ -25,7 +28,8 @@ export default class AuthButton extends React.Component {
    * @override
    */
   componentDidMount() {
-    const fetchRequest = standardizeFetchErrors(fetch('/auth'),
+    const fetchRequest = standardizeFetchErrors(
+        fetch(makeRelativeUrlAbsolute('/auth')),
         'Failed to communicate with the server, please try again later.',
         'Encountered a server error, please try again later.');
 
