@@ -19,7 +19,6 @@ const firebaseConfig = {
  */
 class GitHubAuthorizer {
   constructor() { // eslint-disable-line
-    GitHubAuthorizer.initializeFirebase();
 
     /** @type {string} gitHub API token */
     this.token = null;
@@ -30,6 +29,8 @@ class GitHubAuthorizer {
      * @type {Firebase} 
      */
     this.firebase = firebase; // eslint-disable-line
+
+    this.initializeFirebase()
   }
 
   /**
@@ -83,12 +84,11 @@ class GitHubAuthorizer {
    * otherwise
    */
   async toggleAuthorization() {
-    const firebase = this.firebase;
-    if (!firebase.auth().currentUser) {
+    if (!this.getFirebase().auth().currentUser) {
       try {
-        let provider = new firebase.auth.GitHubAuthProvider();
+        let provider = new this.firebase.auth.GithubAuthProvider();
         let authorizationResults =
-          await firebase.auth().signInWithPopup(provider);
+          await this.getFirebase().auth().signInWithPopup(provider);
         // This gives you a GitHub Access Token.
         // You can use it to access the GitHub API.
         this.token = await authorizationResults.credential.accessToken;
@@ -102,7 +102,7 @@ class GitHubAuthorizer {
       }
     } else {
       // if logged in, sign out
-      firebase.auth().signOut();
+      this.getFirebase().auth().signOut();
       this.token = null;
     }
     return true
@@ -114,9 +114,9 @@ class GitHubAuthorizer {
    *
    * NOTE: This is not an instance function and will not be exported.
    */
-  static initializeFirebase() {
-    if (firebase.apps.length === 0) { // eslint-disable-line
-      firebase.initializeApp(firebaseConfig); // eslint-disable-line
+  initializeFirebase() {
+    if (this.getFirebase().apps.length === 0) { // eslint-disable-line
+      this.getFirebase().initializeApp(firebaseConfig); // eslint-disable-line
     }
   }
 }

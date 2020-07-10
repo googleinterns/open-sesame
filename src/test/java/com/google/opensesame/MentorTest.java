@@ -1,5 +1,7 @@
-package com.google.opensesame.servlets;
+package com.google.opensesame;
 
+import com.google.opensesame.servlets.MentorBuilder;
+import com.google.opensesame.servlets.MentorObject;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
