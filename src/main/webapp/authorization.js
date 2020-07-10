@@ -95,35 +95,28 @@ class GitHubAuthorizer {
    * @return {AuthorizationEnum} true if no errors occured during
    * authorization, false otherwise.
    */
-  async toggleAuthorization() {
-    if (!this.getFirebase().auth().currentUser) {
-      try {
-        let provider = new this.firebase.auth.GithubAuthProvider();
-        let authorizationResults =
-          await this.getFirebase().auth().signInWithPopup(provider);
-        // This gives you a GitHub Access Token.
-        // You can use it to access the GitHub API.
-        this.token = await authorizationResults.credential.accessToken;
-      } catch (error) {
-        // Handle Errors here.
-        console.error(error);
-        // TODO: Change this in future iterations
-        alert(error.message);
-        this.token = null;
-        return {
-          gitHubToken: null,
-          isValid: false,
-        };
-      }
-    } else {
-      // if logged in, sign out
-      this.getFirebase().auth().signOut();
+  signIn() {
+    let provider = new this.firebase.auth.GithubAuthProvider();
+    return this.getFirebase().auth().signInWithPopup(provider)
+        .then((result) => {
+      this.token = result.credential.accessToken;
+      return result;
+    });
+  }
+
+  signOut() {
+    return this.getFirebase().auth().signOut().then(() => {
       this.token = null;
+      return null;
+    });
+  }
+
+  toggleSignIn() {
+    if (this.getUser()) {
+      return this.signOut();
+    } else {
+      return this.signIn();
     }
-    return {
-      gitHubToken: this.token,
-      isValid: true,
-    };
   }
 
   /**
