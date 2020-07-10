@@ -5,15 +5,6 @@ const firebaseConfig = {
 };
 
 /**
- * The enum returned after authorization is toggled
- * @typedef AuthorizationEnum
- * @property {boolean} isValid false if an error occurs during authorization
- * true otherwise.
- * @property {String} gitHubToken a GitHub API access token if user was
- * authorized null otherwise
- */
-
-/**
  * Object used for GitHub authorization and as a wrapper for Firebase.
  * It handles Firebase initialization on instantiation and holds nifty
  * functions for handling GitHub authorization. We are using a class to have
@@ -84,6 +75,58 @@ class GitHubAuthorizer {
 
   /**
    * Function called when authorizing user to verify them as a gitHub user.
+   *
+   * Side Effects: it sets the current objects token
+   * to the returned GitHub API accessToken if a token is returned.
+   *
+   * NOTE: this function is asynchronous and should be used with an await
+   *
+   * @return {<Promise> Firebase.UserCredential | null} credentials of the 
+   * authorized user or null if an error occurs
+   */
+  async signIn() {
+    try {
+      let provider = new this.firebase.auth.GithubAuthProvider();
+      let gitHubProviderResults =
+        await this.getFirebase().auth().signInWithPopup(provider);
+      this.token = await authorizationResults.credential.accessToken;
+      return gitHubProviderResults;
+    } catch (error) {
+      // Handle Errors here
+      console.error(error);
+      // TODO: Change this in future iterations	
+      alert(error.message);
+      this.token = null;
+      return null;
+    };
+  }
+
+  /**
+   * Function called as an authorization opt out when the current user wants to
+   * leave our site for good.
+   *
+   * Side Effects: Sets the current objects token to null if successful.
+   *
+   * NOTE: this function is asynchronous and should be used with an await
+   *
+   * @return {<Promise> null} 
+   */
+
+  async signOut() {
+    try {
+      await this.getFirebase().auth().signOut();
+      this.token = null;
+    } catch (error) {
+      // Handle Errors here
+      console.error(error);
+      // TODO: Change this in future iterations	
+      alert(error.message);
+    };
+    return null;
+  }
+
+  /**
+   * Function called when authorizing user to verify them as a gitHub user.
    * This function doubles as an opt out when the current user wants to leave
    * our site for good.
    *
@@ -92,25 +135,9 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {AuthorizationEnum} true if no errors occured during
-   * authorization, false otherwise.
+   * @return {<Promise> Firebase.UserCredential | null} credentials of the 
+   * authorized user or null if an error occurs or the user is signed out
    */
-  signIn() {
-    let provider = new this.firebase.auth.GithubAuthProvider();
-    return this.getFirebase().auth().signInWithPopup(provider)
-        .then((result) => {
-      this.token = result.credential.accessToken;
-      return result;
-    });
-  }
-
-  signOut() {
-    return this.getFirebase().auth().signOut().then(() => {
-      this.token = null;
-      return null;
-    });
-  }
-
   toggleSignIn() {
     if (this.getUser()) {
       return this.signOut();
