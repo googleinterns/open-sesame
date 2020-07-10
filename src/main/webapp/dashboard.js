@@ -195,7 +195,10 @@ function createCardTitle(titleText) {
 
 /**
  * Return a card with information about a given @param mentee object and
- * a link to send @param mentee a star
+ * a link to send @param mentee a star          
+ * 
+ * 
+ * 
  * @param {Mentee} mentee
  * @return {HTMLElement} card with information about a given mentee
  */
