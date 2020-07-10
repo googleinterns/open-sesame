@@ -86,7 +86,7 @@ class GitHubAuthorizer {
    * @return {Firebase.UserCredential} credentials of the
    * authorized user. Can throw errors.
    */
-  async signIn() {
+  signIn() {
     let provider = new this.firebase.auth.GithubAuthProvider();
     return this.getFirebase().auth().signInWithPopup(provider)
       .then((result) => {
