@@ -59,9 +59,9 @@ function createMentorElement(mentor) {
   mentorDescription.innerHTML = mentor.description;
   mentorCardBody.appendChild(mentorDescription);
 
-  mentorCardBody.appendChild(createTagRow(mentor.interestTags));
+  mentorCardBody.appendChild(createTagDiv(mentor.interestTags));
 
-  mentorCardBody.appendChild( createProjectsRow(mentor.projectIDs));
+  mentorCardBody.appendChild( createProjectsDiv(mentor.projectIDs));
 
   mentorCard.appendChild(mentorCardBody);
   mentorContainer.appendChild(mentorCard);
