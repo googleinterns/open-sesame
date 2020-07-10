@@ -23,17 +23,20 @@ class GitHubAuthorizer {
    */
   constructor() {
 
-    /** @type {string} GitHub API token */
-    this.token = null;
-
-    /**
-     * the Firebase instance associated with a given
+   /**
+     * the firbase instance associated with a given 
      * GitHubAuthorizer
-     * @type {Firebase}
+     * @type {Firebase} 
      */
     this.firebase = firebase; // eslint-disable-line
 
-    this.initializeFirebase();
+    this.initializeFirebase()
+
+    /** @type {string} gitHub API token */
+    this.token = null;
+
+    // Ensure that user is not signed in from another session.
+    this.signOut();
   }
 
   /**
