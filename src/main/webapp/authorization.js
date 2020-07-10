@@ -22,7 +22,7 @@ class GitHubAuthorizer {
    * Create a GitHubAuthorizer.
    */
   constructor() {
-   /**
+    /**
      * the firbase instance associated with a given 
      * GitHubAuthorizer
      * @type {Firebase} 
@@ -89,8 +89,8 @@ class GitHubAuthorizer {
   async signIn() {
     let provider = new this.firebase.auth.GithubAuthProvider();
     let gitHubProviderResults =
-      this.getFirebase().auth().signInWithPopup(provider);
-    this.token = await gitHubProviderResults.credential.accessToken;
+      await this.getFirebase().auth().signInWithPopup(provider);
+    this.token = gitHubProviderResults.credential.accessToken;
     return gitHubProviderResults;
   }
 
