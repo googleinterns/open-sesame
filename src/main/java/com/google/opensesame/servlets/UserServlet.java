@@ -94,7 +94,9 @@ public class UserServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     System.out.println("Auth token: " + request.getParameter("gitHubAuthToken"));
-    System.out.println("Interests: " + new ArrayList<String>(Arrays.asList(request.getParameterValues("interestTags"))));
+    System.out.println(
+        "Interests: "
+            + new ArrayList<String>(Arrays.asList(request.getParameterValues("interestTags"))));
 
     response.setStatus(HttpServletResponse.SC_OK);
     response.setContentType("application/json;");
