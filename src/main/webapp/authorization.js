@@ -83,7 +83,7 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {Promise <Firebase.UserCredential>} credentials of the 
+   * @return {UserCredentia} credentials of the 
    * authorized user. Can throw errors.
    */
   async signIn() {
