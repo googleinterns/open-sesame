@@ -5,8 +5,6 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.opensesame.util.ErrorResponse;
-
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,18 +29,6 @@ public class AuthServlet extends HttpServlet {
     }
 
     return userService.getCurrentUser();
-  }
-
-  /**
-   * @return Returns the request parameter associated with the inputted name,
-   * or returns the default value if the specified parameter is not defined.
-   */
-  public static String getParameter(HttpServletRequest request, String name, String defaultValue) {
-    String value = request.getParameter(name);
-    if (value == null) {
-      return defaultValue;
-    }
-    return value;
   }
 
   /**
