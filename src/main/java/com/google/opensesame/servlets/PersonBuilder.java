@@ -17,7 +17,8 @@ public class PersonBuilder {
   private String description;
   private String name;
 
-  public PersonBuilder() {}
+  public PersonBuilder() {
+  }
 
   public PersonBuilder name(String name) {
     this.name = name;

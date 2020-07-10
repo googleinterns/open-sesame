@@ -8,8 +8,8 @@ import java.util.List;
 public class MentorObject extends PersonObject {
   private ArrayList<String> projectIDs;
 
-  public MentorObject(String gitHubID, ArrayList<String> interestTags, ArrayList<String> projectIDs)
-      throws IOException {
+  public MentorObject(String gitHubID, ArrayList<String> interestTags,
+      ArrayList<String> projectIDs) throws IOException {
     super(gitHubID, interestTags);
     this.projectIDs = projectIDs;
   }
