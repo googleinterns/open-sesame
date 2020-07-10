@@ -11,10 +11,10 @@
   <h1 class="display-4 mt-5">Become a Mentor for Your Project!</h1>
   <h4 class="emphasis mb-5">Enter the URL of the GitHub repository for your project to become a mentor.</h4>
   <hr/>
-  <form>
+  <form action="/mentors" method="POST">
     <div class="form-group">
       <label for="inputRepo" class="text-weight-bold">Repository URL</label>
-      <input class="form-control" id="inputRepo" aria-describedby="repoHelp" placeholder="Enter repo url">
+      <input class="form-control" id="inputRepo" name="inputRepo" aria-describedby="repoHelp" placeholder="Enter repo url">
       <small id="repoHelp" class="form-text text-muted">We will use publicly available data about this repository in order to display it on our project search page.</small>
     </div>
     <button class="btn text-center">Submit</button>
