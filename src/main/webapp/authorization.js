@@ -81,14 +81,14 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {<Promise> Firebase.UserCredential} credentials of the 
+   * @return {Promise <Firebase.UserCredential>} credentials of the 
    * authorized user. Can throw errors.
    */
   async signIn() {
     let provider = new this.firebase.auth.GithubAuthProvider();
     let gitHubProviderResults =
-      await this.getFirebase().auth().signInWithPopup(provider);
-    this.token = await authorizationResults.credential.accessToken;
+      this.getFirebase().auth().signInWithPopup(provider);
+    this.token = await gitHubProviderResults.credential.accessToken;
     return gitHubProviderResults;
   }
 
