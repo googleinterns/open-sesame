@@ -1,6 +1,11 @@
 package com.google.opensesame.servlets;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.io.IOException;
+import java.net.URL;
+import com.google.appengine.api.datastore.Entity;
 
 public class PersonBuilder {
   private String name;
@@ -9,14 +14,15 @@ public class PersonBuilder {
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> projectIDs = new ArrayList<String>();
 
-  public PersonBuilder() {}
-
-  public PersonObject buildPerson() {
-    return new PersonObject(name, gitHubID, description, interestTags);
+  public PersonBuilder() {
   }
 
-  public MentorObject buildMentor() {
-    return new MentorObject(name, gitHubID, description, interestTags, projectIDs);
+  public PersonObject buildPerson() throws IOException {
+    return new PersonObject(gitHubID, interestTags);
+  }
+
+  public MentorObject buildMentor() throws IOException {
+    return new MentorObject(gitHubID, interestTags, projectIDs);
   }
 
   public PersonBuilder name(String name) {
@@ -42,5 +48,27 @@ public class PersonBuilder {
   public PersonBuilder projectIDs(ArrayList<String> projectIDs) {
     this.projectIDs = projectIDs;
     return this;
+  }
+
+
+  /**
+   * Convert an entity retrieved from Datastore into the Person type.
+   *
+   * @param personEntity PersonObject.ENTITY_NAME entity
+   * @return PersonObject that corresponds to the entity retrieved from datastore
+   * @throws IOException
+   */
+  public PersonObject userFromEntity(Entity personEntity) throws IOException {
+    PersonBuilder userBuilder = new PersonBuilder();
+
+    String entityGitHubID = (String) personEntity.getProperty(PersonObject.GITHUB_ID_FIELD);
+    userBuilder.gitHubID(entityGitHubID);
+    ArrayList<String> entityTagList =
+        (ArrayList<String>)
+            Arrays.asList(personEntity.getProperty(PersonObject.TAG_LIST_FIELD)).stream()
+                .map(tag -> (String) tag)
+                .collect(Collectors.toList());
+    userBuilder.interestTags(entityTagList);
+    return userBuilder.buildPerson();
   }
 }
