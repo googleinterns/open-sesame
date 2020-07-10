@@ -23,13 +23,13 @@ class GitHubAuthorizer {
    */
   constructor() {
     /**
-     * the firbase instance associated with a given 
+     * the firebase instance associated with a given
      * GitHubAuthorizer
-     * @type {Firebase} 
+     * @type {Firebase}
      */
     this.firebase = firebase; // eslint-disable-line
 
-    this.initializeFirebase()
+    this.initializeFirebase();
 
     /** @type {string} gitHub API token */
     this.token = null;
@@ -83,7 +83,7 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {Firebase.UserCredential} credentials of the 
+   * @return {Firebase.UserCredential} credentials of the
    * authorized user. Can throw errors.
    */
   async signIn() {
@@ -123,7 +123,7 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {<Promise> Firebase.UserCredential | null} credentials of the 
+   * @return {<Promise> Firebase.UserCredential | null} credentials of the
    * authorized user or null the user is signed out
    */
   toggleSignIn() {
