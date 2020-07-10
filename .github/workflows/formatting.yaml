@@ -25,11 +25,11 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install modules
       run: npm install
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Apply php-cs-fixer changes
     - name: Run ESLint
       run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: apply ESLint changes
 
   ESLint-Annotation:
     runs-on: ubuntu-latest
