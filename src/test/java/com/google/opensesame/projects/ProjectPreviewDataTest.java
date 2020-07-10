@@ -14,7 +14,7 @@ import org.kohsuke.github.GHRepository;
 import org.mockito.Mockito;
 
 @RunWith(JUnit4.class)
-public class ProjectPreviewTest {
+public class ProjectPreviewDataTest {
   private static Map<String, Object> projectProperties;
   private static GHRepository mockRepository;
 
@@ -41,8 +41,8 @@ public class ProjectPreviewTest {
   public void populatesRepositoryInfo() throws IOException {
     // Ensures that the project preview data is properly populated from the GitHub repository and
     // datastore entity properties.
-    ProjectPreview projectPreview =
-        ProjectPreview.fromPropertiesAndRepository(projectProperties, mockRepository);
+    ProjectPreviewData projectPreview =
+        ProjectPreviewData.fromPropertiesAndRepository(projectProperties, mockRepository);
 
     Assert.assertEquals(MOCK_REPO_NAME, projectPreview.getName());
     Assert.assertEquals(MOCK_REPO_DESCRIPTION, projectPreview.getDescription());

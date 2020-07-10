@@ -7,7 +7,11 @@ import java.util.Map;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
-public class ProjectPreview {
+/**
+ * A class containing basic project data for previewing a project. This is intended to be serialized
+ * and sent to the client.
+ */
+public class ProjectPreviewData {
   /**
    * Creates a ProjectPreview object from a set of project properties.
    *
@@ -17,15 +21,17 @@ public class ProjectPreview {
    * @return Returns the created ProjectPreview.
    * @throws IOException Throws when there is an error communicating with the GitHub API.
    */
-  public static ProjectPreview fromProperties(Map<String, Object> properties) throws IOException {
+  public static ProjectPreviewData fromProperties(Map<String, Object> properties)
+      throws IOException {
     GitHub gitHub = GitHubGetter.getGitHub();
-    GHRepository repository = gitHub.getRepository((String) properties.get("repositoryName"));
+    GHRepository repository =
+        gitHub.getRepositoryById((String) properties.get(ProjectEntity.REPOSITORY_ID_KEY));
 
     return fromPropertiesAndRepository(properties, repository);
   }
 
   /**
-   * Creates a ProjectPreview object from a set of project properties and it's associated GitHub
+   * Creates a ProjectPreview object from a set of project properties and its associated GitHub
    * repository.
    *
    * @param properties The properties of a project entity. This can come directly from a datastore
@@ -35,15 +41,15 @@ public class ProjectPreview {
    * @return Returns the created ProjectPreview
    * @throws IOException Throws when there is an error communicating with the GitHub API.
    */
-  public static ProjectPreview fromPropertiesAndRepository(
+  public static ProjectPreviewData fromPropertiesAndRepository(
       Map<String, Object> properties, GHRepository repository) throws IOException {
-    return new ProjectPreview(
+    return new ProjectPreviewData(
         repository.getName(),
         repository.getDescription(),
         repository.listTopics(),
         repository.getLanguage(),
-        (int) properties.get("numMentors"),
-        repository);
+        (int) properties.get(ProjectEntity.NUM_MENTORS_KEY),
+        (String) properties.get(ProjectEntity.REPOSITORY_ID_KEY));
   }
 
   private final String name;
@@ -51,7 +57,7 @@ public class ProjectPreview {
   private final List<String> topicTags;
   private final String primaryLanguage;
   private final int numMentors;
-  private final transient GHRepository repository;
+  private final String repositoryId;
 
   /**
    * Creates a new ProjectPreview object.
@@ -62,19 +68,19 @@ public class ProjectPreview {
    * @param numMentors
    * @param repository
    */
-  public ProjectPreview(
+  public ProjectPreviewData(
       String name,
       String description,
       List<String> topicTags,
       String primaryLanguage,
       int numMentors,
-      GHRepository repository) {
+      String repositoryId) {
     this.name = name;
     this.description = description;
     this.topicTags = topicTags;
     this.primaryLanguage = primaryLanguage;
     this.numMentors = numMentors;
-    this.repository = repository;
+    this.repositoryId = repositoryId;
   }
 
   public String getName() {
@@ -97,7 +103,7 @@ public class ProjectPreview {
     return numMentors;
   }
 
-  public GHRepository getRepository() {
-    return repository;
+  public String getRepositoryId() {
+    return repositoryId;
   }
 }
