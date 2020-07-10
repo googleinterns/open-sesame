@@ -23,7 +23,7 @@ a:hover,
   color: white;
 }
 
-.btn.disabled {
+.btn-purple.disabled {
   background-color: rebeccapurple;
   color: white;
 }
