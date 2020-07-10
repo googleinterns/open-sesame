@@ -93,7 +93,7 @@ describe('Fetch error handler', () => {
       fetchMock('https://localhost/test'),
       fetchFailedMessage,
       genericServerErrorMessage);
-    
+ 
     return formattedRequest.then((res) => {
       fail('Did not catch the error.');
     }).catch((errorResponse) => {
@@ -121,7 +121,7 @@ describe('Fetch error handler', () => {
       fetchMock('https://localhost/test'),
       fetchFailedMessage,
       genericServerErrorMessage);
-    
+
     return formattedRequest.then((json) => {
       expect(json.message).toEqual('Test response');
     }).catch((errorResponse) => {
