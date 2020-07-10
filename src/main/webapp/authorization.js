@@ -18,6 +18,7 @@ const firebaseConfig = {
  * NOTE: The authorization.js file location might change.
  */
 class GitHubAuthorizer {
+
   /**
    * Create a GitHubAuthorizer.
    */
@@ -27,13 +28,13 @@ class GitHubAuthorizer {
     this.token = null;
 
     /**
-     * the Firebase instance associated with a given 
+     * the Firebase instance associated with a given
      * GitHubAuthorizer
      * @type {Firebase}
      */
     this.firebase = firebase; // eslint-disable-line
 
-    this.initializeFirebase()
+    this.initializeFirebase();
   }
 
   /**
@@ -108,7 +109,7 @@ class GitHubAuthorizer {
       this.getFirebase().auth().signOut();
       this.token = null;
     }
-    return true
+    return true;
   }
 
   /**
