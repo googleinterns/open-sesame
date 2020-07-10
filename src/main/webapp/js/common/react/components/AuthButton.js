@@ -1,7 +1,7 @@
 import checkTesting from '../../../checkTesting.js';
 import {
-  standardizeFetchErrors, 
-  makeRelativeUrlAbsolute
+  standardizeFetchErrors,
+  makeRelativeUrlAbsolute,
 } from '../../../fetch_handler.js';
 checkTesting();
 
@@ -62,12 +62,12 @@ export default class AuthButton extends React.Component {
       // The button is disabled while the authorization data is being loaded.
       classList += ' disabled';
       linkText = 'Log In';
-      authLink = '/';  
+      authLink = '/';
     } else {
       if (this.state.authData.authorized) {
         if (this.state.authData.hasProfile) {
           authLink = this.state.authData.logoutUrl;
-          linkText = 'Log Out'; 
+          linkText = 'Log Out';
         } else {
           authLink = USER_SIGNUP_URL;
           linkText = 'Create Profile';
