@@ -16,7 +16,7 @@ public class ProjectDatastore {
    * same repository ID exists.
    *
    * @param projectEntity
-   * @return Returns the key associated with the datastore entity;
+   * @return Returns the key associated with the datastore entity.
    */
   public static Key addProjectEntity(ProjectEntity projectEntity) {
     Entity newProjectEntity = new Entity(PROJECT_KIND, projectEntity.repositoryId);
