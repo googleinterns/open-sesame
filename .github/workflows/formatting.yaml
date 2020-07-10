@@ -26,14 +26,10 @@ jobs:
     - name: Install modules
       run: npm install
     - name: Run ESLint
+      id: run-ESLint
       run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix
-  
-         
-  ESLint-Annotation:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: hallee/eslint-action@1.0.3
-      if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
+    - name: annotate
+      uses: hallee/eslint-action@1.0.3
+      if: (steps.wait-for-build.outputs.conclusion == 'failure')&&(${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }})
       with:
-        repo-token: ${{secrets.GITHUB_TOKEN}}
+        repo-token: ${{secrets.GITHUB_TOKEN}}      
