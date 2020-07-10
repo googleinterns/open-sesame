@@ -18,15 +18,10 @@ jobs:
         with:
           args: "--replace"
 
+  
   ESLint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          args: '--fix'
-      - uses: hallee/eslint-action@1.0.3
-        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
-        with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
-          eslint-rc: .eslintrc.js
-          args: '--fix'
+    - uses: actions/checkout@v2
+    - name: Run ESLint
+      run: eslint . --ext .js,.jsx,.ts,.tsx --fix
