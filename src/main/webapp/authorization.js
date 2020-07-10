@@ -22,7 +22,6 @@ class GitHubAuthorizer {
    * Create a GitHubAuthorizer.
    */
   constructor() {
-
    /**
      * the firbase instance associated with a given 
      * GitHubAuthorizer
