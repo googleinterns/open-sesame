@@ -6,10 +6,10 @@ const firebaseConfig = {
 
 /**
  * The enum returned after authorization is toggled
- * @typedef AuthorizationEnum 
+ * @typedef AuthorizationEnum
  * @property {boolean} isValid false if an error occurs during authorization
  * true otherwise.
- * @property {String} gitHubToken a GitHub API access token if user was 
+ * @property {String} gitHubToken a GitHub API access token if user was
  * authorized null otherwise
  */
 
@@ -27,7 +27,6 @@ const firebaseConfig = {
  * NOTE: The authorization.js file location might change.
  */
 class GitHubAuthorizer {
-
   /**
    * Create a GitHubAuthorizer.
    */
