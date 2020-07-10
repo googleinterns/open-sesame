@@ -3,6 +3,7 @@ package com.google.opensesame.servlets;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -88,5 +89,15 @@ public class UserServlet extends HttpServlet {
     response.setStatus(errorCode);
     response.setContentType("text/html;");
     response.getWriter().println(errorMsg);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    System.out.println("Auth token: " + request.getParameter("gitHubAuthToken"));
+    System.out.println("Interests: " + new ArrayList<String>(Arrays.asList(request.getParameterValues("interestTags"))));
+
+    response.setStatus(HttpServletResponse.SC_OK);
+    response.setContentType("application/json;");
+    response.getWriter().println("{}");
   }
 }
