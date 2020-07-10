@@ -88,10 +88,11 @@ class GitHubAuthorizer {
    */
   async signIn() {
     let provider = new this.firebase.auth.GithubAuthProvider();
-    let gitHubProviderResults =
-      await this.getFirebase().auth().signInWithPopup(provider);
-    this.token = gitHubProviderResults.credential.accessToken;
-    return gitHubProviderResults;
+    return this.getFirebase().auth().signInWithPopup(provider)
+      .then((result) => {
+        this.token = result.credential.accessToken;
+        return result;
+      });
   }
 
   /**
@@ -106,9 +107,10 @@ class GitHubAuthorizer {
    */
 
   async signOut() {
-    await this.getFirebase().auth().signOut();
-    this.token = null;
-    return null;
+    return this.getFirebase().auth().signOut().then(() => {
+      this.token = null;
+      return null;
+    });
   }
 
   /**
