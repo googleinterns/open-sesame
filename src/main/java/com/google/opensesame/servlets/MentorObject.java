@@ -1,5 +1,6 @@
 package com.google.opensesame.servlets;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,13 +8,9 @@ import java.util.List;
 public class MentorObject extends PersonObject {
   private ArrayList<String> projectIDs;
 
-  public MentorObject(
-      String name,
-      String gitHubID,
-      String description,
-      ArrayList<String> interestTags,
-      ArrayList<String> projectIDs) {
-    super(name, gitHubID, description, interestTags);
+  public MentorObject(String gitHubID, ArrayList<String> interestTags,
+      ArrayList<String> projectIDs) throws IOException {
+    super(gitHubID, interestTags);
     this.projectIDs = projectIDs;
   }
 
