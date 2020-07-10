@@ -26,12 +26,8 @@ jobs:
     - name: Install modules
       run: npm install
     - name: Run ESLint
-      run: |
-        npx eslint . --ext .js,.jsx,.ts,.tsx --fix
-        git add .
-        git commit -m "apply ESLint changes"
-        git push
-
+      continue-on-error: true
+      run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: apply ESLint changes
