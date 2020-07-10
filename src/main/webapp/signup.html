@@ -13,9 +13,10 @@
   <hr/>
   <form id="signup-form">
     <div class="form-group">
-      <button class="font-weight-bold">Link Your GitHub Account</button>
+      <button class="btn btn-purple font-weight-bold" name="github-link-button">Link Your GitHub Account</button>
       <small id="gitHubHelp" class="form-text text-muted">We will use your GitHub account to populate your name and bio and message you when you match with a mentor/mentee.</small>
     </div>
+    <!-- TODO : Look into a more efficient method for adding interests. Potentially a React component. -->
     <div class="form-group">
       <label for="interests" class="font-weight-bold">Interests</label>
       <div class="form-check">
@@ -73,12 +74,15 @@
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="check9" value="documentation">
-        <label class="form-check-label" for="check9">
+        <input class="form-check-input" type="checkbox" id="check10" value="documentation">
+        <label class="form-check-label" for="check10">
             Documentation
         </label>
       </div>
     </div>
-    <button class="btn text-center">Submit</button>
+    <button class="btn btn-purple text-center" type="submit" name="submit-button" disabled>Submit</button>
   </form>
 </div>
+
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
+<script type="module" src="./signup.js"></script>
