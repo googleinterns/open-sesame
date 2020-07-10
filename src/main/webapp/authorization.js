@@ -5,12 +5,12 @@ const firebaseConfig = {
 };
 
 /**
- * Object used for GitHub authorization and as a wrapper for firebase.
+ * Object used for GitHub authorization and as a wrapper for Firebase.
  * It handles Firebase initialization on instantiation and holds nifty
- * functions for handling gitHub authorization. We are using a class to have
- * access tokens persist for ease of use on the backend
+ * functions for handling GitHub authorization. We are using a class to have
+ * access tokens persist for ease of use on the backend,
  *
- * Make sure to include the scripts below in any HTML File that uses this class
+ * Make sure to include the scripts below in any HTML file that uses this class.
  *
  * <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
  * <script type="module" src="authorization.js"></script>
@@ -18,15 +18,18 @@ const firebaseConfig = {
  * NOTE: The authorization.js file location might change.
  */
 class GitHubAuthorizer {
-  constructor() { // eslint-disable-line
+  /**
+   * Create a GitHubAuthorizer.
+   */
+  constructor() {
 
-    /** @type {string} gitHub API token */
+    /** @type {string} GitHub API token */
     this.token = null;
 
     /**
-     * the firbase instance associated with a given 
+     * the Firebase instance associated with a given 
      * GitHubAuthorizer
-     * @type {Firebase} 
+     * @type {Firebase}
      */
     this.firebase = firebase; // eslint-disable-line
 
@@ -59,7 +62,7 @@ class GitHubAuthorizer {
    * @return {Firebase.User} current user or null
    */
   getUser() {
-    return this.firebase.auth().currentUser;
+    return this.getFirebase().auth().currentUser;
   }
 
   /**
@@ -98,7 +101,7 @@ class GitHubAuthorizer {
         // TODO: Change this in future iterations
         alert(error.message);
         this.token = null;
-        return false
+        return false;
       }
     } else {
       // if logged in, sign out
