@@ -30,6 +30,5 @@ jobs:
       run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix
     - name: annotate
       uses: hallee/eslint-action@1.0.3
-      if: (steps.run-ESLint.outputs.conclusion == 'failure')
       with:
         repo-token: ${{secrets.GITHUB_TOKEN}}      
