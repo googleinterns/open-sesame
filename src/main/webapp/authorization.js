@@ -87,12 +87,12 @@ class GitHubAuthorizer {
    * authorized user. Can throw errors.
    */
   signIn() {
-    let provider = new this.firebase.auth.GithubAuthProvider();
+    const provider = new this.firebase.auth.GithubAuthProvider();
     return this.getFirebase().auth().signInWithPopup(provider)
-      .then((result) => {
-        this.token = result.credential.accessToken;
-        return result;
-      });
+        .then((result) => {
+          this.token = result.credential.accessToken;
+          return result;
+        });
   }
 
   /**
@@ -146,4 +146,4 @@ class GitHubAuthorizer {
   }
 }
 
-export let gitHubAuthorizer = new GitHubAuthorizer();
+export const gitHubAuthorizer = new GitHubAuthorizer();
