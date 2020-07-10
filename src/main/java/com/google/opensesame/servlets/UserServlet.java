@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +39,7 @@ public class UserServlet extends HttpServlet {
     PersonObject userObject;
 
     try {
-      userObject = toPersonObject(datastore.get(userKey));
+      userObject = new PersonBuilder().userFromEntity(datastore.get(userKey));
     } catch (Exception e) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Person does not exist in Datastore");
       return;
@@ -82,7 +81,7 @@ public class UserServlet extends HttpServlet {
   // TODO: use function in other servlets.
   /**
    * Query datastore for entities. Comparisons are done with @param field coming first. For
-   * example @param field EQUAL @param thingToBeComparedTo. Look at
+   * example @param field EQUAL @param value. Look at
    * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Query.FilterOperator
    * for more information on the @param operator
    *
@@ -98,25 +97,5 @@ public class UserServlet extends HttpServlet {
     return datastore.prepare(new Query(PersonObject.ENTITY_NAME).setFilter(userFilter));
   }
 
-  // TODO: Move this to the Person object class
-  /**
-   * Convert an entity retrieved from Datastore into the Person type.
-   *
-   * @param personEntity PersonObject.ENTITY_NAME entity
-   * @return PersonObject that corresponds to the entity retrieved from datastore
-   */
-  public PersonObject toPersonObject(Entity personEntity) {
-    PersonBuilder userBuilder = new PersonBuilder();
-
-    String entityGitHubID = (String) personEntity.getProperty(PersonObject.GITHUB_ID_FIELD);
-    userBuilder.gitHubID(entityGitHubID);
-    ArrayList<String> entityTagList =
-        (ArrayList<String>)
-            Arrays.asList(personEntity.getProperty(PersonObject.TAG_LIST_FIELD)).stream()
-                .map(tag -> (String) tag)
-                .collect(Collectors.toList());
-    userBuilder.interestTags(entityTagList);
-    return userBuilder.buildPerson();
-  }
   // TODO: make error handling conform with Richie's error handling
 }
