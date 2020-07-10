@@ -1,11 +1,10 @@
 package com.google.opensesame.servlets;
 
+import com.google.appengine.api.datastore.Entity;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-import java.io.IOException;
-import java.net.URL;
-import com.google.appengine.api.datastore.Entity;
 
 public class PersonBuilder {
   private String name;
@@ -14,8 +13,7 @@ public class PersonBuilder {
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> projectIDs = new ArrayList<String>();
 
-  public PersonBuilder() {
-  }
+  public PersonBuilder() {}
 
   public PersonObject buildPerson() throws IOException {
     return new PersonObject(gitHubID, interestTags);
@@ -49,7 +47,6 @@ public class PersonBuilder {
     this.projectIDs = projectIDs;
     return this;
   }
-
 
   /**
    * Convert an entity retrieved from Datastore into the Person type.
