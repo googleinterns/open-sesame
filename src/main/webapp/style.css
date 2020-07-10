@@ -9,21 +9,21 @@ a:hover,
   color: darkblue;
 }
 
-.btn {
+.btn-purple {
   background-color: rebeccapurple;
   border: none;
   border-radius: 8px;
   color: white;
 }
 
-.btn:hover {
+.btn-purple:hover {
   background-color: purple;
   border: none;
   border-radius: 8px;
   color: white;
 }
 
-.btn.disabled {
+.btn-purple.disabled {
   background-color: rebeccapurple;
   color: white;
 }
