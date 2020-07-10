@@ -30,6 +30,6 @@ jobs:
       run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix
     - name: annotate
       uses: hallee/eslint-action@1.0.3
-      if: (steps.wait-for-build.outputs.conclusion == 'failure')&&(${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }})
+      if: (steps.run-ESLint.outputs.conclusion == 'failure')&&(${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }})
       with:
         repo-token: ${{secrets.GITHUB_TOKEN}}      
