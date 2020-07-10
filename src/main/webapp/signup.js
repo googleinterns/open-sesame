@@ -5,8 +5,8 @@
  */
 import {gitHubAuthorizer} from './authorization.js';
 import {
-  standardizeFetchErrors, 
-  makeRelativeUrlAbsolute
+  standardizeFetchErrors,
+  makeRelativeUrlAbsolute,
 } from './js/fetch_handler.js';
 
 const AFTER_SIGNUP_REDIRECT = '/dashboard.html';
@@ -42,7 +42,7 @@ function handleGitHubLink(e) {
 
 /**
  * Updates the signup UI when the state of user GitHub authentication changes.
- * @param {Firebase.User} user 
+ * @param {Firebase.User} user
  */
 function handleAuthStateChanged(user) {
   const signupForm = document.getElementById('signup-form');
@@ -101,16 +101,17 @@ function submitSignup(e) {
 /**
  * Creates a signup post request.
  * This requires url-encoding the signup body and formatting the errors.
- * @param {SignUpData} signupBody 
+ * @param {SignUpData} signupBody
+ * @return {Promise} Returns a prepared signup fetch request.
  */
 function createSignupRequest(signupBody) {
   const encodedBody = new URLSearchParams();
-  encodedBody.append("gitHubAuthToken", signupBody.gitHubAuthToken);
+  encodedBody.append('gitHubAuthToken', signupBody.gitHubAuthToken);
   // Appending multiple values to the same parameter is the standard protocol
   // for encoding an array of values:
   // https://stackoverflow.com/questions/38797509/passing-array-into-urlsearchparams-while-consuming-http-call-for-get-request
   signupBody.interestTags.forEach((interestTag) => {
-    encodedBody.append("interestTags", interestTag);
+    encodedBody.append('interestTags', interestTag);
   });
 
   const fetchRequest = fetch(makeRelativeUrlAbsolute('/user'), {
@@ -122,7 +123,7 @@ function createSignupRequest(signupBody) {
   });
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetchRequest, 
+      fetchRequest,
       'Failed to communicate with the server. Please try again later.',
       'An error occcured while creating your account.'
           + ' Please try again later.');
