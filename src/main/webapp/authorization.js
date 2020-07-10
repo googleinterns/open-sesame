@@ -81,24 +81,15 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {<Promise> Firebase.UserCredential | null} credentials of the 
-   * authorized user or null if an error occurs
+   * @return {<Promise> Firebase.UserCredential} credentials of the 
+   * authorized user. Can throw errors.
    */
   async signIn() {
-    try {
-      let provider = new this.firebase.auth.GithubAuthProvider();
-      let gitHubProviderResults =
-        await this.getFirebase().auth().signInWithPopup(provider);
-      this.token = await authorizationResults.credential.accessToken;
-      return gitHubProviderResults;
-    } catch (error) {
-      // Handle Errors here
-      console.error(error);
-      // TODO: Change this in future iterations	
-      alert(error.message);
-      this.token = null;
-      return null;
-    };
+    let provider = new this.firebase.auth.GithubAuthProvider();
+    let gitHubProviderResults =
+      await this.getFirebase().auth().signInWithPopup(provider);
+    this.token = await authorizationResults.credential.accessToken;
+    return gitHubProviderResults;
   }
 
   /**
@@ -109,19 +100,12 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {<Promise> null} 
+   * @return {<Promise> null} can throw errors
    */
 
   async signOut() {
-    try {
-      await this.getFirebase().auth().signOut();
-      this.token = null;
-    } catch (error) {
-      // Handle Errors here
-      console.error(error);
-      // TODO: Change this in future iterations	
-      alert(error.message);
-    };
+    await this.getFirebase().auth().signOut();
+    this.token = null;
     return null;
   }
 
@@ -136,7 +120,7 @@ class GitHubAuthorizer {
    * NOTE: this function is asynchronous and should be used with an await
    *
    * @return {<Promise> Firebase.UserCredential | null} credentials of the 
-   * authorized user or null if an error occurs or the user is signed out
+   * authorized user or null the user is signed out
    */
   toggleSignIn() {
     if (this.getUser()) {
