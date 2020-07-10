@@ -105,7 +105,7 @@ class GitHubAuthorizer {
    *
    * @return {<Promise> null} can throw errors
    */
-  async signOut() {
+  signOut() {
     return this.getFirebase().auth().signOut().then(() => {
       this.token = null;
       return null;
