@@ -5,6 +5,15 @@ const firebaseConfig = {
 };
 
 /**
+ * The enum returned after authorization is toggled
+ * @typedef AuthorizationEnum 
+ * @property {boolean} isValid false if an error occurs during authorization
+ * true otherwise.
+ * @property {String} gitHubToken a GitHub API access token if user was 
+ * authorized null otherwise
+ */
+
+/**
  * Object used for GitHub authorization and as a wrapper for Firebase.
  * It handles Firebase initialization on instantiation and holds nifty
  * functions for handling GitHub authorization. We are using a class to have
@@ -84,8 +93,8 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {boolean} true if no errors occured during authorization, false
-   * otherwise
+   * @return {AuthorizationEnum} true if no errors occured during
+   * authorization, false otherwise.
    */
   async toggleAuthorization() {
     if (!this.getFirebase().auth().currentUser) {
@@ -102,14 +111,20 @@ class GitHubAuthorizer {
         // TODO: Change this in future iterations
         alert(error.message);
         this.token = null;
-        return false;
+        return {
+          gitHubToken: null,
+          isValid: false,
+        };
       }
     } else {
       // if logged in, sign out
       this.getFirebase().auth().signOut();
       this.token = null;
     }
-    return true;
+    return {
+      gitHubToken: this.token,
+      isValid: true,
+    };
   }
 
   /**
@@ -119,8 +134,8 @@ class GitHubAuthorizer {
    * NOTE: This is not an instance function and will not be exported.
    */
   initializeFirebase() {
-    if (this.getFirebase().apps.length === 0) { // eslint-disable-line
-      this.getFirebase().initializeApp(firebaseConfig); // eslint-disable-line
+    if (this.getFirebase().apps.length === 0) {
+      this.getFirebase().initializeApp(firebaseConfig);
     }
   }
 }
