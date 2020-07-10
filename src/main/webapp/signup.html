@@ -8,15 +8,16 @@
 <link rel="stylesheet" href="style.css">
 
 <div class="container">
-  <h1 class="display-4 mt-5">Sign Up for Open Sesame!</h1>
-  <h4 class="emphasis mb-5">Looking to find a mentor within the open source community, or become a mentor to foster the next generation of open source contributors? Sign up here!</h4>
+  <h1 class="display-4 mt-5">Create your Open Sesame Profile!</h1>
+  <h4 class="emphasis mb-5">Looking to find a mentor within the open source community, or become a mentor to foster the next generation of open source contributors? Create your profile to get started!</h4>
   <hr/>
   <form id="signup-form">
     <div class="form-group">
-      <button class="font-weight-bold">Link Your GitHub Account</button>
+      <button class="btn btn-purple font-weight-bold" name="github-link-button">Link Your GitHub Account</button>
       <small id="gitHubHelp" class="form-text text-muted">We will use your GitHub account to populate your name and bio and message you when you match with a mentor/mentee.</small>
     </div>
-    <div class="form-group">
+    <!-- TODO : Look into a more efficient method for adding interests. Potentially a React component. -->
+    <div id="interests" class="form-group">
       <label for="interests" class="font-weight-bold">Interests</label>
       <div class="form-check">
         <input class="form-check-input" type="checkbox" id="check1" value="python">
@@ -73,12 +74,15 @@
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="check9" value="documentation">
-        <label class="form-check-label" for="check9">
+        <input class="form-check-input" type="checkbox" id="check10" value="documentation">
+        <label class="form-check-label" for="check10">
             Documentation
         </label>
       </div>
     </div>
-    <button class="btn text-center">Submit</button>
+    <button class="btn btn-purple text-center" type="submit" name="submit-button" disabled>Submit</button>
   </form>
 </div>
+
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
+<script type="module" src="./signup.js"></script>
