@@ -10,13 +10,13 @@ function getUser(user) { //eslint-disable-line
 
   // TODO: switch to standard fetch error handler
   fetch('/user', {method: 'GET', body: params})
-    .then(errorHandling).then((response) => response.json())
-    .then((user) => {
-      return user;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then(errorHandling).then((response) => response.json())
+      .then((user) => {
+        return user;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 }
 
 /**
