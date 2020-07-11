@@ -89,10 +89,10 @@ class GitHubAuthorizer {
   signIn() {
     const provider = new this.firebase.auth.GithubAuthProvider();
     return this.getFirebase().auth().signInWithPopup(provider)
-        .then((result) => {
-          this.token = result.credential.accessToken;
-          return result;
-        });
+      .then((result) => {
+        this.token = result.credential.accessToken;
+        return result;
+      });
   }
 
   /**
@@ -102,8 +102,8 @@ class GitHubAuthorizer {
    * Side Effects: Sets the current objects token to null if successful.
    *
    * NOTE: this function is asynchronous and should be used with an await
-   *
-   * @return {<Promise> null} can throw errors
+   * 
+   * @return {null} can throw errors
    */
   signOut() {
     return this.getFirebase().auth().signOut().then(() => {
@@ -122,7 +122,7 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {<Promise> Firebase.UserCredential | null} credentials of the
+   * @return { Firebase.UserCredential | null} credentials of the
    * authorized user or null the user is signed out
    */
   toggleSignIn() {
