@@ -5,18 +5,39 @@
  * defined API error from the Open Sesame API.
  *
  * All error responses from the Open Sesame API should contain a JSON body
- * formatted to match the ErrorResponse object here. {@link ErrorResponse}.
+ * formatted to match the ErrorResponse class.
  */
-/**
- * @typedef ErrorResponse
- * @property {string} error
- * @property {number} [statusCode]
- * @property {string} userMessage
- */
+export class ErrorResponse extends Error {
+  /**
+   * Creates a JS error with additional information for frontend use.
+   * @param {string} message
+   * @param {number} [statusCode]
+   * @param {string} userMessage 
+   */
+  constructor(message, statusCode, userMessage) {
+    super(message);
+    /**
+     * The name of the error, which is error and the status code if one is
+     * available. For example: 'Error 404'.
+     * @type {string}
+     */
+    this.name = statusCode ? `Error ${statusCode}` : 'Error';
+    /**
+     * The HTTP status code of the error. Reference here for more information:
+     * https://www.restapitutorial.com/httpstatuscodes.html
+     * @type {number}
+     */
+    this.statusCode = statusCode;
+    /**
+     * A user-friendly message describing what went wrong.
+     * @type {string}
+     */
+    this.userMessage = userMessage;
+  }
+}
 /**
  * Standardizes the errors of a fetch request made to the Open Sesame backend
  * for easier error handling.
- * {@link ErrorResponse}
  * @param {Promise} fetchRequest A fetch request to the Open Sesame backend.
  * @param {string} fetchFailedUserMessage The message to display to the user
  *    when the fetch itself has failed due to a network error.
@@ -30,13 +51,8 @@ export function standardizeFetchErrors(
   return fetchRequest.catch((fetchError) => {
     // Fetch encountered an error while making the request (a network
     // error).
-    /** @type {ErrorResponse} */
-    const errorResponse = {
-      error: fetchError,
-      userMessage: fetchFailedUserMessage,
-    };
-
-    return Promise.reject(errorResponse);
+    return Promise.reject(
+        new ErrorResponse(fetchError.message, null, fetchFailedUserMessage));
   }).then((response) => {
     if (!response.ok) {
       // Fetch received a response from the server but the response contained
@@ -61,11 +77,10 @@ export function makeRelativeUrlAbsolute(relativeUrl) {
 
 /**
  * Formats an API error response to match the ErrorResponse convention.
- * {@link ErrorResponse}
  * @param {Response} errorResponse
  * @param {string} genericServerErrorUserMessage
  * @return {Promise} Returns a promise that rejects with a properly-formatted
- *    ErrorResponse object. {@link ErrorResponse}
+ *    ErrorResponse error.
  */
 function formatAPIErrorResponse(errorResponse, genericServerErrorUserMessage) {
   if (errorResponse.headers.get('Content-Type').startsWith('text/html')) {
@@ -74,11 +89,11 @@ function formatAPIErrorResponse(errorResponse, genericServerErrorUserMessage) {
     // internal error and could not continue with the request
     // or a 404 error if the servlet could not find a requested endpoint.
     return errorResponse.text().then((errorText) => {
-      return Promise.reject({
-        error: extractErrorTextFromHTML(errorText),
-        statusCode: errorResponse.status,
-        userMessage: genericServerErrorUserMessage,
-      });
+      return Promise.reject(new ErrorResponse(
+        extractErrorTextFromHTML(errorText),
+        errorResponse.status,
+        genericServerErrorUserMessage
+      ));
     });
   } else if (errorResponse.headers.get('Content-Type')
       .startsWith('application/json')) {
@@ -86,14 +101,18 @@ function formatAPIErrorResponse(errorResponse, genericServerErrorUserMessage) {
     // for the Open Sesame API. These responses follow the same format as
     // the ErrorResponse type.
     return errorResponse.json().then((errorJson) => {
-      return Promise.reject(errorJson);
+      return Promise.reject(new ErrorResponse(
+        errorJson.message,
+        errorJson.statusCode,
+        errorJson.userMessage
+      ));
     });
   } else {
-    return Promise.reject({
-      error: 'Error could not be parsed; unanticipated content type.',
-      statusCode: errorResponse.status,
-      userMessage: genericServerErrorUserMessage,
-    });
+    return Promise.reject(new ErrorResponse(
+      'Error could not be parsed; unanticipated content type.',
+      errorResponse.status,
+      genericServerErrorUserMessage
+    ));
   }
 }
 
