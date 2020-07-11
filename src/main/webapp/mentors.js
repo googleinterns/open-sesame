@@ -1,3 +1,6 @@
+import standardizeFetchErrors from '/js/fetch_handler.js';
+getMentors();
+
 /**
  * Get mentors from the mentor servlet.
  * @param {String} response
@@ -6,9 +9,13 @@ function getMentors() { // eslint-disable-line no-unused-vars
   console.log('entering get mentors function/n');
   let url = new URL(
       '/mentors', window.location.protocol + '//' + window.location.hostname);
-
-  fetch(url).then(errorHandling).then((response) => response.json())
-      .then((mentors) => {
+  const fetchRequest = standardizeFetchErrors(
+        fetch(url),
+        'Failed to communicate with the server, please try again later.',
+        'Encountered a server error, please try again later.');
+  
+  fetchRequest.then((mentors) => {
+    console.log('got mentor data');
     const mentorsContainer = document.getElementById('mentors-container');
     mentorsContainer.innerHTML = '';
     for (const mentor of mentors) {
@@ -16,21 +23,11 @@ function getMentors() { // eslint-disable-line no-unused-vars
       mentorsContainer.appendChild(createMentorElement(mentor));
     }
   })
-  .catch((error) => {
-    console.log(error);
+  .catch((errorResponse) => {
+      alert(errorResponse.userMessage);
+      console.error(
+          `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
   });
-}
-
-/**
- * Basic error handling checks if fetch results are 'ok.'
- * @param {Response} response - A fetch response.
- * @return {Response} the response.
- */
-function errorHandling(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
 }
 
 /**
@@ -59,9 +56,9 @@ function createMentorElement(mentor) {
   mentorDescription.innerHTML = mentor.description;
   mentorCardBody.appendChild(mentorDescription);
 
-  mentorCardBody.appendChild(createTagRow(mentor.interestTags));
+  mentorCardBody.appendChild(createTagDiv(mentor.interestTags));
 
-  mentorCardBody.appendChild( createProjectsRow(mentor.projectIDs));
+  mentorCardBody.appendChild( createProjectsDiv(mentor.projectIDs));
 
   mentorCard.appendChild(mentorCardBody);
   mentorContainer.appendChild(mentorCard);
