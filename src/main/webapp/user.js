@@ -9,20 +9,20 @@ function getUser(user) { //eslint-disable-line
   params.append('user', user);
 
   // TODO: switch to standard fetch error handler
-  fetch('/user', {method: 'GET', body: params})
-      .then(errorHandling).then((response) => response.json())
-      .then((user) => {
-        return user;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  fetch('/user', { method: 'GET', body: params })
+    .then(errorHandling).then((response) => response.json())
+    .then((user) => {
+      return user;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 /**
  * Basic error handling checks if fetch results are 'ok.'
- * @param {Response} response the HTTP response
- * @return {Response}an 'ok' HTTP response
+ * @param {Response} response the HTTP response   
+ * @return {Response}an 'ok' HTTP response   
  */
 function errorHandling(response) {
   if (!response.ok) {
