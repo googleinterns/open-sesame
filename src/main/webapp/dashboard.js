@@ -113,7 +113,6 @@ function createAboutMe(user) {
 
   userGithubButton.href = user.gitHubURL;
 
-
   for (let tag of user.interestTags) {
     addTag(tag, userTagRow);
   }
@@ -207,6 +206,7 @@ function createMenteeCard(mentee) {
   const menteeCardElement = document.createElement('div');
   menteeCardElement.className = 'card card-holder col-' +
     ' text-center m-1 p-2';
+
   const menteeCardBody = document.createElement('div');
   menteeCardBody.className = 'card-body';
   menteeCardElement.append(menteeCardBody);
