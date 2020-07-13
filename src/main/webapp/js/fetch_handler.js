@@ -7,7 +7,7 @@
  * All error responses from the Open Sesame API should contain a JSON body
  * formatted to match the ErrorResponse class.
  */
-export class ErrorResponse extends Error {
+class ErrorResponse extends Error {
   /**
    * Creates a JS error with additional information for frontend use.
    * @param {string} message
@@ -46,7 +46,7 @@ export class ErrorResponse extends Error {
  * @return {Promise} Returns a promise that formats the errors from a fetch
  *    request.
  */
-export function standardizeFetchErrors(
+function standardizeFetchErrors(
     fetchRequest, fetchFailedUserMessage, genericServerErrorUserMessage) {
   return fetchRequest.catch((fetchError) => {
     // Fetch encountered an error while making the request (a network
@@ -59,7 +59,7 @@ export function standardizeFetchErrors(
       // an error code.
       return formatAPIErrorResponse(response, genericServerErrorUserMessage);
     } else {
-      return response.json();
+      return response;
     }
   });
 }
@@ -71,8 +71,20 @@ export function standardizeFetchErrors(
  * @param {string} relativeUrl
  * @return {URL} Returns the absolute URL.
  */
-export function makeRelativeUrlAbsolute(relativeUrl) {
+function makeRelativeUrlAbsolute(relativeUrl) {
   return new URL(relativeUrl, window.location.origin);
+}
+
+/**
+ * Logs the error to the console and alerts the user through a browser alert if
+ * there is a user message available.
+ * @param {Error} error
+ */
+function basicErrorHandling(error) {
+  console.error(error);
+  if (typeof(error.userMessage) !== 'undefined') {
+    alert(error.userMessage);
+  }
 }
 
 /**
@@ -128,3 +140,10 @@ function extractErrorTextFromHTML(htmlString) {
   return Array.from(body.childNodes)
       .map((child) => child.textContent).join(' ');
 }
+
+export {
+  ErrorResponse,
+  standardizeFetchErrors,
+  makeRelativeUrlAbsolute,
+  basicErrorHandling,
+};
