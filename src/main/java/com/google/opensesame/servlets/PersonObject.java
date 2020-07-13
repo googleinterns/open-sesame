@@ -20,7 +20,6 @@ public class PersonObject {
   /**
    * Creates a PersonObject with the given parameters
    *
-   * @param name
    * @param gitHubID
    * @param interestTags
    * @throws IOException
