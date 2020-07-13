@@ -3,7 +3,6 @@ package com.google.opensesame.projects;
 import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
@@ -13,43 +12,35 @@ import org.kohsuke.github.GitHub;
  */
 public class ProjectPreviewData {
   /**
-   * Creates a ProjectPreview object from a set of project properties.
-   *
-   * @param properties The properties of a project entity. This can come directly from a datastore
-   *     entity, as datastore entities inherit a getProperty() method from PropertyContainer:
-   *     https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Entity
-   * @return Returns the created ProjectPreview.
+   * Creates project preview data from a ProjectEntity.
+   * @param projectEntity A project entity from datastore or manually created.
+   * @return Returns the created ProjectPreviewData.
    * @throws IOException Throws when there is an error communicating with the GitHub API.
    */
-  public static ProjectPreviewData fromProperties(Map<String, Object> properties)
+  public static ProjectPreviewData fromProjectEntity(ProjectEntity projectEntity)
       throws IOException {
     GitHub gitHub = GitHubGetter.getGitHub();
-    GHRepository repository =
-        gitHub.getRepositoryById((String) properties.get(ProjectEntity.REPOSITORY_ID_KEY));
+    GHRepository repository = gitHub.getRepositoryById(projectEntity.repositoryId);
 
-    return fromPropertiesAndRepository(properties, repository);
+    return fromProjectEntity(projectEntity, repository);
   }
 
   /**
-   * Creates a ProjectPreview object from a set of project properties and its associated GitHub
-   * repository.
-   *
-   * @param properties The properties of a project entity. This can come directly from a datastore
-   *     entity, as datastore entities inherit a getProperty() method from PropertyContainer:
-   *     https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Entity
+   * Creates project preview data from a ProjectEntity and the GitHub repository.
+   * @param projectEntity A project entity from datastore or manually created.
    * @param repository The GitHub repository associated with the project.
-   * @return Returns the created ProjectPreview
+   * @return Returns the created ProjectPreviewData.
    * @throws IOException Throws when there is an error communicating with the GitHub API.
    */
-  public static ProjectPreviewData fromPropertiesAndRepository(
-      Map<String, Object> properties, GHRepository repository) throws IOException {
+  public static ProjectPreviewData fromProjectEntity(
+      ProjectEntity projectEntity, GHRepository repository) throws IOException {
     return new ProjectPreviewData(
         repository.getName(),
         repository.getDescription(),
         repository.listTopics(),
         repository.getLanguage(),
-        (int) properties.get(ProjectEntity.NUM_MENTORS_KEY),
-        (String) properties.get(ProjectEntity.REPOSITORY_ID_KEY));
+        (int) projectEntity.getNumMentors(),
+        projectEntity.repositoryId);
   }
 
   private final String name;
