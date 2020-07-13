@@ -9,11 +9,7 @@ import com.google.gson.Gson;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -75,8 +71,8 @@ public class MentorsServlet extends HttpServlet {
     response.getWriter().println(jsonMentors);
   }
 
-  //This function prints an error message to the mentor form page if invalid input is found.
-  public void formError(HttpServletRequest request, HttpServletResponse response, String error)  
+  // This function prints an error message to the mentor form page if invalid input is found.
+  public void formError(HttpServletRequest request, HttpServletResponse response, String error)
       throws ServletException, IOException {
     response.setContentType("application/json");
     response.getWriter().println(new Gson().toJson(error));
@@ -89,15 +85,15 @@ public class MentorsServlet extends HttpServlet {
     String repoUrl = request.getParameter("inputRepo");
     String repoName = repoUrl.replaceFirst("https://github.com/", "");
     GitHub gitHub = GitHubGetter.getGitHub();
-    try { 
+    try {
       GHRepository inputRepo = gitHub.getRepository(repoName);
-    } catch(Exception e) {
+    } catch (Exception e) {
       System.out.println("Couldn't find repo\n");
       formError(request, response, "COULDN'T FIND REPO");
       return;
     }
 
-    //TODO: Send Richie the GHRepository ID and person ID to add to projects database
+    // TODO: Send Richie the GHRepository ID and person ID to add to projects database
     //      Send to a function in the ProjectEntity.java class
 
     String userID = AuthServlet.getAuthorizedUser().getUserId();
