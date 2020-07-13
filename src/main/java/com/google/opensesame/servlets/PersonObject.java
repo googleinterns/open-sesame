@@ -8,25 +8,19 @@ import org.kohsuke.github.GitHub;
 
 /** A class containing basic user data. This is intended to be serialized and sent to the client. */
 public class PersonObject {
-  public static String ENTITY_NAME = "User";
-  public static String GITHUB_ID_FIELD = "github-id";
-  public static String TAG_LIST_FIELD = "tags";
-
   private final ArrayList<String> interestTags;
   private final String bio;
   private final String email;
   private final String gitHubID;
+  private final String gitHubURL;
   private final String image;
   private final String location;
   private final String name;
-  private final String gitHubURL;
 
   /**
    * Creates a PersonObject with the given parameters
    *
-   * @param name
    * @param gitHubID
-   * @param bio
    * @param interestTags
    * @throws IOException
    */
