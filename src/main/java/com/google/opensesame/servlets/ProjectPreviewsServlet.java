@@ -1,10 +1,14 @@
 package com.google.opensesame.servlets;
 
-import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
+import com.google.opensesame.projects.ProjectDatastore;
+import com.google.opensesame.projects.ProjectEntity;
 import com.google.opensesame.projects.ProjectPreviewData;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,21 +20,14 @@ public class ProjectPreviewsServlet extends HttpServlet {
   private final Gson gson = new Gson();
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<Entity> testProjectEntities = new ArrayList<Entity>();
-    Entity firstTestProjectEntity = new Entity("Project");
-    firstTestProjectEntity.setProperty("repositoryId", "45717250");
-    firstTestProjectEntity.setProperty("numMentors", 5);
-    testProjectEntities.add(firstTestProjectEntity);
-
-    Entity secondTestProjectEntity = new Entity("Project");
-    secondTestProjectEntity.setProperty("repositoryId", "20580498");
-    secondTestProjectEntity.setProperty("numMentors", 1);
-    testProjectEntities.add(secondTestProjectEntity);
-
-    ArrayList<ProjectPreviewData> projectPreviews = new ArrayList<ProjectPreviewData>();
-    for (Entity projectEntity : testProjectEntities) {
-      projectPreviews.add(ProjectPreviewData.fromProperties(projectEntity.getProperties()));
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
+    Query projectsQuery = new Query("Project")
+        .addSort(ProjectEntity.NUM_MENTORS_KEY, SortDirection.DESCENDING);
+    
+    List<ProjectEntity> projectEntities = ProjectDatastore.getByQuery(projectsQuery);
+    List<ProjectPreviewData> projectPreviews = new ArrayList<ProjectPreviewData>();
+    for (ProjectEntity projectEntity : projectEntities) {
+      projectPreviews.add(ProjectPreviewData.fromProjectEntity(projectEntity));
     }
 
     String projectPreviewsJson = gson.toJson(projectPreviews);
