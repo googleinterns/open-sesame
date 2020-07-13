@@ -24,6 +24,12 @@ public class ProjectDatastore {
    * @return Returns the key associated with the datastore entity.
    */
   public static Key addProjectEntity(ProjectEntity projectEntity) {
+    if (projectEntity.getNumMentors() <= 0) {
+      System.out.println("Saving project (" + projectEntity.repositoryId + ") with zero mentors."
+          + " This is most likely a mistake, as projects should only exist in the"
+          + " datastore with one or more mentors.");
+    }
+
     Entity newProjectEntity = new Entity(PROJECT_KIND, projectEntity.repositoryId);
     projectEntity.fillEntity(newProjectEntity);
 
