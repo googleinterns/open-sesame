@@ -25,9 +25,12 @@ public class ProjectDatastore {
    */
   public static Key addProjectEntity(ProjectEntity projectEntity) {
     if (projectEntity.getNumMentors() <= 0) {
-      System.out.println("Saving project (" + projectEntity.repositoryId + ") with zero mentors."
-          + " This is most likely a mistake, as projects should only exist in the"
-          + " datastore with one or more mentors.");
+      System.out.println(
+          "Saving project ("
+              + projectEntity.repositoryId
+              + ") with zero mentors."
+              + " This is most likely a mistake, as projects should only exist in the"
+              + " datastore with one or more mentors.");
     }
 
     Entity newProjectEntity = new Entity(PROJECT_KIND, projectEntity.repositoryId);
@@ -58,15 +61,16 @@ public class ProjectDatastore {
 
   /**
    * Gets a project entity by its repository ID. If it doesn't exist, creates a new ProjectEntity
-   * and returns that. 
+   * and returns that.
+   *
    * @param repositoryId The GitHub repository ID.
    * @return Returns an existing ProjectEntity or a new ProjectEntity with the specified repository
-   *    ID.
+   *     ID.
    */
   public static ProjectEntity getByRepositoryIdOrNew(String repositoryId) {
     ProjectEntity projectEntity = getByRepositoryId(repositoryId);
     if (projectEntity == null) {
-      projectEntity = 
+      projectEntity =
           new ProjectEntity(repositoryId, new ArrayList<String>(), new ArrayList<String>());
     }
 
