@@ -1,4 +1,4 @@
-import { getUser } from 'user.js';
+import {getUser} from 'user.js';
 
 /**
  * A project
@@ -58,20 +58,20 @@ const dummyUser = {
 
 /** @const {Mentee List} */
 const dummyMentees = [{
-    name: 'Richi',
-    starLink: '#givestar',
-    image: dummyImg,
-  },
-  {
-    name: 'Obi',
-    starLink: '#givestar',
-    image: dummyImg,
-  },
-  {
-    name: 'Sami',
-    starLink: '#givestar',
-    image: dummyImg,
-  },
+  name: 'Richi',
+  starLink: '#givestar',
+  image: dummyImg,
+},
+{
+  name: 'Obi',
+  starLink: '#givestar',
+  image: dummyImg,
+},
+{
+  name: 'Sami',
+  starLink: '#givestar',
+  image: dummyImg,
+},
 ];
 
 /** @const {Project} */
@@ -113,7 +113,7 @@ function createAboutMe(user) {
 
   userGithubButton.href = user.gitHubURL;
 
-  for (let tag of user.interestTags) {
+  for (const tag of user.interestTags) {
     addTag(tag, userTagRow);
   }
 }
