@@ -33,7 +33,7 @@ jobs:
     - name: Commit ESLint changes
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: apply ESLint changes
+        commit_message: Apply ESLint changes.
     - name: Annotate ESLint errors
       uses: hallee/eslint-action@1.0.3
       if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
