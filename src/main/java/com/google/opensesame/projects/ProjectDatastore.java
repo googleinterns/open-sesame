@@ -52,6 +52,7 @@ public class ProjectDatastore {
 
   /**
    * Get a list of project entities by query and fetch options.
+   *
    * @param projectsQuery The datastore query.
    * @param fetchOptions The fetch options for the query.
    * @return Returns a list of project entities from the query.
@@ -75,6 +76,7 @@ public class ProjectDatastore {
 
   /**
    * Get a list of project entities by query.
+   *
    * @param projectsQuery The datastore query.
    * @return Returns a list of project entities from the query.
    */

@@ -13,6 +13,7 @@ import org.kohsuke.github.GitHub;
 public class ProjectPreviewData {
   /**
    * Creates project preview data from a ProjectEntity.
+   *
    * @param projectEntity A project entity from datastore or manually created.
    * @return Returns the created ProjectPreviewData.
    * @throws IOException Throws when there is an error communicating with the GitHub API.
@@ -27,6 +28,7 @@ public class ProjectPreviewData {
 
   /**
    * Creates project preview data from a ProjectEntity and the GitHub repository.
+   *
    * @param projectEntity A project entity from datastore or manually created.
    * @param repository The GitHub repository associated with the project.
    * @return Returns the created ProjectPreviewData.
