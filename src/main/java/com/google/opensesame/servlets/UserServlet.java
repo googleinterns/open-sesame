@@ -34,12 +34,12 @@ public class UserServlet extends HttpServlet {
   // Get a specific user. Return null if not found. TODO: User Validation
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGithub = request.getParameter("githubID");
-    Key userKey = KeyFactory.createKey(PersonObject.ENTITY_NAME, userGithub);
+    Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userGithub);
 
     PersonObject userObject;
 
     try {
-      userObject = new PersonBuilder().userFromEntity(datastore.get(userKey));
+      userObject = new PersonBuilder().buildPersonObject(datastore.get(userKey));
     } catch (Exception e) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Person does not exist in Datastore");
       return;
@@ -61,29 +61,20 @@ public class UserServlet extends HttpServlet {
     ArrayList<String> userTags =
         (ArrayList<String>) Arrays.asList(request.getParameterValues("tags"));
 
-    storePersonObject(
-        new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPerson());
-  }
-
-  // TODO: Add the person entity creation to the PersonObject/make it it's own class
-  /**
-   * Send a person entity to datastore with information about a given PersonObject @param person.
-   *
-   * @param person a person object
-   */
-  public void storePersonObject(PersonObject person) {
-    Entity personEntity = new Entity(PersonObject.ENTITY_NAME, person.getGitHubID());
-    personEntity.setProperty(PersonObject.GITHUB_ID_FIELD, person.getGitHubID());
-    personEntity.setProperty(PersonObject.TAG_LIST_FIELD, person.getTags());
+    Entity personEntity =
+        new PersonBuilder()
+        .gitHubID(userGitHubID)
+        .interestTags(userTags)
+        .buildPersonEntity();
     datastore.put(personEntity);
   }
 
   // TODO: use function in other servlets.
   /**
-   * Query datastore for entities. Comparisons are done with @param field coming first. For
-   * example @param field EQUAL @param value. Look at
+   * Query datastore for entities. Comparisons are done with field coming first. For
+   * example field EQUAL value. Look at
    * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Query.FilterOperator
-   * for more information on the @param operator
+   * for more information on the operator
    *
    * @param EntityName the type of entity to be queried for
    * @param field the field that is being used to query
@@ -92,9 +83,9 @@ public class UserServlet extends HttpServlet {
    * @return {PreparedQuery} a Datastore prepared query.
    */
   public PreparedQuery queryInDatabase(
-      Entity EntityName, String field, Object thingToBeCompareTo, FilterOperator operator) {
+      String entityName, String field, Object thingToBeCompareTo, FilterOperator operator) {
     Filter userFilter = new FilterPredicate(field, operator, thingToBeCompareTo);
-    return datastore.prepare(new Query(PersonObject.ENTITY_NAME).setFilter(userFilter));
+    return datastore.prepare(new Query(entityName).setFilter(userFilter));
   }
 
   // TODO: make error handling conform with Richie's error handling
