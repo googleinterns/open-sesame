@@ -19,7 +19,7 @@ export default function ProjectList(props) {
   return (
     <div className="p-4 row">
       {props.projectPreviews.map((projectPreview, i) =>
-        <ProjectPreview key={i} projectPreview={projectPreview} />)}
+          <ProjectPreview key={i} projectPreview={projectPreview} />)}
     </div>
   );
 }

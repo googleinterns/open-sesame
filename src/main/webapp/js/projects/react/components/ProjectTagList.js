@@ -10,7 +10,7 @@ export default function ProjectTagList(props) {
       {props.tags.map((tag, i) => {
         return (
           <div key={i}
-            className="border border-muted text-muted mr-1 mb-1 badge">
+              className="border border-muted text-muted mr-1 mb-1 badge">
             {tag}
           </div>
         );

@@ -16,9 +16,9 @@ describe('Fetch error handler', () => {
     });
 
     const formattedRequest = standardizeFetchErrors(
-        fetchMock('https://localhost/test'),
-        fetchFailedMessage,
-        genericServerErrorMessage);
+      fetchMock('https://localhost/test'),
+      fetchFailedMessage,
+      genericServerErrorMessage);
 
     return formattedRequest.then((res) => {
       fail('Did not catch the error.');
@@ -39,9 +39,9 @@ describe('Fetch error handler', () => {
     });
 
     const formattedRequest = standardizeFetchErrors(
-        fetchMock('https://localhost/test'),
-        fetchFailedMessage,
-        genericServerErrorMessage);
+      fetchMock('https://localhost/test'),
+      fetchFailedMessage,
+      genericServerErrorMessage);
 
     return formattedRequest.then((res) => {
       fail('Did not catch the error.');
@@ -68,9 +68,9 @@ describe('Fetch error handler', () => {
     });
 
     const formattedRequest = standardizeFetchErrors(
-        fetchMock('https://localhost/test'),
-        fetchFailedMessage,
-        genericServerErrorMessage);
+      fetchMock('https://localhost/test'),
+      fetchFailedMessage,
+      genericServerErrorMessage);
 
     return formattedRequest.then((res) => {
       fail('Did not catch the error.');
@@ -90,10 +90,10 @@ describe('Fetch error handler', () => {
     });
 
     const formattedRequest = standardizeFetchErrors(
-        fetchMock('https://localhost/test'),
-        fetchFailedMessage,
-        genericServerErrorMessage);
-
+      fetchMock('https://localhost/test'),
+      fetchFailedMessage,
+      genericServerErrorMessage);
+ 
     return formattedRequest.then((res) => {
       fail('Did not catch the error.');
     }).catch((errorResponse) => {
@@ -112,15 +112,15 @@ describe('Fetch error handler', () => {
     fetchMock.get('https://localhost/test', {
       body: JSON.stringify(mockApiResponse),
       status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+        headers: {
+          'Content-Type': 'application/json',
+        },
     });
 
     const formattedRequest = standardizeFetchErrors(
-        fetchMock('https://localhost/test'),
-        fetchFailedMessage,
-        genericServerErrorMessage);
+      fetchMock('https://localhost/test'),
+      fetchFailedMessage,
+      genericServerErrorMessage);
 
     return formattedRequest.then((json) => {
       expect(json.message).toEqual('Test response');

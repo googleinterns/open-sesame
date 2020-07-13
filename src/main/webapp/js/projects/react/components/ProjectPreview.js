@@ -23,7 +23,7 @@ export default function ProjectPreview(props) {
           <p>{projectPreview.description}</p>
         </div>
         <div className=
-          "px-3 pb-3 mt-auto d-flex flex-wrap justify-content-center">
+            "px-3 pb-3 mt-auto d-flex flex-wrap justify-content-center">
           <span>
             <strong className="h5 text-success mr-2">
               {projectPreview.numMentors}

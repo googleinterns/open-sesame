@@ -4,21 +4,21 @@
  */
 function getMentors() { // eslint-disable-line no-unused-vars
   console.log('entering get mentors function/n');
-  const url = new URL(
+  let url = new URL(
       '/mentors', window.location.protocol + '//' + window.location.hostname);
 
   fetch(url).then(errorHandling).then((response) => response.json())
       .then((mentors) => {
-        const mentorsContainer = document.getElementById('mentors-container');
-        mentorsContainer.innerHTML = '';
-        for (const mentor of mentors) {
-          console.log(mentor);
-          mentorsContainer.appendChild(createMentorElement(mentor));
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const mentorsContainer = document.getElementById('mentors-container');
+    mentorsContainer.innerHTML = '';
+    for (const mentor of mentors) {
+      console.log(mentor);
+      mentorsContainer.appendChild(createMentorElement(mentor));
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 }
 
 /**
@@ -75,9 +75,9 @@ function createMentorElement(mentor) {
  * @return {HTMLElement} userGithubButton
  */
 function createGitHubLink(gitHubID) {
-  const gitHubBaseUrl = 'https://github.com/';
+  let gitHubBaseUrl = 'https://github.com/';
   const gitLink = gitHubBaseUrl.concat(gitHubID);
-  const userGithubButton = document.createElement('a');
+  let userGithubButton = document.createElement('a');
   userGithubButton.innerText = 'GitHub Profile';
   userGithubButton.className = 'btn btn-primary';
   userGithubButton.role = 'button';
@@ -91,10 +91,10 @@ function createGitHubLink(gitHubID) {
  * @return {HTMLElement} tagDiv
  */
 function createTagDiv(interestTags) {
-  const tagDiv = document.createElement('div');
+  let tagDiv = document.createElement('div');
   tagDiv.className = 'row p-3';
   for (const tagText of interestTags) {
-    const tagElement = document.createElement('div');
+    let tagElement = document.createElement('div');
     tagElement.className = 'border border-muted text-muted mr-1 mb-1 badge';
     tagElement.innerText = tagText;
     tagDiv.append(tagElement);
@@ -108,13 +108,13 @@ function createTagDiv(interestTags) {
  * @return {HTMLElement} projectsDiv
  */
 function createProjectsDiv(projectIDs) {
-  const projectsDiv = document.createElement('div');
+  let projectsDiv = document.createElement('div');
   projectsDiv.className = 'row p-3';
   for (const projectID of projectIDs) {
-    const projectElement = document.createElement('div');
+    let projectElement = document.createElement('div');
     projectElement.className = 'card container card-holder col-12' +
         ' text-center project-card p-3 m-3';
-    const cardTitleElement = document.createElement('h4');
+    let cardTitleElement = document.createElement('h4');
     cardTitleElement.className = 'card-title dark-emph';
     cardTitleElement.innerText = projectID;
     projectElement.appendChild(cardTitleElement);
