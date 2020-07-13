@@ -62,14 +62,17 @@ public class UserServlet extends HttpServlet {
         (ArrayList<String>) Arrays.asList(request.getParameterValues("tags"));
 
     Entity personEntity =
-        new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPersonEntity();
+        new PersonBuilder()
+        .gitHubID(userGitHubID)
+        .interestTags(userTags)
+        .buildPersonEntity();
     datastore.put(personEntity);
   }
 
   // TODO: use function in other servlets.
   /**
-   * Query datastore for entities. Comparisons are done with field coming first. For example field
-   * EQUAL value. Look at
+   * Query datastore for entities. Comparisons are done with field coming first. For
+   * example field EQUAL value. Look at
    * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Query.FilterOperator
    * for more information on the operator
    *
