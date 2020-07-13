@@ -9,7 +9,7 @@ afterEach(() => {
   fetchMock.restore();
 });
 
-describe('Fetch error handler', () => {
+describe('Fetch error standardizer', () => {
   it('correctly formats fetch errors', () => {
     fetchMock.get('https://localhost/test', {
       throws: new Error('Test error'),
@@ -122,7 +122,7 @@ describe('Fetch error handler', () => {
       fetchFailedMessage,
       genericServerErrorMessage);
 
-    return formattedRequest.then((json) => {
+    return formattedRequest.then((response) => response.json()).then((json) => {
       expect(json.message).toEqual('Test response');
     }).catch((errorResponse) => {
       fail('Caught an error from a successful request.');
