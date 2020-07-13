@@ -7,21 +7,17 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class PersonBuilder {
-  private String name;
+  public static String ENTITY_NAME = "User";
+  public static String GITHUB_ID_FIELD = "github-id";
+  public static String TAG_LIST_FIELD = "tags";
+
   private String gitHubID;
-  private String description = "";
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> projectIDs = new ArrayList<String>();
+  private String description;
+  private String name;
 
   public PersonBuilder() {}
-
-  public PersonObject buildPerson() throws IOException {
-    return new PersonObject(gitHubID, interestTags);
-  }
-
-  public MentorObject buildMentor() throws IOException {
-    return new MentorObject(gitHubID, interestTags, projectIDs);
-  }
 
   public PersonBuilder name(String name) {
     this.name = name;
@@ -47,25 +43,53 @@ public class PersonBuilder {
     this.projectIDs = projectIDs;
     return this;
   }
-
+  
   /**
-   * Convert an entity retrieved from Datastore into the Person type.
-   *
+   * Create a PersonObject instance with information from the current builder.
+   * @return PersonObject that corresponds with feilkds from this PersonBuilder 
+   * instance
+   * @throws IOException
+   */
+  public PersonObject buildPersonObject() throws IOException {
+    return new PersonObject(gitHubID, interestTags);
+  }
+  
+  /**
+   * Convert an entity retrieved from Datastore into a PersonObject.
    * @param personEntity PersonObject.ENTITY_NAME entity
    * @return PersonObject that corresponds to the entity retrieved from datastore
    * @throws IOException
    */
-  public PersonObject userFromEntity(Entity personEntity) throws IOException {
-    PersonBuilder userBuilder = new PersonBuilder();
-
-    String entityGitHubID = (String) personEntity.getProperty(PersonObject.GITHUB_ID_FIELD);
-    userBuilder.gitHubID(entityGitHubID);
+  public PersonObject buildPersonObject(Entity personEntity) throws IOException { 
+    String entityGitHubID = (String) personEntity.getProperty(GITHUB_ID_FIELD);
+    this.gitHubID(entityGitHubID);
     ArrayList<String> entityTagList =
         (ArrayList<String>)
-            Arrays.asList(personEntity.getProperty(PersonObject.TAG_LIST_FIELD)).stream()
+            Arrays.asList(personEntity.getProperty(TAG_LIST_FIELD)).stream()
                 .map(tag -> (String) tag)
                 .collect(Collectors.toList());
-    userBuilder.interestTags(entityTagList);
-    return userBuilder.buildPerson();
+    this.interestTags(entityTagList);
+    return this.buildPersonObject();
+  }
+
+  /**
+   * Create a MentorObject instance with information from the current builder.
+   * @return MentorObject that corresponds with feilds from this PersonBuilder 
+   * instance
+   * @throws IOException
+   */
+  public MentorObject buildMentor() throws IOException {
+    return new MentorObject(gitHubID, interestTags, projectIDs);
+  }
+
+   /**
+   * build an entity with information about a person.
+   * @return entity containing information from the personbuilder
+   */
+  public Entity buildPersonEntity() {
+    Entity personEntity = new Entity(ENTITY_NAME, this.gitHubID);
+    personEntity.setProperty(GITHUB_ID_FIELD, this.gitHubID);
+    personEntity.setProperty(TAG_LIST_FIELD, this.interestTags);
+    return personEntity; 
   }
 }
