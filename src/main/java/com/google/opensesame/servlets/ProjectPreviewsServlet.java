@@ -20,10 +20,10 @@ public class ProjectPreviewsServlet extends HttpServlet {
   private final Gson gson = new Gson();
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
-    Query projectsQuery = new Query("Project")
-        .addSort(ProjectEntity.NUM_MENTORS_KEY, SortDirection.DESCENDING);
-    
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query projectsQuery =
+        new Query("Project").addSort(ProjectEntity.NUM_MENTORS_KEY, SortDirection.DESCENDING);
+
     List<ProjectEntity> projectEntities = ProjectDatastore.getByQuery(projectsQuery);
     List<ProjectPreviewData> projectPreviews = new ArrayList<ProjectPreviewData>();
     for (ProjectEntity projectEntity : projectEntities) {

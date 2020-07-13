@@ -91,9 +91,10 @@ public class ProjectEntity {
   public int getNumInterestedUsers() {
     return this.interestedUserIds.size();
   }
-  
+
   /**
    * Adds the properties of this ProjectEntity object to an Entity.
+   *
    * @param entity The Datastore Entity to add this ProjectEntity's properties to.
    */
   public void fillEntity(Entity entity) {
@@ -106,6 +107,7 @@ public class ProjectEntity {
 
   /**
    * Convenience method for saving the project entity to the datastore.
+   *
    * @return Returns the key associated with the datastore entry.
    */
   public Key save() {
