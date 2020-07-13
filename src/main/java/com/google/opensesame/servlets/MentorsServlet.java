@@ -1,35 +1,24 @@
 package com.google.opensesame.servlets;
 
-
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.ServingUrlOptions;
-import com.google.appengine.api.users.User;
 import com.google.gson.Gson;
-import com.google.opensesame.github.GitHubGetter;
 import com.google.opensesame.auth.AuthServlet;
+import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
@@ -87,35 +76,18 @@ public class MentorsServlet extends HttpServlet {
   }
 
   //This function prints an error message to the mentor form page if invalid input is found.
-  public void formError(HttpServletRequest request, HttpServletResponse response, String error)  throws ServletException, IOException {
-    System.out.println("form error!");
+  public void formError(HttpServletRequest request, HttpServletResponse response, String error)  
+      throws ServletException, IOException {
     response.setContentType("application/json");
     response.getWriter().println(new Gson().toJson(error));
-    /*String message = "<ul><li class='ml-3 display-4 font-weight-bold text-danger'>"   + error + "</li></ul>";
-    response.setContentType("text/html");
-    PrintWriter pw = response.getWriter();
-    pw.print(message);
-    RequestDispatcher rd = request.getRequestDispatcher("mentor_form.html");
-    rd.include(request, response);
-    pw.close();*/
     return;
   }
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    System.out.println("request is " + request);
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
     String repoUrl = request.getParameter("inputRepo");
-    System.out.println("repo is " + repoUrl);
-    /*String urlPattern = "https://github.com/";
-    Pattern regEx = Pattern.compile(urlPattern);
-    Matcher inputMatcher = regEx.matcher(repoUrl);
-    if (!inputMatcher.find()) {
-      //Input is not in the format of a GitHub repo link.
-      formError(request, response, "ENTER A VALID REPO LINK");
-      return;
-    }*/
-
-    String repoName = repoUrl.replaceFirst("https://github.com/","");
+    String repoName = repoUrl.replaceFirst("https://github.com/", "");
     GitHub gitHub = GitHubGetter.getGitHub();
     try { 
       GHRepository inputRepo = gitHub.getRepository(repoName);
@@ -129,17 +101,14 @@ public class MentorsServlet extends HttpServlet {
     //      Send to a function in the ProjectEntity.java class
 
     String userID = AuthServlet.getAuthorizedUser().getUserId();
-    
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    /*try { 
-      Entity personEntity = datastore.get(KeyFactory.stringToKey(userID)); 
-    } catch (Exception e) {
-      formError(request, response, "COULDNT FIND U IN DATASTORE");
-      return;
-      //TODO: Handle this exception (which should never occur if datastore is working properly)
-    }*/
+    try {
+      Entity personEntity = datastore.get(KeyFactory.stringToKey(userID));
+    } catch (EntityNotFoundException e) {
+      // TODO: Handle this exception (which should never occur if datastore is working properly)
+    }
 
-    //TODO: Add a mentor entity as a child of the user entity.
+    // TODO: Add a mentor entity as a child of the user entity.
 
     response.setContentType("application/json");
     response.getWriter().println(new Gson().toJson("success"));
