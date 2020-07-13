@@ -51,6 +51,23 @@ public class ProjectDatastore {
   }
 
   /**
+   * Gets a project entity by its repository ID. If it doesn't exist, creates a new ProjectEntity
+   * and returns that. 
+   * @param repositoryId The GitHub repository ID.
+   * @return Returns an existing ProjectEntity or a new ProjectEntity with the specified repository
+   *    ID.
+   */
+  public static ProjectEntity getByRepositoryIdOrNew(String repositoryId) {
+    ProjectEntity projectEntity = getByRepositoryId(repositoryId);
+    if (projectEntity == null) {
+      projectEntity = 
+          new ProjectEntity(repositoryId, new ArrayList<String>(), new ArrayList<String>());
+    }
+
+    return projectEntity;
+  }
+
+  /**
    * Get a list of project entities by query and fetch options.
    * @param projectsQuery The datastore query.
    * @param fetchOptions The fetch options for the query.
