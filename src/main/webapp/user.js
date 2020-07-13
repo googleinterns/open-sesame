@@ -2,7 +2,7 @@
  * Get the user @param user from the user servlet. gets a user object from the
  * UserServlet
  * @param {string} user
- * @return {dashboard.User} 
+ * @return {dashboard.User}
  */
 function getUser(user) { //eslint-disable-line
   console.log('entering get user function/n');
@@ -10,26 +10,26 @@ function getUser(user) { //eslint-disable-line
   params.append('user', user);
 
   // TODO: switch to standard fetch error handler
-  return fetch('/user', { method: 'GET', body: params })
-    .then(errorHandling).then((response) => response.json())
-    .then((user) => {
-      return user;
-    })
-    .catch((error) => {
-      console.error(error);
-      return null;
-    });
+  return fetch('/user', {method: 'GET', body: params})
+      .then(errorHandling).then((response) => response.json())
+      .then((user) => {
+        return user;
+      })
+      .catch((error) => {
+        console.error(error);
+        return null;
+      });
 }
 
 /**
- * Posts a user to the servlet 
- * @param {URLSearchParams} userParams parameters with the users information  
+ * Posts a user to the servlet
+ * @param {URLSearchParams} userParams parameters with the users information
  */
 function postUser(userParams) {
-  fetch('/user', { method: 'POST', body: userParams })
-    .catch((error) => {
-      console.error(error)
-    });
+  fetch('/user', {method: 'POST', body: userParams})
+      .catch((error) => {
+        console.error(error);
+      });
 }
 
 /**
@@ -44,4 +44,4 @@ function errorHandling(response) {
   return response;
 }
 
-export { getUser, postUser };
+export {getUser, postUser};
