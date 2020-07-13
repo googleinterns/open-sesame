@@ -88,49 +88,60 @@ public class MentorsServlet extends HttpServlet {
 
   //This function prints an error message to the mentor form page if invalid input is found.
   public void formError(HttpServletRequest request, HttpServletResponse response, String error)  throws ServletException, IOException {
-    String message = "<ul><li class='ml-3 display-4 font-weight-bold text-danger'>"   + error + "</li></ul>";
+    System.out.println("form error!");
+    response.setContentType("application/json");
+    response.getWriter().println(new Gson().toJson(error));
+    /*String message = "<ul><li class='ml-3 display-4 font-weight-bold text-danger'>"   + error + "</li></ul>";
     response.setContentType("text/html");
     PrintWriter pw = response.getWriter();
     pw.print(message);
     RequestDispatcher rd = request.getRequestDispatcher("mentor_form.html");
     rd.include(request, response);
-    pw.close();
+    pw.close();*/
     return;
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    System.out.println("request is " + request);
     String repoUrl = request.getParameter("inputRepo");
-    String urlPattern = "https://github.com/";
+    System.out.println("repo is " + repoUrl);
+    /*String urlPattern = "https://github.com/";
     Pattern regEx = Pattern.compile(urlPattern);
     Matcher inputMatcher = regEx.matcher(repoUrl);
     if (!inputMatcher.find()) {
       //Input is not in the format of a GitHub repo link.
       formError(request, response, "ENTER A VALID REPO LINK");
       return;
-    }
+    }*/
 
     String repoName = repoUrl.replaceFirst("https://github.com/","");
     GitHub gitHub = GitHubGetter.getGitHub();
-    GHRepository inputRepo = gitHub.getRepository(repoName);
-    if (inputRepo == null) {
-      //Repo was not found on GitHub.
+    try { 
+      GHRepository inputRepo = gitHub.getRepository(repoName);
+    } catch(Exception e) {
+      System.out.println("Couldn't find repo\n");
       formError(request, response, "COULDN'T FIND REPO");
       return;
     }
-    //TODO: Send Richie the GHRepository to add to projects database
+
+    //TODO: Send Richie the GHRepository ID and person ID to add to projects database
+    //      Send to a function in the ProjectEntity.java class
 
     String userID = AuthServlet.getAuthorizedUser().getUserId();
     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    try { 
+    /*try { 
       Entity personEntity = datastore.get(KeyFactory.stringToKey(userID)); 
-    } catch (EntityNotFoundException e) {
+    } catch (Exception e) {
+      formError(request, response, "COULDNT FIND U IN DATASTORE");
+      return;
       //TODO: Handle this exception (which should never occur if datastore is working properly)
-    }
+    }*/
 
     //TODO: Add a mentor entity as a child of the user entity.
 
-    response.sendRedirect("/dashboard.html");
+    response.setContentType("application/json");
+    response.getWriter().println(new Gson().toJson("success"));
   }
 }

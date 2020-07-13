@@ -122,3 +122,32 @@ function createProjectsDiv(projectIDs) {
   }
   return projectsDiv;
 }
+
+function submitForm() {
+  const inputUrl = document.getElementById("inputRepo").value;
+  const encodedBody = new URLSearchParams();
+  encodedBody.append('inputRepo', inputUrl);
+  let url = new URL(
+      '/mentors', window.location.protocol + '//' + window.location.hostname);
+  const fetchRequest = fetch((url), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: encodedBody,
+  });
+  
+  fetchRequest.then((response) => response.json()).then((response) => {
+    if (response == 'success') {
+      window.location.href = '/dashboard.html';
+    }
+    else {
+      const errorContainer = document.getElementById('error-message-container');
+      errorContainer.innerHTML = response;
+    }
+  }).catch((errorResponse) => {
+    console.error(
+        `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
+      alert(errorResponse.userMessage);
+  });
+}

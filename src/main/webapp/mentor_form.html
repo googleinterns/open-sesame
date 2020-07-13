@@ -11,7 +11,7 @@
   <h1 class="display-4 mt-5">Become a Mentor for Your Project!</h1>
   <h4 class="emphasis mb-5">Enter the URL of the GitHub repository for your project to become a mentor.</h4>
   <hr/>
-  <form action="/mentors" method="POST">
+  <form action="javascript:submitForm()">
     <div class="form-group">
       <label for="inputRepo" class="text-weight-bold">Repository URL</label>
       <input class="form-control" id="inputRepo" name="inputRepo" aria-describedby="repoHelp" placeholder="Enter repo url">
@@ -19,6 +19,7 @@
     </div>
     <button class="btn text-center">Submit</button>
   </form>
+  <div class='ml-3 display-4 font-weight-bold text-danger' id='error-message-container'></div>
 </div>
 
 <!-- Add Custom Scripts -->
