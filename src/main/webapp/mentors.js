@@ -1,14 +1,23 @@
+import standardizeFetchErrors from '/js/fetch_handler.js';
+getMentors();
+let form = document.getElementById('mentor-form');
+form.addEventListener('submit', submitForm);
+
 /**
  * Get mentors from the mentor servlet.
  * @param {String} response
  */
 function getMentors() { // eslint-disable-line no-unused-vars
   console.log('entering get mentors function/n');
-  let url = new URL(
+  const url = new URL(
       '/mentors', window.location.protocol + '//' + window.location.hostname);
-
-  fetch(url).then(errorHandling).then((response) => response.json())
-      .then((mentors) => {
+  const fetchRequest = standardizeFetchErrors(
+        fetch(url),
+        'Failed to communicate with the server, please try again later.',
+        'Encountered a server error, please try again later.');
+  
+  fetchRequest.then((mentors) => {
+    console.log('got mentor data');
     const mentorsContainer = document.getElementById('mentors-container');
     mentorsContainer.innerHTML = '';
     for (const mentor of mentors) {
@@ -16,21 +25,11 @@ function getMentors() { // eslint-disable-line no-unused-vars
       mentorsContainer.appendChild(createMentorElement(mentor));
     }
   })
-  .catch((error) => {
-    console.log(error);
+  .catch((errorResponse) => {
+      alert(errorResponse.userMessage);
+      console.error(
+          `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
   });
-}
-
-/**
- * Basic error handling checks if fetch results are 'ok.'
- * @param {Response} response - A fetch response.
- * @return {Response} the response.
- */
-function errorHandling(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
 }
 
 /**
@@ -59,9 +58,9 @@ function createMentorElement(mentor) {
   mentorDescription.innerHTML = mentor.description;
   mentorCardBody.appendChild(mentorDescription);
 
-  mentorCardBody.appendChild(createTagRow(mentor.interestTags));
+  mentorCardBody.appendChild(createTagDiv(mentor.interestTags));
 
-  mentorCardBody.appendChild( createProjectsRow(mentor.projectIDs));
+  mentorCardBody.appendChild( createProjectsDiv(mentor.projectIDs));
 
   mentorCard.appendChild(mentorCardBody);
   mentorContainer.appendChild(mentorCard);
@@ -75,9 +74,9 @@ function createMentorElement(mentor) {
  * @return {HTMLElement} userGithubButton
  */
 function createGitHubLink(gitHubID) {
-  let gitHubBaseUrl = 'https://github.com/';
+  const gitHubBaseUrl = 'https://github.com/';
   const gitLink = gitHubBaseUrl.concat(gitHubID);
-  let userGithubButton = document.createElement('a');
+  const userGithubButton = document.createElement('a');
   userGithubButton.innerText = 'GitHub Profile';
   userGithubButton.className = 'btn btn-primary';
   userGithubButton.role = 'button';
@@ -91,10 +90,10 @@ function createGitHubLink(gitHubID) {
  * @return {HTMLElement} tagDiv
  */
 function createTagDiv(interestTags) {
-  let tagDiv = document.createElement('div');
+  const tagDiv = document.createElement('div');
   tagDiv.className = 'row p-3';
   for (const tagText of interestTags) {
-    let tagElement = document.createElement('div');
+    const tagElement = document.createElement('div');
     tagElement.className = 'border border-muted text-muted mr-1 mb-1 badge';
     tagElement.innerText = tagText;
     tagDiv.append(tagElement);
@@ -108,17 +107,46 @@ function createTagDiv(interestTags) {
  * @return {HTMLElement} projectsDiv
  */
 function createProjectsDiv(projectIDs) {
-  let projectsDiv = document.createElement('div');
+  const projectsDiv = document.createElement('div');
   projectsDiv.className = 'row p-3';
   for (const projectID of projectIDs) {
-    let projectElement = document.createElement('div');
+    const projectElement = document.createElement('div');
     projectElement.className = 'card container card-holder col-12' +
         ' text-center project-card p-3 m-3';
-    let cardTitleElement = document.createElement('h4');
+    const cardTitleElement = document.createElement('h4');
     cardTitleElement.className = 'card-title dark-emph';
     cardTitleElement.innerText = projectID;
     projectElement.appendChild(cardTitleElement);
     projectsDiv.append(projectElement);
   }
   return projectsDiv;
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  const inputUrl = document.getElementById("inputRepo").value;
+  const encodedBody = new URLSearchParams();
+  encodedBody.append('inputRepo', inputUrl);
+  const url = new URL('/mentors', window.location.origin);
+  const fetchRequest = fetch((url), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: encodedBody,
+  });
+  
+  standardizeFetchErrors(fetchRequest, 'Fetch failed message here', 'Server error message here').then((response) => {
+    console.log('valid url');
+    window.location.href = '/dashboard.html';
+    }).catch((errorResponse) => {
+    if (errorResponse.statusCode == 400) {
+      const errorContainer = document.getElementById('error-message-container');
+      errorContainer.innerText = errorResponse.message;
+    } else {
+      console.error(
+        `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
+      alert(errorResponse.userMessage);
+    }
+  });
 }

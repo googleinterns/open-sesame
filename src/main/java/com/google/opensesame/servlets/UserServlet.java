@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,14 +34,16 @@ public class UserServlet extends HttpServlet {
   // Get a specific user. Return null if not found. TODO: User Validation
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGithub = request.getParameter("githubID");
-    Key userKey = KeyFactory.createKey(PersonObject.ENTITY_NAME, userGithub);
+    Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userGithub);
+    System.out.println(userKey);
 
     PersonObject userObject;
-
     try {
-      userObject = toPersonObject(datastore.get(userKey));
+      userObject = new PersonBuilder().buildPersonObject(datastore.get(userKey));
+      System.out.println(userObject);
     } catch (Exception e) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Person does not exist in Datastore");
+      e.printStackTrace();
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
       return;
     }
 
@@ -54,37 +55,24 @@ public class UserServlet extends HttpServlet {
   @Override
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGitHubID = request.getParameter("gitHubID");
-    if (userGitHubID.isBlank()) {
+    String userGitHubID = request.getParameter("githubID");
+    if (userGitHubID.trim().isEmpty()) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID");
       return;
     }
-    ArrayList<String> userTags =
-        (ArrayList<String>) Arrays.asList(request.getParameterValues("tags"));
+    ArrayList<String> userTags = new ArrayList<>(Arrays.asList(request.getParameterValues("tags")));
 
-    storePersonObject(
-        new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPerson());
-  }
-
-  // TODO: Add the person entity creation to the PersonObject/make it it's own class
-  /**
-   * Send a person entity to datastore with information about a given PersonObject @param person.
-   *
-   * @param person a person object
-   */
-  public void storePersonObject(PersonObject person) {
-    Entity personEntity = new Entity(PersonObject.ENTITY_NAME, person.getGitHubID());
-    personEntity.setProperty(PersonObject.GITHUB_ID_FIELD, person.getGitHubID());
-    personEntity.setProperty(PersonObject.TAG_LIST_FIELD, person.getTags());
+    Entity personEntity =
+        new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPersonEntity();
     datastore.put(personEntity);
   }
 
   // TODO: use function in other servlets.
   /**
-   * Query datastore for entities. Comparisons are done with @param field coming first. For
-   * example @param field EQUAL @param thingToBeComparedTo. Look at
+   * Query datastore for entities. Comparisons are done with field coming first. For example field
+   * EQUAL value. Look at
    * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Query.FilterOperator
-   * for more information on the @param operator
+   * for more information on the operator
    *
    * @param EntityName the type of entity to be queried for
    * @param field the field that is being used to query
@@ -93,30 +81,10 @@ public class UserServlet extends HttpServlet {
    * @return {PreparedQuery} a Datastore prepared query.
    */
   public PreparedQuery queryInDatabase(
-      Entity EntityName, String field, Object thingToBeCompareTo, FilterOperator operator) {
-    Filter userFilter = new FilterPredicate(field, operator, thingToBeCompareTo);
-    return datastore.prepare(new Query(PersonObject.ENTITY_NAME).setFilter(userFilter));
+      String entityName, String field, Object value, FilterOperator operator) {
+    Filter userFilter = new FilterPredicate(field, operator, value);
+    return datastore.prepare(new Query(entityName).setFilter(userFilter));
   }
 
-  // TODO: Move this to the Person object class
-  /**
-   * Convert an entity retrieved from Datastore into the Person type.
-   *
-   * @param personEntity PersonObject.ENTITY_NAME entity
-   * @return PersonObject that corresponds to the entity retrieved from datastore
-   */
-  public PersonObject toPersonObject(Entity personEntity) {
-    PersonBuilder userBuilder = new PersonBuilder();
-
-    String entityGitHubID = (String) personEntity.getProperty(PersonObject.GITHUB_ID_FIELD);
-    userBuilder.gitHubID(entityGitHubID);
-    ArrayList<String> entityTagList =
-        (ArrayList<String>)
-            Arrays.asList(personEntity.getProperty(PersonObject.TAG_LIST_FIELD)).stream()
-                .map(tag -> (String) tag)
-                .collect(Collectors.toList());
-    userBuilder.interestTags(entityTagList);
-    return userBuilder.buildPerson();
-  }
   // TODO: make error handling conform with Richie's error handling
 }
