@@ -6,6 +6,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
@@ -75,11 +76,17 @@ public class MentorsServlet extends HttpServlet {
     response.getWriter().println(jsonMentors);
   }
 
-  //This function prints an error message to the mentor form page if invalid input is found.
-  public void formError(HttpServletRequest request, HttpServletResponse response, String error)  
+  //This function sends an error if invalid input is found.
+  public void error(HttpServletResponse response, String errorMessage, int statusCode, String userMessage)  
       throws ServletException, IOException {
-    response.setContentType("application/json");
-    response.getWriter().println(new Gson().toJson(error));
+    JsonObject responseObject = new JsonObject();
+    responseObject.addProperty("message", errorMessage);
+    responseObject.addProperty("statusCode", statusCode);
+    responseObject.addProperty("userMessage", userMessage);
+    String responseJson = new Gson().toJson(responseObject);
+    response.setStatus(statusCode);
+    response.setContentType("application/json;");
+    response.getWriter().println(responseJson);
     return;
   }
 
@@ -91,9 +98,8 @@ public class MentorsServlet extends HttpServlet {
     GitHub gitHub = GitHubGetter.getGitHub();
     try { 
       GHRepository inputRepo = gitHub.getRepository(repoName);
-    } catch(Exception e) {
-      System.out.println("Couldn't find repo\n");
-      formError(request, response, "COULDN'T FIND REPO");
+    } catch (Exception e) {
+      error(response, "Repo not found: Please enter a valid repo url.", 400, "Repo not found");
       return;
     }
 
@@ -102,15 +108,18 @@ public class MentorsServlet extends HttpServlet {
 
     String userID = AuthServlet.getAuthorizedUser().getUserId();
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    try {
+
+    //This section is commented out until we have populated datastore to refer to.
+    /*try {
       Entity personEntity = datastore.get(KeyFactory.stringToKey(userID));
     } catch (EntityNotFoundException e) {
+      error(response, "You must be logged in.", 401, "User not logged in.");
       // TODO: Handle this exception (which should never occur if datastore is working properly)
-    }
+    }*/
 
     // TODO: Add a mentor entity as a child of the user entity.
-
-    response.setContentType("application/json");
+    response.setContentType("application/json;");
     response.getWriter().println(new Gson().toJson("success"));
+    return;
   }
 }
