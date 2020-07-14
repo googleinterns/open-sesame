@@ -25,7 +25,7 @@
  * @return {Promise} Returns a promise that formats the errors from a fetch
  *    request.
  */
-export default function standardizeFetchErrors(
+export function standardizeFetchErrors(
     fetchRequest, fetchFailedUserMessage, genericServerErrorUserMessage) {
   return fetchRequest.catch((fetchError) => {
     // Fetch encountered an error while making the request (a network
@@ -46,6 +46,17 @@ export default function standardizeFetchErrors(
       return response.json();
     }
   });
+}
+
+/**
+ * Makes a relative URL (like one to an Open Sesame endpoint) absolute. This
+ * needs to be done for all fetch requests that are going to be tested with
+ * NodeJS, as relative URLs are not supported on NodeJS.
+ * @param {string} relativeUrl
+ * @return {URL} Returns the absolute URL.
+ */
+export function makeRelativeUrlAbsolute(relativeUrl) {
+  return new URL(relativeUrl, window.location.origin);
 }
 
 /**

@@ -3,7 +3,10 @@
  * page. This handles the loading of project preview data.
  */
 import ProjectList from './ProjectList.js';
-import standardizeFetchErrors from '../../../fetch_handler.js';
+import {
+  standardizeFetchErrors,
+  makeRelativeUrlAbsolute
+} from '../../../fetch_handler.js';
 
 /**
  * The main project search page react component.
@@ -28,7 +31,7 @@ export default class ProjectsSearch extends React.Component {
    */
   componentDidMount() {
     const fetchRequest = standardizeFetchErrors(
-        fetch('/project-previews'),
+        fetch(makeRelativeUrlAbsolute('/project-previews')),
         'Failed to communicate with the server, please try again later.',
         'Encountered a server error, please try again later.');
     fetchRequest.then((projectPreviews) => {
