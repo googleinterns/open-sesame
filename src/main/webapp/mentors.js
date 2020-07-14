@@ -1,3 +1,7 @@
+import standardizeFetchErrors from '/js/fetch_handler.js';
+let form = document.getElementById('mentor-form');
+form.addEventListener('submit', submitForm);
+
 /**
  * Get mentors from the mentor servlet.
  * @param {String} response
@@ -123,12 +127,12 @@ function createProjectsDiv(projectIDs) {
   return projectsDiv;
 }
 
-function submitForm() {
+function submitForm(e) {
+  e.preventDefault();
   const inputUrl = document.getElementById("inputRepo").value;
   const encodedBody = new URLSearchParams();
   encodedBody.append('inputRepo', inputUrl);
-  let url = new URL(
-      '/mentors', window.location.protocol + '//' + window.location.hostname);
+  const url = new URL('/mentors', window.location.origin);
   const fetchRequest = fetch((url), {
     method: 'POST',
     headers: {
@@ -137,17 +141,17 @@ function submitForm() {
     body: encodedBody,
   });
   
-  fetchRequest.then((response) => response.json()).then((response) => {
-    if (response == 'success') {
-      window.location.href = '/dashboard.html';
-    }
-    else {
+  standardizeFetchErrors(fetchRequest, 'Fetch failed message here', 'Server error message here').then((response) => {
+    console.log('valid url');
+    window.location.href = '/dashboard.html';
+    }).catch((errorResponse) => {
+    if (errorResponse.statusCode == 400) {
       const errorContainer = document.getElementById('error-message-container');
-      errorContainer.innerHTML = response;
-    }
-  }).catch((errorResponse) => {
-    console.error(
-        `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
+      errorContainer.innerText = errorResponse.message;
+    } else {
+      console.error(
+        `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
       alert(errorResponse.userMessage);
+    }
   });
 }
