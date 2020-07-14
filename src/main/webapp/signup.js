@@ -74,12 +74,8 @@ function submitSignup(e) {
   gitHubLinkButton.disabled = true;
   submitButton.disabled = true;
 
-  const signupBody = createSignupBody();
-  console.log('Body of signup request:');
-  console.log(signupBody);
-  if (signupBody) {
-    const signupRequest = createSignupRequest(signupBody);
-
+  const signupRequest = createSignupRequest();
+  if (signupRequest) {
     signupRequest.then((response) => {
       // If signup is successful, redirect.
       window.location.href = AFTER_SIGNUP_REDIRECT;
@@ -100,10 +96,17 @@ function submitSignup(e) {
 /**
  * Creates a signup post request.
  * This requires url-encoding the signup body and formatting the errors.
- * @param {SignUpData} signupBody
- * @return {Promise} Returns a prepared signup fetch request.
+ * @return {?Promise} Returns a prepared signup fetch request or null if the
+ *    fetch request could not be prepared.
  */
-function createSignupRequest(signupBody) {
+function createSignupRequest() {
+  const signupBody = createSignupBody();
+  console.log('Body of signup request:');
+  console.log(signupBody);
+  if (!signupBody) {
+    return null;
+  }
+
   const encodedBody = new URLSearchParams();
   encodedBody.append('gitHubAuthToken', signupBody.gitHubAuthToken);
   // Appending multiple values to the same parameter is the standard protocol
@@ -132,7 +135,7 @@ function createSignupRequest(signupBody) {
 
 /**
  * Creates the body of a signup request to be sent to the Open Sesame API.
- * @return {SignUpData} Returns the body of the signup request or null if the
+ * @return {?SignUpData} Returns the body of the signup request or null if the
  *    requirements have not been met to sign up.
  */
 function createSignupBody() {
