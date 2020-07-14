@@ -14,7 +14,7 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class MentorTest {
   private static final String MENTOR_NAME = "Mentor";
-  private static final String MENTOR_GITHUB_ID = "Mentor_GitHub_ID";
+  private static final String MENTOR_GITHUB_ID = "Obinnabii";
   private static final String PROJECT_ID = "Project_ID";
 
   @Test
