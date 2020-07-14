@@ -82,13 +82,12 @@ function submitSignup(e) {
 
     signupRequest.then((response) => {
       // If signup is successful, redirect.
-      gitHubLinkButton.disabled = false;
-      submitButton.disabled = false;
       window.location.href = AFTER_SIGNUP_REDIRECT;
     }).catch((errorResponse) => {
       console.error(
         `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
       alert(errorResponse.userMessage);
+    }).then(() => {
       gitHubLinkButton.disabled = false;
       submitButton.disabled = false;
     });
