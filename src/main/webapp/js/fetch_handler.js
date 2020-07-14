@@ -12,7 +12,7 @@ class ErrorResponse extends Error {
    * Creates a JS error with additional information for frontend use.
    * @param {string} message
    * @param {number} [statusCode]
-   * @param {string} userMessage 
+   * @param {string} userMessage
    */
   constructor(message, statusCode, userMessage) {
     super(message);
@@ -102,9 +102,9 @@ function formatAPIErrorResponse(errorResponse, genericServerErrorUserMessage) {
     // or a 404 error if the servlet could not find a requested endpoint.
     return errorResponse.text().then((errorText) => {
       return Promise.reject(new ErrorResponse(
-        extractErrorTextFromHTML(errorText),
-        errorResponse.status,
-        genericServerErrorUserMessage
+          extractErrorTextFromHTML(errorText),
+          errorResponse.status,
+          genericServerErrorUserMessage,
       ));
     });
   } else if (errorResponse.headers.get('Content-Type')
@@ -114,16 +114,16 @@ function formatAPIErrorResponse(errorResponse, genericServerErrorUserMessage) {
     // the ErrorResponse type.
     return errorResponse.json().then((errorJson) => {
       return Promise.reject(new ErrorResponse(
-        errorJson.message,
-        errorJson.statusCode,
-        errorJson.userMessage
+          errorJson.message,
+          errorJson.statusCode,
+          errorJson.userMessage,
       ));
     });
   } else {
     return Promise.reject(new ErrorResponse(
-      'Error could not be parsed; unanticipated content type.',
-      errorResponse.status,
-      genericServerErrorUserMessage
+        'Error could not be parsed; unanticipated content type.',
+        errorResponse.status,
+        genericServerErrorUserMessage,
     ));
   }
 }
