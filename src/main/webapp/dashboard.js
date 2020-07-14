@@ -32,30 +32,11 @@ import { getUser } from './user.js';
  * Fake information for the hardcoded stage.
  */
 /** @const {string} */
-const dummyName = 'Dior';
-const dummyLocation = 'Sunnyvale CA.';
-const dummyBio = 'The cutest pug in The tech industry. Lorem ipsum dolor sit ' +
-  'amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut' +
-  ' labore et dolore magna aliqua.';
 const dummyImg = 'images/dior.jpg';
-const dummyGitSrc = '#';
 const dummyProjectName = 'Kubernetes';
 const dummyGitHubID = 'Obinnabii'
 
-/** @const {string List} */
-const dummyTags = ['Weekly', '30 mins', 'Kubernetes', 'Open Sesame',
-  'Documentation',
-];
 
-/** @const {User} */
-const dummyUser = {
-  name: dummyName,
-  location: dummyLocation,
-  image: dummyImg,
-  bio: dummyBio,
-  interestTags: dummyTags,
-  gitSrc: dummyGitSrc,
-};
 
 /** @const {Mentee List} */
 const dummyMentees = [{
