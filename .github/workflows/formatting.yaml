@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # v2 minimum required
+        with:
+          token: ${{secrets.PAT_TOKEN}} # Re-running Linter on auto commit
       # Recommended: latest versions of Google Java Format require JDK 11+
       - uses: actions/setup-java@v1
         with:
