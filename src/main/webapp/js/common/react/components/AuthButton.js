@@ -1,6 +1,6 @@
 import checkTesting from '../../../checkTesting.js';
 import {
-  standardizeFetchErrors, 
+  standardizeFetchErrors,
   basicErrorHandling,
   makeRelativeUrlAbsolute,
 } from '../../../fetch_handler.js';
@@ -35,7 +35,7 @@ export default class AuthButton extends React.Component {
         fetch(makeRelativeUrlAbsolute('/auth')),
         'Failed to communicate with the server, please try again later.',
         'Encountered a server error, please try again later.');
-    
+
     fetchRequest.then((response) => response.json()).then((authData) => {
       console.log('Auth data received:');
       console.log(authData);

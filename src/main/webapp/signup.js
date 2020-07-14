@@ -35,8 +35,8 @@ function handleGitHubLink(e) {
 
   gitHubAuthorizer.toggleSignIn().catch((error) => {
     console.error(error);
-    alert('Encountered an error with GitHub authentication.'
-        + ' Please try again later.');
+    alert('Encountered an error with GitHub authentication.' +
+        ' Please try again later.');
   });
 }
 
@@ -81,7 +81,7 @@ function submitSignup(e) {
       window.location.href = AFTER_SIGNUP_REDIRECT;
     }).catch((errorResponse) => {
       console.error(
-        `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
+          `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
       alert(errorResponse.userMessage);
     }).then(() => {
       gitHubLinkButton.disabled = false;
@@ -127,8 +127,8 @@ function createSignupRequest() {
   const errorFormattedFetchRequest = standardizeFetchErrors(
       fetchRequest,
       'Failed to communicate with the server. Please try again later.',
-      'An error occcured while creating your account.'
-          + ' Please try again later.');
+      'An error occcured while creating your account.' +
+          ' Please try again later.');
 
   return errorFormattedFetchRequest;
 }
