@@ -10,11 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -96,14 +92,14 @@ public class MentorsServlet extends HttpServlet {
     String repoUrl = request.getParameter("inputRepo");
     String repoName = repoUrl.replaceFirst("https://github.com/", "");
     GitHub gitHub = GitHubGetter.getGitHub();
-    try { 
+    try {
       GHRepository inputRepo = gitHub.getRepository(repoName);
     } catch (Exception e) {
       error(response, "Repo not found: Please enter a valid repo url.", 400, "Repo not found");
       return;
     }
 
-    //TODO: Send Richie the GHRepository ID and person ID to add to projects database
+    // TODO: Send Richie the GHRepository ID and person ID to add to projects database
     //      Send to a function in the ProjectEntity.java class
 
     String userID = AuthServlet.getAuthorizedUser().getUserId();
