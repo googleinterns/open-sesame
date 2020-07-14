@@ -27,7 +27,7 @@ function initNavbar() {
     {
       href: '/dashboard.html',
       name: 'Dashboard',
-    }
+    },
   ];
 
   const navbarContainer = document.getElementById('navbar-container');
