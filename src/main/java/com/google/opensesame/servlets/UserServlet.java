@@ -37,7 +37,7 @@ public class UserServlet extends HttpServlet {
     Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userGithub);
     System.out.println(userKey);
 
-    PersonObject userObject;    
+    PersonObject userObject;
     try {
       userObject = new PersonBuilder().buildPersonObject(datastore.get(userKey));
       System.out.println(userObject);
@@ -60,8 +60,7 @@ public class UserServlet extends HttpServlet {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID");
       return;
     }
-    ArrayList<String> userTags = new ArrayList<>(
-        Arrays.asList(request.getParameterValues("tags")));
+    ArrayList<String> userTags = new ArrayList<>(Arrays.asList(request.getParameterValues("tags")));
 
     Entity personEntity =
         new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPersonEntity();
