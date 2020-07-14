@@ -146,7 +146,7 @@ function createSignupBody() {
     return null;
   }
 
-  const emailAddress = 
+  const emailAddress =
       document.getElementById('signup-form').elements['userEmail'].value;
   if (!validateEmail(emailAddress)) {
     // TODO : Add to a more elegant notification system
@@ -175,7 +175,7 @@ function createSignupBody() {
  * Validates an email syntactically against a regular expression.
  * Sourced from:
  * https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
- * @param {string} email 
+ * @param {string} email
  */
 function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
