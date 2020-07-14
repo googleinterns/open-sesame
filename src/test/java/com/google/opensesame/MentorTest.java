@@ -2,7 +2,6 @@ package com.google.opensesame;
 
 import com.google.opensesame.servlets.MentorBuilder;
 import com.google.opensesame.servlets.MentorObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
