@@ -3,6 +3,7 @@ package com.google.opensesame.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
@@ -14,6 +15,8 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,13 +38,15 @@ public class UserServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGithub = request.getParameter("githubID");
     Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userGithub);
+    System.out.println(userKey);
 
-    PersonObject userObject;
-
+    PersonObject userObject;    
     try {
       userObject = new PersonBuilder().buildPersonObject(datastore.get(userKey));
+      System.out.println(userObject);
     } catch (Exception e) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Person does not exist in Datastore");
+      e.printStackTrace();
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
       return;
     }
 
@@ -53,13 +58,13 @@ public class UserServlet extends HttpServlet {
   @Override
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGitHubID = request.getParameter("gitHubID");
-    if (userGitHubID.isBlank()) {
+    String userGitHubID = request.getParameter("githubID");
+    if (userGitHubID.trim().isEmpty()) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID");
       return;
     }
-    ArrayList<String> userTags =
-        (ArrayList<String>) Arrays.asList(request.getParameterValues("tags"));
+    ArrayList<String> userTags = new ArrayList<>(
+        Arrays.asList(request.getParameterValues("tags")));
 
     Entity personEntity =
         new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPersonEntity();
