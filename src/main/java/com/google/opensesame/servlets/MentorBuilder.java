@@ -1,5 +1,6 @@
 package com.google.opensesame.servlets;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MentorBuilder {
@@ -11,8 +12,8 @@ public class MentorBuilder {
 
   public MentorBuilder() {}
 
-  public MentorObject buildMentor() {
-    return new MentorObject(name, gitHubID, description, interestTags, projectIDs);
+  public MentorObject buildMentor() throws IOException {
+    return new MentorObject(gitHubID, interestTags, projectIDs);
   }
 
   public MentorBuilder name(String name) {

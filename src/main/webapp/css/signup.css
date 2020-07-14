@@ -1,0 +1,28 @@
+.btn-purple {
+  background-color: rebeccapurple;
+  border: none;
+  border-radius: 8px;
+  color: white;
+}
+
+.btn-purple:hover {
+  background-color: purple;
+  border: none;
+  border-radius: 8px;
+  color: white;
+}
+
+.btn-purple.disabled {
+  background-color: rebeccapurple;
+  color: white;
+}
+
+.btn-purple-shadow:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.emphasis,
+a {
+  color: rebeccapurple;
+  text-decoration: none;
+}
