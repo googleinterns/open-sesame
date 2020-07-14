@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+//TODO: Pivot away from builder if it stays redundant by the next PR
 public class PersonBuilder {
   public static String ENTITY_NAME = "User";
   public static String GITHUB_ID_FIELD = "github-id";
@@ -64,11 +65,8 @@ public class PersonBuilder {
   public PersonObject buildPersonObject(Entity personEntity) throws IOException {
     String entityGitHubID = (String) personEntity.getProperty(GITHUB_ID_FIELD);
     this.gitHubID(entityGitHubID);
-    ArrayList<String> entityTagList =
-        (ArrayList<String>)
-            Arrays.asList(personEntity.getProperty(TAG_LIST_FIELD)).stream()
-                .map(tag -> (String) tag)
-                .collect(Collectors.toList());
+    ArrayList<String> entityTagList = (ArrayList<String>) 
+            personEntity.getProperty(TAG_LIST_FIELD);
     this.interestTags(entityTagList);
     return this.buildPersonObject();
   }
