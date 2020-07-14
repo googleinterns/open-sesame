@@ -17,10 +17,10 @@ function getMentors() { // eslint-disable-line no-unused-vars
   console.log('entering get mentors function/n');
   const url = new URL('/mentors', window.location.origin);
   const fetchRequest = standardizeFetchErrors(
-        fetch(url),
-        'Failed to communicate with the server, please try again later.',
-        'Encountered a server error, please try again later.');
-  
+      fetch(url),
+      'Failed to communicate with the server, please try again later.',
+      'Encountered a server error, please try again later.');
+
   fetchRequest.then((mentors) => {
     console.log('got mentor data');
     const mentorsContainer = document.getElementById('mentors-container');
@@ -30,11 +30,11 @@ function getMentors() { // eslint-disable-line no-unused-vars
       mentorsContainer.appendChild(createMentorElement(mentor));
     }
   })
-  .catch((errorResponse) => {
-      alert(errorResponse.userMessage);
-      console.error(
-          `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
-  });
+      .catch((errorResponse) => {
+        alert(errorResponse.userMessage);
+        console.error(
+            `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
+      });
 }
 
 /**
@@ -129,7 +129,7 @@ function createProjectsDiv(projectIDs) {
 
 function submitForm(e) {
   e.preventDefault();
-  const inputUrl = document.getElementById("inputRepo").value;
+  const inputUrl = document.getElementById('inputRepo').value;
   const encodedBody = new URLSearchParams();
   encodedBody.append('inputRepo', inputUrl);
   const url = new URL('/mentors', window.location.origin);
@@ -140,17 +140,17 @@ function submitForm(e) {
     },
     body: encodedBody,
   });
-  
+
   standardizeFetchErrors(fetchRequest, 'Fetch failed message here', 'Server error message here').then((response) => {
     console.log('valid url');
     window.location.href = '/dashboard.html';
-    }).catch((errorResponse) => {
+  }).catch((errorResponse) => {
     if (errorResponse.statusCode == 400) {
       const errorContainer = document.getElementById('error-message-container');
       errorContainer.innerText = errorResponse.message;
     } else {
       console.error(
-        `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
+          `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
       alert(errorResponse.userMessage);
     }
   });
