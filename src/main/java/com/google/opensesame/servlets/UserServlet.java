@@ -12,7 +12,6 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.gson.Gson;
 import com.google.opensesame.util.ErrorResponse;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,27 +36,31 @@ public class UserServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGithub = request.getParameter("githubID");
     Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userGithub);
-    
+
     Entity userEntity;
-    try{
-    userEntity = datastore.get(userKey);
+    try {
+      userEntity = datastore.get(userKey);
     } catch (Exception e) {
-      ErrorResponse.sendJsonError(response, 
-      e.getMessage() + "/n/n" + e.getStackTrace(),
-      HttpServletResponse.SC_BAD_REQUEST,
-      "The user requested could not be found on the server." +
-      "Please ensure that the user has an account with us.");
+      ErrorResponse.sendJsonError(
+          response,
+          e.getMessage() + "/n/n" + e.getStackTrace(),
+          HttpServletResponse.SC_BAD_REQUEST,
+          "The user requested could not be found on the server."
+              + "Please ensure that the user has an account with us.");
       return;
-    }    
+    }
     PersonObject userObject;
     try {
       userObject = new PersonBuilder().buildPersonObject(userEntity);
     } catch (Exception e) {
-      ErrorResponse.sendJsonError(response, 
-      e.getMessage() + "/n/n" + e.getStackTrace() + 
-      "/n/n PersonObject could not be instantiated from Person Entity",
-      HttpServletResponse.SC_BAD_REQUEST,
-      "User could not be instatiated in the Server");
+      ErrorResponse.sendJsonError(
+          response,
+          e.getMessage()
+              + "/n/n"
+              + e.getStackTrace()
+              + "/n/n PersonObject could not be instantiated from Person Entity",
+          HttpServletResponse.SC_BAD_REQUEST,
+          "User could not be instatiated in the Server");
       return;
     }
 
@@ -71,24 +74,27 @@ public class UserServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
       String userGitHubID = request.getParameter("githubID");
-    if (userGitHubID.trim().isEmpty()) {
-      ErrorResponse.sendJsonError(response, 
-      "Empty GitHub ID",
-      HttpServletResponse.SC_BAD_REQUEST,
-      "There is no GitHub ID affiliated with this request");
-      return;
-    }
-    ArrayList<String> userTags = new ArrayList<>(Arrays.asList(request.getParameterValues("tags")));
+      if (userGitHubID.trim().isEmpty()) {
+        ErrorResponse.sendJsonError(
+            response,
+            "Empty GitHub ID",
+            HttpServletResponse.SC_BAD_REQUEST,
+            "There is no GitHub ID affiliated with this request");
+        return;
+      }
+      ArrayList<String> userTags =
+          new ArrayList<>(Arrays.asList(request.getParameterValues("tags")));
 
-    Entity personEntity =
-        new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPersonEntity();
-    datastore.put(personEntity);}
-  catch (Exception e){
-    ErrorResponse.sendJsonError(response, 
-      e.getMessage() + "/n/n" + e.getStackTrace(),
-      HttpServletResponse.SC_BAD_REQUEST,
-      "User informatiuon could not be sent to datastore");
-  }
+      Entity personEntity =
+          new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPersonEntity();
+      datastore.put(personEntity);
+    } catch (Exception e) {
+      ErrorResponse.sendJsonError(
+          response,
+          e.getMessage() + "/n/n" + e.getStackTrace(),
+          HttpServletResponse.SC_BAD_REQUEST,
+          "User informatiuon could not be sent to datastore");
+    }
   }
 
   // TODO: use function in other servlets.
