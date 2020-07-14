@@ -1,7 +1,7 @@
 import checkTesting from '../../../checkTesting.js';
 import {
   standardizeFetchErrors, 
-  defaultErrorHandling as basicErrorHandling,
+  basicErrorHandling,
   makeRelativeUrlAbsolute,
 } from '../../../fetch_handler.js';
 checkTesting();
