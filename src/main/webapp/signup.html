@@ -16,6 +16,13 @@
       <button class="btn btn-purple font-weight-bold" name="github-link-button">Link Your GitHub Account</button>
       <small id="gitHubHelp" class="form-text text-muted">We will use your GitHub account to populate your name and bio and message you when you match with a mentor/mentee.</small>
     </div>
+    <form>
+    <div class="form-group">
+      <label for="userEmail" class="font-weight-bold">Email address</label>
+      <input type="email" class="form-control" id="userEmail" name="userEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+      <!-- TODO : Change privacy statement when matchmaking process is developed beyond MVP -->
+      <small id="emailHelp" class="form-text text-muted">Your email address is not public. It is only visible to Open Sesame users if you're seeking to mentor.</small>
+    </div>
     <!-- TODO : Look into a more efficient method for adding interests. Potentially a React component. -->
     <div id="interests" class="form-group">
       <label for="interests" class="font-weight-bold">Interests</label>
