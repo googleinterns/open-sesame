@@ -80,8 +80,8 @@ public class UserServlet extends HttpServlet {
    * @return {PreparedQuery} a Datastore prepared query.
    */
   public PreparedQuery queryInDatabase(
-      String entityName, String field, Object thingToBeCompareTo, FilterOperator operator) {
-    Filter userFilter = new FilterPredicate(field, operator, thingToBeCompareTo);
+      String entityName, String field, Object value, FilterOperator operator) {
+    Filter userFilter = new FilterPredicate(field, operator, value);
     return datastore.prepare(new Query(entityName).setFilter(userFilter));
   }
 
