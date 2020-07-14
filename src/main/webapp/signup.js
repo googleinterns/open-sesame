@@ -4,7 +4,7 @@
  * @property {string[]} interestTags
  */
 import {gitHubAuthorizer} from './authorization.js';
-import {postUser} from '.user.js';
+import {postUser} from './user.js';
 
 const AFTER_SIGNUP_REDIRECT = '/dashboard.html';
 
