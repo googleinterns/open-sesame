@@ -2,7 +2,6 @@ package com.google.opensesame.servlets;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -13,6 +12,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Subclass;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,11 +29,13 @@ public class MentorsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query<MentorEntity> mentors = ofy().load().type(MentorEntity.class);
+    List<MentorEntity> mentorEntities = ofy().load().type(MentorEntity.class).list();
     ArrayList<MentorObject> mentors = new ArrayList<MentorObject>();
-    for (MentorEntity mentor: mentors) {
+
+    //Commented out until Obi's new person builder functionalities are merged
+    /*for (MentorEntity mentor: mentorEntities) {
       mentors.add(fromMentorEntity(mentor));
-    }
+    }*/
 
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
@@ -77,38 +79,37 @@ public class MentorsServlet extends HttpServlet {
       return;
     }
 
-    String inputRepoID = inputRepo.getId();
-    ProjectEntity newProject = getByRepositoryIdOrNew(inputRepoID);
+    Long inputRepoID = inputRepo.getId();
+    //Commented out until Richie's implementation of these functions is merged
+    /*ProjectEntity newProject = getByRepositoryIdOrNew(inputRepoID);
     if (!newProject.mentorIds.contains(userID)) {
       newProject.mentorIds.add(userID);
       newProject.save();
-    }
+    }*/
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-    // This section is commented out until we have populated datastore to refer to.
     PersonEntity user;
     try {
-      user = ofy().load().type(PersonEntity.class).id(userID);
+      user = ofy().load().type(PersonEntity.class).id(userID).now();
     } catch (Exception e) {
       error(response, "You must sign up for opensesame first.", 401, "User not registered.");
       return;
     }
 
     if (user instanceof MentorEntity) {
-      MentorEntity mentor = (MentoryEntity) user;
+      MentorEntity mentor = (MentorEntity) user;
       mentor.projectIDs.add(inputRepoID);
       ofy().save().entity(mentor);
     }
     else {
-      ArrayList<String> projects = new ArrayList<String>();
+      ArrayList<Long> projects = new ArrayList<Long>();
       projects.add(inputRepoID);
       ArrayList<String> mentees = new ArrayList<String>();
       MentorEntity mentor = new MentorEntity(user, projects, mentees);
       ofy().save().entity(mentor);
     }
 
-    // TODO: Add a mentor entity as a child of the user entity.
     response.setContentType("application/json;");
     response.getWriter().println(new Gson().toJson("success"));
     return;
