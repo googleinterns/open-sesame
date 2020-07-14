@@ -1,16 +1,14 @@
 package com.google.opensesame.servlets;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Subclass;
+import com.google.opensesame.projects.ProjectEntity;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -21,9 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
-import com.google.opensesame.projects.ProjectEntity;
 @WebServlet("/mentors")
 public class MentorsServlet extends HttpServlet {
 
@@ -31,7 +26,7 @@ public class MentorsServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query<MentorEntity> mentors = ofy().load().type(MentorEntity.class);
     ArrayList<MentorObject> mentors = new ArrayList<MentorObject>();
-    for (MentorEntity mentor: mentors) {
+    for (MentorEntity mentor : mentors) {
       mentors.add(fromMentorEntity(mentor));
     }
 
@@ -68,7 +63,7 @@ public class MentorsServlet extends HttpServlet {
       error(response, "Repo not found: Please enter a valid repo url.", 400, "Repo not found");
       return;
     }
-     
+
     String userID;
     try {
       userID = AuthServlet.getAuthorizedUser().getUserId();
@@ -99,8 +94,7 @@ public class MentorsServlet extends HttpServlet {
       MentorEntity mentor = (MentoryEntity) user;
       mentor.projectIDs.add(inputRepoID);
       ofy().save().entity(mentor);
-    }
-    else {
+    } else {
       ArrayList<String> projects = new ArrayList<String>();
       projects.add(inputRepoID);
       ArrayList<String> mentees = new ArrayList<String>();

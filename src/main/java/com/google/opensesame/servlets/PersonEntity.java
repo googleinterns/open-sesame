@@ -1,31 +1,25 @@
 package com.google.opensesame.servlets;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Parent;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @Entity
 public class PersonEntity {
-    @Id String id;
-    ArrayList<String> interestTags;
-    String email;
+  @Id String id;
+  ArrayList<String> interestTags;
+  String email;
 
-    public PersonEntity(PersonObject person) {
-      this.id = person.getGitHubID();
-      this.interestTags = person.getTags();
-      this.email = person.getEmail();
-    }
+  public PersonEntity(PersonObject person) {
+    this.id = person.getGitHubID();
+    this.interestTags = person.getTags();
+    this.email = person.getEmail();
+  }
 
-    public PersonEntity(String gitHubID, ArrayList<String> interestTags, String email) {
-      this.id = gitHubID;
-      this.interestTags = interestTags;
-      this.email = email;
-    }
+  public PersonEntity(String gitHubID, ArrayList<String> interestTags, String email) {
+    this.id = gitHubID;
+    this.interestTags = interestTags;
+    this.email = email;
+  }
 }
