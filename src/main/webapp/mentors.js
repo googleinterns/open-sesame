@@ -1,4 +1,5 @@
 import standardizeFetchErrors from '/js/fetch_handler.js';
+getMentors();
 let form = document.getElementById('mentor-form');
 form.addEventListener('submit', submitForm);
 
@@ -10,31 +11,25 @@ function getMentors() { // eslint-disable-line no-unused-vars
   console.log('entering get mentors function/n');
   const url = new URL(
       '/mentors', window.location.protocol + '//' + window.location.hostname);
-
-  fetch(url).then(errorHandling).then((response) => response.json())
-      .then((mentors) => {
-        const mentorsContainer = document.getElementById('mentors-container');
-        mentorsContainer.innerHTML = '';
-        for (const mentor of mentors) {
-          console.log(mentor);
-          mentorsContainer.appendChild(createMentorElement(mentor));
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-}
-
-/**
- * Basic error handling checks if fetch results are 'ok.'
- * @param {Response} response - A fetch response.
- * @return {Response} the response.
- */
-function errorHandling(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
+  const fetchRequest = standardizeFetchErrors(
+        fetch(url),
+        'Failed to communicate with the server, please try again later.',
+        'Encountered a server error, please try again later.');
+  
+  fetchRequest.then((mentors) => {
+    console.log('got mentor data');
+    const mentorsContainer = document.getElementById('mentors-container');
+    mentorsContainer.innerHTML = '';
+    for (const mentor of mentors) {
+      console.log(mentor);
+      mentorsContainer.appendChild(createMentorElement(mentor));
+    }
+  })
+  .catch((errorResponse) => {
+      alert(errorResponse.userMessage);
+      console.error(
+          `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
+  });
 }
 
 /**
