@@ -70,11 +70,9 @@ public class AuthServlet extends HttpServlet {
       // TODO : Add ability to check that a PersonObject exists in datastore with the user's ID.
       // For now, will assume to be false. This can be implemented when datastore support is added
       // for the PersonObject
-      // Checking the datastore for an existing PersonObject is mildly inefficient. This is a side
-      // effect of having to use the Users API on top of GitHub OAuth. Because there are two steps
-      // in signing up, this check ensures that the user has completed both authentication steps.
       // If in the future OAuth can be used for backend authentication (through something like the
-      // Firebase Auth Admin SDK), this check can be removed (along with all Users API code).
+      // Firebase Auth Admin SDK), we can remove the logic to check the datastore for an existing
+      // PersonObject with the user's ID (along with all Users API code).
       responseObject.addProperty("hasProfile", false);
     } else {
       responseObject.addProperty("authorized", false);
