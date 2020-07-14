@@ -19,8 +19,8 @@ public class ProjectServlet extends HttpServlet {
   private static final String PROJECT_ID_PARAM = "projectId";
 
   /**
-   * @return Returns the request parameter associated with the inputted name,
-   * or returns the default value if the specified parameter is not defined.
+   * @return Returns the request parameter associated with the inputted name, or returns the default
+   *     value if the specified parameter is not defined.
    */
   public static String getParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
@@ -45,7 +45,7 @@ public class ProjectServlet extends HttpServlet {
     ProjectEntity projectEntity = ProjectDatastore.getByRepositoryId(projectId);
     if (projectEntity == null) {
       ErrorResponse.sendJsonError(
-          response, 
+          response,
           "A project with the specified project ID '" + projectId + "' does not exist.",
           HttpServletResponse.SC_BAD_REQUEST,
           "Failed to retrieve project data.");
