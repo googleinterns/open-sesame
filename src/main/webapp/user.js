@@ -5,14 +5,18 @@
  */
 function getUser(user) { //eslint-disable-line
   console.log('entering get user function/n');
-  fetch('/user?user=' + user)
-    .then(errorHandling).then((response) => response.json())
-    .then((user) => {
-      return user;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const params = new URLSearchParams();
+  params.append('user', user);
+
+  // TODO: switch to standard fetch error handler
+  fetch('/user', {method: 'GET', body: params})
+      .then(errorHandling).then((response) => response.json())
+      .then((user) => {
+        return user;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 }
 
 /**

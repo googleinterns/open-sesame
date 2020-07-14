@@ -55,20 +55,20 @@ const dummyUser = {
 
 /** @const {Mentee List} */
 const dummyMentees = [{
-    name: 'Richi',
-    starLink: '#givestar',
-    image: dummyImg,
-  },
-  {
-    name: 'Obi',
-    starLink: '#givestar',
-    image: dummyImg,
-  },
-  {
-    name: 'Sami',
-    starLink: '#givestar',
-    image: dummyImg,
-  },
+  name: 'Richi',
+  starLink: '#givestar',
+  image: dummyImg,
+},
+{
+  name: 'Obi',
+  starLink: '#givestar',
+  image: dummyImg,
+},
+{
+  name: 'Sami',
+  starLink: '#givestar',
+  image: dummyImg,
+},
 ];
 
 /** @const {Project} */
@@ -86,7 +86,7 @@ const aboutMeCardDiv = document.getElementById('about-me-card-body');
 const userBioElement = document.getElementById('user-bio');
 const userImageElement = document.getElementById('user-image');
 const userNameAndLocationElement =
-    document.getElementById('user-name-location');
+  document.getElementById('user-name-location');
 const userTagRow = document.getElementById('user-tag-row');
 const userGithubButton = document.getElementById('user-github');
 const affiliationsDiv = document.getElementById('affiliations');
@@ -97,20 +97,20 @@ const affiliationsDiv = document.getElementById('affiliations');
  * @param {User} user
  */
 function createAboutMe(user) {
-  let editButton = createEditButton('#');
+  const editButton = createEditButton('#');
   aboutMeCardDiv.prepend(editButton);
 
   userImageElement.src = user.image;
 
   userNameAndLocationElement.innerHTML = user.name + '<br>';
-  let userLocation = createLocation(user.location);
+  const userLocation = createLocation(user.location);
   userNameAndLocationElement.append(userLocation);
 
   userBioElement.innerText = user.bio;
 
   userGithubButton.href = user.gitSrc;
 
-  for (let tag of user.tags) {
+  for (const tag of user.tags) {
     addTag(tag, userTagRow);
   }
 }
@@ -121,7 +121,7 @@ function createAboutMe(user) {
  * @return {HTMLElement} edit button
  */
 function createEditButton(link) {
-  let editButton = document.createElement('a');
+  const editButton = document.createElement('a');
   editButton.className = 'float-right bold';
   editButton.innerText = 'Edit';
   editButton.href = link;
@@ -134,7 +134,7 @@ function createEditButton(link) {
  * @param {HTMLElement} tagDiv the div the tag is to be added to.
  */
 function addTag(tagText, tagDiv) {
-  let tagElement = document.createElement('div');
+  const tagElement = document.createElement('div');
   tagElement.className = 'border border-muted text-muted mr-1 mb-1 badge';
   tagElement.innerText = tagText;
   tagDiv.append(tagElement);
@@ -146,7 +146,7 @@ function addTag(tagText, tagDiv) {
  * @return {HTMLElement} location small element
  */
 function createLocation(location) {
-  let userLocation = document.createElement('small');
+  const userLocation = document.createElement('small');
   userLocation.innerText = location;
   return userLocation;
 }
@@ -157,10 +157,10 @@ function createLocation(location) {
  * @param {Project} projectObject
  */
 function addProject(projectObject) {
-  let projectCardElement = createProjectCard(projectObject.name);
+  const projectCardElement = createProjectCard(projectObject.name);
   affiliationsDiv.append(projectCardElement);
-  let menteeRow = createRowElement();
-  for (let mentee of projectObject.mentees) {
+  const menteeRow = createRowElement();
+  for (const mentee of projectObject.mentees) {
     menteeRow.append(createMenteeCard(mentee));
   }
   projectCardElement.append(menteeRow);
@@ -173,10 +173,10 @@ function addProject(projectObject) {
  * title @param projectName
  */
 function createProjectCard(projectName) {
-  let projectCardElement = document.createElement('div');
+  const projectCardElement = document.createElement('div');
   projectCardElement.className = 'card container card-holder col-12' +
     ' text-center project-card p-3 m-3';
-  let projectTitleElement = createCardTitle(projectName);
+  const projectTitleElement = createCardTitle(projectName);
   projectCardElement.append(projectTitleElement);
   return projectCardElement;
 }
@@ -187,7 +187,7 @@ function createProjectCard(projectName) {
  * @return {HTMLElement} div representing a card title with @param titleText
  */
 function createCardTitle(titleText) {
-  let cardTitleElement = document.createElement('h4');
+  const cardTitleElement = document.createElement('h4');
   cardTitleElement.className = 'card-title dark-emph';
   cardTitleElement.innerText = titleText;
   return cardTitleElement;
@@ -200,10 +200,10 @@ function createCardTitle(titleText) {
  * @return {HTMLElement} card with information about a given mentee
  */
 function createMenteeCard(mentee) {
-  let menteeCardElement = document.createElement('div');
+  const menteeCardElement = document.createElement('div');
   menteeCardElement.className = 'card card-holder col-' +
     ' text-center m-1 p-2';
-  let menteeCardBody = document.createElement('div');
+  const menteeCardBody = document.createElement('div');
   menteeCardBody.className = 'card-body';
   menteeCardElement.append(menteeCardBody);
   menteeCardBody.append(createMenteeCardImage(mentee.image));
@@ -217,7 +217,7 @@ function createMenteeCard(mentee) {
  * @return {HTMLElement} bootstrap row div
  */
 function createRowElement() {
-  let rowElement = document.createElement('div');
+  const rowElement = document.createElement('div');
   rowElement.className = 'row p-3';
   return rowElement;
 }
@@ -228,7 +228,7 @@ function createRowElement() {
  * @return {HTMLElement} anchor that performs the given action
  */
 function createStarButton(link) {
-  let starButton = document.createElement('a');
+  const starButton = document.createElement('a');
   starButton.className = 'star';
   starButton.innerText = 'Send star';
   starButton.href = link;
@@ -241,7 +241,7 @@ function createStarButton(link) {
  * @return {HTMLElement} image object
  */
 function createMenteeCardImage(imgSrc) {
-  let menteeCardImage = document.createElement('img');
+  const menteeCardImage = document.createElement('img');
   menteeCardImage.className = 'card-img-top mentee-card-img';
   menteeCardImage.src = imgSrc;
   return menteeCardImage;

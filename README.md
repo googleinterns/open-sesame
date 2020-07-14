@@ -42,17 +42,28 @@ To [increase the hourly GitHub API rate limit](https://developer.github.com/v3/#
 </env-variables>
 ```
 
-## JavaScript Testing
+## Linting
+Run the linter with:
+```
+$ npm install eslint  # if not installed already.
+$ ./node_modules/eslint/bin/eslint.js <file or folder>
+```
+
+## Testing
 JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest, additional functionality is added with:
 * [jest-dom](https://github.com/testing-library/jest-dom) for testing the DOM.
 * [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for testing React.
 
-**Run the tests** with:
-```
-npm test
-```
+The tests are also automatically run when using the `npm run dev-server` command to start a development server.
+### JavaScript Testing
+JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest, additional functionality is added with:
+* [jest-dom](https://github.com/testing-library/jest-dom) for testing the DOM.
+* [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for testing React.
+### Java Testing
+Java unit testing is done with [JUnit 4](https://junit.org/junit4/).
 ### Adding tests
-To add another JS test, simply add a JS file that ends with `.test.js` (ex: `script.test.js`) and it will automatically be run by Jest.
+**To add another JS test**, simply add a JS file that ends with `.test.js` (ex: `script.test.js`) and it will automatically be run by Jest.
+**To add another Java test**, add a Java file to the testing directory `src/test/java/`. Be sure to follow the Java conventions for package directory structure, for example if you're testing a package in `com.google.opensesame.github`, the test should be placed in the directory `src/test/java/com/google/opensesame/github`.
 
 ## File Structure
 Please refer to [this](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html) resource to learn more about what each project directory should be used for, and take a look at [this section](https://maven.apache.org/guides/getting-started/#how-do-i-make-my-first-maven-project) of the Maven getting started guide to see how the project naming scheme affects directory structure.
