@@ -28,6 +28,7 @@ function getUser(user) { //eslint-disable-line
 /**
  * Posts a user to the servlet
  * @param {URLSearchParams} userParams parameters with the users information
+ * @return {Promise} response from '/user' POST
  */
 function postUser(userParams) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute('/user'), {
