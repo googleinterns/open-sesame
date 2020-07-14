@@ -1,7 +1,13 @@
 import standardizeFetchErrors from '/js/fetch_handler.js';
-getMentors();
-let form = document.getElementById('mentor-form');
-form.addEventListener('submit', submitForm);
+
+if (window.location.href.includes('mentors.html')) {
+  getMentors();
+}
+if (window.location.href.includes('mentor_form.html')) {
+  console.log('mentor form page!');
+  document.getElementById('mentor-form').addEventListener('submit', submitForm);
+}
+
 
 /**
  * Get mentors from the mentor servlet.
