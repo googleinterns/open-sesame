@@ -1,15 +1,18 @@
 package com.google.opensesame.servlets;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
+<<<<<<< HEAD
 import com.google.appengine.api.datastore.KeyFactory;
+=======
+>>>>>>> 2e0a8ff410bfca2c612bbd63021c8dbd23d67153
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Subclass;
+import com.google.opensesame.projects.ProjectEntity;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
-import com.google.opensesame.projects.ProjectEntity;
 @WebServlet("/mentors")
 public class MentorsServlet extends HttpServlet {
 
@@ -70,7 +70,7 @@ public class MentorsServlet extends HttpServlet {
       error(response, "Repo not found: Please enter a valid repo url.", 400, "Repo not found");
       return;
     }
-     
+
     String userID;
     try {
       userID = AuthServlet.getAuthorizedUser().getUserId();

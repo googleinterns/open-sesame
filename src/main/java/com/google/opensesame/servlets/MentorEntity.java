@@ -6,11 +6,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Subclass;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-@Subclass(index=true)
+@Subclass(index = true)
 public class MentorEntity extends PersonEntity {
     ArrayList<Long> projectIDs;
     ArrayList<String> menteeIDs;
