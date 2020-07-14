@@ -7,14 +7,14 @@
 function getUser(user) { //eslint-disable-line  
   // TODO: switch to standard fetch error handler
   return fetch('/user?githubID=' + user)
-    .then(errorHandling).then((response) => response.json())
-    .then((user) => {
-      return user;
-    })
-    .catch((error) => {
-      console.error(error);
-      return null;
-    });
+      .then(errorHandling).then((response) => response.json())
+      .then((user) => {
+        return user;
+      })
+      .catch((error) => {
+        console.error(error);
+        return null;
+      });
 }
 
 /**
@@ -22,10 +22,10 @@ function getUser(user) { //eslint-disable-line
  * @param {URLSearchParams} userParams parameters with the users information
  */
 function postUser(userParams) {
-  fetch('/user', { method: 'POST', body: userParams })
-    .catch((error) => {
-      console.error(error);
-    });
+  fetch('/user', {method: 'POST', body: userParams})
+      .catch((error) => {
+        console.error(error);
+      });
 }
 
 /**
@@ -40,4 +40,4 @@ function errorHandling(response) {
   return response;
 }
 
-export { getUser, postUser };
+export {getUser, postUser};
