@@ -3,8 +3,8 @@
  * @property {string} gitHubAuthToken
  * @property {string[]} interestTags
  */
-import { gitHubAuthorizer } from './authorization.js';
-import { postUser } from '.user.js';
+import {gitHubAuthorizer} from './authorization.js';
+import {postUser} from '.user.js';
 
 const AFTER_SIGNUP_REDIRECT = '/dashboard.html';
 
@@ -16,9 +16,9 @@ function initSignupForm() {
   signupForm.addEventListener('submit', submitSignup);
 
   signupForm.elements['github-link-button'].addEventListener(
-    'click', handleGitHubLink);
+      'click', handleGitHubLink);
   gitHubAuthorizer
-    .getFirebase().auth().onAuthStateChanged(handleAuthStateChanged);
+      .getFirebase().auth().onAuthStateChanged(handleAuthStateChanged);
   // Handle auth state changed on page load in case of existing authentication.
   handleAuthStateChanged(gitHubAuthorizer.getUser());
 }
@@ -78,7 +78,7 @@ function submitSignup(e) {
       window.location.href = AFTER_SIGNUP_REDIRECT;
     }).catch((errorResponse) => {
       console.error(
-        `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
+          `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
       alert(errorResponse.userMessage);
     }).then(() => {
       gitHubLinkButton.disabled = false;
