@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/auth")
 public class AuthServlet extends HttpServlet {
-
   public static final String AUTH_URL_REDIRECT = "/";
 
   public Gson gson = new Gson();
@@ -43,7 +42,15 @@ public class AuthServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     JsonObject responseObject = new JsonObject();
+    addAuthData(responseObject);
 
+    String responseJson = gson.toJson(responseObject);
+    response.setStatus(HttpServletResponse.SC_OK);
+    response.setContentType("application/json;");
+    response.getWriter().println(responseJson);
+  }
+
+  private void addAuthData(JsonObject responseObject) {
     UserService userService = UserServiceFactory.getUserService();
 
     responseObject.addProperty("loginUrl", userService.createLoginURL(AUTH_URL_REDIRECT));
@@ -59,14 +66,17 @@ public class AuthServlet extends HttpServlet {
       userData.addProperty("id", currentUser.getUserId());
 
       responseObject.add("user", userData);
+
+      // TODO : Add ability to check that a PersonObject exists in datastore with the user's ID.
+      // For now, will assume to be false. This can be implemented when datastore support is added
+      // for the PersonObject
+      // If in the future OAuth can be used for backend authentication (through something like the
+      // Firebase Auth Admin SDK), we can remove the logic to check the datastore for an existing
+      // PersonObject with the user's ID (along with all Users API code).
+      responseObject.addProperty("hasProfile", false);
     } else {
       responseObject.addProperty("authorized", false);
+      responseObject.addProperty("hasProfile", false);
     }
-
-    String responseJson = gson.toJson(responseObject);
-
-    response.setStatus(HttpServletResponse.SC_OK);
-    response.setContentType("application/json;");
-    response.getWriter().println(responseJson);
   }
 }
