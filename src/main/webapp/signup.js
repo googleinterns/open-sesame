@@ -2,6 +2,7 @@
  * @typedef SignUpData
  * @property {string} gitHubAuthToken
  * @property {string[]} interestTags
+ * @property {string} emailAddress
  */
 import {gitHubAuthorizer} from './authorization.js';
 import {
@@ -145,6 +146,14 @@ function createSignupBody() {
     return null;
   }
 
+  const emailAddress = 
+      document.getElementById('signup-form').elements['userEmail'].value;
+  if (!validateEmail(emailAddress)) {
+    // TODO : Add to a more elegant notification system
+    alert('Please enter a valid email address.');
+    return null;
+  }
+
   let interestCheckBox = document.getElementById('check1');
   const interestTags = [];
   for (let i = 2; interestCheckBox; i++) {
@@ -158,7 +167,19 @@ function createSignupBody() {
   return {
     gitHubAuthToken: gitHubAuthorizer.getToken(),
     interestTags,
+    emailAddress,
   };
+}
+
+/**
+ * Validates an email syntactically against a regular expression.
+ * Sourced from:
+ * https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+ * @param {string} email 
+ */
+function validateEmail(email) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
 }
 
 initSignupForm();
