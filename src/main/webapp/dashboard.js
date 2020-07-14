@@ -1,57 +1,41 @@
+import {getUser} from './user.js';
+
 /**
  * A project
  * @typedef {Object} Project
- * @property {String} name - the name of a given project.
+ * @property {string} name - the name of a given project.
  * @property {Mentee List} mentees - the list of mentees under a given project.
  */
 
 /**
  * A mentee
  * @typedef {Object} Mentee
- * @property {String} image -the link to a mentee's image
- * @property {String} name - the name of the mentee
- * @property {String} starLink - the link to the action that rewards a given
+ * @property {string} image -the link to a mentee's image
+ * @property {string} name - the name of the mentee
+ * @property {string} starLink - the link to the action that rewards a given
  *                               mentee with a star
  */
 
 /**
  * A User
  * @typedef {Object} User
- * @property {String} bio - The bio of the user
- * @property {String} gitSrc - The user's github page
- * @property {String} image - The User's profile picture
- * @property {String} location - the location of the user
- * @property {String} name - the name of the user
- * @property {String List} tags - The user's tags
+ * @property {string List} interestTags - The user's tags
+ * @property {string} bio - The bio of the user
+ * @property {string} email - the email address of the user
+ * @property {string} gitHubURL: - The user's github page
+ * @property {string} image - The User's profile picture
+ * @property {string} location - the location of the user
+ * @property {string} name - the name of the user
  */
 
 /**
  * Fake information for the hardcoded stage.
  */
-/** @const {String} */
-const dummyName = 'Dior';
-const dummyLocation = 'Sunnyvale CA.';
-const dummyBio = 'The cutest pug in The tech industry. Lorem ipsum dolor sit ' +
-  'amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut' +
-  ' labore et dolore magna aliqua.';
+/** @const {string} */
 const dummyImg = 'images/dior.jpg';
-const dummyGitSrc = '#';
 const dummyProjectName = 'Kubernetes';
+const dummyGitHubID = 'Obinnabii';
 
-/** @const {String List} */
-const dummyTags = ['Weekly', '30 mins', 'Kubernetes', 'Open Sesame',
-  'Documentation',
-];
-
-/** @const {User} */
-const dummyUser = {
-  name: dummyName,
-  location: dummyLocation,
-  image: dummyImg,
-  bio: dummyBio,
-  tags: dummyTags,
-  gitSrc: dummyGitSrc,
-};
 
 /** @const {Mentee List} */
 const dummyMentees = [{
@@ -108,16 +92,16 @@ function createAboutMe(user) {
 
   userBioElement.innerText = user.bio;
 
-  userGithubButton.href = user.gitSrc;
+  userGithubButton.href = user.gitHubURL;
 
-  for (const tag of user.tags) {
+  for (const tag of user.interestTags) {
     addTag(tag, userTagRow);
   }
 }
 
 /**
  * Return an edit button element that links to the action @param link.
- * @param {String} link the href link to the action the edit button will perform
+ * @param {string} link the href link to the action the edit button will perform
  * @return {HTMLElement} edit button
  */
 function createEditButton(link) {
@@ -130,7 +114,7 @@ function createEditButton(link) {
 
 /**
  * Append a tag with @param tagText to @param tagDiv
- * @param {String} tagText the text in the tag element.
+ * @param {string} tagText the text in the tag element.
  * @param {HTMLElement} tagDiv the div the tag is to be added to.
  */
 function addTag(tagText, tagDiv) {
@@ -142,7 +126,7 @@ function addTag(tagText, tagDiv) {
 
 /**
  * Creates a small element with a given @param location
- * @param {String} location text for a given location.
+ * @param {string} location text for a given location.
  * @return {HTMLElement} location small element
  */
 function createLocation(location) {
@@ -168,7 +152,7 @@ function addProject(projectObject) {
 
 /**
  * Return a project card div element with the title @param projectName
- * @param {String} projectName
+ * @param {string} projectName
  * @return {HTMLElement} div representing a project card with the
  * title @param projectName
  */
@@ -183,7 +167,7 @@ function createProjectCard(projectName) {
 
 /**
  * Return a bootstrap card-title div element with @param titleText
- * @param {String} titleText
+ * @param {string} titleText
  * @return {HTMLElement} div representing a card title with @param titleText
  */
 function createCardTitle(titleText) {
@@ -203,6 +187,7 @@ function createMenteeCard(mentee) {
   const menteeCardElement = document.createElement('div');
   menteeCardElement.className = 'card card-holder col-' +
     ' text-center m-1 p-2';
+
   const menteeCardBody = document.createElement('div');
   menteeCardBody.className = 'card-body';
   menteeCardElement.append(menteeCardBody);
@@ -224,7 +209,7 @@ function createRowElement() {
 
 /**
  * Return an anchor of the class star that perform the acton @param link
- * @param {String} link
+ * @param {string} link
  * @return {HTMLElement} anchor that performs the given action
  */
 function createStarButton(link) {
@@ -237,7 +222,7 @@ function createStarButton(link) {
 
 /**
  * Return a small image with the source @param imgSrc
- * @param {String} imgSrc
+ * @param {string} imgSrc
  * @return {HTMLElement} image object
  */
 function createMenteeCardImage(imgSrc) {
@@ -251,7 +236,7 @@ function createMenteeCardImage(imgSrc) {
  * Call functions to populate page sections with data.
  */
 function setUpPage() {
-  createAboutMe(dummyUser);
+  getUser(dummyGitHubID).then(createAboutMe);
   addProject(dummyProject);
   addProject(dummyProject);
 }

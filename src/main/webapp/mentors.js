@@ -1,3 +1,8 @@
+import standardizeFetchErrors from '/js/fetch_handler.js';
+getMentors();
+const form = document.getElementById('mentor-form');
+form.addEventListener('submit', submitForm);
+
 /**
  * Get mentors from the mentor servlet.
  * @param {String} response
@@ -6,31 +11,25 @@ function getMentors() { // eslint-disable-line no-unused-vars
   console.log('entering get mentors function/n');
   const url = new URL(
       '/mentors', window.location.protocol + '//' + window.location.hostname);
+  const fetchRequest = standardizeFetchErrors(
+      fetch(url),
+      'Failed to communicate with the server, please try again later.',
+      'Encountered a server error, please try again later.');
 
-  fetch(url).then(errorHandling).then((response) => response.json())
-      .then((mentors) => {
-        const mentorsContainer = document.getElementById('mentors-container');
-        mentorsContainer.innerHTML = '';
-        for (const mentor of mentors) {
-          console.log(mentor);
-          mentorsContainer.appendChild(createMentorElement(mentor));
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+  fetchRequest.then((mentors) => {
+    console.log('got mentor data');
+    const mentorsContainer = document.getElementById('mentors-container');
+    mentorsContainer.innerHTML = '';
+    for (const mentor of mentors) {
+      console.log(mentor);
+      mentorsContainer.appendChild(createMentorElement(mentor));
+    }
+  })
+      .catch((errorResponse) => {
+        alert(errorResponse.userMessage);
+        console.error(
+            `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
       });
-}
-
-/**
- * Basic error handling checks if fetch results are 'ok.'
- * @param {Response} response - A fetch response.
- * @return {Response} the response.
- */
-function errorHandling(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
 }
 
 /**
@@ -121,4 +120,33 @@ function createProjectsDiv(projectIDs) {
     projectsDiv.append(projectElement);
   }
   return projectsDiv;
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  const inputUrl = document.getElementById('inputRepo').value;
+  const encodedBody = new URLSearchParams();
+  encodedBody.append('inputRepo', inputUrl);
+  const url = new URL('/mentors', window.location.origin);
+  const fetchRequest = fetch((url), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: encodedBody,
+  });
+
+  standardizeFetchErrors(fetchRequest, 'Fetch failed message here', 'Server error message here').then((response) => {
+    console.log('valid url');
+    window.location.href = '/dashboard.html';
+  }).catch((errorResponse) => {
+    if (errorResponse.statusCode == 400) {
+      const errorContainer = document.getElementById('error-message-container');
+      errorContainer.innerText = errorResponse.message;
+    } else {
+      console.error(
+          `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
+      alert(errorResponse.userMessage);
+    }
+  });
 }
