@@ -28,7 +28,7 @@ public class PersonObject {
     this.gitHubID = gitHubID;
     this.interestTags = interestTags;
 
-    // GitHub query
+    // GitHub query TODO: alternate ways of getting this information.
     final GitHub gitHub = GitHubGetter.getGitHub();
     final GHUser userGitAccount = gitHub.getUser(gitHubID);
     this.bio = userGitAccount.getBio();
