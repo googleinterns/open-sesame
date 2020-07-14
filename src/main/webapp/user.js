@@ -1,3 +1,8 @@
+import {
+  standardizeFetchErrors,
+  makeRelativeUrlAbsolute,
+} from './js/fetch_handler.js';
+
 /**
  * Get the user @param user from the user servlet. gets a user object from the
  * UserServlet
@@ -6,15 +11,18 @@
  */
 function getUser(user) { //eslint-disable-line  
   // TODO: switch to standard fetch error handler
-  return fetch('/user?githubID=' + user)
-      .then(errorHandling).then((response) => response.json())
-      .then((user) => {
-        return user;
-      })
-      .catch((error) => {
-        console.error(error);
-        return null;
-      });
+  const fetchRequest = fetch(makeRelativeUrlAbsolute('/user?githubID=' + user));
+
+  const errorFormattedFetchRequest = standardizeFetchErrors(
+    fetchRequest,
+    'Failed to communicate with the server. Please try again later.',
+    'An error occcured while retrieving this account.' +
+    ' Please try again later.');
+
+  return errorFormattedFetchRequest.then((response) => response.json())
+    .then((user) => {
+      return user;
+    })
 }
 
 /**
@@ -22,22 +30,21 @@ function getUser(user) { //eslint-disable-line
  * @param {URLSearchParams} userParams parameters with the users information
  */
 function postUser(userParams) {
-  fetch('/user', {method: 'POST', body: userParams})
-      .catch((error) => {
-        console.error(error);
-      });
+  const fetchRequest = fetch(makeRelativeUrlAbsolute('/user'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: userParams,
+  });
+
+  const errorFormattedFetchRequest = standardizeFetchErrors(
+    fetchRequest,
+    'Failed to communicate with the server. Please try again later.',
+    'An error occcured while creating your account.' +
+    ' Please try again later.');
+
+  return errorFormattedFetchRequest;
 }
 
-/**
- * Basic error handling checks if fetch results are 'ok.'
- * @param {Response} response the HTTP response
- * @return {Response}an 'ok' HTTP response
- */
-function errorHandling(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
-
-export {getUser, postUser};
+export { getUser, postUser };
