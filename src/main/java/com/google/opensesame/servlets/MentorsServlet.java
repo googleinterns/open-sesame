@@ -2,9 +2,6 @@ package com.google.opensesame.servlets;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
@@ -72,8 +69,9 @@ public class MentorsServlet extends HttpServlet {
     response.getWriter().println(jsonMentors);
   }
 
-  //This function sends an error if invalid input is found.
-  public void error(HttpServletResponse response, String errorMessage, int statusCode, String userMessage)  
+  // This function sends an error if invalid input is found.
+  public void error(
+      HttpServletResponse response, String errorMessage, int statusCode, String userMessage)
       throws ServletException, IOException {
     JsonObject responseObject = new JsonObject();
     responseObject.addProperty("message", errorMessage);
@@ -105,7 +103,7 @@ public class MentorsServlet extends HttpServlet {
     String userID = AuthServlet.getAuthorizedUser().getUserId();
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-    //This section is commented out until we have populated datastore to refer to.
+    // This section is commented out until we have populated datastore to refer to.
     /*try {
       Entity personEntity = datastore.get(KeyFactory.stringToKey(userID));
     } catch (EntityNotFoundException e) {
