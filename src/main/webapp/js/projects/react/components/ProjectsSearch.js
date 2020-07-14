@@ -5,7 +5,7 @@
 import ProjectList from './ProjectList.js';
 import {
   standardizeFetchErrors,
-  makeRelativeUrlAbsolute
+  makeRelativeUrlAbsolute,
 } from '../../../fetch_handler.js';
 
 /**
