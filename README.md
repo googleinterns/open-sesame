@@ -42,11 +42,18 @@ To [increase the hourly GitHub API rate limit](https://developer.github.com/v3/#
 </env-variables>
 ```
 
+## Linting
+Run the linter with:
+```
+$ npm install eslint  # if not installed already.
+$ ./node_modules/eslint/bin/eslint.js <file or folder>
+```
+
 ## Testing
-**Run the tests** with:
-```
-npm test
-```
+JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest, additional functionality is added with:
+* [jest-dom](https://github.com/testing-library/jest-dom) for testing the DOM.
+* [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for testing React.
+
 The tests are also automatically run when using the `npm run dev-server` command to start a development server.
 ### JavaScript Testing
 JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest, additional functionality is added with:

@@ -87,12 +87,12 @@ class GitHubAuthorizer {
    * authorized user. Can throw errors.
    */
   signIn() {
-    let provider = new this.firebase.auth.GithubAuthProvider();
+    const provider = new this.firebase.auth.GithubAuthProvider();
     return this.getFirebase().auth().signInWithPopup(provider)
-      .then((result) => {
-        this.token = result.credential.accessToken;
-        return result;
-      });
+        .then((result) => {
+          this.token = result.credential.accessToken;
+          return result;
+        });
   }
 
   /**
@@ -103,7 +103,7 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {<Promise> null} can throw errors
+   * @return {null} can throw errors
    */
   signOut() {
     return this.getFirebase().auth().signOut().then(() => {
@@ -122,7 +122,7 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return {<Promise> Firebase.UserCredential | null} credentials of the
+   * @return { Firebase.UserCredential | null} credentials of the
    * authorized user or null the user is signed out
    */
   toggleSignIn() {
@@ -146,4 +146,4 @@ class GitHubAuthorizer {
   }
 }
 
-export let gitHubAuthorizer = new GitHubAuthorizer();
+export const gitHubAuthorizer = new GitHubAuthorizer();
