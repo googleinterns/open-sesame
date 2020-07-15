@@ -73,22 +73,22 @@ public class UserServlet extends HttpServlet {
   @Override
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      String userGitHubID = request.getParameter("githubID");
-      if (userGitHubID == null || userGitHubID.trim().length() == 0) {
-        ErrorResponse.sendJsonError(
-            response,
-            "Empty GitHub ID",
-            HttpServletResponse.SC_BAD_REQUEST,
-            "There is no GitHub ID affiliated with this request");
-        return;
-      }
-      String[] userTags = request.getParameterValues("tags");
-      ArrayList<String> userTagsList = userTags == null ? new ArrayList<String>() :
-          new ArrayList<>(Arrays.asList( userTags ));
+    String userGitHubID = request.getParameter("githubID");
+    if (userGitHubID == null || userGitHubID.trim().length() == 0) {
+      ErrorResponse.sendJsonError(
+          response,
+          "Empty GitHub ID",
+          HttpServletResponse.SC_BAD_REQUEST,
+          "There is no GitHub ID affiliated with this request");
+      return;
+    }
+    String[] userTags = request.getParameterValues("tags");
+    ArrayList<String> userTagsList =
+        userTags == null ? new ArrayList<String>() : new ArrayList<>(Arrays.asList(userTags));
 
-      Entity personEntity =
-          new PersonBuilder().gitHubID(userGitHubID).interestTags(userTagsList).buildPersonEntity();
-      datastore.put(personEntity);
+    Entity personEntity =
+        new PersonBuilder().gitHubID(userGitHubID).interestTags(userTagsList).buildPersonEntity();
+    datastore.put(personEntity);
   }
 
   // TODO: use function in other servlets.
