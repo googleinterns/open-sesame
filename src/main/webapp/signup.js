@@ -4,10 +4,7 @@
  * @property {string[]} interestTags
  */
 import {gitHubAuthorizer} from './authorization.js';
-import {
-  standardizeFetchErrors,
-  makeRelativeUrlAbsolute,
-} from './js/fetch_handler.js';
+import {postUser} from './user.js';
 
 const AFTER_SIGNUP_REDIRECT = '/dashboard.html';
 
@@ -36,7 +33,7 @@ function handleGitHubLink(e) {
   gitHubAuthorizer.toggleSignIn().catch((error) => {
     console.error(error);
     alert('Encountered an error with GitHub authentication.' +
-        ' Please try again later.');
+      ' Please try again later.');
   });
 }
 
@@ -128,7 +125,7 @@ function createSignupRequest() {
       fetchRequest,
       'Failed to communicate with the server. Please try again later.',
       'An error occcured while creating your account.' +
-          ' Please try again later.');
+    ' Please try again later.');
 
   return errorFormattedFetchRequest;
 }
