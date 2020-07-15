@@ -1,16 +1,27 @@
 import standardizeFetchErrors from '/js/fetch_handler.js';
+
 getMentors();
-const form = document.getElementById('mentor-form');
-form.addEventListener('submit', submitForm);
+initForm();
+
+function initForm() {
+  const mentorForm = document.getElementById('mentor-form');
+  if (mentorForm) {
+    mentorForm.addEventListener('submit', submitForm);
+  }
+  return;
+}
 
 /**
  * Get mentors from the mentor servlet.
  * @param {String} response
  */
-function getMentors() { // eslint-disable-line no-unused-vars
+function getMentors() {
+  const mentorsContainer = document.getElementById('mentors-container');
+  if (!mentorsContainer) {
+    return;
+  }
   console.log('entering get mentors function/n');
-  const url = new URL(
-      '/mentors', window.location.protocol + '//' + window.location.hostname);
+  const url = new URL('/mentors', window.location.origin);
   const fetchRequest = standardizeFetchErrors(
       fetch(url),
       'Failed to communicate with the server, please try again later.',
@@ -18,7 +29,6 @@ function getMentors() { // eslint-disable-line no-unused-vars
 
   fetchRequest.then((mentors) => {
     console.log('got mentor data');
-    const mentorsContainer = document.getElementById('mentors-container');
     mentorsContainer.innerHTML = '';
     for (const mentor of mentors) {
       console.log(mentor);
