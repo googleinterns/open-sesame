@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 
 /**
  * A project
@@ -34,25 +34,24 @@ import {getUser} from './user.js';
 /** @const {string} */
 const dummyImg = 'images/dior.jpg';
 const dummyProjectName = 'Kubernetes';
-const dummyGitHubID = 'Obinnabii';
 
 
 /** @const {Mentee List} */
 const dummyMentees = [{
-  name: 'Richi',
-  starLink: '#givestar',
-  image: dummyImg,
-},
-{
-  name: 'Obi',
-  starLink: '#givestar',
-  image: dummyImg,
-},
-{
-  name: 'Sami',
-  starLink: '#givestar',
-  image: dummyImg,
-},
+    name: 'Richi',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
+  {
+    name: 'Obi',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
+  {
+    name: 'Sami',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
 ];
 
 /** @const {Project} */
@@ -236,7 +235,7 @@ function createMenteeCardImage(imgSrc) {
  * Call functions to populate page sections with data.
  */
 function setUpPage() {
-  getUser(dummyGitHubID).then(createAboutMe);
+  getUser().then(createAboutMe);
   addProject(dummyProject);
   addProject(dummyProject);
 }
