@@ -1,11 +1,14 @@
 import standardizeFetchErrors from '/js/fetch_handler.js';
 
-if (window.location.href.includes('mentors.html')) {
-  getMentors();
-}
-if (window.location.href.includes('mentor_form.html')) {
-  console.log('mentor form page!');
-  document.getElementById('mentor-form').addEventListener('submit', submitForm);
+getMentors();
+initForm();
+
+function initForm() {
+  let mentorForm = document.getElementById('mentor-form');
+  if (mentorForm) {
+    mentorForm.addEventListener('submit', submitForm);
+  }
+  return;
 }
 
 
@@ -13,7 +16,11 @@ if (window.location.href.includes('mentor_form.html')) {
  * Get mentors from the mentor servlet.
  * @param {String} response
  */
-function getMentors() { // eslint-disable-line no-unused-vars
+function getMentors() {
+  let mentorsContainer = document.getElementById('mentors-container');
+  if(!mentorsContainer) {
+    return;
+  }
   console.log('entering get mentors function/n');
   const url = new URL('/mentors', window.location.origin);
   const fetchRequest = standardizeFetchErrors(
@@ -23,7 +30,6 @@ function getMentors() { // eslint-disable-line no-unused-vars
 
   fetchRequest.then((mentors) => {
     console.log('got mentor data');
-    const mentorsContainer = document.getElementById('mentors-container');
     mentorsContainer.innerHTML = '';
     for (const mentor of mentors) {
       console.log(mentor);
