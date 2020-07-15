@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # v2 minimum required
+        with:
+          token: ${{secrets.PAT_TOKEN}} # Re-running Linter on auto commit
       # Recommended: latest versions of Google Java Format require JDK 11+
       - uses: actions/setup-java@v1
         with:
@@ -18,11 +20,24 @@ jobs:
         with:
           args: "--replace"
 
+  
   ESLint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: hallee/eslint-action@1.0.3
-        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
-        with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
+    - uses: actions/checkout@v2
+      with:
+        token: ${{secrets.PAT_TOKEN}}
+    - name: Install modules
+      run: npm install
+    - name: Run ESLint
+      continue-on-error: true
+      run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix
+    - name: Commit ESLint changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Apply ESLint changes.
+    - name: Annotate ESLint errors
+      uses: hallee/eslint-action@1.0.3
+      if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
+      with:
+        repo-token: ${{secrets.GITHUB_TOKEN}}
