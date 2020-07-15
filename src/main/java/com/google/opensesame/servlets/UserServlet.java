@@ -36,7 +36,7 @@ public class UserServlet extends HttpServlet {
   }
 
   @Override
-  // Get a specific user. Return the currently signed in user if no userID is 
+  // Get a specific user. Return the currently signed in user if no userID is
   // supplied.
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
