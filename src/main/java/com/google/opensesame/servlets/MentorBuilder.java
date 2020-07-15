@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class MentorBuilder {
   private String name;
   private String gitHubID;
+  private String email;
   private String description = "";
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> projectIDs = new ArrayList<String>();
@@ -13,7 +14,7 @@ public class MentorBuilder {
   public MentorBuilder() {}
 
   public MentorObject buildMentor() throws IOException {
-    return new MentorObject(gitHubID, interestTags, projectIDs);
+    return new MentorObject(gitHubID, interestTags, projectIDs, email);
   }
 
   public MentorBuilder name(String name) {

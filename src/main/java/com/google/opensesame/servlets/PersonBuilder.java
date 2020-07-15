@@ -9,11 +9,14 @@ public class PersonBuilder {
   public static String ENTITY_NAME = "User";
   public static String GITHUB_ID_FIELD = "github-id";
   public static String TAG_LIST_FIELD = "tags";
+  public static String EMAIL_FEILD = "email";
 
-  private String gitHubID;
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> projectIDs = new ArrayList<String>();
   private String description;
+  private String email;
+  private String gitHubID;
+  private String userID;
   private String name;
 
   public PersonBuilder() {}
@@ -43,6 +46,16 @@ public class PersonBuilder {
     return this;
   }
 
+  public PersonBuilder email(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public PersonBuilder userID(String userID) {
+    this.userID = userID;
+    return this;
+  }
+
   /**
    * Create a PersonObject instance with information from the current builder.
    *
@@ -50,7 +63,7 @@ public class PersonBuilder {
    * @throws IOException
    */
   public PersonObject buildPersonObject() throws IOException {
-    return new PersonObject(gitHubID, interestTags);
+    return new PersonObject(gitHubID, interestTags, email);
   }
 
   /**
@@ -65,6 +78,7 @@ public class PersonBuilder {
     this.gitHubID(entityGitHubID);
     ArrayList<String> entityTagList = (ArrayList<String>) personEntity.getProperty(TAG_LIST_FIELD);
     this.interestTags(entityTagList);
+    this.email = (String) personEntity.getProperty(EMAIL_FEILD);
     return this.buildPersonObject();
   }
 
@@ -75,7 +89,7 @@ public class PersonBuilder {
    * @throws IOException
    */
   public MentorObject buildMentor() throws IOException {
-    return new MentorObject(gitHubID, interestTags, projectIDs);
+    return new MentorObject(gitHubID, interestTags, projectIDs, email);
   }
 
   /**
@@ -84,9 +98,10 @@ public class PersonBuilder {
    * @return entity containing information from the personbuilder
    */
   public Entity buildPersonEntity() {
-    Entity personEntity = new Entity(ENTITY_NAME, this.gitHubID);
+    Entity personEntity = new Entity(ENTITY_NAME, this.userID);
     personEntity.setProperty(GITHUB_ID_FIELD, this.gitHubID);
     personEntity.setProperty(TAG_LIST_FIELD, this.interestTags);
+    personEntity.setProperty(EMAIL_FEILD, this.email);
     return personEntity;
   }
 }
