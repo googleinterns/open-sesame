@@ -26,7 +26,8 @@ public class MentorsServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     ArrayList<String> interests = new ArrayList<String>();
     interests.add("skateboarding");
-    PersonEntity mockPerson = new PersonEntity("user_id_mock", "Obinnabii", interests, "samialves@google.com");
+    PersonEntity mockPerson =
+        new PersonEntity("user_id_mock", "Obinnabii", interests, "samialves@google.com");
     ArrayList<String> mentees = new ArrayList<String>();
     mentees.add("Richie");
     MentorEntity mockMentor = new MentorEntity(mockPerson, new ArrayList<Long>(), mentees);

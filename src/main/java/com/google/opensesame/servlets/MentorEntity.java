@@ -11,7 +11,7 @@ public class MentorEntity extends PersonEntity {
   private MentorEntity() {
     super();
   }
-  
+
   public MentorEntity(
       PersonEntity person, ArrayList<Long> projectIDs, ArrayList<String> menteeIDs) {
     super(person.id, person.interestTags, person.email);
