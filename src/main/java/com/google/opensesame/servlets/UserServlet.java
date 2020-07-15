@@ -90,7 +90,7 @@ public class UserServlet extends HttpServlet {
           new PersonBuilder().gitHubID(userGitHubID).interestTags(userTagsList).buildPersonEntity();
       datastore.put(personEntity);
     }
-  }
+  
 
   // TODO: use function in other servlets.
   /**
