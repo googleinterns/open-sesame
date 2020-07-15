@@ -28,15 +28,17 @@ public class MentorsServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     ArrayList<String> interests = new ArrayList<String>();
     interests.add("skateboarding");
-    PersonEntity mockPerson = PersonEntity("Obinnabii", interests, "samialves@google.com");
-    MentorEntity mockMentor = MentorEntity(mockPerson, new ArrayList<Long>(), new ArrayList<String>());
+    PersonEntity mockPerson = new PersonEntity("user_id_mock", "Obinnabii", interests, "samialves@google.com");
+    ArrayList<String> mentees = new ArrayList<String>();
+    mentees.add("Richie");
+    MentorEntity mockMentor = new MentorEntity(mockPerson, new ArrayList<Long>(), mentees);
     ofy().save().entity(mockMentor);
     List<MentorEntity> mentorEntities = ofy().load().type(MentorEntity.class).list();
     ArrayList<MentorObject> mentors = new ArrayList<MentorObject>();
 
     //Commented out until Obi's new person builder functionalities are merged
     /*for (MentorEntity mentor: mentorEntities) {
-      mentors.add(fromMentorEntity(mentor));
+      mentors.add(new PersonBuilder().buildMentorObject(mentor));
     }*/
 
     String jsonMentors = new Gson().toJson(mentors);
