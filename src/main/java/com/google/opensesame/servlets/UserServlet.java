@@ -3,6 +3,7 @@ package com.google.opensesame.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
@@ -40,10 +41,10 @@ public class UserServlet extends HttpServlet {
     Entity userEntity; // TODO: Abstract doGet() into it's own function
     try {
       userEntity = datastore.get(userKey);
-    } catch (Exception e) {
+    } catch (EntityNotFoundException e) {
       ErrorResponse.sendJsonError(
           response,
-          e.getMessage() + "/n/n" + e.getStackTrace(),
+          "User not fount in the Datastore",
           HttpServletResponse.SC_BAD_REQUEST,
           "The user requested could not be found on the server."
               + "Please ensure that the user has an account with us.");
@@ -72,7 +73,6 @@ public class UserServlet extends HttpServlet {
   @Override
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    try {
       String userGitHubID = request.getParameter("githubID");
       if (userGitHubID == null || userGitHubID.trim().length() == 0) {
         ErrorResponse.sendJsonError(
@@ -82,18 +82,13 @@ public class UserServlet extends HttpServlet {
             "There is no GitHub ID affiliated with this request");
         return;
       }
-      ArrayList<String> userTags =
-          new ArrayList<>(Arrays.asList(request.getParameterValues("tags")));
+      String[] userTags = request.getParameterValues("tags");
+      ArrayList<String> userTagsList = userTags == null ? new ArrayList<String>() :
+          new ArrayList<>(Arrays.asList( userTags ));
 
       Entity personEntity =
-          new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPersonEntity();
+          new PersonBuilder().gitHubID(userGitHubID).interestTags(userTagsList).buildPersonEntity();
       datastore.put(personEntity);
-    } catch (Exception e) {
-      ErrorResponse.sendJsonError(
-          response,
-          e.getMessage() + "/n/n" + e.getStackTrace(),
-          HttpServletResponse.SC_BAD_REQUEST,
-          "User informatiuon could not be sent to datastore");
     }
   }
 
