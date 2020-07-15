@@ -11,6 +11,7 @@ public class PersonObject {
   private String description;
   private ArrayList<String> interestTags;
   private String gitHubID;
+  private String email;
 
   public PersonObject(
       String name, String gitHubID, String description, ArrayList<String> interestTags) {
@@ -22,6 +23,10 @@ public class PersonObject {
 
   public String getName() {
     return name;
+  }
+
+  public String getEmail() {
+    return email;
   }
 
   public String getDescription() {
