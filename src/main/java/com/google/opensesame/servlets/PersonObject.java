@@ -25,7 +25,8 @@ public class PersonObject {
    * @param email
    * @throws IOException
    */
-  public PersonObject(String gitHubID, ArrayList<String> interestTags, String email) throws IOException {
+  public PersonObject(String gitHubID, ArrayList<String> interestTags, String email)
+      throws IOException {
     this.gitHubID = gitHubID;
     this.interestTags = interestTags;
     this.email = email;
