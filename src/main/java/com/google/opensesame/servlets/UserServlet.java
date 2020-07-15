@@ -104,8 +104,9 @@ public class UserServlet extends HttpServlet {
    *
    * @param personEntity PersonObject.ENTITY_NAME entity
    * @return PersonObject that corresponds to the entity retrieved from datastore
+   * @throws IOException
    */
-  public PersonObject toPersonObject(Entity personEntity) {
+  public PersonObject toPersonObject(Entity personEntity) throws IOException {
     PersonBuilder userBuilder = new PersonBuilder();
 
     String entityGitHubID = (String) personEntity.getProperty(PersonObject.GITHUB_ID_FIELD);

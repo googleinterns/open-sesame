@@ -1,5 +1,6 @@
 package com.google.opensesame.servlets;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PersonBuilder {
@@ -9,14 +10,15 @@ public class PersonBuilder {
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> projectIDs = new ArrayList<String>();
 
-  public PersonBuilder() {}
-
-  public PersonObject buildPerson() {
-    return new PersonObject(name, gitHubID, description, interestTags);
+  public PersonBuilder() {
   }
 
-  public MentorObject buildMentor() {
-    return new MentorObject(name, gitHubID, description, interestTags, projectIDs);
+  public PersonObject buildPerson() throws IOException {
+    return new PersonObject(gitHubID, interestTags);
+  }
+
+  public MentorObject buildMentor() throws IOException {
+    return new MentorObject( gitHubID, interestTags, projectIDs);
   }
 
   public PersonBuilder name(String name) {

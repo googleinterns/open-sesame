@@ -14,7 +14,7 @@ public class MentorEntity extends PersonEntity {
 
   public MentorEntity(
       PersonEntity person, ArrayList<Long> projectIDs, ArrayList<String> menteeIDs) {
-    super(person.id, person.interestTags, person.email);
+    super(person.id, person.gitHubId, person.interestTags, person.email);
     this.projectIDs = projectIDs;
     this.menteeIDs = menteeIDs;
   }
