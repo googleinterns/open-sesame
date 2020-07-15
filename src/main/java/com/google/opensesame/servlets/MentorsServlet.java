@@ -1,7 +1,7 @@
 package com.google.opensesame.servlets;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 @WebServlet("/mentors")
 public class MentorsServlet extends HttpServlet {
 
@@ -28,7 +26,7 @@ public class MentorsServlet extends HttpServlet {
     interests.add("skateboarding");
     PersonEntity mockPerson =
         new PersonEntity("user_id_mock", "Obinnabii", interests, "samialves@google.com");
-    
+
     ArrayList<String> mentees = new ArrayList<String>();
     mentees.add("Richie");
     MentorEntity mockMentor = new MentorEntity(mockPerson, new ArrayList<Long>(), mentees);
