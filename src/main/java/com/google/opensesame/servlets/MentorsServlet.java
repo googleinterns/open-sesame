@@ -26,6 +26,11 @@ public class MentorsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    ArrayList<String> interests = new ArrayList<String>();
+    interests.add("skateboarding");
+    PersonEntity mockPerson = PersonEntity("Obinnabii", interests, "samialves@google.com");
+    MentorEntity mockMentor = MentorEntity(mockPerson, new ArrayList<Long>(), new ArrayList<String>());
+    ofy().save().entity(mockMentor);
     List<MentorEntity> mentorEntities = ofy().load().type(MentorEntity.class).list();
     ArrayList<MentorObject> mentors = new ArrayList<MentorObject>();
 
