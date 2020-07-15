@@ -11,7 +11,6 @@ function initForm() {
   return;
 }
 
-
 /**
  * Get mentors from the mentor servlet.
  * @param {String} response

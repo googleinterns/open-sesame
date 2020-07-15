@@ -1,5 +1,5 @@
 /* global fail */
-import standardizeFetchErrors from './fetch_handler.js';
+import {standardizeFetchErrors} from './fetch_handler.js';
 const fetchMock = require('fetch-mock-jest').sandbox();
 
 const fetchFailedMessage = 'Fetch failed';
@@ -9,10 +9,10 @@ afterEach(() => {
   fetchMock.restore();
 });
 
-describe('Fetch error handler', () => {
+describe('Fetch error standardizer', () => {
   it('correctly formats fetch errors', () => {
     fetchMock.get('https://localhost/test', {
-      throws: 'Test error',
+      throws: new Error('Test error'),
     });
 
     const formattedRequest = standardizeFetchErrors(
@@ -23,9 +23,9 @@ describe('Fetch error handler', () => {
     return formattedRequest.then((res) => {
       fail('Did not catch the error.');
     }).catch((errorResponse) => {
-      expect(errorResponse.error).toEqual('Test error');
+      expect(errorResponse.message).toEqual('Test error');
       expect(errorResponse.userMessage).toEqual(fetchFailedMessage);
-      expect(errorResponse.statusCode).toBeUndefined();
+      expect(errorResponse.statusCode).toBeNull();
     });
   });
 
@@ -46,7 +46,7 @@ describe('Fetch error handler', () => {
     return formattedRequest.then((res) => {
       fail('Did not catch the error.');
     }).catch((errorResponse) => {
-      expect(errorResponse.error).toEqual('Error message');
+      expect(errorResponse.message).toEqual('Error message');
       expect(errorResponse.userMessage).toEqual(genericServerErrorMessage);
       expect(errorResponse.statusCode).toEqual(500);
     });
@@ -54,7 +54,7 @@ describe('Fetch error handler', () => {
 
   it('correctly formats API errors', () => {
     const apiErrorResponse = {
-      error: 'Test API error',
+      message: 'Test API error',
       statusCode: 400,
       userMessage: 'Test user message',
     };
@@ -75,7 +75,7 @@ describe('Fetch error handler', () => {
     return formattedRequest.then((res) => {
       fail('Did not catch the error.');
     }).catch((errorResponse) => {
-      expect(errorResponse.error).toEqual('Test API error');
+      expect(errorResponse.message).toEqual('Test API error');
       expect(errorResponse.userMessage).toEqual('Test user message');
       expect(errorResponse.statusCode).toEqual(400);
     });
@@ -97,7 +97,7 @@ describe('Fetch error handler', () => {
     return formattedRequest.then((res) => {
       fail('Did not catch the error.');
     }).catch((errorResponse) => {
-      expect(errorResponse.error)
+      expect(errorResponse.message)
           .toEqual('Error could not be parsed; unanticipated content type.');
       expect(errorResponse.userMessage).toEqual(genericServerErrorMessage);
       expect(errorResponse.statusCode).toEqual(500);
@@ -122,7 +122,7 @@ describe('Fetch error handler', () => {
         fetchFailedMessage,
         genericServerErrorMessage);
 
-    return formattedRequest.then((json) => {
+    return formattedRequest.then((response) => response.json()).then((json) => {
       expect(json.message).toEqual('Test response');
     }).catch((errorResponse) => {
       fail('Caught an error from a successful request.');

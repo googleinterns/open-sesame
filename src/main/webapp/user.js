@@ -1,32 +1,28 @@
+import {
+  standardizeFetchErrors,
+  makeRelativeUrlAbsolute,
+} from './js/fetch_handler.js';
+
 /**
  * Get the user @param user from the user servlet. gets a user object from the
  * UserServlet
  * @param {string} user
+ * @return {dashboard.User}
  */
-function getUser(user) { //eslint-disable-line
-  console.log('entering get user function/n');
-  const params = new URLSearchParams();
-  params.append('user', user);
-
+function getUser(user) { //eslint-disable-line  
   // TODO: switch to standard fetch error handler
-  fetch('/user', {method: 'GET', body: params})
-      .then(errorHandling).then((response) => response.json())
+  const fetchRequest = fetch(makeRelativeUrlAbsolute('/user?githubID=' + user));
+
+  const errorFormattedFetchRequest = standardizeFetchErrors(
+      fetchRequest,
+      'Failed to communicate with the server. Please try again later.',
+      'An error occcured while retrieving this account.' +
+    ' Please try again later.');
+
+  return errorFormattedFetchRequest.then((response) => response.json())
       .then((user) => {
         return user;
-      })
-      .catch((error) => {
-        console.log(error);
       });
 }
 
-/**
- * Basic error handling checks if fetch results are 'ok.'
- * @param {Response} response the HTTP response
- * @return {Response}an 'ok' HTTP response
- */
-function errorHandling(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
+export {getUser};
