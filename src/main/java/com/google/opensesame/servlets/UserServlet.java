@@ -14,10 +14,6 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.gson.Gson;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.util.ErrorResponse;
-
-import org.kohsuke.github.GHMyself;
-import org.kohsuke.github.GitHub;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +21,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.kohsuke.github.GHMyself;
+import org.kohsuke.github.GitHub;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
@@ -41,11 +39,12 @@ public class UserServlet extends HttpServlet {
   // Get a specific user. Return the currently signed in user if none is found.
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    String  userID = request.getParameter("userID") != null ? 
-          request.getParameter("userID") : 
-          AuthServlet.getAuthorizedUser().getUserId();
-  
-          Key userKey; 
+    String userID =
+        request.getParameter("userID") != null
+            ? request.getParameter("userID")
+            : AuthServlet.getAuthorizedUser().getUserId();
+
+    Key userKey;
     try {
       userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userID);
     } catch (Exception e) {
@@ -95,12 +94,10 @@ public class UserServlet extends HttpServlet {
     String userGitHubAuthToken;
     ArrayList<String> userTags;
     // Get information from request body
-    try{
-    userGitHubAuthToken = request.getParameter("gitHubAuthToken");
-    userTags =
-          new ArrayList<>(Arrays.asList(request.getParameterValues("interestTags")));
-    } 
-    catch (Exception e) {
+    try {
+      userGitHubAuthToken = request.getParameter("gitHubAuthToken");
+      userTags = new ArrayList<>(Arrays.asList(request.getParameterValues("interestTags")));
+    } catch (Exception e) {
       ErrorResponse.sendJsonError(
           response,
           e.getMessage() + "/n/n" + e.getStackTrace() + "/n/n Incomplete POST body parameters",
@@ -109,36 +106,38 @@ public class UserServlet extends HttpServlet {
       return;
     }
     // Get User information from GitHub using the Oath token.
-      GHMyself userGHMyself;
-      try {
+    GHMyself userGHMyself;
+    try {
       GitHub userPersonalGitHubInstance = GitHub.connectUsingOAuth(userGitHubAuthToken);
       userGHMyself = userPersonalGitHubInstance.getMyself();
-      } catch (Exception e) {
-        ErrorResponse.sendJsonError(
-            response,
-            e.getMessage()
-            + "/n/n"
-            + e.getStackTrace()
-            + "/n/n Could not get Authenticate User with the given token",
-            HttpServletResponse.SC_BAD_REQUEST,
-            "User could not be authenticated by GitHub, please try again");
-        return;
-      }
-      // Build and send the User's datastore entity
-      try {
+    } catch (Exception e) {
+      ErrorResponse.sendJsonError(
+          response,
+          e.getMessage()
+              + "/n/n"
+              + e.getStackTrace()
+              + "/n/n Could not get Authenticate User with the given token",
+          HttpServletResponse.SC_BAD_REQUEST,
+          "User could not be authenticated by GitHub, please try again");
+      return;
+    }
+    // Build and send the User's datastore entity
+    try {
       Entity personEntity =
           new PersonBuilder()
-          .userID(AuthServlet.getAuthorizedUser().getUserId())
-          .gitHubID(userGHMyself.getLogin())
-          .email(userGHMyself.getEmail())
-          .interestTags(userTags)
-          .buildPersonEntity();
+              .userID(AuthServlet.getAuthorizedUser().getUserId())
+              .gitHubID(userGHMyself.getLogin())
+              .email(userGHMyself.getEmail())
+              .interestTags(userTags)
+              .buildPersonEntity();
       datastore.put(personEntity);
     } catch (Exception e) {
       ErrorResponse.sendJsonError(
           response,
-          e.getMessage() + "/n/n" + e.getStackTrace() + 
-          "/n/n User informatiuon could not be sent to datastore",
+          e.getMessage()
+              + "/n/n"
+              + e.getStackTrace()
+              + "/n/n User informatiuon could not be sent to datastore",
           HttpServletResponse.SC_BAD_REQUEST,
           "User information could not be sent to datastore");
       return;
