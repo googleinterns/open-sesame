@@ -98,7 +98,7 @@ public class UserServlet extends HttpServlet {
       Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userID);
       datastore.get(userKey);
     } catch (Exception e) {
-      return false;
+        return false;
     }
     return true;
   }
