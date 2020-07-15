@@ -10,19 +10,19 @@ import {
  * @return {dashboard.User}
  */
 function getUser(userID = null) { //eslint-disable-line  
-  const fetchURL = '/user' + (userID ? '?userID=' + userID : '')
+  const fetchURL = '/user' + (userID ? '?userID=' + userID : '');
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-    fetchRequest,
-    'Failed to communicate with the server. Please try again later.',
-    'An error occcured while retrieving this account.' +
+      fetchRequest,
+      'Failed to communicate with the server. Please try again later.',
+      'An error occcured while retrieving this account.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest.then((response) => response.json())
-    .then((user) => {
-      return user;
-    });
+      .then((user) => {
+        return user;
+      });
 }
 
 /**
@@ -39,12 +39,12 @@ function postUser(userParams) {
   });
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-    fetchRequest,
-    'Failed to communicate with the server. Please try again later.',
-    'An error occcured while creating your account.' +
+      fetchRequest,
+      'Failed to communicate with the server. Please try again later.',
+      'An error occcured while creating your account.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest;
 }
 
-export { getUser, postUser };
+export {getUser, postUser};
