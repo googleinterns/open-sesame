@@ -4,14 +4,14 @@ import {
 } from './js/fetch_handler.js';
 
 /**
- * Get the user @param user from the user servlet. gets a user object from the
- * UserServlet
- * @param {string} user
+ * Get the user with @param userID from the user servlet. If no @param userID is
+ * supplied, function returns the currently signed in user.
+ * @param {string=} userID OPTIONAL
  * @return {dashboard.User}
  */
-function getUser(user) { //eslint-disable-line  
-  // TODO: switch to standard fetch error handler
-  const fetchRequest = fetch(makeRelativeUrlAbsolute('/user?userID=' + user));
+function getUser(userID = null) { //eslint-disable-line  
+  const fetchURL = '/user' + (userID ? '?userID=' + userID : '')
+  const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
     fetchRequest,
