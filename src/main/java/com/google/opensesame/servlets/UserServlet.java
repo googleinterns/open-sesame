@@ -3,7 +3,6 @@ package com.google.opensesame.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
@@ -12,7 +11,6 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.gson.Gson;
-import com.google.opensesame.util.ErrorResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,35 +31,19 @@ public class UserServlet extends HttpServlet {
   }
 
   @Override
-  // Get a specific user. Return null if not found.
+  // Get a specific user. Return null if not found. TODO: User Validation
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGithub = request.getParameter("githubID"); // TODO:Check for null values
+    String userGithub = request.getParameter("githubID");
     Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userGithub);
+    System.out.println(userKey);
 
-    Entity userEntity; // TODO: Abstract doGet() into it's own function
-    try {
-      userEntity = datastore.get(userKey);
-    } catch (EntityNotFoundException e) {
-      ErrorResponse.sendJsonError(
-          response,
-          "User not fount in the Datastore",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "The user requested could not be found on the server."
-              + "Please ensure that the user has an account with us.");
-      return;
-    }
     PersonObject userObject;
     try {
-      userObject = new PersonBuilder().buildPersonObject(userEntity);
+      userObject = new PersonBuilder().buildPersonObject(datastore.get(userKey));
+      System.out.println(userObject);
     } catch (Exception e) {
-      ErrorResponse.sendJsonError(
-          response,
-          e.getMessage()
-              + "/n/n"
-              + e.getStackTrace()
-              + "/n/n PersonObject could not be instantiated from Person Entity",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "User could not be instatiated in the Server");
+      e.printStackTrace();
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
       return;
     }
 
@@ -73,23 +55,16 @@ public class UserServlet extends HttpServlet {
   @Override
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      String userGitHubID = request.getParameter("githubID");
-      if (userGitHubID == null || userGitHubID.trim().length() == 0) {
-        ErrorResponse.sendJsonError(
-            response,
-            "Empty GitHub ID",
-            HttpServletResponse.SC_BAD_REQUEST,
-            "There is no GitHub ID affiliated with this request");
-        return;
-      }
-      String[] userTags = request.getParameterValues("tags");
-      ArrayList<String> userTagsList = userTags == null ? new ArrayList<String>() :
-          new ArrayList<>(Arrays.asList( userTags ));
-
-      Entity personEntity =
-          new PersonBuilder().gitHubID(userGitHubID).interestTags(userTagsList).buildPersonEntity();
-      datastore.put(personEntity);
+    String userGitHubID = request.getParameter("githubID");
+    if (userGitHubID.trim().isEmpty()) {
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID");
+      return;
     }
+    ArrayList<String> userTags = new ArrayList<>(Arrays.asList(request.getParameterValues("tags")));
+
+    Entity personEntity =
+        new PersonBuilder().gitHubID(userGitHubID).interestTags(userTags).buildPersonEntity();
+    datastore.put(personEntity);
   }
 
   // TODO: use function in other servlets.
