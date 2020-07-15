@@ -22,17 +22,18 @@ public class PersonObject {
    *
    * @param gitHubID
    * @param interestTags
+   * @param email
    * @throws IOException
    */
-  public PersonObject(String gitHubID, ArrayList<String> interestTags) throws IOException {
+  public PersonObject(String gitHubID, ArrayList<String> interestTags, String email) throws IOException {
     this.gitHubID = gitHubID;
     this.interestTags = interestTags;
+    this.email = email;
 
     // GitHub query TODO: alternate ways of getting this information.
     final GitHub gitHub = GitHubGetter.getGitHub();
     final GHUser userGitAccount = gitHub.getUser(gitHubID);
     this.bio = userGitAccount.getBio();
-    this.email = userGitAccount.getEmail();
     this.image = userGitAccount.getAvatarUrl();
     this.location = userGitAccount.getLocation();
     this.name = userGitAccount.getName();
