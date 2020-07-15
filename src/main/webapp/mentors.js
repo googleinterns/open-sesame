@@ -4,7 +4,7 @@ getMentors();
 initForm();
 
 function initForm() {
-  let mentorForm = document.getElementById('mentor-form');
+  const mentorForm = document.getElementById('mentor-form');
   if (mentorForm) {
     mentorForm.addEventListener('submit', submitForm);
   }
@@ -17,8 +17,8 @@ function initForm() {
  * @param {String} response
  */
 function getMentors() {
-  let mentorsContainer = document.getElementById('mentors-container');
-  if(!mentorsContainer) {
+  const mentorsContainer = document.getElementById('mentors-container');
+  if (!mentorsContainer) {
     return;
   }
   console.log('entering get mentors function/n');
