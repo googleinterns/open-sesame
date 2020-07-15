@@ -2,16 +2,12 @@ package com.google.opensesame;
 
 import com.google.opensesame.servlets.MentorObject;
 import com.google.opensesame.servlets.PersonBuilder;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
-//@RunWith(JUnit4.class)
+// @RunWith(JUnit4.class)
 public class MentorTest {
   private static final String MENTOR_NAME = "Mentor";
   private static final String MENTOR_GITHUB_ID = "Mentor_GitHub_ID";

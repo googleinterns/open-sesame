@@ -10,15 +10,14 @@ public class PersonBuilder {
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> projectIDs = new ArrayList<String>();
 
-  public PersonBuilder() {
-  }
+  public PersonBuilder() {}
 
   public PersonObject buildPerson() throws IOException {
     return new PersonObject(gitHubID, interestTags);
   }
 
   public MentorObject buildMentor() throws IOException {
-    return new MentorObject( gitHubID, interestTags, projectIDs);
+    return new MentorObject(gitHubID, interestTags, projectIDs);
   }
 
   public PersonBuilder name(String name) {
