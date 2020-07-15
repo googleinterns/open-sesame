@@ -4,10 +4,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-<<<<<<< HEAD
 import com.google.appengine.api.datastore.KeyFactory;
-=======
->>>>>>> 2e0a8ff410bfca2c612bbd63021c8dbd23d67153
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
