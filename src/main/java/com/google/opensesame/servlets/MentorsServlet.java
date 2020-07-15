@@ -4,12 +4,10 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
-import com.google.opensesame.projects.ProjectEntity;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +27,13 @@ public class MentorsServlet extends HttpServlet {
     ArrayList<String> interests = new ArrayList<String>();
     interests.add("skateboarding");
     PersonEntity mockPerson = PersonEntity("Obinnabii", interests, "samialves@google.com");
-    MentorEntity mockMentor = MentorEntity(mockPerson, new ArrayList<Long>(), new ArrayList<String>());
+    MentorEntity mockMentor =
+        MentorEntity(mockPerson, new ArrayList<Long>(), new ArrayList<String>());
     ofy().save().entity(mockMentor);
     List<MentorEntity> mentorEntities = ofy().load().type(MentorEntity.class).list();
     ArrayList<MentorObject> mentors = new ArrayList<MentorObject>();
 
-    //Commented out until Obi's new person builder functionalities are merged
+    // Commented out until Obi's new person builder functionalities are merged
     /*for (MentorEntity mentor: mentorEntities) {
       mentors.add(fromMentorEntity(mentor));
     }*/
@@ -82,7 +81,7 @@ public class MentorsServlet extends HttpServlet {
     }
 
     Long inputRepoID = inputRepo.getId();
-    //Commented out until Richie's implementation of these functions is merged
+    // Commented out until Richie's implementation of these functions is merged
     /*ProjectEntity newProject = getByRepositoryIdOrNew(inputRepoID);
     if (!newProject.mentorIds.contains(userID)) {
       newProject.mentorIds.add(userID);
@@ -103,8 +102,7 @@ public class MentorsServlet extends HttpServlet {
       MentorEntity mentor = (MentorEntity) user;
       mentor.projectIDs.add(inputRepoID);
       ofy().save().entity(mentor);
-    }
-    else {
+    } else {
       ArrayList<Long> projects = new ArrayList<Long>();
       projects.add(inputRepoID);
       ArrayList<String> mentees = new ArrayList<String>();

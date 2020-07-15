@@ -1,7 +1,7 @@
 package com.google.opensesame.objectify;
 
-import javax.servlet.annotation.WebFilter;
 import com.googlecode.objectify.ObjectifyFilter;
+import javax.servlet.annotation.WebFilter;
 
 @WebFilter(urlPatterns = {"/*"})
 public class ObjectifyWebFilter extends ObjectifyFilter {}
