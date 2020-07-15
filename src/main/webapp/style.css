@@ -5,25 +5,25 @@ a {
 }
 
 a:hover,
-.dark-emph {
+.dark-emphasis {
   color: darkblue;
 }
 
-.btn {
+.btn-emphasis {
   background-color: rebeccapurple;
   border: none;
   border-radius: 8px;
   color: white;
 }
 
-.btn:hover {
+.btn-emphasis:hover {
   background-color: purple;
   border: none;
   border-radius: 8px;
   color: white;
 }
 
-.btn.disabled {
+.btn-emphasis.disabled {
   background-color: rebeccapurple;
   color: white;
 }
