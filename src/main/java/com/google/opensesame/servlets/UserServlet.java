@@ -3,6 +3,7 @@ package com.google.opensesame.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
@@ -87,4 +88,20 @@ public class UserServlet extends HttpServlet {
   }
 
   // TODO: make error handling conform with Richie's error handling
+  /**
+   * Check if a user is stored with userID in Datastore.
+   * Invalid return false.
+   * @param userID
+   * @return true if userID exists in datastore, false otherwise. 
+   */
+    public Boolean hasProfile( String userID ) {
+      try {
+        Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userID);
+        datastore.get(userKey);
+      } catch (Exception e) {
+        return false;
+      }
+      return true;
+  }
+
 }
