@@ -10,7 +10,7 @@ form.addEventListener('submit', submitForm);
 function getMentors() { // eslint-disable-line no-unused-vars
   console.log('entering get mentors function/n');
   const url = new URL(
-      '/mentors', window.location.origin);
+      '/mentors', window.location.protocol + '//' + window.location.hostname);
   const fetchRequest = standardizeFetchErrors(
       fetch(url),
       'Failed to communicate with the server, please try again later.',
