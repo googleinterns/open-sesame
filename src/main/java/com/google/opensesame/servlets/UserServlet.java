@@ -34,10 +34,10 @@ public class UserServlet extends HttpServlet {
   @Override
   // Get a specific user. Return null if not found.
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGithub = request.getParameter("githubID"); //TODO:Check for null values
+    String userGithub = request.getParameter("githubID"); // TODO:Check for null values
     Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userGithub);
 
-    Entity userEntity; // TODO: Abstract doGet() into it's own function 
+    Entity userEntity; // TODO: Abstract doGet() into it's own function
     try {
       userEntity = datastore.get(userKey);
     } catch (Exception e) {
