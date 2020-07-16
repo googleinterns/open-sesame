@@ -4,7 +4,7 @@ import com.google.appengine.api.datastore.Entity;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// TODO: Pivot away from builder if it stays redundant by the next PR
+// TODO: ReEvaluate the usefulness of a Builder after MVP presentation.
 public class PersonBuilder {
   public static String ENTITY_NAME = "User";
   public static String GITHUB_ID_FIELD = "github-id";
@@ -12,7 +12,7 @@ public class PersonBuilder {
   public static String EMAIL_FEILD = "email";
 
   private ArrayList<String> interestTags = new ArrayList<String>();
-  private ArrayList<String> projectIDs = new ArrayList<String>();
+  private ArrayList<Long> projectIDs = new ArrayList<Long>();
   private String description;
   private String email;
   private String gitHubID;
@@ -41,7 +41,7 @@ public class PersonBuilder {
     return this;
   }
 
-  public PersonBuilder projectIDs(ArrayList<String> projectIDs) {
+  public PersonBuilder projectIDs(ArrayList<Long> projectIDs) {
     this.projectIDs = projectIDs;
     return this;
   }
@@ -62,24 +62,28 @@ public class PersonBuilder {
    * @return PersonObject that corresponds with feilkds from this PersonBuilder instance
    * @throws IOException
    */
-  public PersonObject buildPersonObject() throws IOException {
-    return new PersonObject(gitHubID, interestTags, email);
+  public PersonObject buildPerson() throws IOException {
+    return new PersonObject(userID, gitHubID, interestTags, email);
   }
-
-  /**
-   * Convert an entity retrieved from Datastore into a PersonObject.
+  
+   /**
+   * Fill PersonBuilder information from an entity. This will work on PersonEntities
+   * and MentorEntities 
    *
-   * @param personEntity PersonObject.ENTITY_NAME entity
+   * @param personEntity PersonEntity instance with user infromation
    * @return PersonObject that corresponds to the entity retrieved from datastore
    * @throws IOException
    */
-  public PersonObject buildPersonObject(Entity personEntity) throws IOException {
-    String entityGitHubID = (String) personEntity.getProperty(GITHUB_ID_FIELD);
-    this.gitHubID(entityGitHubID);
-    ArrayList<String> entityTagList = (ArrayList<String>) personEntity.getProperty(TAG_LIST_FIELD);
-    this.interestTags(entityTagList);
-    this.email = (String) personEntity.getProperty(EMAIL_FEILD);
-    return this.buildPersonObject();
+  public PersonBuilder fromEntity(PersonEntity personEntity) throws IOException {
+    this.userID(personEntity.id);
+    this.gitHubID(personEntity.gitHubId);
+    this.interestTags(personEntity.interestTags);
+    this.email(personEntity.email);
+    if (personEntity instanceof MentorEntity){
+      MentorEntity mentorEntity = (MentorEntity) personEntity;
+      this.projectIDs(mentorEntity.projectIDs);
+    }
+    return this;
   }
 
   /**
@@ -89,19 +93,6 @@ public class PersonBuilder {
    * @throws IOException
    */
   public MentorObject buildMentor() throws IOException {
-    return new MentorObject(gitHubID, interestTags, projectIDs, email);
-  }
-
-  /**
-   * build an entity with information about a person.
-   *
-   * @return entity containing information from the personbuilder
-   */
-  public Entity buildPersonEntity() {
-    Entity personEntity = new Entity(ENTITY_NAME, this.userID);
-    personEntity.setProperty(GITHUB_ID_FIELD, this.gitHubID);
-    personEntity.setProperty(TAG_LIST_FIELD, this.interestTags);
-    personEntity.setProperty(EMAIL_FEILD, this.email);
-    return personEntity;
+    return new MentorObject(userID, gitHubID, interestTags, projectIDs, email);
   }
 }
