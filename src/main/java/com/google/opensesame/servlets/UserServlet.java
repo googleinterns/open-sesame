@@ -38,14 +38,14 @@ public class UserServlet extends HttpServlet {
   }
 
   @Override
-  // Get a specific user. Return the currently signed in user if no userID is
+  // Get a specific user. Return the currently signed-in user if no userID is
   // supplied.
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     String userID = request.getParameter("userID");
     if (userID == null) {
       try {
-        userID = AuthServlet.getAuthorizedUser().getUserId();
+        userID = AuthServlet.getAuthorizedUser().getUserId(); // TODO: Should this be a functionality? 
       } catch (NullPointerException e) {
         ErrorResponse.sendJsonError(
             response,
@@ -56,33 +56,20 @@ public class UserServlet extends HttpServlet {
         return; // TODO: Establish Redirect page path
       }
     }
-
-    try {
-      PersonEntity UserEntity = ofy().load().type(PersonEntity.class).id(userID).now();
-    } catch (EntityNotFoundException e) {
+    PersonEntity userEntity = ofy().load().type(PersonEntity.class).id(userID).now();
+    if (userEntity == null) {
       ErrorResponse.sendJsonError(
           response,
-          "User not found in the Datastore",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "The user requested could not be found on the server."
-              + "Please ensure that the user has an account with us.");
-      return;
-    }
-    PersonObject userObject;
-    try {
-      userObject = new PersonBuilder().buildPersonObject(userEntity);
-    } catch (Exception e) {
-      ErrorResponse.sendJsonError(
-          response,
-          e.getMessage()
-              + "/n/n"
-              + e.getStackTrace()
-              + "/n/n PersonObject could not be instantiated from Person Entity",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "User could not be instatiated in the Server");
+          "User retrieved from Datastore was null",
+          HttpServletResponse.SC_NOT_FOUND,
+          "User does not exist.");
       return;
     }
 
+    PersonObject userObject = new PersonBuilder()
+    .fromEntity(userEntity)
+    .buildPerson();
+    // TODO: make this return a Mentor if the user has mentor status
     String jsonPerson = new Gson().toJson(userObject);
     response.setContentType("application/json;");
     response.getWriter().println(jsonPerson);
@@ -91,57 +78,45 @@ public class UserServlet extends HttpServlet {
   @Override
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGitHubAuthToken;
-    ArrayList<String> userTags;
-    // Get information from request body
-    try {
-      userGitHubAuthToken = request.getParameter("gitHubAuthToken");
-      userTags = new ArrayList<>(Arrays.asList(request.getParameterValues("interestTags")));
-    } catch (Exception e) {
-      ErrorResponse.sendJsonError(
-          response,
-          e.getMessage() + "/n/n" + e.getStackTrace() + "/n/n Incomplete POST body parameters",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "User information was incomplete");
-      return;
-    }
+    String userGitHubAuthToken = request.getParameter("gitHubAuthToken");
+    ArrayList<String> userTags = new ArrayList<>(
+      Arrays.asList(request.getParameterValues("interestTags") == null
+      ? new String[]{} 
+      : request.getParameterValues("interestTags")));
+
+      String userID;
+      try {
+        userID = AuthServlet.getAuthorizedUser().getUserId();
+      } catch (NullPointerException e) {
+        ErrorResponse.sendJsonError(
+            response,
+            "User not logged in",
+            HttpServletResponse.SC_BAD_REQUEST,
+            "You are not logged in");
+        response.sendRedirect(pageToRedirectToIfUserNotAuthenticated);
+        return; // TODO: Establish Redirect page path
+      }
+  
     // Get User information from GitHub using the Oath token.
     GHMyself userGHMyself;
     try {
-      GitHub userPersonalGitHubInstance = GitHub.connectUsingOAuth(userGitHubAuthToken);
-      userGHMyself = userPersonalGitHubInstance.getMyself();
+      userGHMyself = GitHub.connectUsingOAuth(userGitHubAuthToken).getMyself();
     } catch (Exception e) {
       ErrorResponse.sendJsonError(
           response,
           e.getMessage()
-              + "/n/n"
               + e.getStackTrace()
-              + "/n/n Could not get Authenticate User with the given token",
-          HttpServletResponse.SC_BAD_REQUEST,
+              + "Could not get authenticated User with the given token",
+          HttpServletResponse.SC_UNAUTHORIZED,
           "User could not be authenticated by GitHub, please try again");
       return;
     }
     // Build and send the User's datastore entity
-    try {
-      Entity personEntity =
-          new PersonBuilder()
-              .userID(AuthServlet.getAuthorizedUser().getUserId())
-              .gitHubID(userGHMyself.getLogin())
-              .email(userGHMyself.getEmail())
-              .interestTags(userTags)
-              .buildPersonEntity();
-      datastore.put(personEntity);
-    } catch (Exception e) {
-      ErrorResponse.sendJsonError(
-          response,
-          e.getMessage()
-              + "/n/n"
-              + e.getStackTrace()
-              + "/n/n User informatiuon could not be sent to datastore",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "User information could not be sent to datastore");
-      return;
-    }
+      ofy().save().entity(
+      new PersonEntity(userID, 
+          userGHMyself.getLogin(), 
+          userTags, 
+          userGHMyself.getEmail()));
   }
 
   // TODO: use function in other servlets.
@@ -163,5 +138,5 @@ public class UserServlet extends HttpServlet {
     return datastore.prepare(new Query(entityName).setFilter(userFilter));
   }
 
-  // TODO: make error handling conform with Richie's error handling
+  // TODO: The same GitHub account can be used with multiple emails :(
 }
