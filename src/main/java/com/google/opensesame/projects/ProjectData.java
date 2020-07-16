@@ -41,7 +41,7 @@ public class ProjectData {
     ProjectPreviewData previewData =
         ProjectPreviewData.fromProjectEntity(projectEntity, repository);
 
-    // TODO : Use helper function to get mentors by ID. Sami is currently working on this.
+    // TODO : Use helper function to get mentors by ID.
     // Will use mock data for now.
     List<MentorObject> mentors = createMentorMockData();
 
@@ -49,12 +49,13 @@ public class ProjectData {
   }
 
   /**
-   * This is a temporary function that creates mentor mock data. This will be removed when a helper
-   * function is created for getting mentors by ID.
+   * This is a temporary function that creates mentor mock data. This will be
+   * removed when a helper function is created for getting mentors by ID.
    *
    * @return Returns the mentor mock data.
+   * @throws IOException
    */
-  private static List<MentorObject> createMentorMockData() {
+  private static List<MentorObject> createMentorMockData() throws IOException {
     List<MentorObject> mentors = new ArrayList<MentorObject>();
 
     ArrayList<String> ObiSkills = new ArrayList<String>();
