@@ -1,5 +1,5 @@
 import checkTesting from '../../../checkTesting.js';
-import { basicErrorHandling } from '../../../fetch_handler.js';
+import {basicErrorHandling} from '../../../fetch_handler.js';
 checkTesting();
 
 /**
@@ -9,7 +9,7 @@ checkTesting();
 export default class DataFetcher extends React.Component {
   /**
    * Create a generic data fetching component.
-   * @param {Object} props 
+   * @param {Object} props
    */
   constructor(props) {
     super(props);
@@ -17,7 +17,7 @@ export default class DataFetcher extends React.Component {
     this.state = {
       isFetching: true,
       data: null,
-    }
+    };
 
     /**
      * Controller used to abort fetch requests if the React component is
@@ -46,14 +46,14 @@ export default class DataFetcher extends React.Component {
     this.props.createFetchRequest(this.abortController.signal).then((data) => {
       console.log('Data received:');
       console.log(data);
-      
+
       this.setState({
         isFetching: false,
         data,
       });
     }).catch((error) => basicErrorHandling(error));
   }
-  
+
   render() {
     // https://reactjs.org/docs/render-props.html
     return this.props.render(this.state);

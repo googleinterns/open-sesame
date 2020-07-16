@@ -67,12 +67,12 @@ function ProjectPreviewFetcher() {
         loading={dataFetcher.isFetching}
         projectPreviews={dataFetcher.data} />
     );
-  }
-  
+  };
+
   return (
-    <DataFetcher 
-        createFetchRequest={createProjectPreviewFetch}
-        render={onRender} />
+    <DataFetcher
+      createFetchRequest={createProjectPreviewFetch}
+      render={onRender} />
   );
 }
 
@@ -82,19 +82,19 @@ function ProjectPreviewFetcher() {
  * @return {React.Component} Returns the React component.
  */
 function ExpandedProjectFetcher() {
-  const { projectId } = ReactRouterDOM.useParams();
+  const {projectId} = ReactRouterDOM.useParams();
   const onRender = (dataFetcher) => {
     return (
-      <ExpandedProject 
-          loading={dataFetcher.isFetching} 
-          project={dataFetcher.data} />
+      <ExpandedProject
+        loading={dataFetcher.isFetching}
+        project={dataFetcher.data} />
     );
   };
 
   return (
-    <DataFetcher 
-        createFetchRequest={createProjectFetchGetter(projectId)}
-        render={onRender} />
+    <DataFetcher
+      createFetchRequest={createProjectFetchGetter(projectId)}
+      render={onRender} />
   );
 }
 
@@ -108,33 +108,33 @@ function ExpandedProjectFetcher() {
 function createProjectFetchGetter(projectId) {
   return (signal) => {
     const projectUrl = makeRelativeUrlAbsolute('/project');
-    projectUrl.searchParams.append("projectId", projectId);
+    projectUrl.searchParams.append('projectId', projectId);
     const fetchRequest = fetch(projectUrl, {
       method: 'get',
       signal: signal,
     });
 
     return standardizeFetchErrors(
-      fetchRequest,
-      'Failed to communicate with the server, please try again later.',
-      'Encountered a server error, please try again later.')
-          .then((response) => response.json());
+        fetchRequest,
+        'Failed to communicate with the server, please try again later.',
+        'Encountered a server error, please try again later.')
+        .then((response) => response.json());
   };
 }
 
 /**
  * Creates a fetch request for project previews.
- * @param {AbortSignal} signal 
+ * @param {AbortSignal} signal
  */
 function createProjectPreviewFetch(signal) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute('/project-previews'), {
     method: 'get',
     signal: signal,
   });
-  
+
   return standardizeFetchErrors(
-    fetchRequest,
-    'Failed to communicate with the server, please try again later.',
-    'Encountered a server error, please try again later.')
-        .then((response) => response.json());
+      fetchRequest,
+      'Failed to communicate with the server, please try again later.',
+      'Encountered a server error, please try again later.')
+      .then((response) => response.json());
 }
