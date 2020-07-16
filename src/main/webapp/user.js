@@ -14,20 +14,22 @@ function getUser(userID = null) { //eslint-disable-line
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetchRequest,
-      'Failed to communicate with the server. Please try again later.',
-      'An error occcured while retrieving this account.' +
+    fetchRequest,
+    'Failed to communicate with the server. Please try again later.',
+    'An error occcured while retrieving this account.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest.then((response) => response.json())
-      .then((user) => {
-        return user;
-      });
+    .then((user) => {
+      return user;
+    });
 }
 
 /**
  * Posts a user to the servlet
  * @param {URLSearchParams} userParams parameters with the users information
+ * @return {?Promise} Returns a prepared post user fetch request or null if the
+ * fetch request could not be prepared.
  */
 function postUser(userParams) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute('/user'), {
@@ -39,12 +41,12 @@ function postUser(userParams) {
   });
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetchRequest,
-      'Failed to communicate with the server. Please try again later.',
-      'An error occcured while creating your account.' +
+    fetchRequest,
+    'Failed to communicate with the server. Please try again later.',
+    'An error occcured while creating your account.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest;
 }
 
-export {getUser, postUser};
+export { getUser, postUser };
