@@ -1,12 +1,11 @@
 package com.google.opensesame.servlets;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.Filter;
@@ -46,21 +45,20 @@ public class UserServlet extends HttpServlet {
     String userID = request.getParameter("userID");
     if (userID == null) {
       try {
-      userID = AuthServlet.getAuthorizedUser().getUserId();
-      }
-      catch (NullPointerException e) {
+        userID = AuthServlet.getAuthorizedUser().getUserId();
+      } catch (NullPointerException e) {
         ErrorResponse.sendJsonError(
-          response,
-          "UserID not Supplied and user not logged in",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "You are not logged in");
-          response.sendRedirect(pageToRedirectToIfUserNotAuthenticated);
-          return; // TODO: Establish Redirect page path
+            response,
+            "UserID not Supplied and user not logged in",
+            HttpServletResponse.SC_BAD_REQUEST,
+            "You are not logged in");
+        response.sendRedirect(pageToRedirectToIfUserNotAuthenticated);
+        return; // TODO: Establish Redirect page path
       }
     }
 
     try {
-    PersonEntity UserEntity = ofy().load().type(PersonEntity.class).id(userID).now();
+      PersonEntity UserEntity = ofy().load().type(PersonEntity.class).id(userID).now();
     } catch (EntityNotFoundException e) {
       ErrorResponse.sendJsonError(
           response,
