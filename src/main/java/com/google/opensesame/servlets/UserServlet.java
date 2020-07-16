@@ -25,7 +25,6 @@ import org.kohsuke.github.GitHub;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-
   private DatastoreService datastore;
 
   @Override
