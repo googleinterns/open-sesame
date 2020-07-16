@@ -6,20 +6,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class MentorObject extends PersonObject {
-  private ArrayList<String> projectIDs;
+  private ArrayList<Long> projectIDs;
 
   public MentorObject(
-      String gitHubID, ArrayList<String> interestTags, ArrayList<String> projectIDs, String email)
+      String userID, String gitHubID, ArrayList<String> interestTags, ArrayList<Long> projectIDs, String email)
       throws IOException {
-    super(gitHubID, interestTags, email);
+    super(userID, gitHubID, interestTags, email);
     this.projectIDs = projectIDs;
   }
 
-  public List<String> getProjectIDs() {
+  public List<Long> getProjectIDs() {
     return Collections.unmodifiableList(projectIDs);
   }
 
-  public void addProject(String projectID) {
+  public void addProject(Long projectID) {
     projectIDs.add(projectID);
   }
 }

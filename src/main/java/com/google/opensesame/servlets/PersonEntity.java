@@ -17,6 +17,7 @@ public class PersonEntity {
     this.gitHubId = person.getGitHubID();
     this.interestTags = person.getTags();
     this.email = person.getEmail();
+    this.id = person.getUserID();
   }
 
   public PersonEntity(String id, String gitHubId, ArrayList<String> interestTags, String email) {

@@ -16,20 +16,23 @@ public class PersonObject {
   private final String image;
   private final String location;
   private final String name;
+  private final String userID;
 
   /**
    * Creates a PersonObject with the given parameters
    *
+   * @param userID
    * @param gitHubID
    * @param interestTags
    * @param email
    * @throws IOException
    */
-  public PersonObject(String gitHubID, ArrayList<String> interestTags, String email)
+  public PersonObject(String userID, String gitHubID, ArrayList<String> interestTags, String email)
       throws IOException {
     this.gitHubID = gitHubID;
     this.interestTags = interestTags;
     this.email = email;
+    this.userID = userID;
 
     // GitHub query TODO: alternate ways of getting this information.
     final GitHub gitHub = GitHubGetter.getGitHub();
@@ -80,4 +83,9 @@ public class PersonObject {
   public String getGitHubURL() {
     return this.gitHubURL;
   }
+
+    /** @return the URL of the current User page on GitHub. */
+    public String getUserID() {
+      return this.userID;
+    }
 }
