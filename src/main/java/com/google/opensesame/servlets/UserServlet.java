@@ -63,7 +63,7 @@ public class UserServlet extends HttpServlet {
           "User does not exist.");
       return;
     }
-UserObject userObject = new UserBuilder().fromEntity(userEntity).buildUser();
+    UserObject userObject = new UserBuilder().fromEntity(userEntity).buildUser();
     // TODO: make this return a Mentor if the user has mentor status
     String jsonPerson = new Gson().toJson(userObject);
     response.setContentType("application/json;");
@@ -113,8 +113,6 @@ UserObject userObject = new UserBuilder().fromEntity(userEntity).buildUser();
         .entity(
             new PersonEntity(userID, userGHMyself.getLogin(), userTags, userGHMyself.getEmail()));
   }
-
-  
 
   // TODO: use function in other servlets.
   /**
