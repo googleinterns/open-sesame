@@ -1,10 +1,13 @@
 package com.google.opensesame.auth;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.opensesame.servlets.PersonEntity;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -67,13 +70,9 @@ public class AuthServlet extends HttpServlet {
 
       responseObject.add("user", userData);
 
-      // TODO : Add ability to check that a PersonObject exists in datastore with the user's ID.
-      // For now, will assume to be false. This can be implemented when datastore support is added
-      // for the PersonObject
-      // If in the future OAuth can be used for backend authentication (through something like the
-      // Firebase Auth Admin SDK), we can remove the logic to check the datastore for an existing
-      // PersonObject with the user's ID (along with all Users API code).
-      responseObject.addProperty("hasProfile", false);
+      PersonEntity personEntity = 
+          ofy().load().type(PersonEntity.class).id(currentUser.getUserId()).now();
+      responseObject.addProperty("hasProfile", personEntity != null);
     } else {
       responseObject.addProperty("authorized", false);
       responseObject.addProperty("hasProfile", false);
