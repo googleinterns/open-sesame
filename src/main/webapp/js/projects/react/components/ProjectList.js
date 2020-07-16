@@ -24,8 +24,13 @@ export default function ProjectList(props) {
 
   return (
     <div className="p-4 row">
-      {props.projectPreviews.map((projectPreview, i) =>
-        <ProjectPreview key={i} projectPreview={projectPreview} />)}
+      {props.projectPreviews.map((projectPreview) => {
+        return (
+          <div className="p-1 col-lg-4">
+            <ProjectPreview key={projectPreview.repositoryId} projectPreview={projectPreview} />
+          </div>
+        );
+      })}
     </div>
   );
 }
