@@ -1,7 +1,6 @@
 import ProjectTagList from './ProjectTagList.js';
 import {projectPreviewType} from '../prop_types.js';
 
-const Router = ReactRouterDOM.BrowserRouter;
 const Link = ReactRouterDOM.Link;
 
 /**
