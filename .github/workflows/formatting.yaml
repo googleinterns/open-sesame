@@ -59,7 +59,7 @@ jobs:
         java-version: "8"
     - name: Cache local npm dependencies
       uses: actions/cache@v2
-        with:
+      with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
