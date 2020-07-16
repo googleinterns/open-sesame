@@ -49,9 +49,8 @@ public class UserServlet extends HttpServlet {
         ErrorResponse.sendJsonError(
             response,
             "UserID not Supplied and user not logged in",
-            HttpServletResponse.SC_BAD_REQUEST,
+            HttpServletResponse.SC_FORBIDDEN,
             "You are not logged in");
-        response.sendRedirect(pageToRedirectToIfUserNotAuthenticated);
         return; // TODO: Establish Redirect page path
       }
     }
@@ -90,9 +89,8 @@ public class UserServlet extends HttpServlet {
       ErrorResponse.sendJsonError(
           response,
           "User not logged in",
-          HttpServletResponse.SC_BAD_REQUEST,
+          HttpServletResponse.SC_FORBIDDEN,
           "You are not logged in");
-      response.sendRedirect(pageToRedirectToIfUserNotAuthenticated);
       return; // TODO: Establish Redirect page path
     }
 
