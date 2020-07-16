@@ -19,7 +19,7 @@ export default function ExpandedProject(props) {
     <div>
       {props.project.previewData.name}
     </div>
-  )
+  );
 }
 
 ExpandedProject.propTypes = {
