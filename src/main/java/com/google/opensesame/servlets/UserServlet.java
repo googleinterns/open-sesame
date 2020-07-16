@@ -38,7 +38,6 @@ public class UserServlet extends HttpServlet {
   // Get a specific user. Return the currently signed-in user if no userID is
   // supplied.
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     String userID = request.getParameter("userID");
     if (userID == null) {
       try {
@@ -73,7 +72,7 @@ public class UserServlet extends HttpServlet {
   @Override
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGitHubAuthToken = request.getParameter("gitHubAuthToken")
+    String userGitHubAuthToken = request.getParameter("gitHubAuthToken");
     if (userGitHubAuthToken == null){
       ErrorResponse.sendJsonError(
           response,
@@ -105,7 +104,7 @@ public class UserServlet extends HttpServlet {
     GHMyself userGHMyself;
     try {
       userGHMyself = GitHub.connectUsingOAuth(userGitHubAuthToken).getMyself();
-    } catch (Exception e) {
+    } catch (org.kohsuke.github.HttpException e) {
       ErrorResponse.sendJsonError(
           response,
           e.getMessage()
