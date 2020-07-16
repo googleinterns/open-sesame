@@ -2,6 +2,7 @@
  * @typedef SignUpData
  * @property {string} gitHubAuthToken
  * @property {string[]} interestTags
+ * @property {string} emailAddress
  */
 import {gitHubAuthorizer} from './authorization.js';
 import {postUser} from './user.js';
@@ -142,6 +143,9 @@ function createSignupBody() {
     return null;
   }
 
+  const emailAddress =
+      document.getElementById('signup-form').elements['userEmail'].value;
+
   let interestCheckBox = document.getElementById('check1');
   const interestTags = [];
   for (let i = 2; interestCheckBox; i++) {
@@ -155,6 +159,7 @@ function createSignupBody() {
   return {
     gitHubAuthToken: gitHubAuthorizer.getToken(),
     interestTags,
+    emailAddress,
   };
 }
 
