@@ -8,6 +8,12 @@ import {
   makeRelativeUrlAbsolute,
   basicErrorHandling,
 } from '../../../fetch_handler.js';
+import DataFetcher from '../../../common/react/components/DataFetcher.js';
+import ProjectPreview from './ProjectPreview.js';
+
+const Router = ReactRouterDOM.BrowserRouter;
+const Switch = ReactRouterDOM.Switch;
+const Route = ReactRouterDOM.Route;
 
 /**
  * The main project search page react component.
@@ -27,38 +33,46 @@ export default class ProjectsSearch extends React.Component {
   }
 
   /**
-   * Loads the project preview data after React has initialized the component.
-   * @override
-   */
-  componentDidMount() {
-    const fetchRequest = standardizeFetchErrors(
-        fetch(makeRelativeUrlAbsolute('/project-previews')),
-        'Failed to communicate with the server, please try again later.',
-        'Encountered a server error, please try again later.');
-
-    fetchRequest.then((response) => response.json()).then((projectPreviews) => {
-      console.log('Project Previews Received:');
-      console.log(projectPreviews);
-      this.setState({
-        isFetching: false,
-        projectPreviews,
-      });
-    }).catch((error) => basicErrorHandling(error));
-  }
-
-  /**
    * Renders the list of project previews or a loading notification if the data
    * is still being loaded.
    * @return {React.Component}
    * @override
    */
   render() {
-    if (this.state.isFetching) {
-      return (
-        <h1 className="text-primary text-center mt-2">Loading projects...</h1>
-      );
-    }
+    return (
+      <Router basename="/projects.html">
+        <Switch>
+          <Route path="/">
+            <DataFetcher 
+                getFetchRequest={this.getProjectPreviewsFetch}
+                render={this.renderProjectPreviews} />
+          </Route>
+          <Route path="/:id">
+            
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }
 
-    return <ProjectList projectPreviews={this.state.projectPreviews} />;
+  renderProjectPreviews(dataFetcher) {
+    return (
+      <ProjectList 
+          loading={dataFetcher.isFetching}
+          projectPreviews={dataFetcher.data} />
+    );
+  }
+
+  getProjectPreviewsFetch(signal) {
+    const fetchRequest = fetch(makeRelativeUrlAbsolute('/project-previews'), {
+      method: 'get',
+      signal: signal,
+    });
+    
+    return standardizeFetchErrors(
+      fetchRequest,
+      'Failed to communicate with the server, please try again later.',
+      'Encountered a server error, please try again later.')
+          .then((response) => response.json());
   }
 }
