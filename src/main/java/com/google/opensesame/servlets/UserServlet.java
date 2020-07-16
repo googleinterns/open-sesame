@@ -111,4 +111,20 @@ public class UserServlet extends HttpServlet {
   }
 
   // TODO: make error handling conform with Richie's error handling
+  // TODO: update to Objectify
+  /**
+   * Check if a user is stored with userID in Datastore. Invalid return false.
+   *
+   * @param userID
+   * @return true if userID exists in datastore, false otherwise.
+   */
+  public Boolean hasProfile(String userID) {
+    Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userID);
+    try {
+      datastore.get(userKey);
+    } catch (EntityNotFoundException e) {
+      return false;
+    }
+    return true;
+  }
 }
