@@ -25,7 +25,6 @@ import org.kohsuke.github.GitHub;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-  private String pageToRedirectToIfUserNotAuthenticated = "index.html";
 
   private DatastoreService datastore;
 
@@ -108,7 +107,7 @@ public class UserServlet extends HttpServlet {
           "User could not be authenticated by GitHub, please try again");
       return;
     }
-    // Build and send the User's datastore entity
+    // Build and save the User's datastore entity
     ofy()
         .save()
         .entity(

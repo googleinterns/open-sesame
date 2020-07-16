@@ -28,8 +28,7 @@ function getUser(userID = null) { //eslint-disable-line
 /**
  * Posts a user to the servlet
  * @param {URLSearchParams} userParams parameters with the users information
- * @return {?Promise} Returns a prepared post user fetch request or null if the
- * fetch request could not be prepared.
+ * @return {Promise} Returns a prepared post user fetch request.
  */
 function postUser(userParams) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute('/user'), {
