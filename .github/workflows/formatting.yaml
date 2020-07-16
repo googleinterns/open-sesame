@@ -15,7 +15,7 @@ jobs:
       # Recommended: latest versions of Google Java Format require JDK 11+
       - uses: actions/setup-java@v1
         with:
-          java-version: "8"
+          java-version: "11"
       - uses: axel-op/googlejavaformat-action@v3
         with:
           args: "--replace"
@@ -52,6 +52,11 @@ jobs:
   Build:
 
     steps:
+    - uses: actions/checkout@v2 
+    - name: Setup Java 8
+      uses: actions/setup-java@v1
+      with:
+        java-version: "8"
     - name: Cache local npm dependencies
       uses: actions/cache@v2
         with:
@@ -59,7 +64,6 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
-
     - name: Cache local Maven repository
       uses: actions/cache@v2
       with:
@@ -67,9 +71,7 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-
     - name: Install Dependencies
-      run: npm install
-    
+      run: npm install    
     - name: Build and check for errors
       run: npm run verify
