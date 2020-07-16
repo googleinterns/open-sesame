@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 
 /**
  * A project
@@ -38,20 +38,20 @@ const dummyProjectName = 'Kubernetes';
 
 /** @const {Mentee List} */
 const dummyMentees = [{
-  name: 'Richi',
-  starLink: '#givestar',
-  image: dummyImg,
-},
-{
-  name: 'Obi',
-  starLink: '#givestar',
-  image: dummyImg,
-},
-{
-  name: 'Sami',
-  starLink: '#givestar',
-  image: dummyImg,
-},
+    name: 'Richi',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
+  {
+    name: 'Obi',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
+  {
+    name: 'Sami',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
 ];
 
 /** @const {Project} */
@@ -72,6 +72,7 @@ const userNameAndLocationElement =
   document.getElementById('user-name-location');
 const userTagRow = document.getElementById('user-tag-row');
 const userGithubButton = document.getElementById('user-github');
+const userEmailButton = document.getElementById('user-email');
 const affiliationsDiv = document.getElementById('affiliations');
 
 /**
@@ -92,6 +93,7 @@ function createAboutMe(user) {
   userBioElement.innerText = user.bio;
 
   userGithubButton.href = user.gitHubURL;
+  userEmailButton.href = 'mailto:' + user.email; // TODO: only send email when authorized
 
   for (const tag of user.interestTags) {
     addTag(tag, userTagRow);
