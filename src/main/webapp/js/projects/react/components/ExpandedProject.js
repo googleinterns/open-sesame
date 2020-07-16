@@ -1,3 +1,4 @@
+import ProjectTagList from './ProjectTagList.js';
 import {expandedProjectType} from '../prop_types.js';
 
 /**
@@ -12,12 +13,36 @@ export default function ExpandedProject(props) {
     );
   }
 
-  // TODO : Add expanded project frontend view.
-  // For now this is just the name of the project to ensure that everything
-  // works.
+  const project = props.project;
+  const projectTags = project.previewData.topicTags;
+  // Adds the primary language to the list of project tags. Should add
+  // different types of tags in the future to make it easier to differentiate
+  // topics from languages.
+  projectTags.unshift(project.previewData.primaryLanguage);
+
   return (
-    <div>
-      {props.project.previewData.name}
+    <div className="container">
+      <div className="row mt-2">
+        <div className="col-md-8">
+          <div className="card mb-2">
+            <div className="card-body px-3 py-2">
+              <h3 className="card-title emphasis">
+                {project.previewData.name}
+              </h3>
+              <ProjectTagList tags={projectTags} />
+            </div>
+          </div>
+          <div className="card">
+            {/* TODO : Add README renderer instead of description. */}
+            <div className="card-body px-3 py-2">
+              {project.previewData.description}
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+        
+        </div>
+      </div>  
     </div>
   );
 }
