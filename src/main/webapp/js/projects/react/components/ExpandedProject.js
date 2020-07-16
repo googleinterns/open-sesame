@@ -55,7 +55,7 @@ export default function ExpandedProject(props) {
           </div>
         </div>
         <div className="col-md-3">
-        
+            {/* GitHub repository information will go here. */}
         </div>
       </div>  
     </div>
