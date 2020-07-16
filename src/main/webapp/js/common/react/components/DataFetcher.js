@@ -43,7 +43,7 @@ export default class DataFetcher extends React.Component {
   componentDidMount() {
     // TODO : Add automatic retry functionality here.
     // TOOD : Add better user notification system here.
-    this.props.getFetchRequest(this.abortController.signal).then((data) => {
+    this.props.createFetchRequest(this.abortController.signal).then((data) => {
       console.log('Data received:');
       console.log(data);
       
@@ -61,6 +61,6 @@ export default class DataFetcher extends React.Component {
 }
 
 DataFetcher.propTypes = {
-  getFetchRequest: PropTypes.func.isRequired,
+  createFetchRequest: PropTypes.func.isRequired,
   render: PropTypes.func.isRequired,
 };
