@@ -4,54 +4,59 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 // TODO: ReEvaluate the usefulness of a Builder after MVP presentation.
-public class UserBuilder {
+public class PersonBuilder {
+  public static String ENTITY_NAME = "User";
+  public static String GITHUB_ID_FIELD = "github-id";
+  public static String TAG_LIST_FIELD = "tags";
+  public static String EMAIL_FEILD = "email";
+
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> menteeIDs = new ArrayList<String>();
   private ArrayList<Long> projectIDs = new ArrayList<Long>();
-  private String bio;
+  private String description;
   private String email;
   private String gitHubID;
   private String userID;
   private String name;
 
-  public UserBuilder() {}
+  public PersonBuilder() {}
 
-  public UserBuilder name(String name) {
+  public PersonBuilder name(String name) {
     this.name = name;
     return this;
   }
 
-  public UserBuilder gitHubID(String gitHubID) {
+  public PersonBuilder gitHubID(String gitHubID) {
     this.gitHubID = gitHubID;
     return this;
   }
 
-  public UserBuilder bio(String bio) {
-    this.bio = bio;
+  public PersonBuilder description(String description) {
+    this.description = description;
     return this;
   }
 
-  public UserBuilder interestTags(ArrayList<String> interestTags) {
+  public PersonBuilder interestTags(ArrayList<String> interestTags) {
     this.interestTags = interestTags;
     return this;
   }
 
-  public UserBuilder menteeIDs(ArrayList<String> interestTags) {
+  public PersonBuilder menteeIDs(ArrayList<String> interestTags) {
     this.interestTags = interestTags;
     return this;
   }
 
-  public UserBuilder projectIDs(ArrayList<Long> projectIDs) {
+  public PersonBuilder projectIDs(ArrayList<Long> projectIDs) {
     this.projectIDs = projectIDs;
     return this;
   }
 
-  public UserBuilder email(String email) {
+  public PersonBuilder email(String email) {
     this.email = email;
     return this;
   }
 
-  public UserBuilder userID(String userID) {
+  public PersonBuilder userID(String userID) {
     this.userID = userID;
     return this;
   }
@@ -59,22 +64,22 @@ public class UserBuilder {
   /**
    * Create a PersonObject instance with information from the current builder.
    *
-   * @return PersonObject that corresponds with feilkds from this UserBuilder instance
+   * @return PersonObject that corresponds with feilkds from this PersonBuilder instance
    * @throws IOException
    */
-  public UserObject buildUser() throws IOException {
-    return new UserObject(userID, gitHubID, interestTags, menteeIDs, projectIDs, email);
+  public PersonObject buildPerson() throws IOException {
+    return new PersonObject(userID, gitHubID, interestTags, email);
   }
 
   /**
-   * Fill UserBuilder information from an entity. This will work on PersonEntities and
+   * Fill PersonBuilder information from an entity. This will work on PersonEntities and
    * MentorEntities
    *
    * @param personEntity PersonEntity instance with user infromation
    * @return PersonObject that corresponds to the entity retrieved from datastore
    * @throws IOException
    */
-  public UserBuilder fromEntity(PersonEntity personEntity) throws IOException {
+  public PersonBuilder fromEntity(PersonEntity personEntity) throws IOException {
     this.userID(personEntity.id);
     this.gitHubID(personEntity.gitHubId);
     this.interestTags(personEntity.interestTags);
@@ -85,5 +90,15 @@ public class UserBuilder {
       this.menteeIDs(mentorEntity.menteeIDs);
     }
     return this;
+  }
+
+  /**
+   * Create a MentorObject instance with information from the current builder.
+   *
+   * @return MentorObject that corresponds with feilds from this PersonBuilder instance
+   * @throws IOException
+   */
+  public MentorObject buildMentor() throws IOException {
+    return new MentorObject(userID, gitHubID, interestTags, menteeIDs, projectIDs, email);
   }
 }
