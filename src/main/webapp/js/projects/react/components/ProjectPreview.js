@@ -18,8 +18,7 @@ export default function ProjectPreview(props) {
   projectTags.unshift(projectPreview.primaryLanguage);
 
   return (
-    <Router basename="/projects.html">
-      <div className="p-1 col-lg-4">
+    <div className="p-1 col-lg-4">
         <div className="project-preview card h-100">
           <div className="card-body pb-0">
             <Link 
@@ -41,7 +40,6 @@ export default function ProjectPreview(props) {
           </div>
         </div>
       </div>
-    </Router>
   );
 }
 
