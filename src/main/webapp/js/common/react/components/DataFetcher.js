@@ -54,8 +54,13 @@ export default class DataFetcher extends React.Component {
     }).catch((error) => basicErrorHandling(error));
   }
   
+  /**
+   * Renders the component passed through the render props:
+   * https://reactjs.org/docs/render-props.html
+   * @return {React.Component} Returns the React component.
+   * @override
+   */
   render() {
-    // https://reactjs.org/docs/render-props.html
     return this.props.render(this.state);
   }
 }
