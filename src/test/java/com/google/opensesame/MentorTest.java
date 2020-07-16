@@ -14,7 +14,7 @@ import org.junit.runners.JUnit4;
 public class MentorTest {
   private static final String MENTOR_NAME = "Mentor";
   private static final String MENTOR_GITHUB_ID = "Obinnabii";
-  private static final String PROJECT_ID = "Project_ID";
+  private static final Long PROJECT_ID = 1234L;
 
   @Test
   public void addProjects() throws IOException {
@@ -22,10 +22,10 @@ public class MentorTest {
         new PersonBuilder().name(MENTOR_NAME).gitHubID(MENTOR_GITHUB_ID).buildMentor();
     mentor.addProject(PROJECT_ID);
 
-    List<String> expected = new ArrayList<String>();
+    List<Long> expected = new ArrayList<Long>();
     expected.add(PROJECT_ID);
 
-    List<String> actual = mentor.getProjectIDs();
+    List<Long> actual = mentor.getProjectIDs();
 
     Assert.assertEquals(expected, actual);
   }
