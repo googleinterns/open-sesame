@@ -1,7 +1,8 @@
 package com.google.opensesame;
 
-import com.google.opensesame.servlets.MentorBuilder;
 import com.google.opensesame.servlets.MentorObject;
+import com.google.opensesame.servlets.PersonBuilder;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class MentorTest {
   @Test
   public void addProjects() throws IOException {
     MentorObject mentor =
-        new MentorBuilder().name(MENTOR_NAME).gitHubID(MENTOR_GITHUB_ID).buildMentor();
+        new PersonBuilder().name(MENTOR_NAME).gitHubID(MENTOR_GITHUB_ID).buildMentor();
     mentor.addProject(PROJECT_ID);
 
     List<String> expected = new ArrayList<String>();
