@@ -1,5 +1,6 @@
-import ProjectTagList from './ProjectTagList.js';
+import TagList from './TagList.js';
 import {expandedProjectType} from '../prop_types.js';
+import MentorCard from './MentorCard.js';
 
 /**
  * An expanded view of a project.
@@ -21,25 +22,39 @@ export default function ExpandedProject(props) {
   projectTags.unshift(project.previewData.primaryLanguage);
 
   return (
-    <div className="container">
-      <div className="row mt-2">
-        <div className="col-md-8">
-          <div className="card mb-2">
+    <div className="container-fluid">
+      <div></div>
+      <div className="row mt-4">
+        <div className="col-md-9">
+          <div className="card mx-1 mb-2">
             <div className="card-body px-3 py-2">
-              <h3 className="card-title emphasis">
+              <h1 className="card-title emphasis">
                 {project.previewData.name}
-              </h3>
-              <ProjectTagList tags={projectTags} />
+              </h1>
+              <TagList tags={projectTags} />
             </div>
           </div>
-          <div className="card">
+          <div className="ml-1 emphasis">Mentors:</div>
+          <div className="d-flex flex-wrap mb-2">
+            {/* TODO : Use the mentor User ID as the key. Once it is
+                available. */}
+            {project.mentors.map((mentor, i) => {
+              return (
+                <div className="p-1 col-lg-3">
+                  <MentorCard key={i} mentor={mentor} />
+                </div>
+              );
+            })}
+          </div>
+          <div className="ml-1 emphasis">Description:</div>
+          <div className="card mx-1">
             {/* TODO : Add README renderer instead of description. */}
             <div className="card-body px-3 py-2">
               {project.previewData.description}
             </div>
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
         
         </div>
       </div>  
