@@ -1,12 +1,8 @@
 package com.google.opensesame.servlets;
 
+import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import com.google.opensesame.github.GitHubGetter;
-
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 
@@ -39,7 +35,7 @@ public class UserObject {
     this.projectIDs = projectIDs;
     this.menteeIDs = menteeIDs;
     this.isMentor = projectIDs.isEmpty();
-    
+
     // GitHub query TODO: alternate ways of getting this information.
     final GitHub gitHub = GitHubGetter.getGitHub();
     final GHUser userGitAccount = gitHub.getUser(gitHubID);
@@ -48,81 +44,78 @@ public class UserObject {
     this.location = userGitAccount.getLocation();
     this.name = userGitAccount.getName();
     this.gitHubURL = userGitAccount.getHtmlUrl().toString();
-    
   }
-    /** @return true if user is a mentor for a project, false otherwise.*/
-    public Boolean isMentor() {
-      return this.isMentor;
-    }
+  /** @return true if user is a mentor for a project, false otherwise. */
+  public Boolean isMentor() {
+    return this.isMentor;
+  }
 
-    /** @return The name of a user. */
-    public String getName() {
-      return this.name;
-    }
-  
-    /** @return The bio of a user from GitHub. */
-    public String getBio() {
-      return this.bio;
-    }
-  
-    /** @return The tags associated with a user. */
-    public ArrayList<String> getTags() {
-      return this.interestTags;
-    }
-  
-    /** @return the GitHub ID of a user. */
-    public String getGitHubID() {
-      return this.gitHubID;
-    }
-  
-    /** @return the image associated with a user. */
-    public String getImage() {
-      return this.image;
-    }
-  
-    /** @return the location associated with a user according to GitHub. */
-    public String getLocation() {
-      return this.location;
-    }
-  
-    /** @return the email associated with a user according to GitHub. */
-    public String getEmail() {
-      return this.email;
-    }
-  
-    /** @return the URL of the current User page on GitHub. */
-    public String getGitHubURL() {
-      return this.gitHubURL;
-    }
-  
-    /** @return the URL of the current User page on GitHub. */
-    public String getUserID() {
-      return this.userID;
-    }
+  /** @return The name of a user. */
+  public String getName() {
+    return this.name;
+  }
 
-    /** @return a list of ids of projects a user is involved in. */
+  /** @return The bio of a user from GitHub. */
+  public String getBio() {
+    return this.bio;
+  }
+
+  /** @return The tags associated with a user. */
+  public ArrayList<String> getTags() {
+    return this.interestTags;
+  }
+
+  /** @return the GitHub ID of a user. */
+  public String getGitHubID() {
+    return this.gitHubID;
+  }
+
+  /** @return the image associated with a user. */
+  public String getImage() {
+    return this.image;
+  }
+
+  /** @return the location associated with a user according to GitHub. */
+  public String getLocation() {
+    return this.location;
+  }
+
+  /** @return the email associated with a user according to GitHub. */
+  public String getEmail() {
+    return this.email;
+  }
+
+  /** @return the URL of the current User page on GitHub. */
+  public String getGitHubURL() {
+    return this.gitHubURL;
+  }
+
+  /** @return the URL of the current User page on GitHub. */
+  public String getUserID() {
+    return this.userID;
+  }
+
+  /** @return a list of ids of projects a user is involved in. */
   public ArrayList<Long> getProjectIDs() {
     return this.projectIDs;
   }
 
-   /** @return a list of ids of mentees a user is currently mentoring. */
+  /** @return a list of ids of mentees a user is currently mentoring. */
   public ArrayList<String> getMenteeIDs() {
     return this.menteeIDs;
   }
 
   /**
-   * Add a project to the list of projects associated with this
-   * instance of the mentor object. Remember to store this change in datastore
-   * with a personEntity.
+   * Add a project to the list of projects associated with this instance of the mentor object.
+   * Remember to store this change in datastore with a personEntity.
    */
   public void addProject(Long projectID) {
     projectIDs.add(projectID);
   }
 
   /**
-   * Add a project to the list of projects associated with this
-   * instance of the mentor object. Remember to store this change in datastore
-   * with a personEntity.
+   * Add a project to the list of projects associated with this instance of the mentor object.
+   * Remember to store this change in datastore with a personEntity.
    */
   public void addMentee(Long menteeID) {
     projectIDs.add(menteeID);
