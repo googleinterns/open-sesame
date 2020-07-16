@@ -1,5 +1,6 @@
 package com.google.opensesame.servlets;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -27,6 +28,8 @@ import org.kohsuke.github.GitHub;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
+  private String pageToRedirectToIfUserNotAuthenticated = "index.html";
+
   private DatastoreService datastore;
 
   @Override
@@ -40,30 +43,28 @@ public class UserServlet extends HttpServlet {
   // supplied.
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    String userID =
-        request.getParameter("userID") != null
-            ? request.getParameter("userID")
-            : AuthServlet.getAuthorizedUser().getUserId();
-
-    Key userKey;
-    try {
-      userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userID);
-    } catch (Exception e) {
-      ErrorResponse.sendJsonError(
+    String userID = request.getParameter("userID");
+    if (userID == null) {
+      try {
+      userID = AuthServlet.getAuthorizedUser().getUserId();
+      }
+      catch (NullPointerException e) {
+        ErrorResponse.sendJsonError(
           response,
-          e.getMessage() + "/n/n" + e.getStackTrace(),
+          "UserID not Supplied and user not logged in",
           HttpServletResponse.SC_BAD_REQUEST,
-          "An error occured while getting the User's profile");
-      return;
+          "You are not logged in");
+          response.sendRedirect(pageToRedirectToIfUserNotAuthenticated);
+          return; // TODO: Establish Redirect page path
+      }
     }
 
-    Entity userEntity; // TODO: Abstract doGet() into it's own function
     try {
-      userEntity = datastore.get(userKey);
+    PersonEntity UserEntity = ofy().load().type(PersonEntity.class).id(userID).now();
     } catch (EntityNotFoundException e) {
       ErrorResponse.sendJsonError(
           response,
-          "User not fount in the Datastore",
+          "User not found in the Datastore",
           HttpServletResponse.SC_BAD_REQUEST,
           "The user requested could not be found on the server."
               + "Please ensure that the user has an account with us.");
