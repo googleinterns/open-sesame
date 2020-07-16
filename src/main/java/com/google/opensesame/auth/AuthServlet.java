@@ -70,7 +70,7 @@ public class AuthServlet extends HttpServlet {
 
       responseObject.add("user", userData);
 
-      PersonEntity personEntity = 
+      PersonEntity personEntity =
           ofy().load().type(PersonEntity.class).id(currentUser.getUserId()).now();
       responseObject.addProperty("hasProfile", personEntity != null);
     } else {
