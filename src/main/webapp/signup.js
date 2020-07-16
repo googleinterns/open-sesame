@@ -5,7 +5,10 @@
  * @property {string} emailAddress
  */
 import {gitHubAuthorizer} from './authorization.js';
-import {postUser} from './user.js';
+import {
+  standardizeFetchErrors,
+  makeRelativeUrlAbsolute,
+} from './js/fetch_handler.js';
 
 const AFTER_SIGNUP_REDIRECT = '/dashboard.html';
 
@@ -33,8 +36,7 @@ function handleGitHubLink(e) {
 
   gitHubAuthorizer.toggleSignIn().catch((error) => {
     console.error(error);
-    alert('Encountered an error with GitHub authentication.' +
-      ' Please try again later.');
+    alert('Could not complete GitHub authentication. Please try again.');
   });
 }
 
