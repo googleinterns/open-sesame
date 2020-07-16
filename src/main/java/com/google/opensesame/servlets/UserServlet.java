@@ -141,11 +141,12 @@ public class UserServlet extends HttpServlet {
 
   // TODO: The same GitHub account can be used with multiple emails :(
   /**
-   * Check if a user is stored with userID in Datastore. 
+   * Check if a user is stored with userID in Datastore.
+   *
    * @param userID
    * @return PersonEntity with the specified userID or null
    */
   public PersonEntity hasProfile(String userID) {
-  return ofy().load().type(PersonEntity.class).id(userID).now();
+    return ofy().load().type(PersonEntity.class).id(userID).now();
   }
 }
