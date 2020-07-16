@@ -9,6 +9,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.users.User;
 import com.google.gson.Gson;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.util.ErrorResponse;
@@ -73,25 +74,33 @@ public class UserServlet extends HttpServlet {
   @Override
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGitHubAuthToken = request.getParameter("gitHubAuthToken");
-    ArrayList<String> userTags =
-        new ArrayList<>(
-            Arrays.asList(
-                request.getParameterValues("interestTags") == null
-                    ? new String[] {}
-                    : request.getParameterValues("interestTags")));
-
-    String userID;
-    try {
-      userID = AuthServlet.getAuthorizedUser().getUserId();
-    } catch (NullPointerException e) {
+    String userGitHubAuthToken = request.getParameter("gitHubAuthToken")
+    if (userGitHubAuthToken == null){
       ErrorResponse.sendJsonError(
           response,
-          "User not logged in",
-          HttpServletResponse.SC_FORBIDDEN,
-          "You are not logged in");
-      return; // TODO: Establish Redirect page path
+          "GitHub OAuth token was never supplied",
+          HttpServletResponse.SC_UNAUTHORIZED,
+          "User could not be authenticated by GitHub, please try again");
+      return;
     }
+    String[] interestTagsParam = request.getParameterValues("interestTags");
+    if (interestTagsParam == null) {
+      interestTagsParam = new String[] {};
+    }
+    ArrayList<String> userTags =
+        new ArrayList<>(Arrays.asList(interestTagsParam));
+
+    User user = AuthServlet.getAuthorizedUser();
+    if (user == null) {
+        ErrorResponse.sendJsonError(
+            response,
+            "User not logged in",
+            HttpServletResponse.SC_FORBIDDEN,
+            "You are not logged in");
+        return;
+      }
+    
+      String userID = user.getUserId();
 
     // Get User information from GitHub using the Oath token.
     GHMyself userGHMyself;
