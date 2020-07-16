@@ -97,7 +97,7 @@ public class UserServlet extends HttpServlet {
    */
   public Boolean hasProfile(String userID) {
     Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userID);
-    try { 
+    try {
       datastore.get(userKey);
     } catch (EntityNotFoundException e) {
       return false;
