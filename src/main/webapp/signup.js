@@ -5,10 +5,7 @@
  * @property {string} emailAddress
  */
 import {gitHubAuthorizer} from './authorization.js';
-import {
-  standardizeFetchErrors,
-  makeRelativeUrlAbsolute,
-} from './js/fetch_handler.js';
+import {postUser} from './user.js';
 
 const AFTER_SIGNUP_REDIRECT = '/dashboard.html';
 
