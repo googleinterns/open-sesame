@@ -5,7 +5,7 @@
 <!-- Bootstrap CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <!-- Custom styles -->
-<link rel="stylesheet" href="./css/signup.css">
+<link rel="stylesheet" href="./style.css">
 
 <div class="container">
   <h1 class="display-4 mt-5">Create your Open Sesame Profile!</h1>
@@ -13,8 +13,15 @@
   <hr/>
   <form id="signup-form">
     <div class="form-group">
-      <button class="btn btn-purple font-weight-bold" name="github-link-button">Link Your GitHub Account</button>
+      <button class="btn btn-emphasis font-weight-bold" name="github-link-button">Link Your GitHub Account</button>
       <small id="gitHubHelp" class="form-text text-muted">We will use your GitHub account to populate your name and bio and message you when you match with a mentor/mentee.</small>
+    </div>
+    <form>
+    <div class="form-group">
+      <label for="userEmail" class="font-weight-bold">Email address</label>
+      <input type="email" class="form-control" id="userEmail" name="userEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+      <!-- TODO : Change privacy statement when matchmaking process is developed beyond MVP -->
+      <small id="emailHelp" class="form-text text-muted">Your email address is not public. It is only visible to Open Sesame users if you're seeking to mentor.</small>
     </div>
     <!-- TODO : Look into a more efficient method for adding interests. Potentially a React component. -->
     <div id="interests" class="form-group">
@@ -80,7 +87,7 @@
         </label>
       </div>
     </div>
-    <button class="btn btn-purple text-center" type="submit" name="submit-button" disabled>Submit</button>
+    <button class="btn btn-emphasis text-center" type="submit" name="submit-button" disabled>Submit</button>
   </form>
 </div>
 
