@@ -1,10 +1,9 @@
 /**
- * A horizontal list of badge-based tags for a project.
+ * A horizontal list of badge-based tags.
  * @param {{tags: string[]}} props
- * @return {React.Component} Returns a React component list of tags for a
- * project.
+ * @return {React.Component} Returns a React component list of tags.
  */
-export default function ProjectTagList(props) {
+export default function TagList(props) {
   return (
     <div className="d-flex flex-wrap">
       {props.tags.map((tag, i) => {
@@ -19,6 +18,6 @@ export default function ProjectTagList(props) {
   );
 }
 
-ProjectTagList.propTypes = {
+TagList.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
