@@ -1,6 +1,5 @@
 package com.google.opensesame.servlets;
 
-import com.google.appengine.api.datastore.Entity;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -65,10 +64,10 @@ public class PersonBuilder {
   public PersonObject buildPerson() throws IOException {
     return new PersonObject(userID, gitHubID, interestTags, email);
   }
-  
-   /**
-   * Fill PersonBuilder information from an entity. This will work on PersonEntities
-   * and MentorEntities 
+
+  /**
+   * Fill PersonBuilder information from an entity. This will work on PersonEntities and
+   * MentorEntities
    *
    * @param personEntity PersonEntity instance with user infromation
    * @return PersonObject that corresponds to the entity retrieved from datastore
@@ -79,7 +78,7 @@ public class PersonBuilder {
     this.gitHubID(personEntity.gitHubId);
     this.interestTags(personEntity.interestTags);
     this.email(personEntity.email);
-    if (personEntity instanceof MentorEntity){
+    if (personEntity instanceof MentorEntity) {
       MentorEntity mentorEntity = (MentorEntity) personEntity;
       this.projectIDs(mentorEntity.projectIDs);
     }

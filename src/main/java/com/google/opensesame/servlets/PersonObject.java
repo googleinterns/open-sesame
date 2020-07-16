@@ -84,8 +84,8 @@ public class PersonObject {
     return this.gitHubURL;
   }
 
-    /** @return the URL of the current User page on GitHub. */
-    public String getUserID() {
-      return this.userID;
-    }
+  /** @return the URL of the current User page on GitHub. */
+  public String getUserID() {
+    return this.userID;
+  }
 }

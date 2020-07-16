@@ -9,7 +9,11 @@ public class MentorObject extends PersonObject {
   private ArrayList<Long> projectIDs;
 
   public MentorObject(
-      String userID, String gitHubID, ArrayList<String> interestTags, ArrayList<Long> projectIDs, String email)
+      String userID,
+      String gitHubID,
+      ArrayList<String> interestTags,
+      ArrayList<Long> projectIDs,
+      String email)
       throws IOException {
     super(userID, gitHubID, interestTags, email);
     this.projectIDs = projectIDs;

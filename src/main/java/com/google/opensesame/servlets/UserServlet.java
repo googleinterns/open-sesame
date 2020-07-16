@@ -4,8 +4,6 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.Filter;
@@ -45,7 +43,8 @@ public class UserServlet extends HttpServlet {
     String userID = request.getParameter("userID");
     if (userID == null) {
       try {
-        userID = AuthServlet.getAuthorizedUser().getUserId(); // TODO: Should this be a functionality? 
+        userID =
+            AuthServlet.getAuthorizedUser().getUserId(); // TODO: Should this be a functionality?
       } catch (NullPointerException e) {
         ErrorResponse.sendJsonError(
             response,
@@ -66,9 +65,7 @@ public class UserServlet extends HttpServlet {
       return;
     }
 
-    PersonObject userObject = new PersonBuilder()
-    .fromEntity(userEntity)
-    .buildPerson();
+    PersonObject userObject = new PersonBuilder().fromEntity(userEntity).buildPerson();
     // TODO: make this return a Mentor if the user has mentor status
     String jsonPerson = new Gson().toJson(userObject);
     response.setContentType("application/json;");
@@ -79,24 +76,26 @@ public class UserServlet extends HttpServlet {
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGitHubAuthToken = request.getParameter("gitHubAuthToken");
-    ArrayList<String> userTags = new ArrayList<>(
-      Arrays.asList(request.getParameterValues("interestTags") == null
-      ? new String[]{} 
-      : request.getParameterValues("interestTags")));
+    ArrayList<String> userTags =
+        new ArrayList<>(
+            Arrays.asList(
+                request.getParameterValues("interestTags") == null
+                    ? new String[] {}
+                    : request.getParameterValues("interestTags")));
 
-      String userID;
-      try {
-        userID = AuthServlet.getAuthorizedUser().getUserId();
-      } catch (NullPointerException e) {
-        ErrorResponse.sendJsonError(
-            response,
-            "User not logged in",
-            HttpServletResponse.SC_BAD_REQUEST,
-            "You are not logged in");
-        response.sendRedirect(pageToRedirectToIfUserNotAuthenticated);
-        return; // TODO: Establish Redirect page path
-      }
-  
+    String userID;
+    try {
+      userID = AuthServlet.getAuthorizedUser().getUserId();
+    } catch (NullPointerException e) {
+      ErrorResponse.sendJsonError(
+          response,
+          "User not logged in",
+          HttpServletResponse.SC_BAD_REQUEST,
+          "You are not logged in");
+      response.sendRedirect(pageToRedirectToIfUserNotAuthenticated);
+      return; // TODO: Establish Redirect page path
+    }
+
     // Get User information from GitHub using the Oath token.
     GHMyself userGHMyself;
     try {
@@ -112,11 +111,10 @@ public class UserServlet extends HttpServlet {
       return;
     }
     // Build and send the User's datastore entity
-      ofy().save().entity(
-      new PersonEntity(userID, 
-          userGHMyself.getLogin(), 
-          userTags, 
-          userGHMyself.getEmail()));
+    ofy()
+        .save()
+        .entity(
+            new PersonEntity(userID, userGHMyself.getLogin(), userTags, userGHMyself.getEmail()));
   }
 
   // TODO: use function in other servlets.
