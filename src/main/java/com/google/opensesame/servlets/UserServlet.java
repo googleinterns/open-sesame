@@ -140,20 +140,12 @@ public class UserServlet extends HttpServlet {
   }
 
   // TODO: The same GitHub account can be used with multiple emails :(
-  // TODO: update to Objectify
   /**
-   * Check if a user is stored with userID in Datastore. Invalid return false.
-   *
+   * Check if a user is stored with userID in Datastore. 
    * @param userID
-   * @return true if userID exists in datastore, false otherwise.
+   * @return PersonEntity with the specified userID or null
    */
-  public Boolean hasProfile(String userID) {
-    Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userID);
-    try {
-      datastore.get(userKey);
-    } catch (EntityNotFoundException e) {
-      return false;
-    }
-    return true;
+  public PersonEntity hasProfile(String userID) {
+  return ofy().load().type(PersonEntity.class).id(userID).now();
   }
 }
