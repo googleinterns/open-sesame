@@ -1,6 +1,10 @@
 import {mentorType} from '../prop_types.js';
 import TagList from './TagList.js';
 
+/**
+ * A card to display basic information about a project mentor.
+ * @return {React.Component} Returns the react component.
+ */
 export default function MentorCard(props) {
   const mentor = props.mentor;
 
@@ -8,7 +12,7 @@ export default function MentorCard(props) {
     <div className="card project-card h-100">
       <div className="d-flex flex-column card-body">
         <div className="d-flex justify-content-center mb-2">
-          <img className="mentor-picture" src={mentor.image} />
+          <img className="mentor-picture" src={mentor.image} alt="" />
         </div>
         <h5 className="card-title text-center text-dark">
           <a href={mentor.gitHubURL}>{mentor.name}</a>
