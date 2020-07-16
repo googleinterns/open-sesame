@@ -52,11 +52,11 @@ function handleAuthStateChanged(user) {
     submitButton.disabled = false;
     gitHubLinkButton.innerText = 'Unlink Your GitHub Account';
     gitHubLinkButton.classList.add('btn-success');
-    gitHubLinkButton.classList.remove('btn-purple');
+    gitHubLinkButton.classList.remove('btn-emphasis');
   } else {
     submitButton.disabled = true;
     gitHubLinkButton.innerText = 'Link Your GitHub Account';
-    gitHubLinkButton.classList.add('btn-purple');
+    gitHubLinkButton.classList.add('btn-emphasis');
     gitHubLinkButton.classList.remove('btn-success');
   }
 }
