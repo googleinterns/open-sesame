@@ -1,5 +1,6 @@
 import checkTesting from '../../../checkTesting.js';
 import NavbarLink from './NavbarLink.js';
+import AuthButton from './AuthButton.js';
 checkTesting();
 
 /**
@@ -30,6 +31,9 @@ export default function Navbar(props) {
           {props.urls.map((url, i) =>
             <NavbarLink key={i} href={url.href} name={url.name} />)}
         </ul>
+      </div>
+      <div className="ml-1">
+        <AuthButton />
       </div>
     </nav>
   );

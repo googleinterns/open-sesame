@@ -2,9 +2,13 @@
  * @typedef SignUpData
  * @property {string} gitHubAuthToken
  * @property {string[]} interestTags
+ * @property {string} emailAddress
  */
 import {gitHubAuthorizer} from './authorization.js';
-import {postUser} from './user.js';
+import {
+  standardizeFetchErrors,
+  makeRelativeUrlAbsolute,
+} from './js/fetch_handler.js';
 
 const AFTER_SIGNUP_REDIRECT = '/dashboard.html';
 
@@ -32,8 +36,7 @@ function handleGitHubLink(e) {
 
   gitHubAuthorizer.toggleSignIn().catch((error) => {
     console.error(error);
-    alert('Encountered an error with GitHub authentication.' +
-      ' Please try again later.');
+    alert('Could not complete GitHub authentication. Please try again.');
   });
 }
 
@@ -49,11 +52,11 @@ function handleAuthStateChanged(user) {
     submitButton.disabled = false;
     gitHubLinkButton.innerText = 'Unlink Your GitHub Account';
     gitHubLinkButton.classList.add('btn-success');
-    gitHubLinkButton.classList.remove('btn-purple');
+    gitHubLinkButton.classList.remove('btn-emphasis');
   } else {
     submitButton.disabled = true;
     gitHubLinkButton.innerText = 'Link Your GitHub Account';
-    gitHubLinkButton.classList.add('btn-purple');
+    gitHubLinkButton.classList.add('btn-emphasis');
     gitHubLinkButton.classList.remove('btn-success');
   }
 }
@@ -128,6 +131,9 @@ function createSignupBody() {
     return null;
   }
 
+  const emailAddress =
+      document.getElementById('signup-form').elements['userEmail'].value;
+
   let interestCheckBox = document.getElementById('check1');
   const interestTags = [];
   for (let i = 2; interestCheckBox; i++) {
@@ -141,6 +147,7 @@ function createSignupBody() {
   return {
     gitHubAuthToken: gitHubAuthorizer.getToken(),
     interestTags,
+    emailAddress,
   };
 }
 
