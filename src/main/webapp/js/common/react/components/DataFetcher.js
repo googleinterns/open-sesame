@@ -1,5 +1,5 @@
 import checkTesting from '../../../checkTesting.js';
-import { basicErrorHandling } from '../../../fetch_handler';
+import { basicErrorHandling } from '../../../fetch_handler.js';
 checkTesting();
 
 /**
@@ -7,6 +7,10 @@ checkTesting();
  * component.
  */
 export default class DataFetcher extends React.Component {
+  /**
+   * Create a generic data fetching component.
+   * @param {Object} props 
+   */
   constructor(props) {
     super(props);
 
