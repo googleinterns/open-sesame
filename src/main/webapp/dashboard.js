@@ -1,4 +1,4 @@
-import { getUser } from './user.js';
+import {getUser} from './user.js';
 
 /**
  * A project
@@ -38,20 +38,20 @@ const dummyProjectName = 'Kubernetes';
 
 /** @const {Mentee List} */
 const dummyMentees = [{
-    name: 'Richi',
-    starLink: '#givestar',
-    image: dummyImg,
-  },
-  {
-    name: 'Obi',
-    starLink: '#givestar',
-    image: dummyImg,
-  },
-  {
-    name: 'Sami',
-    starLink: '#givestar',
-    image: dummyImg,
-  },
+  name: 'Richi',
+  starLink: '#givestar',
+  image: dummyImg,
+},
+{
+  name: 'Obi',
+  starLink: '#givestar',
+  image: dummyImg,
+},
+{
+  name: 'Sami',
+  starLink: '#givestar',
+  image: dummyImg,
+},
 ];
 
 /** @const {Project} */
