@@ -13,11 +13,11 @@ public class PersonEntity {
 
   public PersonEntity() {}
 
-  public PersonEntity(PersonObject person) {
-    this.gitHubId = person.getGitHubID();
-    this.interestTags = person.getTags();
-    this.email = person.getEmail();
-    this.id = person.getUserID();
+  public PersonEntity(UserObject user) {
+    this.gitHubId = user.getGitHubID();
+    this.interestTags = user.getTags();
+    this.email = user.getEmail();
+    this.id = user.getUserID();
   }
 
   public PersonEntity(String id, String gitHubId, ArrayList<String> interestTags, String email) {
