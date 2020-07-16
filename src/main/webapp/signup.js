@@ -146,7 +146,7 @@ function createSignupBody() {
     return null;
   }
 
-  const emailAddress = 
+  const emailAddress =
       document.getElementById('signup-form').elements['userEmail'].value;
 
   let interestCheckBox = document.getElementById('check1');
