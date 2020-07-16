@@ -84,7 +84,8 @@ public class ProjectDatastore {
    * @param fetchOptions The fetch options for the query.
    * @return Returns a list of project entities from the query.
    */
-  public static List<ProjectEntity> getProjectsByQuery(Query projectsQuery, FetchOptions fetchOptions) {
+  public static List<ProjectEntity> getProjectsByQuery(
+      Query projectsQuery, FetchOptions fetchOptions) {
     if (!projectsQuery.getKind().equals("Project")) {
       throw new IllegalArgumentException("Query must be made to kind 'Project'.");
     }
