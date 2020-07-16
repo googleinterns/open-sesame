@@ -13,10 +13,12 @@ jobs:
         with:
           token: ${{secrets.PAT_TOKEN}} # Re-running Linter on auto commit
       # Recommended: latest versions of Google Java Format require JDK 11+
-      - uses: actions/setup-java@v1
+      - name: Use Java 11
+        uses: actions/setup-java@v1
         with:
           java-version: "11"
-      - uses: axel-op/googlejavaformat-action@v3
+      - name: Format Java Code
+        uses: axel-op/googlejavaformat-action@v3
         with:
           args: "--replace"
 
@@ -27,6 +29,10 @@ jobs:
     - uses: actions/checkout@v2
       with:
         token: ${{secrets.PAT_TOKEN}}
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
     - name: Cache local npm dependencies
       uses: actions/cache@v2
       with:
@@ -53,10 +59,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2 
-    - name: Setup Java 8
+    - name: Use Java 8
       uses: actions/setup-java@v1
       with:
         java-version: "8"
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
     - name: Cache local npm dependencies
       uses: actions/cache@v2
       with:
