@@ -1,10 +1,10 @@
 package com.google.opensesame.projects;
 
-import com.google.appengine.api.datastore.PropertyContainer;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
 import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.kohsuke.github.GHRepository;
@@ -73,6 +73,15 @@ public class ProjectEntity {
     this.repositoryId = repositoryId;
     this.mentorIds = mentorIds;
     this.interestedUserIds = interestedUserIds;
+
+    // Empty lists are represented as null in datastore, so create empty lists if null:
+    // https://cloud.google.com/appengine/docs/standard/java/datastore/entity-property-reference#Using_an_empty_list
+    if (this.mentorIds == null) {
+      this.mentorIds = new ArrayList<String>();
+    }
+    if (this.interestedUserIds == null) {
+      this.interestedUserIds = new ArrayList<String>();
+    }
   }
 
   public int getNumMentors() {
@@ -84,33 +93,24 @@ public class ProjectEntity {
   }
 
   /**
-   * Creates a map of properties from this ProjectEntity object.
+   * Adds the properties of this ProjectEntity object to an Entity.
    *
-   * @return Returns the map of properties.
+   * @param entity The Datastore Entity to add this ProjectEntity's properties to.
    */
-  public Map<String, Object> createProperties() {
-    Map<String, Object> properties = new HashMap<String, Object>();
-    properties.put(REPOSITORY_ID_KEY, repositoryId);
-    properties.put(MENTOR_IDS_KEY, mentorIds);
-    properties.put(INTERESTED_USER_IDS_KEY, interestedUserIds);
-    properties.put(NUM_MENTORS_KEY, getNumMentors());
-    properties.put(NUM_INTERESTED_USERS_KEY, getNumInterestedUsers());
-
-    return properties;
+  public void fillEntity(Entity entity) {
+    entity.setProperty(REPOSITORY_ID_KEY, repositoryId);
+    entity.setProperty(MENTOR_IDS_KEY, mentorIds);
+    entity.setProperty(INTERESTED_USER_IDS_KEY, interestedUserIds);
+    entity.setProperty(NUM_MENTORS_KEY, getNumMentors());
+    entity.setProperty(NUM_INTERESTED_USERS_KEY, getNumInterestedUsers());
   }
 
   /**
-   * Adds the properties of this ProjectEntity object to a PropertyContainer, which will most likely
-   * be a datastore entity, which is a child of PropertyContainer:
-   * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Entity
+   * Convenience method for saving the project entity to the datastore.
    *
-   * @param propertyContainer The property container to add this ProjectEntity's properties to.
+   * @return Returns the key associated with the datastore entry.
    */
-  public void fillPropertyContainer(PropertyContainer propertyContainer) {
-    Map<String, Object> projectEntityProperties = createProperties();
-    projectEntityProperties.forEach(
-        (String key, Object value) -> {
-          propertyContainer.setProperty(key, value);
-        });
+  public Key save() {
+    return ProjectDatastore.addProjectEntity(this);
   }
 }
