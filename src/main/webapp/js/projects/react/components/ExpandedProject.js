@@ -1,5 +1,10 @@
 import {expandedProjectType} from '../prop_types.js';
 
+/**
+ * An expanded view of a project.
+ * @param {Object} props
+ * @return {React.Component} Returns the React component.
+ */
 export default function ExpandedProject(props) {
   if (props.loading) {
     return (
@@ -7,6 +12,9 @@ export default function ExpandedProject(props) {
     );
   }
 
+  // TODO : Add expanded project frontend view.
+  // For now this is just the name of the project to ensure that everything
+  // works.
   return (
     <div>
       {props.project.previewData.name}
