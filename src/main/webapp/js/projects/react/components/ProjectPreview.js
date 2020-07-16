@@ -23,7 +23,7 @@ export default function ProjectPreview(props) {
           <Link
             to={'/' + projectPreview.repositoryId}
             className="stretched-link">
-            <h5 className="card-title text-primary">{projectPreview.name}</h5>
+            <h5 className="card-title emphasis">{projectPreview.name}</h5>
           </Link>
           <ProjectTagList tags={projectTags} />
           <p>{projectPreview.description}</p>
