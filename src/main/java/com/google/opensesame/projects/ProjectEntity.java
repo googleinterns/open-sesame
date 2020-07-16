@@ -5,7 +5,6 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.OnSave;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,7 @@ public class ProjectEntity {
    * https://github.com/objectify/objectify/wiki/Entities#the-basics
    */
   protected ProjectEntity() {}
-  
+
   /**
    * Creates a new ProjectEntity object.
    *
@@ -61,15 +60,13 @@ public class ProjectEntity {
     this.interestedUserIds = interestedUserIds;
   }
 
-  /**
-   * Compute the lengths of mentor and interested user lists before the
-   * project entity is saved.
-   */
-  @OnSave protected void computeListLengths() {
+  /** Compute the lengths of mentor and interested user lists before the project entity is saved. */
+  @OnSave
+  protected void computeListLengths() {
     numMentors = mentorIds.size();
     numInterestedUsers = interestedUserIds.size();
   }
-  
+
   public int getNumMentors() {
     return this.mentorIds.size();
   }

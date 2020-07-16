@@ -49,8 +49,8 @@ public class ProjectData {
   }
 
   /**
-   * This is a temporary function that creates mentor mock data. This will be
-   * removed when a helper function is created for getting mentors by ID.
+   * This is a temporary function that creates mentor mock data. This will be removed when a helper
+   * function is created for getting mentors by ID.
    *
    * @return Returns the mentor mock data.
    * @throws IOException
