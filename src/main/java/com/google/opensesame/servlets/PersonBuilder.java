@@ -11,6 +11,7 @@ public class PersonBuilder {
   public static String EMAIL_FEILD = "email";
 
   private ArrayList<String> interestTags = new ArrayList<String>();
+  private ArrayList<String> menteeIDs = new ArrayList<String>();
   private ArrayList<Long> projectIDs = new ArrayList<Long>();
   private String description;
   private String email;
@@ -36,6 +37,11 @@ public class PersonBuilder {
   }
 
   public PersonBuilder interestTags(ArrayList<String> interestTags) {
+    this.interestTags = interestTags;
+    return this;
+  }
+
+  public PersonBuilder menteeIDs(ArrayList<String> interestTags) {
     this.interestTags = interestTags;
     return this;
   }
@@ -81,6 +87,7 @@ public class PersonBuilder {
     if (personEntity instanceof MentorEntity) {
       MentorEntity mentorEntity = (MentorEntity) personEntity;
       this.projectIDs(mentorEntity.projectIDs);
+      this.menteeIDs(mentorEntity.menteeIDs);
     }
     return this;
   }
@@ -92,6 +99,6 @@ public class PersonBuilder {
    * @throws IOException
    */
   public MentorObject buildMentor() throws IOException {
-    return new MentorObject(userID, gitHubID, interestTags, projectIDs, email);
+    return new MentorObject(userID, gitHubID, interestTags, menteeIDs, projectIDs, email);
   }
 }
