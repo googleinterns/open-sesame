@@ -3,7 +3,6 @@ package com.google.opensesame.servlets;
 import com.googlecode.objectify.annotation.Subclass;
 import java.util.ArrayList;
 
-
 /**
  * The Mentor Entity is designed to directly interface with datastore using Objectify. It holds the
  * neccesary information to generate an UserObject that has chosen to mentor for a project.
@@ -18,7 +17,6 @@ public class MentorEntity extends PersonEntity {
   private MentorEntity() {
     super();
   }
-
 
   public MentorEntity(UserObject user) {
     super(user);
