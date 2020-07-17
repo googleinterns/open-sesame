@@ -8,6 +8,7 @@ checkTesting();
  * @typedef NavbarUrl
  * @property {string} href
  * @property {string} name
+ * @property {boolean} requiresAuth
  */
 /**
  * @typedef NavbarProps
@@ -48,6 +49,13 @@ export default function Navbar(props) {
   );
 }
 
+/**
+ * Determines whether or not to render a NavbarLink depending on the
+ * authentication status of the user.
+ * @param {NavbarUrl} url
+ * @param {boolean} authenticated
+ * @return {?React.Component} Returns the NavbarLink or null.
+ */
 function renderNavbarLink(url, authenticated) {
   if (authenticated || !url.requiresAuth) {
     return <NavbarLink key={url.href} url={url} />;
