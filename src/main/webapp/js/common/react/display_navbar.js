@@ -16,18 +16,22 @@ const urls = [
   {
     href: '/',
     name: 'Home',
+    requiresAuth: false,
   },
   {
     href: '/projects.html',
     name: 'Projects',
+    requiresAuth: false,
   },
   {
     href: '/mentors.html',
     name: 'Mentors',
+    requiresAuth: false,
   },
   {
     href: '/dashboard.html',
     name: 'Dashboard',
+    requiresAuth: true,
   },
 ];
 

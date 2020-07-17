@@ -7,10 +7,12 @@ const navbarUrls = [
   {
     href: '/',
     name: 'Home',
+    requiresAuth: false,
   },
   {
     href: '/projects.html',
     name: 'Projects',
+    requiresAuth: false,
   },
 ];
 

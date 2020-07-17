@@ -21,6 +21,9 @@ checkTesting();
  * @return {React.Component} Returns the navbar.
  */
 export default function Navbar(props) {
+  const authenticated = 
+      !props.loading && props.authData.authorized && props.authData.hasProfile;
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="/">Open Sesame</a>
@@ -35,8 +38,7 @@ export default function Navbar(props) {
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ml-auto">
-          {props.urls.map((url, i) =>
-            <NavbarLink key={i} url={url} />)}
+          {props.urls.map((url, i) => renderNavbarLink(url, authenticated))}
         </ul>
       </div>
       <div className="ml-1">
@@ -44,6 +46,15 @@ export default function Navbar(props) {
       </div>
     </nav>
   );
+}
+
+function renderNavbarLink(url, authenticated) {
+  if (authenticated || !url.requiresAuth) {
+    return <NavbarLink key={url.href} url={url} />;
+  }
+  else {
+    return null;
+  }
 }
 
 Navbar.propTypes = {
