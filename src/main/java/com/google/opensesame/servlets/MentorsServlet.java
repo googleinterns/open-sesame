@@ -1,7 +1,7 @@
 package com.google.opensesame.servlets;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
@@ -17,27 +17,26 @@ import javax.servlet.http.HttpServletResponse;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 @WebServlet("/mentors")
 public class MentorsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     ArrayList<String> interests = new ArrayList<String>();
-    interests.add("skateboarding");   
+    interests.add("skateboarding");
     ArrayList<String> mentees = new ArrayList<String>();
     mentees.add("Richie");
     ArrayList<String> projects = new ArrayList<String>();
     mentees.add("OpenSesame");
-    UserEntity mockMentor = new UserEntity("mock_id", "Sami-2000", interests, "samialves@google.com", projects, mentees);
+    UserEntity mockMentor =
+        new UserEntity(
+            "mock_id", "Sami-2000", interests, "samialves@google.com", projects, mentees);
     ofy().save().entity(mockMentor);
 
-   
     List<UserEntity> mentorEntities = ofy().load().type(UserEntity.class).list();
     ArrayList<UserData> mentors = new ArrayList<UserData>();
     for (UserEntity entity : mentorEntities) {
-      if(entity.isMentor) {
+      if (entity.isMentor) {
         mentors.add(UserData(entity));
       }
     }
@@ -97,7 +96,7 @@ public class MentorsServlet extends HttpServlet {
       error(response, "You must sign up for opensesame first.", 401, "User not registered.");
       return;
     }
-    
+
     if (!user.projectIDs.contains(Long.toString(inputRepoID))) {
       user.projectIDs.add(Long.toString(inputRepoID));
     }
