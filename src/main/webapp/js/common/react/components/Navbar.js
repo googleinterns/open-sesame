@@ -1,6 +1,7 @@
 import checkTesting from '../../../checkTesting.js';
 import NavbarLink from './NavbarLink.js';
 import AuthButton from './AuthButton.js';
+import {authDataType} from '../navbar_prop_types.js';
 checkTesting();
 
 /**
@@ -9,8 +10,14 @@ checkTesting();
  * @property {string} name
  */
 /**
+ * @typedef NavbarProps
+ * @property {NavbarUrl[]} urls
+ * @property {boolean} loading
+ * @property {?Object} authData
+ */
+/**
  * Returns a React navbar component.
- * @param {{urls: NavbarUrl[]}} props
+ * @param {NavbarProps} props
  * @return {React.Component} Returns the navbar.
  */
 export default function Navbar(props) {
@@ -33,7 +40,7 @@ export default function Navbar(props) {
         </ul>
       </div>
       <div className="ml-1">
-        <AuthButton />
+        <AuthButton loading={props.loading} authData={props.authData} />
       </div>
     </nav>
   );
@@ -44,4 +51,6 @@ Navbar.propTypes = {
     href: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
+  loading: PropTypes.bool.isRequired,
+  authData: authDataType,
 };
