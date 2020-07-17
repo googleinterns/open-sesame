@@ -7,7 +7,7 @@ import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
 } from '../../../fetch_handler.js';
-import DataFetcher from '../../../common/react/components/DataFetcher.js';
+import {DataFetcher} from '../../../common/react/components/DataFetcher.js';
 import ExpandedProject from './ExpandedProject.js';
 
 // Using HashRouter to avoid having to configure servlet routing:

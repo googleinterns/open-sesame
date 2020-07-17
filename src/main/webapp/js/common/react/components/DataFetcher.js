@@ -6,7 +6,7 @@ checkTesting();
  * A generic data fetching component that can be used for fetching data for any
  * component.
  */
-export default class DataFetcher extends React.Component {
+export class DataFetcher extends React.Component {
   /**
    * Create a generic data fetching component.
    * @param {Object} props
@@ -42,8 +42,9 @@ export default class DataFetcher extends React.Component {
    */
   componentDidMount() {
     // TODO : Add automatic retry functionality here.
-    // TOOD : Add better user notification system here.
+    // TODO : Add better user notification system here.
     this.props.createFetchRequest(this.abortController.signal).then((data) => {
+      // TODO : Remove for production
       console.log('Data received:');
       console.log(data);
 
