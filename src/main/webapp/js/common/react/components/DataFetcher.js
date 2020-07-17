@@ -1,3 +1,20 @@
+/**
+ * @fileoverview This component is used to fetch data for another component.
+ * You must supply this component with a function to create a fetch request, as
+ * well as a function to render from.
+ */
+/**
+ * @typedef DataFetcherState
+ * @property {boolean} isFetching Whether or not the data is currently being
+ *    fetched.
+ * @property {?Object} data The data received from the fetch request. This is
+ *    null if the data is still being fetched.
+ */
+/**
+ * @typedef DataFetcherProps
+ * @property {function(AbortSignal): Promise} createFetchRequest
+ * @property {function(DataFetcherState): React.Component} render
+ */
 import checkTesting from '../../../checkTesting.js';
 import {basicErrorHandling} from '../../../fetch_handler.js';
 checkTesting();
@@ -9,11 +26,15 @@ checkTesting();
 export default class DataFetcher extends React.Component {
   /**
    * Create a generic data fetching component.
-   * @param {Object} props
+   * @param {DataFetcherProps} props
    */
   constructor(props) {
     super(props);
 
+    /**
+     * The state of the DataFetcher React component.
+     * @type {DataFetcherState}
+     */
     this.state = {
       isFetching: true,
       data: null,
