@@ -25,30 +25,30 @@ function initForm() {
  */
 
 function getMockMentors() {
-  //let mentors = new Array();
+  // let mentors = new Array();
   const mentors = [
     {
-      interestTags: ["code", "trapeze", "baking"],
-      projectIDs: ["opensesame"],
-      description: "Sami works on opensesame",
-      email: "samialves@google.com",
+      interestTags: ['code', 'trapeze', 'baking'],
+      projectIDs: ['opensesame'],
+      description: 'Sami works on opensesame',
+      email: 'samialves@google.com',
       image: 'images/dior.jpg',
-      gitHubID: "Sami-2000",
-      name: "Sami Alves",
-      location: "Mansfield, MA",
+      gitHubID: 'Sami-2000',
+      name: 'Sami Alves',
+      location: 'Mansfield, MA',
     },
     {
       interestTags: null,
       projectIDs: null,
       description: null,
-      email: "obiabbi@google.com",
+      email: 'obiabbi@google.com',
       image: 'images/dior.jpg',
-      gitHubID: "Obinnabii",
-      name: "Obi Abii",
-      location: "Idk maybe near Cornell",
-    }
+      gitHubID: 'Obinnabii',
+      name: 'Obi Abii',
+      location: 'Idk maybe near Cornell',
+    },
   ];
-  //mentors.push(Sami);
+  // mentors.push(Sami);
   const mentorsContainer = document.getElementById('mentors-container');
   if (!mentorsContainer) {
     return;
