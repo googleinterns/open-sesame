@@ -1,4 +1,5 @@
 import checkTesting from '../../../checkTesting.js';
+import {navbarLinkType} from '../navbar_prop_types.js';
 checkTesting();
 
 /**
@@ -20,6 +21,5 @@ export default function NavbarLink(props) {
 }
 
 NavbarLink.propTypes = {
-  href: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  url: navbarLinkType.isRequired,
 };
