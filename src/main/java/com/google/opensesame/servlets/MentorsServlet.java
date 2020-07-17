@@ -22,8 +22,8 @@ public class MentorsServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     ArrayList<UserObject> mentors = new ArrayList<UserObject>();
-    ArrayList<Long> projects = new ArrayList<Long>();
-    projects.add(1234L);
+    ArrayList<String> projects = new ArrayList<String>();
+    projects.add("OpenSesame");
 
     ArrayList<String> ObiSkills = new ArrayList<String>();
     ObiSkills.add("Meme god");
