@@ -103,7 +103,8 @@ function ExpandedProjectFetcher() {
  * This is used in the DataFetcher component to create a fetch request to get
  * project data.
  * @param {string} projectId
- * @return {function(AbortSignal): Promise}
+ * @return {function(AbortSignal): Promise} Returns the function to create
+ *    fetch requests.
  */
 function createProjectFetchGetter(projectId) {
   return (signal) => {
@@ -125,6 +126,7 @@ function createProjectFetchGetter(projectId) {
 /**
  * Creates a fetch request for project previews.
  * @param {AbortSignal} signal
+ * @return {Promise} Returns the fetch request.
  */
 function createProjectPreviewFetch(signal) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute('/project-previews'), {
