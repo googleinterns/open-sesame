@@ -20,8 +20,8 @@ export default function ProjectList(props) {
     return (
       <h2 className="text-center mt-1">Loading projects...</h2>
     );
-  } 
-  
+  }
+
   return (
     <div className="p-4 row">
       {props.projectPreviews.map((projectPreview, i) =>
