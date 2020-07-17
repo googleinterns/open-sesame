@@ -3,6 +3,7 @@ import TagList from './TagList.js';
 
 /**
  * A card to display basic information about a project mentor.
+ * @param {Object} props
  * @return {React.Component} Returns the react component.
  */
 export default function MentorCard(props) {
