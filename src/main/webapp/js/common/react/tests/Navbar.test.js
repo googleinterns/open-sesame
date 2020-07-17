@@ -18,7 +18,7 @@ const navbarUrls = [
     href: '/dashboard.html',
     name: 'Dashboard',
     requiresAuth: true,
-  }
+  },
 ];
 
 const mockAuthData = {
@@ -60,7 +60,7 @@ describe('Navbar component', () => {
     };
 
     render(
-      <Navbar urls={navbarUrls} loading={false} authData={authData} />);
+        <Navbar urls={navbarUrls} loading={false} authData={authData} />);
 
     expect(screen.queryByText('Dashboard')).toBeNull();
   });
@@ -72,7 +72,7 @@ describe('Navbar component', () => {
     };
 
     render(
-      <Navbar urls={navbarUrls} loading={false} authData={authData} />);
+        <Navbar urls={navbarUrls} loading={false} authData={authData} />);
 
     expect(screen.queryByText('Dashboard')).toBeNull();
   });
