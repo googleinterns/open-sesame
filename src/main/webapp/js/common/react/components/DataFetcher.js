@@ -6,7 +6,7 @@
  * To use this component, you need two things:
  * 1) A function that returns a fetch request for the data needed. This will be
  * provided to the DataFetcher through its props. See {@link DataFetcherProps}.
- * One important thing to note is that the DataFetcher support abort signalling,
+ * One important thing to note is that the DataFetcher supports abort signalling,
  * which is used to cancel the fetch request in the case that the component is
  * removed before the fetch can be completed. See this for how to use the abort
  * signal in your fetch request:
@@ -28,7 +28,6 @@
  *      if (fetchState.isFetching) {
  *        return <h1>Loading...</h1>;
  *      }
- *
  *      return <h1>fetchState.data.text</h1>;
  *    }} />
  */
