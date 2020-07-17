@@ -17,8 +17,8 @@ function initForm() {
 /**
  * A Mentor
  * @typedef {Object} Mentor
- * @property {string List} interestTags - The user's tags
- * @property {string List} projectIDs - The user's projects
+ * @property {string[]} interestTags - The user's tags
+ * @property {string[]} projectIDs - The user's projects
  * @property {string} description - The bio of the user
  * @property {string} email - the email address of the user
  * @property {string} gitHubID: - The user's github page
