@@ -1,6 +1,6 @@
 import {standardizeFetchErrors} from '/js/fetch_handler.js';
 
-getMockMentors();
+getMentors();
 initForm();
 
 /**
@@ -80,20 +80,21 @@ function getMentors() {
   const fetchRequest = standardizeFetchErrors(
       fetch(url),
       'Failed to communicate with the server, please try again later.',
-      'Encountered a server error, please try again later.');
+      'Encountered a server error, please try again later.'
+      );
 
-  fetchRequest.then((mentors) => {
-    console.log('got mentor data');
+  fetchRequest.then((response) => response.json()).then((mentors) => {
     mentorsContainer.innerHTML = '';
+    console.log(mentors);
     for (const mentor of mentors) {
       console.log(mentor);
       mentorsContainer.appendChild(createMentorElement(mentor));
     }
   })
       .catch((errorResponse) => {
-        alert(errorResponse.userMessage);
         console.error(
-            `Error ${errorResponse.statusCode}: ${errorResponse.error}`);
+          `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
+       alert(errorResponse.userMessage);
       });
 }
 
