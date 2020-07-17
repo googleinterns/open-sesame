@@ -87,11 +87,12 @@ public class MentorsServlet extends HttpServlet {
     Long inputRepoID = inputRepo.getId();
 
     // Commented out until Richie's implementation of these functions is merged
-    /*ProjectEntity newProject = getByRepositoryIdOrNew(inputRepoID);
-    if (!newProject.mentorIds.contains(userID)) {
-      newProject.mentorIds.add(userID);
-      newProject.save();
-    }*/
+    ProjectEntity newProject = fromRepositoryIdOrNew(inputRepoID);
+    try {
+      ProjectEntity alreadyThere = ofy().load().type(ProjectEntity.class).id(newProject).now();
+    } catch (Exception e) {
+      ofy().save().entity(newProject);
+    }
 
     UserEntity user;
     try {
