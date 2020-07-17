@@ -5,7 +5,7 @@ import {render, screen} from '@testing-library/react';
 
 const mockUrl = {
   href: '/home.html',
-  name: "Home",
+  name: 'Home',
   requiresAuth: false,
 };
 

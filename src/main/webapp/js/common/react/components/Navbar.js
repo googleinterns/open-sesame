@@ -22,7 +22,7 @@ checkTesting();
  * @return {React.Component} Returns the navbar.
  */
 export default function Navbar(props) {
-  const authenticated = 
+  const authenticated =
       !props.loading && props.authData.authorized && props.authData.hasProfile;
 
   return (
@@ -59,8 +59,7 @@ export default function Navbar(props) {
 function renderNavbarLink(url, authenticated) {
   if (authenticated || !url.requiresAuth) {
     return <NavbarLink key={url.href} url={url} />;
-  }
-  else {
+  } else {
     return null;
   }
 }
