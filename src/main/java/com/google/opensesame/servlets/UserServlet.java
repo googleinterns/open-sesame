@@ -12,6 +12,8 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.users.User;
 import com.google.gson.Gson;
 import com.google.opensesame.auth.AuthServlet;
+import com.google.opensesame.user.UserData;
+import com.google.opensesame.user.UserEntity;
 import com.google.opensesame.util.ErrorResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class UserServlet extends HttpServlet {
         return; // TODO: Establish Redirect page path
       }
     }
-    PersonEntity userEntity = ofy().load().type(PersonEntity.class).id(userID).now();
+    UserEntity userEntity = ofy().load().type(UserEntity.class).id(userID).now();
     if (userEntity == null) {
       ErrorResponse.sendJsonError(
           response,
@@ -64,8 +66,7 @@ public class UserServlet extends HttpServlet {
           "User does not exist.");
       return;
     }
-    UserObject userObject = new UserBuilder().fromEntity(userEntity).buildUser();
-    // TODO: make this return a Mentor if the user has mentor status
+    UserData userObject = new UserData(userEntity);
     String jsonPerson = new Gson().toJson(userObject);
     response.setContentType("application/json;");
     response.getWriter().println(jsonPerson);
@@ -119,7 +120,7 @@ public class UserServlet extends HttpServlet {
     ofy()
         .save()
         .entity(
-            new PersonEntity(userID, userGHMyself.getLogin(), userTags, userGHMyself.getEmail()));
+            new UserEntity(userID, userGHMyself.getLogin(), userTags, userGHMyself.getEmail()));
   }
 
   // TODO: use function in other servlets.
@@ -139,16 +140,5 @@ public class UserServlet extends HttpServlet {
       String entityName, String field, Object value, FilterOperator operator) {
     Filter userFilter = new FilterPredicate(field, operator, value);
     return datastore.prepare(new Query(entityName).setFilter(userFilter));
-  }
-
-  // TODO: The same GitHub account can be used with multiple emails :(
-  /**
-   * Check if a user is stored with userID in Datastore.
-   *
-   * @param userID
-   * @return PersonEntity with the specified userID or null
-   */
-  public static PersonEntity hasProfile(String userID) {
-    return ofy().load().type(PersonEntity.class).id(userID).now();
   }
 }

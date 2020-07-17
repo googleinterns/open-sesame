@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
+import com.google.opensesame.user.UserData;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -21,47 +23,26 @@ public class MentorsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<UserObject> mentors = new ArrayList<UserObject>();
+    ArrayList<UserData> mentors = new ArrayList<UserData>();
     ArrayList<String> projects = new ArrayList<String>();
     projects.add("OpenSesame");
 
     ArrayList<String> ObiSkills = new ArrayList<String>();
     ObiSkills.add("Meme god");
     ObiSkills.add("HTML wrangler");
-    UserObject Obi =
-        new UserBuilder()
-            .name("Obi")
-            .gitHubID("Obinnabii")
-            .bio("Obi is awesome.")
-            .interestTags(ObiSkills)
-            .projectIDs(projects)
-            .buildUser();
+    UserData Obi = null;
     mentors.add(Obi);
 
     ArrayList<String> SamiSkills = new ArrayList<String>();
     SamiSkills.add("Stone carver");
     SamiSkills.add("Bootstrap convert");
-    UserObject Sami =
-        new UserBuilder()
-            .name("Sami")
-            .gitHubID("Sami-2000")
-            .bio("Sami is fun.")
-            .interestTags(SamiSkills)
-            .projectIDs(projects)
-            .buildUser();
+    UserData Sami = null;
     mentors.add(Sami);
 
     ArrayList<String> RichiSkills = new ArrayList<String>();
     RichiSkills.add("Minecraft boss");
     RichiSkills.add("React wizard");
-    UserObject Richi =
-        new UserBuilder()
-            .name("Richi")
-            .gitHubID("Richie78321")
-            .bio("Richi is cool.")
-            .interestTags(RichiSkills)
-            .projectIDs(projects)
-            .buildUser();
+    UserData Richi = null;
     mentors.add(Richi);
 
     String jsonMentors = new Gson().toJson(mentors);

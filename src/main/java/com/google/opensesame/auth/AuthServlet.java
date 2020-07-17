@@ -7,7 +7,8 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.opensesame.servlets.PersonEntity;
+import com.google.opensesame.user.UserEntity;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -70,8 +71,8 @@ public class AuthServlet extends HttpServlet {
 
       responseObject.add("user", userData);
 
-      PersonEntity personEntity =
-          ofy().load().type(PersonEntity.class).id(currentUser.getUserId()).now();
+      UserEntity personEntity =
+          ofy().load().type(UserEntity.class).id(currentUser.getUserId()).now();
       responseObject.addProperty("hasProfile", personEntity != null);
     } else {
       responseObject.addProperty("authorized", false);
