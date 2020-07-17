@@ -25,22 +25,22 @@ public class MentorsServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     ArrayList<String> interests = new ArrayList<String>();
-    interests.add("skateboarding");
-    PersonEntity mockPerson =
-        new PersonEntity("user_id_mock", "Obinnabii", interests, "samialves@google.com");
-    
+    interests.add("skateboarding");   
     ArrayList<String> mentees = new ArrayList<String>();
     mentees.add("Richie");
-    MentorEntity mockMentor = new MentorEntity(mockPerson, new ArrayList<Long>(), mentees);
+    ArrayList<String> projects = new ArrayList<String>();
+    mentees.add("OpenSesame");
+    UserEntity mockMentor = new UserEntity("mock_id", "Sami-2000", interests, "samialves@google.com", projects, mentees);
     ofy().save().entity(mockMentor);
 
-    List<MentorEntity> mentorEntities = ofy().load().type(MentorEntity.class).list();
-    ArrayList<MentorObject> mentors = new ArrayList<MentorObject>();
-
-    // Commented out until Obi's new person builder functionalities are merged
-    /*for (MentorEntity mentor: mentorEntities) {
-      mentors.add(new PersonBuilder().buildMentorObject(mentor));
-    }*/
+   
+    List<UserEntity> mentorEntities = ofy().load().type(UserEntity.class).list();
+    ArrayList<UserData> mentors = new ArrayList<UserData>();
+    for (UserEntity entity : mentorEntities) {
+      if(entity.isMentor) {
+        mentors.add(UserData(entity));
+      }
+    }
 
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
@@ -93,25 +93,19 @@ public class MentorsServlet extends HttpServlet {
       newProject.save();
     }*/
 
-    PersonEntity user;
+    UserEntity user;
     try {
-      user = ofy().load().type(PersonEntity.class).id(userID).now();
+      user = ofy().load().type(UserEntity.class).id(userID).now();
     } catch (Exception e) {
       error(response, "You must sign up for opensesame first.", 401, "User not registered.");
       return;
     }
-
-    if (user instanceof MentorEntity) {
-      MentorEntity mentor = (MentorEntity) user;
-      mentor.projectIDs.add(inputRepoID);
-      ofy().save().entity(mentor);
-    } else {
-      ArrayList<Long> projects = new ArrayList<Long>();
-      projects.add(inputRepoID);
-      ArrayList<String> mentees = new ArrayList<String>();
-      MentorEntity mentor = new MentorEntity(user, projects, mentees);
-      ofy().save().entity(mentor);
+    
+    if (!user.projectIDs.contains(Long.toString(inputRepoID))) {
+      user.projectIDs.add(Long.toString(inputRepoID));
     }
+
+    ofy().save().entity(user);
 
     response.setContentType("application/json;");
     response.getWriter().println(new Gson().toJson("success"));
