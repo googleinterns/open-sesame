@@ -1,0 +1,87 @@
+name: Linting and Testing for Continuous Integration
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  JavaFormat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 # v2 minimum required
+        with:
+          token: ${{secrets.PAT_TOKEN}} # Re-running Linter on auto commit
+      # Recommended: latest versions of Google Java Format require JDK 11+
+      - name: Use Java 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: "11"
+      - name: Format Java Code
+        uses: axel-op/googlejavaformat-action@v3
+        with:
+          args: "--replace"
+
+  
+  ESLint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{secrets.PAT_TOKEN}}
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - name: Cache local npm dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-  
+    - name: Install dependencies
+      run: npm install
+    - name: Run ESLint
+      continue-on-error: true
+      run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix
+    - name: Commit ESLint changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Apply ESLint changes.
+    - name: Annotate ESLint errors
+      uses: hallee/eslint-action@1.0.3
+      if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
+      with:
+        repo-token: ${{secrets.GITHUB_TOKEN}}
+
+  BuildAndTest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2 
+    - name: Use Java 8
+      uses: actions/setup-java@v1
+      with:
+        java-version: "8"
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - name: Cache local npm dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - name: Cache local Maven repository
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: Install Dependencies
+      run: npm install    
+    - name: Build and check for errors
+      run: npm run verify
