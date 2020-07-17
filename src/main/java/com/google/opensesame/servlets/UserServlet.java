@@ -75,7 +75,7 @@ public class UserServlet extends HttpServlet {
   // Send a user to datastore. Update the current information about the user if one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userGitHubAuthToken = request.getParameter("gitHubAuthToken");
-    if (userGitHubAuthToken == null){
+    if (userGitHubAuthToken == null) {
       ErrorResponse.sendJsonError(
           response,
           "GitHub OAuth token was never supplied",
@@ -87,20 +87,19 @@ public class UserServlet extends HttpServlet {
     if (interestTagsParam == null) {
       interestTagsParam = new String[] {};
     }
-    ArrayList<String> userTags =
-        new ArrayList<>(Arrays.asList(interestTagsParam));
+    ArrayList<String> userTags = new ArrayList<>(Arrays.asList(interestTagsParam));
 
     User user = AuthServlet.getAuthorizedUser();
     if (user == null) {
-        ErrorResponse.sendJsonError(
-            response,
-            "User not logged in",
-            HttpServletResponse.SC_FORBIDDEN,
-            "You are not logged in");
-        return;
-      }
+      ErrorResponse.sendJsonError(
+          response,
+          "User not logged in",
+          HttpServletResponse.SC_FORBIDDEN,
+          "You are not logged in");
+      return;
+    }
 
-      String userID = user.getUserId();
+    String userID = user.getUserId();
 
     // Get User information from GitHub using the Oath token.
     GHMyself userGHMyself;
@@ -143,12 +142,13 @@ public class UserServlet extends HttpServlet {
   }
 
   // TODO: The same GitHub account can be used with multiple emails :(
-  /** 
-   * Check if a user is stored with userID in Datastore. 
+  /**
+   * Check if a user is stored with userID in Datastore.
+   *
    * @param userID
    * @return PersonEntity with the specified userID or null
    */
   public static PersonEntity hasProfile(String userID) {
-  return ofy().load().type(PersonEntity.class).id(userID).now();
+    return ofy().load().type(PersonEntity.class).id(userID).now();
   }
 }
