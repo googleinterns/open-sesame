@@ -27,15 +27,15 @@ public class UserData {
   private String email;
 
   /**
-   * Create a UserData from a given UserEntity 
-   * 
-   * Note: Emails will only ever be stored in a UserObject if the current user is
-   * authorized with the AuthServlet.
+   * Create a UserData from a given UserEntity
+   *
+   * <p>Note: Emails will only ever be stored in a UserObject if the current user is authorized with
+   * the AuthServlet.
+   *
    * @param userEntity
    * @throws IOException
    */
-  public UserData(UserEntity userEntity)
-      throws IOException {
+  public UserData(UserEntity userEntity) throws IOException {
     this.gitHubID = userEntity.gitHubId;
     this.interestTags = userEntity.interestTags;
     this.userID = userEntity.userId;
@@ -43,7 +43,7 @@ public class UserData {
     // Only ever send email stuff when a user is authorized
     if (AuthServlet.getAuthorizedUser() != null) {
       this.email = null;
-      }
+    }
     this.projectIDs = userEntity.projectIDs;
     this.menteeIDs = userEntity.menteeIDs;
     this.isMentor = userEntity.isMentor;
@@ -117,7 +117,7 @@ public class UserData {
     return this.menteeIDs;
   }
 
-    /**
+  /**
    * Add a project to the list of projects associated with this instance of the mentor object.
    * Remember to store this change in datastore with a UserEntity.
    */

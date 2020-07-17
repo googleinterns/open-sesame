@@ -1,10 +1,9 @@
 package com.google.opensesame.user;
 
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.OnSave;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-
+import com.googlecode.objectify.annotation.OnSave;
 import java.util.ArrayList;
 
 /**
@@ -19,10 +18,10 @@ public class UserEntity {
   String gitHubId;
   /** The interests a user indicated during signup */
   ArrayList<String> interestTags;
-   /** Datastore IDs of projects the given user has decided to mentor for. */
-   ArrayList<String> projectIDs = new ArrayList<String>();
-   /** Datastore IDs of mentees that have expressed interest in being mentored by this user. */
-   ArrayList<String> menteeIDs = new ArrayList<String>();
+  /** Datastore IDs of projects the given user has decided to mentor for. */
+  ArrayList<String> projectIDs = new ArrayList<String>();
+  /** Datastore IDs of mentees that have expressed interest in being mentored by this user. */
+  ArrayList<String> menteeIDs = new ArrayList<String>();
 
   public UserEntity() {}
 
@@ -42,8 +41,13 @@ public class UserEntity {
     this.email = email;
   }
 
-  public UserEntity(String userId, String gitHubId, ArrayList<String> interestTags,
-  String email, ArrayList<String> projectIDs, ArrayList<String> menteeIDs) {
+  public UserEntity(
+      String userId,
+      String gitHubId,
+      ArrayList<String> interestTags,
+      String email,
+      ArrayList<String> projectIDs,
+      ArrayList<String> menteeIDs) {
     this(userId, gitHubId, interestTags, email);
     this.projectIDs = projectIDs;
     this.menteeIDs = menteeIDs;
