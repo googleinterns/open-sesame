@@ -53,8 +53,9 @@ public class ProjectData {
    * function is created for getting mentors by ID.
    *
    * @return Returns the mentor mock data.
+   * @throws IOException
    */
-  private static List<MentorObject> createMentorMockData() {
+  private static List<MentorObject> createMentorMockData() throws IOException {
     List<MentorObject> mentors = new ArrayList<MentorObject>();
 
     ArrayList<String> ObiSkills = new ArrayList<String>();

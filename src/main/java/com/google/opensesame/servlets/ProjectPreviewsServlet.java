@@ -24,7 +24,7 @@ public class ProjectPreviewsServlet extends HttpServlet {
     Query projectsQuery =
         new Query("Project").addSort(ProjectEntity.NUM_MENTORS_KEY, SortDirection.DESCENDING);
 
-    List<ProjectEntity> projectEntities = ProjectDatastore.getByQuery(projectsQuery);
+    List<ProjectEntity> projectEntities = ProjectDatastore.getProjectsByQuery(projectsQuery);
     List<ProjectPreviewData> projectPreviews = new ArrayList<ProjectPreviewData>();
     for (ProjectEntity projectEntity : projectEntities) {
       projectPreviews.add(ProjectPreviewData.fromProjectEntity(projectEntity));

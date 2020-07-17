@@ -52,7 +52,7 @@ export default class AuthButton extends React.Component {
    * @override
    */
   render() {
-    let classList = 'btn btn-purple';
+    let classList = 'btn btn-emphasis';
     let linkText;
     let authLink;
     if (this.state.isFetching) {
