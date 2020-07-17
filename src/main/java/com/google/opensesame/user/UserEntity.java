@@ -26,26 +26,60 @@ public class UserEntity {
 
   public UserEntity() {}
 
-  public UserEntity(UserData user) {
-    this.gitHubId = user.getGitHubID();
-    this.interestTags = user.getTags();
-    this.email = user.getEmail();
-    this.userId = user.getUserID();
-    this.projectIDs = user.getProjectIDs();
-    this.menteeIDs = user.getMenteeIDs();
+  /**
+   * Create a User entity with information from a UserData Instance
+   * @param user
+   */
+  public UserEntity(UserData userData) {
+    this.gitHubId = userData.getGitHubID();
+    this.interestTags = userData.getTags();
+    this.email = userData.getEmail();
+    this.userId = userData.getUserID();
+    this.projectIDs = userData.getProjectIDs();
+    this.menteeIDs = userData.getMenteeIDs();
   }
 
+  /**
+   * Create a User entity with the given information. Use this when instantiating
+   * a User that is not a mentor for any project.
+   * @param userId
+   * @param gitHubId
+   * @param interestTags
+   * @param email
+   */
   public UserEntity(String userId, String gitHubId, ArrayList<String> interestTags, String email) {
     this.userId = userId;
     this.gitHubId = gitHubId;
     this.interestTags = interestTags;
     this.email = email;
   }
-
+  /**
+   * Create a user with the given information. Use this to instantiate a User that 
+   * is a mentor without any mentees.
+   * @param userId
+   * @param gitHubId
+   * @param interestTags
+   * @param email
+   * @param projectIDs
+   */
   public UserEntity(String userId, String gitHubId, ArrayList<String> interestTags,
-  String email, ArrayList<String> projectIDs, ArrayList<String> menteeIDs) {
+  String email, ArrayList<String> projectIDs) {
     this(userId, gitHubId, interestTags, email);
     this.projectIDs = projectIDs;
+  }
+
+  /**
+   * Create a User entity with the given information.
+   * @param userId
+   * @param gitHubId
+   * @param interestTags
+   * @param email
+   * @param projectIDs
+   * @param menteeIDs
+   */
+  public UserEntity(String userId, String gitHubId, ArrayList<String> interestTags,
+  String email, ArrayList<String> projectIDs, ArrayList<String> menteeIDs) {
+    this(userId, gitHubId, interestTags, email, projectIDs);
     this.menteeIDs = menteeIDs;
   }
 
