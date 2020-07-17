@@ -2,7 +2,7 @@
  * @fileoverview This component is used to fetch data for another component.
  * Using this component means that you do not need to create your own fetch
  * boilerplate.
- * 
+ *
  * To use this component, you need two things:
  * 1) A function that returns a fetch request for the data needed. This will be
  * provided to the DataFetcher through its props. See {@link DataFetcherProps}.
@@ -16,12 +16,12 @@
  * https://reactjs.org/docs/render-props.html
  * See {@link DataFetcherState} for what properties will be sent to the render
  * function.
- * 
+ *
  * Below is a simple example. For a working example, see ProjectSearch.js.
  * @example
  * // This example loads data from the '/test' endpoint and renders it to a
  * // header element. While the data is loading it displays 'Loading...' in a
- * // header element. 
+ * // header element.
  * <DataFetcher
  *    createFetchRequest={(signal) => fetch('/test', {signal: signal})}
  *    render={(fetchState) => {
