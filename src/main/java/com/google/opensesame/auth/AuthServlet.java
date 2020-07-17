@@ -1,5 +1,7 @@
 package com.google.opensesame.auth;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -11,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 @WebServlet("/auth")
 public class AuthServlet extends HttpServlet {
@@ -69,7 +70,7 @@ public class AuthServlet extends HttpServlet {
 
       responseObject.add("user", userData);
 
-      PersonEntity personEntity = 
+      PersonEntity personEntity =
           ofy().load().type(PersonEntity.class).id(currentUser.getUserId()).now();
       responseObject.addProperty("hasProfile", personEntity != null);
     } else {
