@@ -1,10 +1,14 @@
 package com.google.opensesame.servlets;
 
+
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
+import com.google.opensesame.user.UserData;
+import com.google.opensesame.user.UserEntity;
+import com.google.opensesame.projects.ProjectEntity;
 import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
 import java.util.ArrayList;
