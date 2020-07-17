@@ -27,6 +27,7 @@ public class UserEntity {
 
   /**
    * Create a User entity with information from a UserData Instance
+   *
    * @param user
    */
   public UserEntity(UserData userData) {
@@ -39,8 +40,9 @@ public class UserEntity {
   }
 
   /**
-   * Create a User entity with the given information. Use this when instantiating
-   * a User that is not a mentor for any project.
+   * Create a User entity with the given information. Use this when instantiating a User that is not
+   * a mentor for any project.
+   *
    * @param userId
    * @param gitHubId
    * @param interestTags
@@ -53,22 +55,28 @@ public class UserEntity {
     this.email = email;
   }
   /**
-   * Create a user with the given information. Use this to instantiate a User that 
-   * is a mentor without any mentees.
+   * Create a user with the given information. Use this to instantiate a User that is a mentor
+   * without any mentees.
+   *
    * @param userId
    * @param gitHubId
    * @param interestTags
    * @param email
    * @param projectIDs
    */
-  public UserEntity(String userId, String gitHubId, ArrayList<String> interestTags,
-  String email, ArrayList<String> projectIDs) {
+  public UserEntity(
+      String userId,
+      String gitHubId,
+      ArrayList<String> interestTags,
+      String email,
+      ArrayList<String> projectIDs) {
     this(userId, gitHubId, interestTags, email);
     this.projectIDs = projectIDs;
   }
 
   /**
    * Create a User entity with the given information.
+   *
    * @param userId
    * @param gitHubId
    * @param interestTags
@@ -76,8 +84,13 @@ public class UserEntity {
    * @param projectIDs
    * @param menteeIDs
    */
-  public UserEntity(String userId, String gitHubId, ArrayList<String> interestTags,
-  String email, ArrayList<String> projectIDs, ArrayList<String> menteeIDs) {
+  public UserEntity(
+      String userId,
+      String gitHubId,
+      ArrayList<String> interestTags,
+      String email,
+      ArrayList<String> projectIDs,
+      ArrayList<String> menteeIDs) {
     this(userId, gitHubId, interestTags, email, projectIDs);
     this.menteeIDs = menteeIDs;
   }
