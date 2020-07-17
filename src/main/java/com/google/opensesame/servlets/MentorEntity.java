@@ -17,13 +17,21 @@ public class MentorEntity extends PersonEntity {
   private MentorEntity() {
     super();
   }
-
+  /**
+   * Create a MentorEntity from a UserObject.
+   * @param user
+   */
   public MentorEntity(UserObject user) {
     super(user);
     this.projectIDs = user.getProjectIDs();
     this.menteeIDs = user.getMenteeIDs();
   }
-
+  /**
+   * Create a MentorEntity with the given information.
+   * @param person A current user that is becoming a mentor
+   * @param projectIDs
+   * @param menteeIDs
+   */
   public MentorEntity(
       PersonEntity person, ArrayList<String> projectIDs, ArrayList<String> menteeIDs) {
     super(person.id, person.gitHubId, person.interestTags, person.email);
