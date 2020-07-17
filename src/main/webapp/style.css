@@ -1,10 +1,10 @@
 .emphasis,
-a {
+.anchor-emphasis {
   color: rebeccapurple;
   text-decoration: none;
 }
 
-a:hover,
+.anchor-emphasis:hover,
 .dark-emphasis {
   color: darkblue;
 }
