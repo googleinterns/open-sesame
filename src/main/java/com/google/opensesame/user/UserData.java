@@ -29,7 +29,7 @@ public class UserData {
   /**
    * Create a UserData from a given UserEntity
    *
-   * <p>Note: Emails will only ever be stored in a UserObject if the current user is authorized with
+   * Note: Emails will only ever be stored in a UserObject if the current user is authorized with
    * the AuthServlet.
    *
    * @param userEntity

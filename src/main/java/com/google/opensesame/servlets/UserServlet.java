@@ -28,8 +28,6 @@ import org.kohsuke.github.GitHub;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-  private String pageToRedirectToIfUserNotAuthenticated = "index.html";
-
   private DatastoreService datastore;
 
   @Override
@@ -47,14 +45,14 @@ public class UserServlet extends HttpServlet {
     if (userID == null) {
       try {
         userID =
-            AuthServlet.getAuthorizedUser().getUserId(); // TODO: Should this be a functionality?
+            AuthServlet.getAuthorizedUser().getUserId();
       } catch (NullPointerException e) {
         ErrorResponse.sendJsonError(
             response,
             "UserID not Supplied and user not logged in",
             HttpServletResponse.SC_FORBIDDEN,
             "You are not logged in");
-        return; // TODO: Establish Redirect page path
+        return;
       }
     }
     UserEntity userEntity = ofy().load().type(UserEntity.class).id(userID).now();
