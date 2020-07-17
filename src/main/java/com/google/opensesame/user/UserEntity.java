@@ -96,8 +96,12 @@ public class UserEntity {
   }
 
   @OnSave
-  public void setIsMentor() {
+  protected void setIsMentor() {
     this.isMentor = projectIDs.isEmpty();
+  }
+
+  public boolean isMentor() {
+    return projectIDs.isEmpty();
   }
 
   /**
