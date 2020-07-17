@@ -241,7 +241,8 @@ function createTagDiv(interestTags, mentorCardBody) {
   tagDiv.className = 'd-flex justify-content-center p-3';
   for (const tagText of interestTags) {
     const tagElement = document.createElement('div');
-    tagElement.className = 'border border-muted text-muted mr-1 mb-1 badge text-center';
+    tagElement.className = 
+        'border border-muted text-muted mr-1 mb-1 badge text-center';
     tagElement.innerText = tagText;
     tagDiv.append(tagElement);
   }
