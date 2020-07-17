@@ -14,12 +14,13 @@ function initForm() {
   return;
 }
 
+
 /**
  * A Mentor
  * @typedef {Object} Mentor
  * @property {string[]} interestTags - The user's tags
  * @property {string[]} projectIDs - The user's projects
- * @property {string} description - The bio of the user
+ * @property {string} bio - The bio of the user
  * @property {string} email - the email address of the user
  * @property {string} gitHubID: - The user's github page
  * @property {string} image - The User's profile picture
@@ -35,7 +36,7 @@ function getMockMentors() {
     {
       interestTags: ['code', 'trapeze', 'baking'],
       projectIDs: ['opensesame'],
-      description: 'Sami works on opensesame',
+      bio: 'Sami works on opensesame',
       email: 'samialves@google.com',
       image: 'images/dior.jpg',
       gitHubID: 'Sami-2000',
@@ -45,7 +46,7 @@ function getMockMentors() {
     {
       interestTags: null,
       projectIDs: null,
-      description: null,
+      bio: null,
       email: 'obiabbi@google.com',
       image: 'images/dior.jpg',
       gitHubID: 'Obinnabii',
@@ -115,7 +116,7 @@ function createMentorElement(mentor) {
   addName(mentor.name, mentorCardBody);
   addLocation(mentor.location, mentorCardBody);
   addEmail(mentor.email, mentorCardBody);
-  addBio(mentor.description, mentorCardBody);
+  addBio(mentor.bio, mentorCardBody);
   createGitHubLink(mentor.gitHubID, mentorCardBody);
   createTagDiv(mentor.interestTags, mentorCardBody);
   createProjectsDiv(mentor.projectIDs, mentorCardBody);
