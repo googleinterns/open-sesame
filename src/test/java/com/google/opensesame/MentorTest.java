@@ -18,7 +18,8 @@
 
 //   @Test
 //   public void addProjects() throws IOException {
-//     UserObject mentor = new UserBuilder().name(MENTOR_NAME).gitHubID(MENTOR_GITHUB_ID).buildUser();
+//     UserObject mentor = new
+// UserBuilder().name(MENTOR_NAME).gitHubID(MENTOR_GITHUB_ID).buildUser();
 //     mentor.addProject(PROJECT_ID);
 
 //     List<String> expected = new ArrayList<String>();

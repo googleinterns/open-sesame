@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
 import com.google.opensesame.user.UserData;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
