@@ -92,7 +92,7 @@ public class MentorsServlet extends HttpServlet {
     // Commented out until Richie's implementation of these functions is merged
     ProjectEntity newProject = fromRepositoryIdOrNew(inputRepoID);
     ofy().save().entity(newProject);
-    
+
     UserEntity user;
     try {
       user = ofy().load().type(UserEntity.class).id(userID).now();
