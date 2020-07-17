@@ -1,5 +1,6 @@
 package com.google.opensesame.servlets;
 
+import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,19 +12,31 @@ import org.kohsuke.github.GitHub;
  * API calls, It would be best to only build a UserObject with the UserBuilder where neccesary.
  */
 public class UserObject {
-  private final ArrayList<String> projectIDs;
-  private final ArrayList<String> menteeIDs;
   private final ArrayList<String> interestTags;
+  private final ArrayList<String> menteeIDs;
+  private final ArrayList<String> projectIDs;
+  private final Boolean isMentor;
   private final String bio;
-  private final String email;
   private final String gitHubID;
   private final String gitHubURL;
   private final String image;
   private final String location;
   private final String name;
   private final String userID;
-  private final Boolean isMentor;
+  private String email;
 
+  /**
+   * Create a UserObject instance with the given information.
+   * Emails will only ever be stored in a UserObject if the current user is
+   * authorized with the AuthServlet.
+   * @param userID
+   * @param gitHubID
+   * @param interestTags
+   * @param menteeIDs
+   * @param projectIDs
+   * @param email
+   * @throws IOException
+   */
   public UserObject(
       String userID,
       String gitHubID,
@@ -34,8 +47,12 @@ public class UserObject {
       throws IOException {
     this.gitHubID = gitHubID;
     this.interestTags = interestTags;
-    this.email = email;
     this.userID = userID;
+    this.email = email;
+    // Only ever send email stuff when a user is authorized
+    if (AuthServlet.getAuthorizedUser() != null) {
+      this.email = null;
+      }
     this.projectIDs = projectIDs;
     this.menteeIDs = menteeIDs;
     this.isMentor = projectIDs.isEmpty();
