@@ -14,7 +14,6 @@ public class PersonEntity {
   @Id String id;
   /** The interests a user indicated during signup */
   ArrayList<String> interestTags;
-
   String email;
   String gitHubId;
 
