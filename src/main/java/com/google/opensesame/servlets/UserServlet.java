@@ -26,7 +26,6 @@ import org.kohsuke.github.GitHub;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-  private String pageToRedirectToIfUserNotAuthenticated = "index.html";
 
   private DatastoreService datastore;
 
