@@ -1,8 +1,9 @@
 package com.google.opensesame.servlets;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.gson.Gson;
 import com.google.opensesame.projects.ProjectData;
-import com.google.opensesame.projects.ProjectDatastore;
 import com.google.opensesame.projects.ProjectEntity;
 import com.google.opensesame.util.ErrorResponse;
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class ProjectServlet extends HttpServlet {
       return;
     }
 
-    ProjectEntity projectEntity = ProjectDatastore.getByRepositoryId(projectId);
+    ProjectEntity projectEntity = ofy().load().type(ProjectEntity.class).id(projectId).now();
     if (projectEntity == null) {
       ErrorResponse.sendJsonError(
           response,

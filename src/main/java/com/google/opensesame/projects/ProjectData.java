@@ -39,7 +39,7 @@ public class ProjectData {
     ProjectPreviewData previewData =
         ProjectPreviewData.fromProjectEntity(projectEntity, repository);
 
-    // TODO : Use helper function to get mentors by ID. Sami is currently working on this.
+    // TODO : Use helper function to get mentors by ID.
     // Will use mock data for now.
     List<UserData> mentors = createMentorMockData();
 
