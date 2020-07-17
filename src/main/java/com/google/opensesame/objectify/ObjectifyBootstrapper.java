@@ -1,7 +1,7 @@
 package com.google.opensesame.objectify;
 
-import com.google.opensesame.user.UserEntity;
 import com.google.opensesame.projects.ProjectEntity;
+import com.google.opensesame.user.UserEntity;
 import com.googlecode.objectify.ObjectifyService;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
