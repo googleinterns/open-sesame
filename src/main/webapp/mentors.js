@@ -264,7 +264,8 @@ function createProjectsDiv(projectIDs, mentorCardBody) {
   projectsDiv.className = 'd-flex justify-content-center p-3';
   for (const projectID of projectIDs) {
     const projectElement = document.createElement('div');
-    projectElement.className = 'card-holder border border-muted text-muted mr-1 mb-1 badge text-center';
+    projectElement.className = 
+        'card-holder border border-muted text-muted mr-1 mb-1 badge text-center';
     const cardTitleElement = document.createElement('h4');
     cardTitleElement.className = 'card-title dark-emph';
     cardTitleElement.innerText = projectID;
