@@ -100,9 +100,7 @@ public class UserEntity {
     this.isMentor = this.isMentor();
   }
 
-  /**
-   * true if the entity represents a mentor, false otherwise.
-   */
+  /** true if the entity represents a mentor, false otherwise. */
   public Boolean isMentor() {
     return !projectIDs.isEmpty();
   }

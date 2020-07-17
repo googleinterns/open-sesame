@@ -44,8 +44,7 @@ public class UserServlet extends HttpServlet {
     String userID = request.getParameter("userID");
     if (userID == null) {
       try {
-        userID =
-            AuthServlet.getAuthorizedUser().getUserId();
+        userID = AuthServlet.getAuthorizedUser().getUserId();
       } catch (NullPointerException e) {
         ErrorResponse.sendJsonError(
             response,
