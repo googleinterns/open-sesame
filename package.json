@@ -4,6 +4,7 @@
   "description": "Open Sesame is a platform intended to make contributing to open source less intimidating by matching first-time contributors to experienced mentors.",
   "main": "index.js",
   "scripts": {
+    "verify": "npm run jest && mvn verify",
     "test": "npm run jest && mvn test",
     "jest": "jest --testPathIgnorePatterns=target/",
     "dev-server": "npm run jest && npm run jsx-preprocessor && mvn package appengine:run || true",
