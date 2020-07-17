@@ -1,7 +1,7 @@
 import checkTesting from '../../../checkTesting.js';
 import NavbarLink from './NavbarLink.js';
 import AuthButton from './AuthButton.js';
-import {authDataType} from '../navbar_prop_types.js';
+import {authDataType, navbarLinkType} from '../navbar_prop_types.js';
 checkTesting();
 
 /**
@@ -36,7 +36,7 @@ export default function Navbar(props) {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ml-auto">
           {props.urls.map((url, i) =>
-            <NavbarLink key={i} href={url.href} name={url.name} />)}
+            <NavbarLink key={i} url={url} />)}
         </ul>
       </div>
       <div className="ml-1">
@@ -47,10 +47,7 @@ export default function Navbar(props) {
 }
 
 Navbar.propTypes = {
-  urls: PropTypes.arrayOf(PropTypes.shape({
-    href: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
+  urls: PropTypes.arrayOf(navbarLinkType).isRequired,
   loading: PropTypes.bool.isRequired,
   authData: authDataType,
 };
