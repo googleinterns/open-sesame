@@ -140,4 +140,6 @@ public class UserServlet extends HttpServlet {
     Filter userFilter = new FilterPredicate(field, operator, value);
     return datastore.prepare(new Query(entityName).setFilter(userFilter));
   }
+
+  // TODO: make function to get users
 }
