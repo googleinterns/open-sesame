@@ -12,10 +12,10 @@ import java.util.ArrayList;
  */
 @Entity
 public class UserEntity {
-  @Id String userId;
+  @Id public String userId;
   @Index Boolean isMentor;
-  String email;
-  String gitHubId;
+  public String email;
+  public String gitHubId;
   /** The interests a user indicated during signup */
   ArrayList<String> interestTags;
   /** Datastore IDs of projects the given user has decided to mentor for. */
