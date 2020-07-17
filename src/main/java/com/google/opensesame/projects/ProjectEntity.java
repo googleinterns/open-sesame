@@ -14,15 +14,16 @@ import java.util.List;
 @Entity
 public class ProjectEntity {
   /**
-   * Get a project entity with a specified repository ID from the datastore or
-   * create a new one if one does not exist in the datastore.
+   * Get a project entity with a specified repository ID from the datastore or create a new one if
+   * one does not exist in the datastore.
+   *
    * @param repositoryId The repository ID of the project.
    * @return Returns the project entity from datastore or a new project entity.
    */
   public static ProjectEntity fromRepositoryIdOrNew(String repositoryId) {
     ProjectEntity projectEntity = ofy().load().type(ProjectEntity.class).id(repositoryId).now();
     if (projectEntity == null) {
-      projectEntity = 
+      projectEntity =
           new ProjectEntity(repositoryId, new ArrayList<String>(), new ArrayList<String>());
     }
 
