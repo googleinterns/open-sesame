@@ -241,7 +241,7 @@ function createTagDiv(interestTags, mentorCardBody) {
   tagDiv.className = 'd-flex justify-content-center p-3';
   for (const tagText of interestTags) {
     const tagElement = document.createElement('div');
-    tagElement.className = 
+    tagElement.className =
         'border border-muted text-muted mr-1 mb-1 badge text-center';
     tagElement.innerText = tagText;
     tagDiv.append(tagElement);
@@ -264,7 +264,7 @@ function createProjectsDiv(projectIDs, mentorCardBody) {
   projectsDiv.className = 'd-flex justify-content-center p-3';
   for (const projectID of projectIDs) {
     const projectElement = document.createElement('div');
-    projectElement.className = 
+    projectElement.className =
         'card-holder border border-muted text-muted mr-1 mb-1 badge text-center';
     const cardTitleElement = document.createElement('h4');
     cardTitleElement.className = 'card-title dark-emph';
