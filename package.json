@@ -22,7 +22,9 @@
     "url": "https://github.com/googleinterns/step22-2020/issues"
   },
   "homepage": "https://github.com/googleinterns/step22-2020#readme",
-  "dependencies": {},
+  "dependencies": {
+    "mailtoui": "^1.0.3"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.1",
