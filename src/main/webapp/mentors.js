@@ -3,6 +3,9 @@ import {standardizeFetchErrors} from '/js/fetch_handler.js';
 getMockMentors();
 initForm();
 
+/**
+ * Initiate mentor form.
+ */
 function initForm() {
   const mentorForm = document.getElementById('mentor-form');
   if (mentorForm) {
@@ -24,8 +27,10 @@ function initForm() {
  * @property {string} name - the name of the user
  */
 
+/**
+ * Populate mentor search page with mock mentors.
+ */
 function getMockMentors() {
-  // let mentors = new Array();
   const mentors = [
     {
       interestTags: ['code', 'trapeze', 'baking'],
@@ -48,7 +53,6 @@ function getMockMentors() {
       location: 'Idk maybe near Cornell',
     },
   ];
-  // mentors.push(Sami);
   const mentorsContainer = document.getElementById('mentors-container');
   if (!mentorsContainer) {
     return;
@@ -276,6 +280,9 @@ function createProjectsDiv(projectIDs, mentorCardBody) {
   return mentorCardBody;
 }
 
+/**
+ * Submit the mentor form with Post request.
+ */
 function submitForm(e) {
   e.preventDefault();
   const inputUrl = document.getElementById('inputRepo').value;
