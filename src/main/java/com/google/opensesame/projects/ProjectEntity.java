@@ -1,37 +1,32 @@
 package com.google.opensesame.projects;
 
-import com.google.opensesame.github.GitHubGetter;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.OnLoad;
 import com.googlecode.objectify.annotation.OnSave;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /** The class used to interact with the project entities in data storage. */
 @Entity
 public class ProjectEntity {
   /**
-   * Creates a new ProjectEntity from a GitHub repository name.
-   *
-   * @param repositoryName
-   * @return Returns the new ProjectEntity or null if the repository name is invalid.
-   * @throws IOException
+   * Get a project entity with a specified repository ID from the datastore or
+   * create a new one if one does not exist in the datastore.
+   * @param repositoryId The repository ID of the project.
+   * @return Returns the project entity from datastore or a new project entity.
    */
-  public static ProjectEntity fromRepositoryName(String repositoryName) throws IOException {
-    GitHub gitHub = GitHubGetter.getGitHub();
-    GHRepository repository;
-    try {
-      repository = gitHub.getRepository(repositoryName);
-    } catch (IOException e) {
-      return null;
+  public static ProjectEntity fromRepositoryIdOrNew(String repositoryId) {
+    ProjectEntity projectEntity = ofy().load().type(ProjectEntity.class).id(repositoryId).now();
+    if (projectEntity == null) {
+      projectEntity = 
+          new ProjectEntity(repositoryId, new ArrayList<String>(), new ArrayList<String>());
     }
 
-    return new ProjectEntity(
-        String.valueOf(repository.getId()), new ArrayList<String>(), new ArrayList<String>());
+    return projectEntity;
   }
 
   @Id public String repositoryId;
@@ -74,6 +69,16 @@ public class ProjectEntity {
   protected void computeListLengths() {
     numMentors = mentorIds.size();
     numInterestedUsers = interestedUserIds.size();
+  }
+
+  @OnLoad
+  protected void checkNullLists() {
+    if (this.mentorIds == null) {
+      this.mentorIds = new ArrayList<String>();
+    }
+    if (this.interestedUserIds == null) {
+      this.interestedUserIds = new ArrayList<String>();
+    }
   }
 
   public int getNumMentors() {
