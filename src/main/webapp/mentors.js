@@ -80,8 +80,8 @@ function getMentors() {
   const fetchRequest = standardizeFetchErrors(
       fetch(url),
       'Failed to communicate with the server, please try again later.',
-      'Encountered a server error, please try again later.'
-      );
+      'Encountered a server error, please try again later.',
+  );
 
   fetchRequest.then((response) => response.json()).then((mentors) => {
     mentorsContainer.innerHTML = '';
@@ -93,8 +93,8 @@ function getMentors() {
   })
       .catch((errorResponse) => {
         console.error(
-          `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-       alert(errorResponse.userMessage);
+            `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
+        alert(errorResponse.userMessage);
       });
 }
 
