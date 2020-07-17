@@ -2,9 +2,7 @@ package com.google.opensesame.projects;
 
 import com.google.opensesame.github.GitHubGetter;
 import com.google.opensesame.user.UserData;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
@@ -58,7 +56,6 @@ public class ProjectData {
   private static List<UserData> createMentorMockData() throws IOException {
     return null;
   }
-
 
   // This is currently in its most basic form. In the future there will be more data that differs
   // from the preview data.
