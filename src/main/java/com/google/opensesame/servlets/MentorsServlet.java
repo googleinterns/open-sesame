@@ -43,7 +43,6 @@ public class MentorsServlet extends HttpServlet {
         mentors.add(new UserData(entity));
       }
     }
-
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
     response.getWriter().println(jsonMentors);
