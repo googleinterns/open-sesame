@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 
+/**
+ * A fully fleshed out User of OpenSesame containing information sourced from
+ * GitHub. To conserve API calls, It would be best to only build a UserObject
+ * with the UserBuilder where neccesary.
+ */
 public class UserObject {
   private final ArrayList<String> projectIDs;
   private final ArrayList<String> menteeIDs;

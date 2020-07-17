@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 // TODO: ReEvaluate the usefulness of a Builder after MVP presentation.
+/** 
+ * A Class designed to build a UserObject with default information. It allows 
+ * for the UserObject to function as both an mentor and a regular user.
+ */
 public class UserBuilder {
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> menteeIDs = new ArrayList<String>();
