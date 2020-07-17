@@ -47,6 +47,11 @@ function initNavbar() {
       navbarContainer);
 }
 
+/**
+ * Renders the Navbar using the state of the data fetcher.
+ * @param {DataFetcherState} dataFetcher 
+ * @return {React.Component} Returns the React component.
+ */
 function renderNavbar(dataFetcher) {
   return (
     <Navbar
@@ -56,6 +61,11 @@ function renderNavbar(dataFetcher) {
   );
 }
 
+/**
+ * Creates a fetch request to get the authentication status of the user.
+ * @param {AbortSignal} signal 
+ * @return {Promise} Returns the authentication fetch request.
+ */
 function createAuthFetchRequest(signal) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute('/auth'), {
     method: "GET",
