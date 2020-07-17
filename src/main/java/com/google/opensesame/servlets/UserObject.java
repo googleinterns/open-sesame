@@ -7,7 +7,7 @@ import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 
 public class UserObject {
-  private final ArrayList<Long> projectIDs;
+  private final ArrayList<String> projectIDs;
   private final ArrayList<String> menteeIDs;
   private final ArrayList<String> interestTags;
   private final String bio;
@@ -25,7 +25,7 @@ public class UserObject {
       String gitHubID,
       ArrayList<String> interestTags,
       ArrayList<String> menteeIDs,
-      ArrayList<Long> projectIDs,
+      ArrayList<String> projectIDs,
       String email)
       throws IOException {
     this.gitHubID = gitHubID;
@@ -96,7 +96,7 @@ public class UserObject {
   }
 
   /** @return a list of ids of projects a user is involved in. */
-  public ArrayList<Long> getProjectIDs() {
+  public ArrayList<String> getProjectIDs() {
     return this.projectIDs;
   }
 
@@ -109,7 +109,7 @@ public class UserObject {
    * Add a project to the list of projects associated with this instance of the mentor object.
    * Remember to store this change in datastore with a personEntity.
    */
-  public void addProject(Long projectID) {
+  public void addProject(String projectID) {
     projectIDs.add(projectID);
   }
 
@@ -117,7 +117,7 @@ public class UserObject {
    * Add a project to the list of projects associated with this instance of the mentor object.
    * Remember to store this change in datastore with a personEntity.
    */
-  public void addMentee(Long menteeID) {
+  public void addMentee(String menteeID) {
     projectIDs.add(menteeID);
   }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class UserBuilder {
   private ArrayList<String> interestTags = new ArrayList<String>();
   private ArrayList<String> menteeIDs = new ArrayList<String>();
-  private ArrayList<Long> projectIDs = new ArrayList<Long>();
+  private ArrayList<String> projectIDs = new ArrayList<String>();
   private String bio;
   private String email;
   private String gitHubID;
@@ -41,7 +41,7 @@ public class UserBuilder {
     return this;
   }
 
-  public UserBuilder projectIDs(ArrayList<Long> projectIDs) {
+  public UserBuilder projectIDs(ArrayList<String> projectIDs) {
     this.projectIDs = projectIDs;
     return this;
   }
