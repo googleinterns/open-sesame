@@ -58,6 +58,15 @@ public class ProjectEntity {
     this.repositoryId = repositoryId;
     this.mentorIds = mentorIds;
     this.interestedUserIds = interestedUserIds;
+
+    // Empty lists are represented as null in datastore, so create empty lists if null:
+    // https://cloud.google.com/appengine/docs/standard/java/datastore/entity-property-reference#Using_an_empty_list
+    if (this.mentorIds == null) {
+      this.mentorIds = new ArrayList<String>();
+    }
+    if (this.interestedUserIds == null) {
+      this.interestedUserIds = new ArrayList<String>();
+    }
   }
 
   /** Compute the lengths of mentor and interested user lists before the project entity is saved. */
