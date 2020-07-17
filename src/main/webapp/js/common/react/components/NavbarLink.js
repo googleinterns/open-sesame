@@ -9,7 +9,7 @@ checkTesting();
  */
 export default function NavbarLink(props) {
   const url = props.url;
-  
+
   let classes = 'nav-item';
   if (url.href === window.location.pathname) {
     classes += ' active';

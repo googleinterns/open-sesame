@@ -12,7 +12,7 @@ const USER_SIGNUP_URL = '/signup.html';
  */
 export default function AuthButton(props) {
   const authData = props.authData;
-  
+
   let classList = 'btn btn-emphasis';
   let linkText;
   let authLink;

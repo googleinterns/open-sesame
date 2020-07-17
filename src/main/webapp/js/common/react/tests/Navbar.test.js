@@ -23,7 +23,7 @@ describe('Navbar component', () => {
   });
 
   it('displays the names of the urls', () => {
-    render(<Navbar urls={navbarUrls} loading={true}  />);
+    render(<Navbar urls={navbarUrls} loading={true} />);
 
     expect(screen.queryByText('Home')).not.toBeNull();
     expect(screen.queryByText('Projects')).not.toBeNull();
