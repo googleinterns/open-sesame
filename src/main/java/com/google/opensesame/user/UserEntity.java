@@ -12,18 +12,18 @@ import java.util.ArrayList;
  */
 @Entity
 public class UserEntity {
-  @Id String userId;
-  @Index Boolean isMentor;
-  String email;
-  String gitHubId;
+  @Id public String userId;
+  @Index protected Boolean isMentor;
+  public String email;
+  public String gitHubId;
   /** The interests a user indicated during signup */
-  ArrayList<String> interestTags;
+  public ArrayList<String> interestTags;
   /** Datastore IDs of projects the given user has decided to mentor for. */
-  ArrayList<String> projectIDs = new ArrayList<String>();
+  public ArrayList<String> projectIDs = new ArrayList<String>();
   /** Datastore IDs of mentees that have expressed interest in being mentored by this user. */
-  ArrayList<String> menteeIDs = new ArrayList<String>();
+  public ArrayList<String> menteeIDs = new ArrayList<String>();
 
-  public UserEntity() {}
+  protected UserEntity() {}
 
   /**
    * Create a User entity with information from a UserData Instance
@@ -96,8 +96,15 @@ public class UserEntity {
   }
 
   @OnSave
-  public void setIsMentor() {
-    this.isMentor = projectIDs.isEmpty();
+  protected void setIsMentor() {
+    this.isMentor = this.isMentor();
+  }
+
+  /**
+   * true if the entity represents a mentor, false otherwise.
+   */
+  public Boolean isMentor() {
+    return !projectIDs.isEmpty();
   }
 
   /**
