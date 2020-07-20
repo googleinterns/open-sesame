@@ -147,7 +147,6 @@ function createMentorElement(mentor) {
 function createEmail(email) {
   const mentorEmail = document.createElement('a');
   mentorEmail.href = 'mailto: ' + email;
-  mentorEmail.classname = 'mailtoui';
   mentorEmail.innerText = 'Send Email Introduction';
   return mentorEmail;
 }
