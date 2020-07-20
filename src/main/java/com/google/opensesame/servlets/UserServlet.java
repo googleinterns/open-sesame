@@ -119,7 +119,7 @@ public class UserServlet extends HttpServlet {
     // Build and send the User's datastore entity
     ofy()
         .save()
-        .entity(new UserEntity(userID, userGHMyself.getLogin(), userTags, userGHMyself.getEmail()));
+        .entity(new UserEntity(userID, userGHMyself.getLogin(), userTags, user.getEmail()));
   }
 
   // TODO: use function in other servlets.
