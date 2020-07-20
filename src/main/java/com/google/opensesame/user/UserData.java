@@ -13,10 +13,10 @@ import org.kohsuke.github.GitHub;
  * to send data to the frontend as a JSON with Gson.
  */
 public class UserData {
+  private Boolean isMentor;
   private final ArrayList<String> interestTags;
   private final ArrayList<String> menteeIDs;
   private final ArrayList<String> projectIDs;
-  private final Boolean isMentor;
   private final String bio;
   private final String gitHubID;
   private final String gitHubURL;
@@ -29,8 +29,9 @@ public class UserData {
   /**
    * Create a UserData from a given UserEntity
    *
-   * <p>Note: Emails will only ever be stored in a UserObject if the current user is authorized with
-   * the AuthServlet.
+   * <p>
+   * Note: Emails will only ever be stored in a UserObject if the current user is
+   * authorized with the AuthServlet.
    *
    * @param userEntity
    * @throws IOException
@@ -57,6 +58,7 @@ public class UserData {
     this.name = userGitAccount.getName();
     this.gitHubURL = userGitAccount.getHtmlUrl().toString();
   }
+
   /** @return true if user is a mentor for a project, false otherwise. */
   public Boolean isMentor() {
     return this.isMentor;
@@ -118,11 +120,12 @@ public class UserData {
   }
 
   /**
-   * Add a project to the list of projects associated with this instance of the mentor object.
-   * Remember to store this change in datastore with a UserEntity.
+   * Add a project to the list of projects associated with this instance of the
+   * mentor object. Remember to store this change in datastore with a UserEntity.
    */
   public void addProject(String projectID) {
     projectIDs.add(projectID);
+    this.isMentor = true;
   }
 
   /**
