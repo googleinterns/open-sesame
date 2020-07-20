@@ -290,7 +290,7 @@ function createProjectsDiv(projectIDs, mentorCardBody) {
           cardTitleElement.innerText = data.previewData.name;
           projectElement.appendChild(cardTitleElement);
           projectsDiv.append(projectElement);
-        })
+        });
   }
   mentorCardBody.appendChild(projectsDiv);
   return mentorCardBody;
