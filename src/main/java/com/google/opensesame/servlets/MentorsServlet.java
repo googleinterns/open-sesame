@@ -25,27 +25,6 @@ public class MentorsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    GHRepository testRepo;
-    GitHub gitHub = GitHubGetter.getGitHub();
-    try {
-      testRepo = gitHub.getRepository("googleinterns/step22-2020");
-    } catch (Exception e) {
-      System.out.println("COULDN'T FIND REPO");
-      return;
-    }
-    Long testRepoID = testRepo.getId();
-    ProjectEntity testProject = ProjectEntity.fromRepositoryIdOrNew(testRepoID.toString());
-    ofy().save().entity(testProject);
-    ArrayList<String> interests = new ArrayList<String>();
-    interests.add("skateboarding");
-    ArrayList<String> mentees = new ArrayList<String>();
-    ArrayList<String> projects = new ArrayList<String>();
-    projects.add(testRepoID.toString());
-    UserEntity mockMentor =
-        new UserEntity(
-            "mock_id", "Sami-2000", interests, "samialves@google.com", projects, mentees);
-    ofy().save().entity(mockMentor);
-
     List<UserEntity> mentorEntities = ofy().load().type(UserEntity.class).list();
     ArrayList<UserData> mentors = new ArrayList<UserData>();
     for (UserEntity entity : mentorEntities) {
@@ -56,6 +35,33 @@ public class MentorsServlet extends HttpServlet {
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
     response.getWriter().println(jsonMentors);
+  }
+
+  // Add a mock sami object to the datastore
+  public void addMockMentor() throws ServletException, IOException {
+    GHRepository testRepo;
+    GitHub gitHub = GitHubGetter.getGitHub();
+    try {
+      testRepo = gitHub.getRepository("googleinterns/step22-2020");
+    } catch (Exception e) {
+      System.out.println("COULDN'T FIND REPO");
+      return;
+    }
+    Long testRepoID = testRepo.getId();
+    ProjectEntity testProject = ProjectEntity.fromRepositoryIdOrNew(testRepoID.toString());
+    String id = "mock_id";
+    if (!testProject.mentorIds.contains(id)) {
+      testProject.mentorIds.add(id);
+    }
+    ofy().save().entity(testProject);
+    ArrayList<String> interests = new ArrayList<String>();
+    interests.add("skateboarding");
+    ArrayList<String> mentees = new ArrayList<String>();
+    ArrayList<String> projects = new ArrayList<String>();
+    projects.add(testRepoID.toString());
+    UserEntity mockMentor =
+        new UserEntity(id, "Sami-2000", interests, "samialves@google.com", projects, mentees);
+    ofy().save().entity(mockMentor);
   }
 
   // This function sends an error if invalid input is found.
