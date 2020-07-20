@@ -10,7 +10,9 @@ import {
 import {DataFetcher} from '../../../common/react/components/DataFetcher.js';
 import ExpandedProject from './ExpandedProject.js';
 
-// Using HashRouter to avoid having to configure servlet routing:
+// Using HashRouter instead of standard BrowserRouter because it supports
+// client-side routing that doesn't interfere with server-side
+// (servlet) routing.
 // https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writing-manually
 const Router = ReactRouterDOM.HashRouter;
 const Switch = ReactRouterDOM.Switch;
