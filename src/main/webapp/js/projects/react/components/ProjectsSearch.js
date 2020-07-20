@@ -61,11 +61,11 @@ export default class ProjectsSearch extends React.Component {
  * @return {React.Component} Returns the React component.
  */
 function ProjectPreviewFetcher() {
-  const onRender = (dataFetcher) => {
+  const onRender = (dataFetcherState) => {
     return (
       <ProjectList
-        loading={dataFetcher.isFetching}
-        projectPreviews={dataFetcher.data} />
+        loading={dataFetcherState.isFetching}
+        projectPreviews={dataFetcherState.data} />
     );
   };
 
@@ -83,11 +83,11 @@ function ProjectPreviewFetcher() {
  */
 function ExpandedProjectFetcher() {
   const {projectId} = ReactRouterDOM.useParams();
-  const onRender = (dataFetcher) => {
+  const onRender = (dataFetcherState) => {
     return (
       <ExpandedProject
-        loading={dataFetcher.isFetching}
-        project={dataFetcher.data} />
+        loading={dataFetcherState.isFetching}
+        project={dataFetcherState.data} />
     );
   };
 
