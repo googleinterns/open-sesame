@@ -269,14 +269,28 @@ function createProjectsDiv(projectIDs, mentorCardBody) {
   const projectsDiv = document.createElement('div');
   projectsDiv.className = 'd-flex justify-content-center p-3';
   for (const projectID of projectIDs) {
-    const projectElement = document.createElement('div');
-    projectElement.className =
-        'card-holder border border-muted text-muted mr-1 mb-1 badge text-center';
-    const cardTitleElement = document.createElement('h4');
-    cardTitleElement.className = 'card-title dark-emph';
-    cardTitleElement.innerText = projectID;
-    projectElement.appendChild(cardTitleElement);
-    projectsDiv.append(projectElement);
+    const projectUrl = new URL('/project', window.location.origin);
+    projectUrl.searchParams.append('projectId', Number(projectID));
+    const fetchRequest = fetch(projectUrl, {
+      method: 'get',
+    });
+    standardizeFetchErrors(
+        fetchRequest,
+        'Failed to communicate with the server, please try again later.',
+        'Encountered a server error, please try again later.')
+        .then((response) => response.json()).then((data) => {
+          console.log('got project data');
+          console.log(data);
+          const projectElement = document.createElement('a');
+          projectElement.href = new URL('/projects.html' + '#/' + projectID, window.location.origin);
+          projectElement.className =
+            'card-holder border border-muted text-muted mr-1 mb-1 badge text-center';
+          const cardTitleElement = document.createElement('h4');
+          cardTitleElement.className = 'card-title dark-emph';
+          cardTitleElement.innerText = data.previewData.name;
+          projectElement.appendChild(cardTitleElement);
+          projectsDiv.append(projectElement);
+        })
   }
   mentorCardBody.appendChild(projectsDiv);
   return mentorCardBody;
