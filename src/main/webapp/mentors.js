@@ -264,11 +264,11 @@ function createProjectsDiv(projectIDs) {
           cardTitleElement.innerText = data.previewData.name;
           projectElement.appendChild(cardTitleElement);
           projectsDiv.append(projectElement);
-        }) 
+        })
         .catch((errorResponse) => {
-        console.error(
-            `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-        alert(errorResponse.userMessage);
+          console.error(
+              `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
+          alert(errorResponse.userMessage);
         });
   }
   return projectsDiv;
