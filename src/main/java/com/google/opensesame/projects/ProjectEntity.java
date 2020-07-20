@@ -81,12 +81,4 @@ public class ProjectEntity {
       this.interestedUserIds = new ArrayList<String>();
     }
   }
-
-  public int getNumMentors() {
-    return this.mentorIds.size();
-  }
-
-  public int getNumInterestedUsers() {
-    return this.interestedUserIds.size();
-  }
 }

@@ -1,6 +1,6 @@
 import TagList from './TagList.js';
-import {expandedProjectType} from '../prop_types.js';
 import MentorCard from './MentorCard.js';
+import {expandedProjectType} from '../prop_types.js';
 
 /**
  * An expanded view of a project.
@@ -16,7 +16,7 @@ export default function ExpandedProject(props) {
 
   const project = props.project;
   const projectTags = project.previewData.topicTags;
-  // Adds the primary language to the list of project tags. Should add
+  // Adds the primary language to the list of project tags. TODO add
   // different types of tags in the future to make it easier to differentiate
   // topics from languages.
   projectTags.unshift(project.previewData.primaryLanguage);

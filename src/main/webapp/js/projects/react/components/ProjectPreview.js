@@ -33,7 +33,7 @@ export default function ProjectPreview(props) {
           <strong className="h5 text-success mr-2">
             {projectPreview.numMentors}
           </strong>
-            Mentors
+          Mentors
         </span>
       </div>
     </div>
