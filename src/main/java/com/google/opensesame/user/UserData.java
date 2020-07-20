@@ -119,9 +119,8 @@ public class UserData {
   }
 
   /**
-   * Add a project to the list of projects associated with this instance of
-   * UserData.
-   * Remember to store this change in datastore with a UserEntity.
+   * Add a project to the list of projects associated with this instance of UserData. Remember to
+   * store this change in datastore with a UserEntity.
    */
   public void addProject(String projectId) {
     projectIds.add(projectId);
@@ -129,9 +128,8 @@ public class UserData {
   }
 
   /**
-   * Add a project to the list of projects associated with this instance of 
-   * UserData.
-   * Remember to store this change in datastore with a UserEntity.
+   * Add a project to the list of projects associated with this instance of UserData. Remember to
+   * store this change in datastore with a UserEntity.
    */
   public void addMentee(String menteeId) {
     projectIds.add(menteeId);

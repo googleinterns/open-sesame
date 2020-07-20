@@ -106,8 +106,7 @@ public class UserEntity {
   }
 
   /**
-   * Add a project Id to the list of project Ids associated with this instance
-   * of the UserEntity.
+   * Add a project Id to the list of project Ids associated with this instance of the UserEntity.
    * Remember to store this change in datastore.
    */
   public void addProject(String projectId) {
@@ -115,8 +114,7 @@ public class UserEntity {
   }
 
   /**
-   * Add a mentee Id to the list of mentee Ids associated with this instance of 
-   * the UserEntity.
+   * Add a mentee Id to the list of mentee Ids associated with this instance of the UserEntity.
    * Remember to store this change in datastore.
    */
   public void addMentee(String menteeId) {
