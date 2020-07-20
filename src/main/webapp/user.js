@@ -14,12 +14,12 @@ function getUser(userID = null) { //eslint-disable-line
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-    fetchRequest,
-    'Failed to communicate with the server. Please try again later.',
-    'An error occcured while retrieving this account.' +
+      fetchRequest,
+      'Failed to communicate with the server. Please try again later.',
+      'An error occcured while retrieving this account.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest.then((response) => response.json());
 }
 
-export { getUser };
+export {getUser};
