@@ -118,6 +118,6 @@ public class UserEntity {
    * Remember to store this change in datastore with a personEntity.
    */
   public void addMentee(String menteeID) {
-    projectIDs.add(menteeID);
+    menteeIDs.add(menteeID);
   }
 }
