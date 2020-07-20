@@ -1,7 +1,8 @@
 /**
  * @fileoverview This component is used to fetch data for another component.
  * Using this component means that you do not need to create your own fetch
- * boilerplate.
+ * boilerplate. This component fetches a requested resource and then
+ * renders the supplied react component with that resource.
  *
  * To use this component, you need two things:
  * 1) A function that returns a fetch request for the data needed. This will be
