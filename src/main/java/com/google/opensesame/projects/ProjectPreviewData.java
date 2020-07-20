@@ -41,7 +41,7 @@ public class ProjectPreviewData {
         repository.getDescription(),
         repository.listTopics(),
         repository.getLanguage(),
-        (int) projectEntity.getNumMentors(),
+        (int) projectEntity.mentorIds.size(),
         projectEntity.repositoryId);
   }
 

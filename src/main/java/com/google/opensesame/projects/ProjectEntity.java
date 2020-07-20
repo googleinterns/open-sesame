@@ -1,65 +1,46 @@
 package com.google.opensesame.projects;
 
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
-import com.google.opensesame.github.GitHubGetter;
-import java.io.IOException;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.OnLoad;
+import com.googlecode.objectify.annotation.OnSave;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /** The class used to interact with the project entities in data storage. */
+@Entity
 public class ProjectEntity {
-  public static final String REPOSITORY_ID_KEY = "repositoryId";
-  public static final String NUM_MENTORS_KEY = "numMentors";
-  public static final String NUM_INTERESTED_USERS_KEY = "numInterestedUsers";
-  public static final String MENTOR_IDS_KEY = "mentorIds";
-  public static final String INTERESTED_USER_IDS_KEY = "interestedUserIds";
-
   /**
-   * Creates a new ProjectEntity from a GitHub repository name.
+   * Get a project entity with a specified repository ID from the datastore or create a new one if
+   * one does not exist in the datastore.
    *
-   * @param repositoryName
-   * @return Returns the new ProjectEntity or null if the repository name is invalid.
-   * @throws IOException
+   * @param repositoryId The repository ID of the project.
+   * @return Returns the project entity from datastore or a new project entity.
    */
-  public static ProjectEntity fromRepositoryName(String repositoryName) throws IOException {
-    GitHub gitHub = GitHubGetter.getGitHub();
-    GHRepository repository;
-    try {
-      repository = gitHub.getRepository(repositoryName);
-    } catch (IOException e) {
-      return null;
+  public static ProjectEntity fromRepositoryIdOrNew(String repositoryId) {
+    ProjectEntity projectEntity = ofy().load().type(ProjectEntity.class).id(repositoryId).now();
+    if (projectEntity == null) {
+      projectEntity =
+          new ProjectEntity(repositoryId, new ArrayList<String>(), new ArrayList<String>());
     }
 
-    return new ProjectEntity(
-        String.valueOf(repository.getId()), new ArrayList<String>(), new ArrayList<String>());
+    return projectEntity;
   }
 
-  /**
-   * Creates a ProjectEntity from the properties of an existing entity in datastore. Assumes that
-   * that all of the required keys are populated in the properties.
-   *
-   * @param properties The properties of an existing datastore entity.
-   * @return Returns the new ProjectEntity.
-   */
-  public static ProjectEntity fromProperties(Map<String, Object> properties) {
-    // Warning is suppressed because it is a precondition that the properties are from a
-    // project entity.
-    @SuppressWarnings({"unchecked"})
-    ProjectEntity newEntity =
-        new ProjectEntity(
-            (String) properties.get(REPOSITORY_ID_KEY),
-            (List<String>) properties.get(MENTOR_IDS_KEY),
-            (List<String>) properties.get(INTERESTED_USER_IDS_KEY));
-    return newEntity;
-  }
-
-  public final String repositoryId;
+  @Id public String repositoryId;
   public List<String> mentorIds;
   public List<String> interestedUserIds;
+  @Index protected int numMentors;
+  @Index protected int numInterestedUsers;
+
+  /**
+   * No-arg constructor for Objectify:
+   * https://github.com/objectify/objectify/wiki/Entities#the-basics
+   */
+  protected ProjectEntity() {}
 
   /**
    * Creates a new ProjectEntity object.
@@ -84,33 +65,20 @@ public class ProjectEntity {
     }
   }
 
-  public int getNumMentors() {
-    return this.mentorIds.size();
+  /** Compute the lengths of mentor and interested user lists before the project entity is saved. */
+  @OnSave
+  protected void computeListLengths() {
+    numMentors = mentorIds.size();
+    numInterestedUsers = interestedUserIds.size();
   }
 
-  public int getNumInterestedUsers() {
-    return this.interestedUserIds.size();
-  }
-
-  /**
-   * Adds the properties of this ProjectEntity object to an Entity.
-   *
-   * @param entity The Datastore Entity to add this ProjectEntity's properties to.
-   */
-  public void fillEntity(Entity entity) {
-    entity.setProperty(REPOSITORY_ID_KEY, repositoryId);
-    entity.setProperty(MENTOR_IDS_KEY, mentorIds);
-    entity.setProperty(INTERESTED_USER_IDS_KEY, interestedUserIds);
-    entity.setProperty(NUM_MENTORS_KEY, getNumMentors());
-    entity.setProperty(NUM_INTERESTED_USERS_KEY, getNumInterestedUsers());
-  }
-
-  /**
-   * Convenience method for saving the project entity to the datastore.
-   *
-   * @return Returns the key associated with the datastore entry.
-   */
-  public Key save() {
-    return ProjectDatastore.addProjectEntity(this);
+  @OnLoad
+  protected void checkNullLists() {
+    if (this.mentorIds == null) {
+      this.mentorIds = new ArrayList<String>();
+    }
+    if (this.interestedUserIds == null) {
+      this.interestedUserIds = new ArrayList<String>();
+    }
   }
 }
