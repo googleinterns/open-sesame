@@ -129,8 +129,8 @@ function createMentorElement(mentor) {
   if (mentor.interestTags != null) {
     mentorCardBody.appendChild(createTagDiv(mentor.interestTags));
   }
-  if (mentor.projectIDs != null) {
-    mentorCardBody.appendChild(createProjectsDiv(mentor.projectIDs));
+  if (mentor.projectIds != null) {
+    mentorCardBody.appendChild(createProjectsDiv(mentor.projectIds));
   }
 
   mentorCard.appendChild(mentorCardBody);
