@@ -116,8 +116,8 @@ public class MentorsServlet extends HttpServlet {
       return;
     }
 
-    if (!user.projectIDs.contains(Long.toString(inputRepoID))) {
-      user.projectIDs.add(Long.toString(inputRepoID));
+    if (!user.projectIds.contains(Long.toString(inputRepoID))) {
+      user.projectIds.add(Long.toString(inputRepoID));
     }
 
     ofy().save().entity(user);
