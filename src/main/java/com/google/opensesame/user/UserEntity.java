@@ -19,7 +19,7 @@ public class UserEntity {
   /** The interests a user indicated during signup */
   ArrayList<String> interestTags;
   /** Datastore IDs of projects the given user has decided to mentor for. */
-  ArrayList<String> projectIDs = new ArrayList<String>();
+  public ArrayList<String> projectIDs = new ArrayList<String>();
   /** Datastore IDs of mentees that have expressed interest in being mentored by this user. */
   ArrayList<String> menteeIDs = new ArrayList<String>();
 
