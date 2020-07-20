@@ -12,8 +12,6 @@
  * signal in your fetch request:
  * https://stackoverflow.com/questions/31061838/how-do-i-cancel-an-http-fetch-request
  * 2) A function that renders the React component using the data being fetched.
- * This follows the render prop design pattern:
- * https://reactjs.org/docs/render-props.html
  * See {@link DataFetcherState} for what properties will be sent to the render
  * function.
  *
