@@ -38,8 +38,8 @@ export default function ExpandedProject(props) {
           <div className="d-flex flex-wrap mb-2">
             {project.mentors.map((mentor) => {
               return (
-                <div className="p-1 col-lg-3">
-                  <MentorCard key={mentor.userId} mentor={mentor} />
+                <div className="p-1 col-lg-3" key={mentor.userId}>
+                  <MentorCard mentor={mentor} />
                 </div>
               );
             })}
