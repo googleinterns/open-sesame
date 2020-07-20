@@ -22,5 +22,6 @@ export default function checkTesting() {
     global.PropTypes = require('prop-types');
     global.React = require('react');
     global.fetch = require('fetch-mock-jest');
+    global.ReactRouterDOM = require('react-router-dom');
   }
 }

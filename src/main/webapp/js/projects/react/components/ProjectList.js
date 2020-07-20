@@ -16,14 +16,28 @@ import {projectPreviewType} from '../prop_types.js';
  * project previews.
  */
 export default function ProjectList(props) {
+  if (props.loading) {
+    return (
+      <h2 className="text-center mt-1">Loading projects...</h2>
+    );
+  }
+
   return (
     <div className="p-4 row">
-      {props.projectPreviews.map((projectPreview, i) =>
-        <ProjectPreview key={i} projectPreview={projectPreview} />)}
+      {props.projectPreviews.map((projectPreview) => {
+        return (
+          <div className="p-1 col-lg-4">
+            <ProjectPreview
+              key={projectPreview.repositoryId}
+              projectPreview={projectPreview} />
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 ProjectList.propTypes = {
-  projectPreviews: PropTypes.arrayOf(projectPreviewType).isRequired,
+  loading: PropTypes.bool.isRequired,
+  projectPreviews: PropTypes.arrayOf(projectPreviewType),
 };
