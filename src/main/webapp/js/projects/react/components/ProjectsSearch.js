@@ -10,7 +10,9 @@ import {
 import {DataFetcher} from '../../../common/react/components/DataFetcher.js';
 import ExpandedProject from './ExpandedProject.js';
 
-// Using HashRouter to avoid having to configure servlet routing:
+// Using HashRouter instead of standard BrowserRouter because it supports
+// client-side routing that doesn't interfere with server-side
+// (servlet) routing.
 // https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writing-manually
 const Router = ReactRouterDOM.HashRouter;
 const Switch = ReactRouterDOM.Switch;
@@ -61,11 +63,11 @@ export default class ProjectsSearch extends React.Component {
  * @return {React.Component} Returns the React component.
  */
 function ProjectPreviewFetcher() {
-  const onRender = (dataFetcher) => {
+  const onRender = (dataFetcherState) => {
     return (
       <ProjectList
-        loading={dataFetcher.isFetching}
-        projectPreviews={dataFetcher.data} />
+        loading={dataFetcherState.isFetching}
+        projectPreviews={dataFetcherState.data} />
     );
   };
 
@@ -83,11 +85,11 @@ function ProjectPreviewFetcher() {
  */
 function ExpandedProjectFetcher() {
   const {projectId} = ReactRouterDOM.useParams();
-  const onRender = (dataFetcher) => {
+  const onRender = (dataFetcherState) => {
     return (
       <ExpandedProject
-        loading={dataFetcher.isFetching}
-        project={dataFetcher.data} />
+        loading={dataFetcherState.isFetching}
+        project={dataFetcherState.data} />
     );
   };
 

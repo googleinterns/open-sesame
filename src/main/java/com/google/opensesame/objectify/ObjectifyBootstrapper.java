@@ -1,5 +1,6 @@
 package com.google.opensesame.objectify;
 
+import com.google.opensesame.projects.ProjectEntity;
 import com.google.opensesame.servlets.MentorEntity;
 import com.google.opensesame.servlets.PersonEntity;
 import com.googlecode.objectify.ObjectifyService;
@@ -12,5 +13,6 @@ public class ObjectifyBootstrapper implements ServletContextListener {
   public void contextInitialized(ServletContextEvent event) {
     ObjectifyService.register(PersonEntity.class);
     ObjectifyService.register(MentorEntity.class);
+    ObjectifyService.register(ProjectEntity.class);
   }
 }
