@@ -29,9 +29,8 @@ public class UserData {
   /**
    * Create a UserData from a given UserEntity
    *
-   * <p>
-   * Note: Emails will only ever be stored in a UserObject if the current user is
-   * authorized with the AuthServlet.
+   * <p>Note: Emails will only ever be stored in a UserObject if the current user is authorized with
+   * the AuthServlet.
    *
    * @param userEntity
    * @throws IOException
@@ -42,7 +41,7 @@ public class UserData {
     this.userID = userEntity.userId;
     this.email = userEntity.email;
     // Only ever send email stuff when a user is authorized
-    if (AuthServlet.getAuthorizedUser() != null) {
+    if (AuthServlet.getAuthorizedUser() == null) {
       this.email = null;
     }
     this.projectIDs = userEntity.projectIDs;
@@ -120,8 +119,8 @@ public class UserData {
   }
 
   /**
-   * Add a project to the list of projects associated with this instance of the
-   * mentor object. Remember to store this change in datastore with a UserEntity.
+   * Add a project to the list of projects associated with this instance of the mentor object.
+   * Remember to store this change in datastore with a UserEntity.
    */
   public void addProject(String projectID) {
     projectIDs.add(projectID);

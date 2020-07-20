@@ -25,12 +25,22 @@ public class MentorsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    GHRepository testRepo;
+    GitHub gitHub = GitHubGetter.getGitHub();
+    try {
+      testRepo = gitHub.getRepository("googleinterns/step22-2020");
+    } catch (Exception e) {
+      System.out.println("COULDN'T FIND REPO");
+      return;
+    }
+    Long testRepoID = testRepo.getId();
+    ProjectEntity testProject = ProjectEntity.fromRepositoryIdOrNew(testRepoID.toString());
+    ofy().save().entity(testProject);
     ArrayList<String> interests = new ArrayList<String>();
     interests.add("skateboarding");
     ArrayList<String> mentees = new ArrayList<String>();
-    mentees.add("Richie");
     ArrayList<String> projects = new ArrayList<String>();
-    mentees.add("OpenSesame");
+    projects.add(testRepoID.toString());
     UserEntity mockMentor =
         new UserEntity(
             "mock_id", "Sami-2000", interests, "samialves@google.com", projects, mentees);
@@ -89,7 +99,8 @@ public class MentorsServlet extends HttpServlet {
 
     // Commented out until Richie's implementation of these functions is merged
     ProjectEntity newProject = ProjectEntity.fromRepositoryIdOrNew(inputRepoID.toString());
-    ofy().save().entity(newProject);
+    newProject.mentorIds.add(userID);
+    ofy().save().entity(newProject).now();
 
     UserEntity user;
     try {
