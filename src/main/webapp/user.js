@@ -9,7 +9,7 @@ import {
  * @param {string=} userID OPTIONAL
  * @return {dashboard.User}
  */
-function getUser(userID = null) { //eslint-disable-line  
+function getUser(userID = null) {
   const fetchURL = '/user' + (userID ? '?userID=' + userID : '');
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
