@@ -19,9 +19,9 @@ public class UserEntity {
   /** The interests a user indicated during signup */
   public ArrayList<String> interestTags;
   /** Datastore IDs of projects the given user has decided to mentor for. */
-  public ArrayList<String> projectIDs = new ArrayList<String>();
+  public ArrayList<String> projectIds = new ArrayList<String>();
   /** Datastore IDs of mentees that have expressed interest in being mentored by this user. */
-  public ArrayList<String> menteeIDs = new ArrayList<String>();
+  public ArrayList<String> menteeIds = new ArrayList<String>();
 
   public UserEntity() {}
 
@@ -31,14 +31,15 @@ public class UserEntity {
    * @param user
    */
   public UserEntity(UserData userData) {
-    this.gitHubId = userData.getGitHubID();
-    this.interestTags = userData.getTags();
-    this.email = userData.getEmail();
-    this.userId = userData.getUserID();
-    this.projectIDs = userData.getProjectIDs();
-    this.menteeIDs = userData.getMenteeIDs();
+    gitHubId = userData.getGitHubID();
+    interestTags = userData.getTags();
+    email = userData.getEmail();
+    userId = userData.getUserID();
+    projectIds = userData.getProjectIDs();
+    menteeIds = userData.getMenteeIDs();
   }
 
+  // TODO: Cut down the number of constructors.
   /**
    * Create a User entity with the given information. Use this when instantiating a User that is not
    * a mentor for any project.
@@ -62,16 +63,16 @@ public class UserEntity {
    * @param gitHubId
    * @param interestTags
    * @param email
-   * @param projectIDs
+   * @param projectIds
    */
   public UserEntity(
       String userId,
       String gitHubId,
       ArrayList<String> interestTags,
       String email,
-      ArrayList<String> projectIDs) {
+      ArrayList<String> projectIds) {
     this(userId, gitHubId, interestTags, email);
-    this.projectIDs = projectIDs;
+    this.projectIds = projectIds;
   }
 
   /**
@@ -81,42 +82,44 @@ public class UserEntity {
    * @param gitHubId
    * @param interestTags
    * @param email
-   * @param projectIDs
-   * @param menteeIDs
+   * @param projectIds
+   * @param menteeIds
    */
   public UserEntity(
       String userId,
       String gitHubId,
       ArrayList<String> interestTags,
       String email,
-      ArrayList<String> projectIDs,
-      ArrayList<String> menteeIDs) {
-    this(userId, gitHubId, interestTags, email, projectIDs);
-    this.menteeIDs = menteeIDs;
+      ArrayList<String> projectIds,
+      ArrayList<String> menteeIds) {
+    this(userId, gitHubId, interestTags, email, projectIds);
+    this.menteeIds = menteeIds;
   }
 
   @OnSave
   protected void setIsMentor() {
-    this.isMentor = this.isMentor();
+    isMentor = isMentor();
   }
 
   public boolean isMentor() {
-    return !projectIDs.isEmpty();
+    return !projectIds.isEmpty();
   }
 
   /**
-   * Add a project Id to the list of project Ids associated with this instance of the mentor object.
-   * Remember to store this change in datastore with a personEntity.
+   * Add a project Id to the list of project Ids associated with this instance
+   * of the UserEntity.
+   * Remember to store this change in datastore.
    */
-  public void addProject(String projectID) {
-    projectIDs.add(projectID);
+  public void addProject(String projectId) {
+    projectIds.add(projectId);
   }
 
   /**
-   * Add a mentee Id to the list of mentee Ids associated with this instance of the mentor object.
-   * Remember to store this change in datastore with a personEntity.
+   * Add a mentee Id to the list of mentee Ids associated with this instance of 
+   * the UserEntity.
+   * Remember to store this change in datastore.
    */
-  public void addMentee(String menteeID) {
-    projectIDs.add(menteeID);
+  public void addMentee(String menteeId) {
+    menteeIds.add(menteeId);
   }
 }
