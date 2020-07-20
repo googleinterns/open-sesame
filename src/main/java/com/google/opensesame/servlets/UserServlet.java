@@ -2,13 +2,6 @@ package com.google.opensesame.servlets;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.Filter;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.users.User;
 import com.google.gson.Gson;
 import com.google.opensesame.auth.AuthServlet;
@@ -28,36 +21,25 @@ import org.kohsuke.github.GitHub;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-  private String pageToRedirectToIfUserNotAuthenticated = "index.html";
-
-  private DatastoreService datastore;
-
   @Override
-  // Instantiate datastore
-  public void init() {
-    datastore = DatastoreServiceFactory.getDatastoreService();
-  }
-
-  @Override
-  // Get a specific user. Return the currently signed-in user if no userID is
+  // Get a specific user. Return the currently signed-in user if no userId is
   // supplied.
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    String userID = request.getParameter("userID");
-    if (userID == null) {
-      try {
-        userID =
-            AuthServlet.getAuthorizedUser().getUserId(); // TODO: Should this be a functionality?
-      } catch (NullPointerException e) {
+    String userId = request.getParameter("userID");
+    if (userId == null) {
+      User currentUser = AuthServlet.getAuthorizedUser();
+      if (currentUser == null) {
         ErrorResponse.sendJsonError(
             response,
             "UserID not Supplied and user not logged in",
             HttpServletResponse.SC_FORBIDDEN,
             "You are not logged in");
-        return; // TODO: Establish Redirect page path
+        return;
+      } else {
+        userId = currentUser.getUserId();
       }
     }
-    UserEntity userEntity = ofy().load().type(UserEntity.class).id(userID).now();
+    UserEntity userEntity = ofy().load().type(UserEntity.class).id(userId).now();
     if (userEntity == null) {
       ErrorResponse.sendJsonError(
           response,
@@ -66,6 +48,7 @@ public class UserServlet extends HttpServlet {
           "User does not exist.");
       return;
     }
+
     UserData userObject = new UserData(userEntity);
     String jsonPerson = new Gson().toJson(userObject);
     response.setContentType("application/json;");
@@ -100,7 +83,7 @@ public class UserServlet extends HttpServlet {
       return;
     }
 
-    String userID = user.getUserId();
+    String userId = user.getUserId();
 
     // Get User information from GitHub using the Oath token.
     GHMyself userGHMyself;
@@ -117,27 +100,8 @@ public class UserServlet extends HttpServlet {
       return;
     }
     // Build and send the User's datastore entity
-    ofy().save().entity(new UserEntity(userID, userGHMyself.getLogin(), userTags, user.getEmail()));
+    ofy().save().entity(new UserEntity(userId, userGHMyself.getLogin(), userTags, user.getEmail()));
+    // TODO: add check for hasProfile.
   }
-
-  // TODO: use function in other servlets.
-  /**
-   * Query datastore for entities. Comparisons are done with field coming first. For example field
-   * EQUAL value. Look at
-   * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Query.FilterOperator
-   * for more information on the operator
-   *
-   * @param EntityName the type of entity to be queried for
-   * @param field the field that is being used to query
-   * @param value the object that will be compared to @param field
-   * @param operator the type of comparison to be made.
-   * @return {PreparedQuery} a Datastore prepared query.
-   */
-  public PreparedQuery queryInDatabase(
-      String entityName, String field, Object value, FilterOperator operator) {
-    Filter userFilter = new FilterPredicate(field, operator, value);
-    return datastore.prepare(new Query(entityName).setFilter(userFilter));
-  }
-
   // TODO: make function to get users
 }
