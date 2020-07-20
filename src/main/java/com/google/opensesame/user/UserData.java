@@ -13,10 +13,10 @@ import org.kohsuke.github.GitHub;
  * to send data to the frontend as a JSON with Gson.
  */
 public class UserData {
+  private Boolean isMentor;
   private final ArrayList<String> interestTags;
   private final ArrayList<String> menteeIDs;
   private final ArrayList<String> projectIDs;
-  private final Boolean isMentor;
   private final String bio;
   private final String gitHubID;
   private final String gitHubURL;
@@ -41,7 +41,7 @@ public class UserData {
     this.userID = userEntity.userId;
     this.email = userEntity.email;
     // Only ever send email stuff when a user is authorized
-    if (AuthServlet.getAuthorizedUser() != null) {
+    if (AuthServlet.getAuthorizedUser() == null) {
       this.email = null;
     }
     this.projectIDs = userEntity.projectIDs;
@@ -57,6 +57,7 @@ public class UserData {
     this.name = userGitAccount.getName();
     this.gitHubURL = userGitAccount.getHtmlUrl().toString();
   }
+
   /** @return true if user is a mentor for a project, false otherwise. */
   public Boolean isMentor() {
     return this.isMentor;
@@ -123,6 +124,7 @@ public class UserData {
    */
   public void addProject(String projectID) {
     projectIDs.add(projectID);
+    this.isMentor = true;
   }
 
   /**

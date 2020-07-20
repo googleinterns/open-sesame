@@ -1,9 +1,14 @@
 package com.google.opensesame.projects;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.opensesame.github.GitHubGetter;
 import com.google.opensesame.user.UserData;
+import com.google.opensesame.user.UserEntity;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
@@ -39,22 +44,14 @@ public class ProjectData {
     ProjectPreviewData previewData =
         ProjectPreviewData.fromProjectEntity(projectEntity, repository);
 
-    // TODO : Use helper function to get mentors by ID.
-    // Will use mock data for now.
-    List<UserData> mentors = createMentorMockData();
+    Map<String, UserEntity> userEntities =
+        ofy().load().type(UserEntity.class).ids(projectEntity.mentorIds);
+    ArrayList<UserData> mentors = new ArrayList<UserData>();
+    for (UserEntity entity : userEntities.values()) {
+      mentors.add(new UserData(entity));
+    }
 
     return new ProjectData(previewData, mentors);
-  }
-
-  /**
-   * This is a temporary function that creates mentor mock data. This will be removed when a helper
-   * function is created for getting mentors by ID.
-   *
-   * @return Returns the mentor mock data.
-   * @throws IOException
-   */
-  private static List<UserData> createMentorMockData() throws IOException {
-    return null;
   }
 
   // This is currently in its most basic form. In the future there will be more data that differs
