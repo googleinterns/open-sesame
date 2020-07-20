@@ -24,7 +24,8 @@ import org.kohsuke.github.GitHub;
 public class MentorsServlet extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
     List<UserEntity> mentorEntities = ofy().load().type(UserEntity.class).list();
     ArrayList<UserData> mentors = new ArrayList<UserData>();
     for (UserEntity entity : mentorEntities) {
@@ -37,14 +38,14 @@ public class MentorsServlet extends HttpServlet {
     response.getWriter().println(jsonMentors);
   }
 
-  // Add a mock sami object to the datastore
-  public void addMockMentor() throws ServletException, IOException {
+  // Add a mock Sami object to the datastore.
+  public void addMockMentor(HttpServletResponse response) throws ServletException, IOException {
     GHRepository testRepo;
     GitHub gitHub = GitHubGetter.getGitHub();
     try {
       testRepo = gitHub.getRepository("googleinterns/step22-2020");
     } catch (Exception e) {
-      System.out.println("COULDN'T FIND REPO");
+      error(response, "Failed to access test repo.", 400, "Test repo not found");
       return;
     }
     Long testRepoID = testRepo.getId();
@@ -54,6 +55,7 @@ public class MentorsServlet extends HttpServlet {
       testProject.mentorIds.add(id);
     }
     ofy().save().entity(testProject);
+
     ArrayList<String> interests = new ArrayList<String>();
     interests.add("skateboarding");
     ArrayList<String> mentees = new ArrayList<String>();
@@ -64,7 +66,7 @@ public class MentorsServlet extends HttpServlet {
     ofy().save().entity(mockMentor);
   }
 
-  // This function sends an error if invalid input is found.
+  // Send an error to response.
   public void error(
       HttpServletResponse response, String errorMessage, int statusCode, String userMessage)
       throws ServletException, IOException {
@@ -102,10 +104,10 @@ public class MentorsServlet extends HttpServlet {
     }
 
     Long inputRepoID = inputRepo.getId();
-
-    // Commented out until Richie's implementation of these functions is merged
     ProjectEntity newProject = ProjectEntity.fromRepositoryIdOrNew(inputRepoID.toString());
-    newProject.mentorIds.add(userID);
+    if (!newProject.mentorIds.contains(userID)) {
+      newProject.mentorIds.add(userID);
+    }
     ofy().save().entity(newProject).now();
 
     UserEntity user;
