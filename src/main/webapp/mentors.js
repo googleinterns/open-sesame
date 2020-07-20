@@ -255,9 +255,10 @@ function createProjectsDiv(projectIDs) {
           console.log('got project data');
           console.log(data);
           const projectElement = document.createElement('a');
-          projectElement.href = new URL('/projects.html' + '#/' + projectID, window.location.origin);
-          projectElement.className =
-            'card-holder border border-muted text-muted mr-1 mb-1 badge text-center';
+          projectElement.href = 
+              new URL('/projects.html#/' + projectID, window.location.origin);
+          projectElement.className = 'card-holder border border-muted' +
+              ' text-muted mr-1 mb-1 badge text-center';
           const cardTitleElement = document.createElement('h4');
           cardTitleElement.className = 'card-title dark-emph';
           cardTitleElement.innerText = data.previewData.name;
@@ -275,7 +276,7 @@ function createProjectsDiv(projectIDs) {
 
 /**
  * Submit the mentor form with Post request.
- * @param InputEvent e
+ * @param Event e
  */
 function submitForm(e) {
   e.preventDefault();
@@ -291,7 +292,8 @@ function submitForm(e) {
     body: encodedBody,
   });
 
-  standardizeFetchErrors(fetchRequest, 'Fetch failed message here', 'Server error message here').then((response) => {
+  standardizeFetchErrors(fetchRequest, 'Fetch failed message here', 
+      'Server error message here').then((response) => {
     console.log('valid url');
     window.location.href = '/dashboard.html';
   }).catch((errorResponse) => {
