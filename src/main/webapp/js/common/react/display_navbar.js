@@ -6,7 +6,7 @@
  * is where the Navbar will be rendered to.
  */
 import Navbar from './components/Navbar.js';
-import DataFetcher from './components/DataFetcher.js';
+import {DataFetcher} from './components/DataFetcher.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
