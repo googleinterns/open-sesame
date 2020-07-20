@@ -1,4 +1,4 @@
-import { getUser } from './user.js';
+import {getUser} from './user.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
@@ -23,7 +23,7 @@ import {
  * A Project from datastore
  * @typedef {Object} Project
  * @property {ProjectPreview} projectPreview - The data used to showcase a
- *                                             project on the projects page 
+ *                                             project on the projects page
  */
 
 /**
@@ -86,7 +86,6 @@ function createAboutMe(user) {
     }
     aboutMeCardDiv.append(projectTagRow);
   }
-
 }
 
 /**
@@ -179,8 +178,8 @@ function createRowElement() {
 
 /**
  * Get the project with the Id @param projectID from Datastore using the
- * /project servlet. 
- * @param {string} projectID the id used to store a project in datastore. 
+ * /project servlet.
+ * @param {string} projectID the id used to store a project in datastore.
  * @return {Project} Data about the project with th id @param projectID
  */
 function getProject(projectID) {
@@ -188,9 +187,9 @@ function getProject(projectID) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-    fetchRequest,
-    'Failed to communicate with the server. Please try again later.',
-    'An error occcured while retrieving this project.' +
+      fetchRequest,
+      'Failed to communicate with the server. Please try again later.',
+      'An error occcured while retrieving this project.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest.then((response) => response.json());
