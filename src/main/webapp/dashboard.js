@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
@@ -16,7 +16,7 @@ import {
  * @property {string} name - the name of the user
  * @property {boolean} isMentor - true if the user is a mentor for a project
  *                                false otherwise.
- * @property {string[]} projectIDs - A List of Projects a user is working on.
+ * @property {string[]} projectIds - A List of Projects a user is working on.
  */
 
 /**
@@ -81,7 +81,7 @@ function createAboutMe(user) {
   if (user.projectIDs != []) {
     aboutMeCardDiv.append(createCardTitle('Projects'));
     const projectTagRow = createRowElement();
-    for (const projectID of user.projectIDs) {
+    for (const projectID of user.projectIds) {
       addProject(projectID, projectTagRow);
     }
     aboutMeCardDiv.append(projectTagRow);
@@ -187,9 +187,9 @@ function getProject(projectID) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetchRequest,
-      'Failed to communicate with the server. Please try again later.',
-      'An error occcured while retrieving this project.' +
+    fetchRequest,
+    'Failed to communicate with the server. Please try again later.',
+    'An error occcured while retrieving this project.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest.then((response) => response.json());
