@@ -1,6 +1,6 @@
 fetch('/auth').then((response) => {
   if (response.ok) {
-    return response.json()
+    return response.json();
   } else {
     return Promise.reject();
   }
