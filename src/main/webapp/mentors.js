@@ -31,7 +31,7 @@ function initForm() {
 /**
  * Populate mentor search page with mock mentors.
  */
-function getMockMentors() {
+function getMockMentors() // eslint-disable-line no-used-vars to
   const mentors = [
     {
       interestTags: ['code', 'trapeze', 'baking'],
@@ -85,7 +85,6 @@ function getMentors() {
 
   fetchRequest.then((response) => response.json()).then((mentors) => {
     mentorsContainer.innerHTML = '';
-    console.log(mentors);
     for (const mentor of mentors) {
       console.log(mentor);
       mentorsContainer.appendChild(createMentorElement(mentor));
@@ -140,6 +139,7 @@ function addEmail(email, mentorCardBody) {
   }
   const mentorEmail = document.createElement('a');
   mentorEmail.href = 'mailto: ' + email;
+  mentorEmail.classname = 'mailtoui';
   mentorEmail.innerText = 'Send Email Introduction';
   mentorCardBody.appendChild(mentorEmail);
   return mentorCardBody;
@@ -298,6 +298,7 @@ function createProjectsDiv(projectIDs, mentorCardBody) {
 
 /**
  * Submit the mentor form with Post request.
+ * @param InputEvent e
  */
 function submitForm(e) {
   e.preventDefault();
