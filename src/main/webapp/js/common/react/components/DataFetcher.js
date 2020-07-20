@@ -6,7 +6,7 @@
  * To use this component, you need two things:
  * 1) A function that returns a fetch request for the data needed. This will be
  * provided to the DataFetcher through its props. See {@link DataFetcherProps}.
- * One important thing to note is that the DataFetcher supports abort signalling,
+ * One important thing to note is that the DataFetcher supports abort signalling
  * which is used to cancel the fetch request in the case that the component is
  * removed before the fetch can be completed.
  * 2) A function that renders the React component using the data being fetched.
