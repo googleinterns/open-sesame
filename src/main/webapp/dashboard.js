@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 
 /**
  * A project
@@ -26,6 +26,9 @@ import {getUser} from './user.js';
  * @property {string} image - The User's profile picture
  * @property {string} location - the location of the user
  * @property {string} name - the name of the user
+ * @property {boolean} isMentor - true if the user is a mentor for a project
+ *                                false otherwise.
+ * @property {string List} projectIDs -
  */
 
 /**
@@ -38,20 +41,20 @@ const dummyProjectName = 'Kubernetes';
 
 /** @const {Mentee List} */
 const dummyMentees = [{
-  name: 'Richi',
-  starLink: '#givestar',
-  image: dummyImg,
-},
-{
-  name: 'Obi',
-  starLink: '#givestar',
-  image: dummyImg,
-},
-{
-  name: 'Sami',
-  starLink: '#givestar',
-  image: dummyImg,
-},
+    name: 'Richi',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
+  {
+    name: 'Obi',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
+  {
+    name: 'Sami',
+    starLink: '#givestar',
+    image: dummyImg,
+  },
 ];
 
 /** @const {Project} */
@@ -87,11 +90,13 @@ function createAboutMe(user) {
   userImageElement.src = user.image;
 
   userNameAndLocationElement.innerHTML = user.name + '<br>';
-  const userLocation = createLocation(user.location);
-  userNameAndLocationElement.append(userLocation);
-
-  userBioElement.innerText = user.bio;
-
+  if (user.location != null) {
+    const userLocation = createLocation(user.location);
+    userNameAndLocationElement.append(userLocation);
+  }
+  if (user.bio != null) {
+    userBioElement.innerText = user.bio;
+  }
   userGithubButton.href = user.gitHubURL;
   if (user.email == null) {
     userEmailButton.style.display = 'none';
@@ -240,10 +245,9 @@ function createMenteeCardImage(imgSrc) {
 /**
  * Call functions to populate page sections with data.
  */
-function setUpPage() {
-  getUser().then(createAboutMe);
-  addProject(dummyProject);
-  addProject(dummyProject);
+async function setUpPage() {
+  const user = await getUser();
+  createAboutMe(user);
 }
 
 window.onload = setUpPage;
