@@ -30,7 +30,7 @@ function initForm() {
 /**
  * Populate mentor search page with mock mentors.
  */
-function getMockMentors() { // eslint-disable-line no-used-vars to
+function getMockMentors() {  // eslint-disable-line no-used-vars
   const mentors = [
     {
       interestTags: ['code', 'trapeze', 'baking'],
@@ -276,7 +276,7 @@ function createProjectsDiv(projectIDs) {
 
 /**
  * Submit the mentor form with Post request.
- * @param Event e
+ * @param {InpuEvent} e
  */
 function submitForm(e) {
   e.preventDefault();
