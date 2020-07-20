@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
@@ -187,9 +187,9 @@ function getProject(projectID) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetchRequest,
-      'Failed to communicate with the server. Please try again later.',
-      'An error occcured while retrieving this project.' +
+    fetchRequest,
+    'Failed to communicate with the server. Please try again later.',
+    'An error occcured while retrieving this project.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest.then((response) => response.json());
@@ -200,6 +200,7 @@ function getProject(projectID) {
  */
 async function setUpPage() {
   const user = await getUser();
+  // TODO: redirect to sign up/in page if the user is not found.
   createAboutMe(user);
 }
 
