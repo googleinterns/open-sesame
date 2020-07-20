@@ -37,7 +37,7 @@ public class MentorsServlet extends HttpServlet {
     response.getWriter().println(jsonMentors);
   }
 
-  //Add a mock sami object to the datastore
+  // Add a mock sami object to the datastore
   public void addMockMentor() throws ServletException, IOException {
     GHRepository testRepo;
     GitHub gitHub = GitHubGetter.getGitHub();
@@ -49,8 +49,8 @@ public class MentorsServlet extends HttpServlet {
     }
     Long testRepoID = testRepo.getId();
     ProjectEntity testProject = ProjectEntity.fromRepositoryIdOrNew(testRepoID.toString());
-    String id= "mock_id";
-    if(!testProject.mentorIds.contains(id)){
+    String id = "mock_id";
+    if (!testProject.mentorIds.contains(id)) {
       testProject.mentorIds.add(id);
     }
     ofy().save().entity(testProject);
@@ -60,8 +60,7 @@ public class MentorsServlet extends HttpServlet {
     ArrayList<String> projects = new ArrayList<String>();
     projects.add(testRepoID.toString());
     UserEntity mockMentor =
-        new UserEntity(
-            id, "Sami-2000", interests, "samialves@google.com", projects, mentees);
+        new UserEntity(id, "Sami-2000", interests, "samialves@google.com", projects, mentees);
     ofy().save().entity(mockMentor);
   }
 
