@@ -30,7 +30,7 @@ function initForm() {
 /**
  * Populate mentor search page with mock mentors.
  */
-function getMockMentors() {  // eslint-disable-line no-used-vars
+function getMockMentors() {  // eslint-disable-line no-unused-vars
   const mentors = [
     {
       interestTags: ['code', 'trapeze', 'baking'],
