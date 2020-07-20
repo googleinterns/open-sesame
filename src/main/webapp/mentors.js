@@ -255,7 +255,7 @@ function createProjectsDiv(projectIDs) {
           console.log('got project data');
           console.log(data);
           const projectElement = document.createElement('a');
-          projectElement.href = 
+          projectElement.href =
               new URL('/projects.html#/' + projectID, window.location.origin);
           projectElement.className = 'card-holder border border-muted' +
               ' text-muted mr-1 mb-1 badge text-center';
@@ -292,7 +292,7 @@ function submitForm(e) {
     body: encodedBody,
   });
 
-  standardizeFetchErrors(fetchRequest, 'Fetch failed message here', 
+  standardizeFetchErrors(fetchRequest, 'Fetch failed message here',
       'Server error message here').then((response) => {
     console.log('valid url');
     window.location.href = '/dashboard.html';
