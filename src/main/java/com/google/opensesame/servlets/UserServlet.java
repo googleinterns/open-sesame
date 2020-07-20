@@ -114,9 +114,7 @@ public class UserServlet extends HttpServlet {
       return;
     }
     // Build and send the User's datastore entity
-    ofy()
-        .save()
-        .entity(new UserEntity(userID, userGHMyself.getLogin(), userTags, user.getEmail()));
+    ofy().save().entity(new UserEntity(userID, userGHMyself.getLogin(), userTags, user.getEmail()));
   }
 
   // TODO: use function in other servlets.
