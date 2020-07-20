@@ -30,9 +30,13 @@ export default function MentorCard(props) {
         {mentor.bio ?
             <p>{mentor.bio}</p> :
             null}
-        <a className="mt-auto btn btn-light" href={'mailto:' + mentor.email}>
-          Connect
-        </a>
+        {mentor.email ?
+            <a
+              className="mt-auto btn btn-light mailtoui"
+              href={'mailto:' + mentor.email}>
+              Connect
+            </a> :
+            null}
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import {
 /**
  * Get the user with @param userID from the user servlet. If no @param userID is
  * supplied, function returns the currently signed in user.
- * @param {string=} userID OPTIONAL
+ * @param {string=} userID (optional)
  * @return {dashboard.User}
  */
 function getUser(userID = null) { //eslint-disable-line  

@@ -15,8 +15,8 @@ import org.kohsuke.github.GitHub;
 public class UserData {
   private Boolean isMentor;
   private final ArrayList<String> interestTags;
-  private final ArrayList<String> menteeIDs;
-  private final ArrayList<String> projectIDs;
+  private final ArrayList<String> menteeIds;
+  private final ArrayList<String> projectIds;
   private final String bio;
   private final String gitHubID;
   private final String gitHubURL;
@@ -36,102 +36,102 @@ public class UserData {
    * @throws IOException
    */
   public UserData(UserEntity userEntity) throws IOException {
-    this.gitHubID = userEntity.gitHubId;
-    this.interestTags = userEntity.interestTags;
-    this.userID = userEntity.userId;
-    this.email = userEntity.email;
+    gitHubID = userEntity.gitHubId;
+    interestTags = userEntity.interestTags;
+    userID = userEntity.userId;
+    email = userEntity.email;
     // Only ever send email stuff when a user is authorized
     if (AuthServlet.getAuthorizedUser() == null) {
-      this.email = null;
+      email = null;
     }
-    this.projectIDs = userEntity.projectIDs;
-    this.menteeIDs = userEntity.menteeIDs;
-    this.isMentor = userEntity.isMentor;
+    projectIds = userEntity.projectIds;
+    menteeIds = userEntity.menteeIds;
+    isMentor = userEntity.isMentor;
 
-    // GitHub query TODO: alternate ways of getting this information.
+    // GitHub query TODO: make this more testable by extracting GitHub.
     final GitHub gitHub = GitHubGetter.getGitHub();
     final GHUser userGitAccount = gitHub.getUser(gitHubID);
-    this.bio = userGitAccount.getBio();
-    this.image = userGitAccount.getAvatarUrl();
-    this.location = userGitAccount.getLocation();
-    this.name = userGitAccount.getName();
-    this.gitHubURL = userGitAccount.getHtmlUrl().toString();
+    bio = userGitAccount.getBio();
+    image = userGitAccount.getAvatarUrl();
+    location = userGitAccount.getLocation();
+    name = userGitAccount.getName();
+    gitHubURL = userGitAccount.getHtmlUrl().toString();
   }
 
   /** @return true if user is a mentor for a project, false otherwise. */
   public Boolean isMentor() {
-    return this.isMentor;
+    return isMentor;
   }
 
   /** @return The name of a user. */
   public String getName() {
-    return this.name;
+    return name;
   }
 
   /** @return The bio of a user from GitHub. */
   public String getBio() {
-    return this.bio;
+    return bio;
   }
 
   /** @return The tags associated with a user. */
   public ArrayList<String> getTags() {
-    return this.interestTags;
+    return interestTags;
   }
 
   /** @return the GitHub ID of a user. */
   public String getGitHubID() {
-    return this.gitHubID;
+    return gitHubID;
   }
 
   /** @return the image associated with a user. */
   public String getImage() {
-    return this.image;
+    return image;
   }
 
   /** @return the location associated with a user according to GitHub. */
   public String getLocation() {
-    return this.location;
+    return location;
   }
 
   /** @return the email associated with a user according to GitHub. */
   public String getEmail() {
-    return this.email;
+    return email;
   }
 
   /** @return the URL of the current User page on GitHub. */
   public String getGitHubURL() {
-    return this.gitHubURL;
+    return gitHubURL;
   }
 
   /** @return the URL of the current User page on GitHub. */
   public String getUserID() {
-    return this.userID;
+    return userID;
   }
 
   /** @return a list of ids of projects a user is involved in. */
   public ArrayList<String> getProjectIDs() {
-    return this.projectIDs;
+    return projectIds;
   }
 
   /** @return a list of ids of mentees a user is currently mentoring. */
   public ArrayList<String> getMenteeIDs() {
-    return this.menteeIDs;
+    return menteeIds;
   }
 
   /**
-   * Add a project to the list of projects associated with this instance of the mentor object.
-   * Remember to store this change in datastore with a UserEntity.
+   * Add a project to the list of projects associated with this instance of UserData. Remember to
+   * store this change in datastore with a UserEntity.
    */
-  public void addProject(String projectID) {
-    projectIDs.add(projectID);
-    this.isMentor = true;
+  public void addProject(String projectId) {
+    projectIds.add(projectId);
+    isMentor = true;
   }
 
   /**
-   * Add a project to the list of projects associated with this instance of the mentor object.
-   * Remember to store this change in datastore with a UserEntity.
+   * Add a project to the list of projects associated with this instance of UserData. Remember to
+   * store this change in datastore with a UserEntity.
    */
-  public void addMentee(String menteeID) {
-    projectIDs.add(menteeID);
+  public void addMentee(String menteeId) {
+    projectIds.add(menteeId);
   }
 }

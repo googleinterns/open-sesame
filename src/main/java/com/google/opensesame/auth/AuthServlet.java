@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/auth")
 public class AuthServlet extends HttpServlet {
-  public static final String AUTH_URL_REDIRECT = "/authredirect.html";
+  public static final String AUTH_URL_REDIRECT = "/";
 
   public Gson gson = new Gson();
 
