@@ -10,6 +10,7 @@ export const projectPreviewType = PropTypes.shape({
 export const mentorType = PropTypes.shape({
   bio: PropTypes.string,
   email: PropTypes.string,
+  interestTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   gitHubURL: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

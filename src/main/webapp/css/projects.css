@@ -1,7 +1,13 @@
-.project-preview {
+.mentor-picture {
+  border-radius: 50%;
+  max-height: 75px;
+  max-width: 75px;
+}
+
+.project-card {
   transition: .05s;
 }
 
-.project-preview:hover {
+.project-card:hover {
   box-shadow: 0px 0px 5px 1px rgba(232,232,232,1);
 }
