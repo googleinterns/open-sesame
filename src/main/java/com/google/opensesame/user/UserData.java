@@ -41,7 +41,7 @@ public class UserData {
     this.userID = userEntity.userId;
     this.email = userEntity.email;
     // Only ever send email stuff when a user is authorized
-    if (AuthServlet.getAuthorizedUser() != null) {
+    if (AuthServlet.getAuthorizedUser() == null) {
       this.email = null;
     }
     this.projectIDs = userEntity.projectIDs;
