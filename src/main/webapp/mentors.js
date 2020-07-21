@@ -3,6 +3,9 @@ import standardizeFetchErrors from '/js/fetch_handler.js';
 getMentors();
 initForm();
 
+/**
+ * Initializes the mentor form and adds a listener for it.
+ */
 function initForm() {
   const mentorForm = document.getElementById('mentor-form');
   if (mentorForm) {
@@ -132,6 +135,9 @@ function createProjectsDiv(projectIDs) {
   return projectsDiv;
 }
 
+/** Posts the form content to the server.
+  * @param {Event} e - the form submission event.
+  */
 function submitForm(e) {
   e.preventDefault();
   const inputUrl = document.getElementById('inputRepo').value;
@@ -146,11 +152,12 @@ function submitForm(e) {
     body: encodedBody,
   });
 
-  standardizeFetchErrors(fetchRequest, 'Fetch failed message here', 'Server error message here').then((response) => {
+  standardizeFetchErrors(fetchRequest, 'Fetch failed message here',
+      'Server error message here').then((response) => {
     console.log('valid url');
     window.location.href = '/dashboard.html';
   }).catch((errorResponse) => {
-    if (errorResponse.statusCode == 400) {
+    if (errorResponse.statusCode === 400) {
       const errorContainer = document.getElementById('error-message-container');
       errorContainer.innerText = errorResponse.message;
     } else {
