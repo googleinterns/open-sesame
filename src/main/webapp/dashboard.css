@@ -13,6 +13,11 @@ small {
   min-height: 20%;
 }
 
+.project-tag {
+  color: white !important;
+  background-color: rebeccapurple;
+}
+
 a.active {
   color: darkblue !important;
 }
@@ -21,20 +26,4 @@ a.active {
   height: 250px;
   object-fit: cover;
   width: 250px;
-}
-
-.mentee-card-img {
-  height: 250px;
-  object-fit: cover;
-  width: 250px;
-}
-
-.star,
-.star:hover {
-  color: gold;
-  text-decoration: none;
-}
-
-.star:hover {
-  color: rgb(221, 221, 12);
 }

@@ -1,17 +1,12 @@
 package com.google.opensesame.servlets;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.Filter;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import com.google.appengine.api.users.User;
 import com.google.gson.Gson;
+import com.google.opensesame.auth.AuthServlet;
+import com.google.opensesame.user.UserData;
+import com.google.opensesame.user.UserEntity;
 import com.google.opensesame.util.ErrorResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,111 +15,101 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.kohsuke.github.GHMyself;
+import org.kohsuke.github.GitHub;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-  private DatastoreService datastore;
-
   @Override
-  // Instantiate datastore
-  public void init() {
-    datastore = DatastoreServiceFactory.getDatastoreService();
-  }
-
-  @Override
-  // Get a specific user. Return null if not found.
+  // Get a user by their userId. Return the currently signed-in user if no
+  // userId is supplied.
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGithub = request.getParameter("githubID"); // TODO:Check for null values
-    Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userGithub);
-
-    Entity userEntity; // TODO: Abstract doGet() into it's own function
-    try {
-      userEntity = datastore.get(userKey);
-    } catch (EntityNotFoundException e) {
-      ErrorResponse.sendJsonError(
-          response,
-          "User not fount in the Datastore",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "The user requested could not be found on the server."
-              + "Please ensure that the user has an account with us.");
-      return;
+    String userId = request.getParameter("userID");
+    if (userId == null) {
+      User currentUser = AuthServlet.getAuthorizedUser();
+      if (currentUser == null) {
+        ErrorResponse.sendJsonError(
+            response,
+            "UserID not Supplied and user not logged in",
+            HttpServletResponse.SC_FORBIDDEN,
+            "You are not logged in");
+        return;
+      } else {
+        userId = currentUser.getUserId();
+      }
     }
-    PersonObject userObject;
-    try {
-      userObject = new PersonBuilder().buildPersonObject(userEntity);
-    } catch (Exception e) {
+    UserEntity userEntity = ofy().load().type(UserEntity.class).id(userId).now();
+    if (userEntity == null) {
       ErrorResponse.sendJsonError(
           response,
-          e.getMessage()
-              + "/n/n"
-              + e.getStackTrace()
-              + "/n/n PersonObject could not be instantiated from Person Entity",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "User could not be instatiated in the Server");
+          "User retrieved from Datastore was null",
+          HttpServletResponse.SC_NOT_FOUND,
+          "User does not exist.");
       return;
     }
 
+    UserData userObject = new UserData(userEntity);
     String jsonPerson = new Gson().toJson(userObject);
     response.setContentType("application/json;");
     response.getWriter().println(jsonPerson);
   }
 
   @Override
-  // Send a user to datastore. Update the current information about the user if one exists.
+  // Send a user to datastore. Update the current information about the user if
+  // one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGitHubID = request.getParameter("githubID");
-    if (userGitHubID == null || userGitHubID.trim().length() == 0) {
+    String gitHubAuthToken = request.getParameter("gitHubAuthToken");
+    if (gitHubAuthToken == null) {
       ErrorResponse.sendJsonError(
           response,
-          "Empty GitHub ID",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "There is no GitHub ID affiliated with this request");
+          "GitHub OAuth token was never supplied",
+          HttpServletResponse.SC_UNAUTHORIZED,
+          "User could not be authenticated by GitHub, please try again");
       return;
     }
-    String[] userTags = request.getParameterValues("tags");
-    ArrayList<String> userTagsList =
-        userTags == null ? new ArrayList<String>() : new ArrayList<>(Arrays.asList(userTags));
 
-    Entity personEntity =
-        new PersonBuilder().gitHubID(userGitHubID).interestTags(userTagsList).buildPersonEntity();
-    datastore.put(personEntity);
-  }
-
-  // TODO: use function in other servlets.
-  /**
-   * Query datastore for entities. Comparisons are done with field coming first. For example field
-   * EQUAL value. Look at
-   * https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/datastore/Query.FilterOperator
-   * for more information on the operator
-   *
-   * @param EntityName the type of entity to be queried for
-   * @param field the field that is being used to query
-   * @param value the object that will be compared to @param field
-   * @param operator the type of comparison to be made.
-   * @return {PreparedQuery} a Datastore prepared query.
-   */
-  public PreparedQuery queryInDatabase(
-      String entityName, String field, Object value, FilterOperator operator) {
-    Filter userFilter = new FilterPredicate(field, operator, value);
-    return datastore.prepare(new Query(entityName).setFilter(userFilter));
-  }
-
-  // TODO: make error handling conform with Richie's error handling
-  // TODO: update to Objectify
-  /**
-   * Check if a user is stored with userID in Datastore. Invalid return false.
-   *
-   * @param userID
-   * @return true if userID exists in datastore, false otherwise.
-   */
-  public Boolean hasProfile(String userID) {
-    Key userKey = KeyFactory.createKey(PersonBuilder.ENTITY_NAME, userID);
-    try {
-      datastore.get(userKey);
-    } catch (EntityNotFoundException e) {
-      return false;
+    User user = AuthServlet.getAuthorizedUser();
+    if (user == null) {
+      ErrorResponse.sendJsonError(
+          response,
+          "User not logged in",
+          HttpServletResponse.SC_FORBIDDEN,
+          "You are not logged in");
+      return;
     }
-    return true;
+
+    String[] interestTags = request.getParameterValues("interestTags");
+    if (interestTags == null) {
+      interestTags = new String[] {};
+    }
+
+    // Get User information from GitHub using the Oath token.
+    GHMyself userGHMyself;
+    try {
+      userGHMyself = GitHub.connectUsingOAuth(gitHubAuthToken).getMyself();
+    } catch (Exception e) {
+      ErrorResponse.sendJsonError(
+          response,
+          e.getMessage()
+              + e.getStackTrace()
+              + "Could not get authenticated User with the given token",
+          HttpServletResponse.SC_UNAUTHORIZED,
+          "User could not be authenticated by GitHub, please try again");
+      return;
+    }
+
+    String userId = user.getUserId();
+    // Build and save the user's datastore entity
+    ofy()
+        .save()
+        .entity(
+            new UserEntity(
+                userId,
+                userGHMyself.getLogin(),
+                new ArrayList<String>(Arrays.asList(interestTags)),
+                user.getEmail()))
+        .now();
   }
+  // TODO: make function to get users given a list of UserIds.
 }
