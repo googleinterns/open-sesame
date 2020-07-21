@@ -93,7 +93,8 @@ function createMentorElement(mentor) {
     mentorCardBody.appendChild(createInterestTagsDiv(mentor.interestTags));
   }
   if (mentor.projectIds != null) {
-    createProjectLinks(mentor.projectIds).then((element) => mentorCardBody.appendChild(element));
+    createProjectLinks(mentor.projectIds)
+        .then((element) => mentorCardBody.appendChild(element));
   }
 
   mentorCard.appendChild(mentorCardBody);
