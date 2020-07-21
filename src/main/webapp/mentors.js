@@ -4,7 +4,7 @@ getMentors();
 initForm();
 
 /**
- * Initiate mentor form.
+ * Initializes the mentor form and adds a listener for it.
  */
 function initForm() {
   const mentorForm = document.getElementById('mentor-form');
@@ -275,7 +275,7 @@ function createProjectsDiv(projectIDs) {
 
 /**
  * Submit the mentor form with Post request.
- * @param {InpuEvent} e
+ * @param {InputEvent} e
  */
 function submitForm(e) {
   e.preventDefault();
