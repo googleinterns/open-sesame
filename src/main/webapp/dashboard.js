@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
@@ -50,8 +50,6 @@ import {
 const aboutMeCardDiv = document.getElementById('about-me-card-body');
 const userBioElement = document.getElementById('user-bio');
 const userImageElement = document.getElementById('user-image');
-const userNameAndLocationElement =
-  document.getElementById('user-name-location');
 const userGithubButton = document.getElementById('user-github');
 const userEmailButton = document.getElementById('user-email');
 
@@ -66,20 +64,25 @@ function createAboutMe(user) {
 
   userImageElement.src = user.image;
 
+  const userNameAndLocationElement =
+    document.getElementById('user-name-location');
   userNameAndLocationElement.innerHTML = user.name + '<br>';
-  if (user.location != null) {
+  if (user.location) {
     const userLocation = createLocation(user.location);
     userNameAndLocationElement.append(userLocation);
   }
-  if (user.bio != null) {
-    userBioElement.innerText = user.bio;
-  }
+
   userGithubButton.href = user.gitHubURL;
-  if (user.email == null) {
+  if (!user.email) {
     userEmailButton.style.display = 'none';
   }
   userEmailButton.href = 'mailto:' + user.email;
-  if (user.interestTags !== []) {
+
+  if (user.bio) {
+    userBioElement.innerText = user.bio;
+  }
+
+  if (user.interestTags) {
     aboutMeCardDiv.append(createCardTitle('Interest Tags'));
     const interestTagRow = createRowElement();
     for (const tag of user.interestTags) {
@@ -88,7 +91,7 @@ function createAboutMe(user) {
     aboutMeCardDiv.append(interestTagRow);
   }
 
-  if (user.projectIDs !== []) {
+  if (user.projectIds) {
     aboutMeCardDiv.append(createCardTitle('Projects'));
     const projectTagRow = createRowElement();
     for (const projectID of user.projectIds) {
@@ -196,13 +199,12 @@ function getProject(projectID) {
   const fetchURL = '/project?projectId=' + projectID;
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
-  const errorFormattedFetchRequest = standardizeFetchErrors(
+  return standardizeFetchErrors(
       fetchRequest,
       'Failed to communicate with the server. Please try again later.',
       'An error occcured while retrieving this project.' +
-    ' Please try again later.');
-
-  return errorFormattedFetchRequest.then((response) => response.json());
+      ' Please try again later.')
+    .then((response) => response.json());
 }
 
 /**
