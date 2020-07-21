@@ -160,13 +160,11 @@ function postUser(userParams) {
     body: userParams,
   });
 
-  const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetchRequest,
-      'Failed to communicate with the server. Please try again later.',
-      'An error occcured while creating your account.' +
-    ' Please try again later.');
-
-  return errorFormattedFetchRequest;
+  return standardizeFetchErrors(
+    fetchRequest,
+    'Failed to communicate with the server. Please try again later.',
+    'An error occcured while creating your account.' +
+      ' Please try again later.');
 }
 
 initSignupForm();
