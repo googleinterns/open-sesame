@@ -152,7 +152,7 @@ function submitForm(e) {
     body: encodedBody,
   });
 
-  standardizeFetchErrors(fetchRequest, 'Fetch failed message here', 
+  standardizeFetchErrors(fetchRequest, 'Fetch failed message here',
       'Server error message here').then((response) => {
     console.log('valid url');
     window.location.href = '/dashboard.html';
