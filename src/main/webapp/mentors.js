@@ -28,43 +28,6 @@ function initForm() {
  */
 
 /**
- * Populate mentor search page with mock mentors.
- */
-function getMockMentors() { // eslint-disable-line no-unused-vars
-  const mentors = [
-    {
-      interestTags: ['code', 'trapeze', 'baking'],
-      projectIDs: ['opensesame'],
-      bio: 'Sami works on opensesame',
-      email: 'samialves@google.com',
-      image: 'images/dior.jpg',
-      gitHubID: 'Sami-2000',
-      name: 'Sami Alves',
-      location: 'Mansfield, MA',
-    },
-    {
-      interestTags: null,
-      projectIDs: null,
-      bio: null,
-      email: 'obiabbi@google.com',
-      image: 'images/dior.jpg',
-      gitHubID: 'Obinnabii',
-      name: 'Obi Abii',
-      location: 'Idk maybe near Cornell',
-    },
-  ];
-  const mentorsContainer = document.getElementById('mentors-container');
-  if (!mentorsContainer) {
-    return;
-  }
-  mentorsContainer.innerHTML = '';
-  for (const mentor of mentors) {
-    console.log(mentor);
-    mentorsContainer.appendChild(createMentorElement(mentor));
-  }
-}
-
-/**
  * Populate mentor search page with mentors from the mentor servlet.
  * @param {String} response
  */
@@ -114,23 +77,23 @@ function createMentorElement(mentor) {
     mentorCardBody.appendChild(createImg(mentor.image));
   }
   if (mentor.name != null) {
-    mentorCardBody.appendChild(createName(mentor.name));
+    mentorCardBody.appendChild(createNameHeader(mentor.name));
   }
   if (mentor.location != null) {
-    mentorCardBody.appendChild(createLocation(mentor.location));
+    mentorCardBody.appendChild(createLocationHeader(mentor.location));
   }
   if (mentor.email != null) {
-    mentorCardBody.appendChild(createEmail(mentor.email));
+    mentorCardBody.appendChild(createEmailLink(mentor.email));
   }
   if (mentor.bio != null) {
-    mentorCardBody.appendChild(createBio(mentor.bio));
+    mentorCardBody.appendChild(createBioParagraph(mentor.bio));
   }
   mentorCardBody.appendChild(createGitHubLink(mentor.gitHubID));
   if (mentor.interestTags != null) {
-    mentorCardBody.appendChild(createTagDiv(mentor.interestTags));
+    mentorCardBody.appendChild(createInterestTagsDiv(mentor.interestTags));
   }
   if (mentor.projectIds != null) {
-    mentorCardBody.appendChild(createProjectsDiv(mentor.projectIds));
+    createProjectLinks(mentor.projectIds).then((element) => mentorCardBody.appendChild(element));
   }
 
   mentorCard.appendChild(mentorCardBody);
@@ -140,11 +103,11 @@ function createMentorElement(mentor) {
 }
 
 /**
- * Creates an email for mentor card.
+ * Creates an email for a mentor card.
  * @param {String} email
  * @return {HTMLElement} mentorEmail
  */
-function createEmail(email) {
+function createEmailLink(email) {
   const mentorEmail = document.createElement('a');
   mentorEmail.href = 'mailto: ' + email;
   mentorEmail.innerText = 'Send Email Introduction';
@@ -152,11 +115,11 @@ function createEmail(email) {
 }
 
 /**
- * Creates a location for mentor card.
+ * Creates a location for a mentor card.
  * @param {String} location
  * @return {HTMLElement} mentorLocation
  */
-function createLocation(location) {
+function createLocationHeader(location) {
   const mentorLocation = document.createElement('h6');
   mentorLocation.className = 'card-subtitle text-muted text-center mb-1';
   mentorLocation.innerText = location;
@@ -164,7 +127,7 @@ function createLocation(location) {
 }
 
 /**
- * Creates an image for mentor card.
+ * Creates an image for a mentor card.
  * @param {String} img
  * @return {HTMLElement} mentorImg
  */
@@ -176,22 +139,22 @@ function createImg(img) {
 }
 
 /**
- * Creates a bio for mentor card.
+ * Creates a bio for a mentor card.
  * @param {String} bio
  * @return {HTMLElement} mentorBio
  */
-function createBio(bio) {
+function createBioParagraph(bio) {
   const mentorBio = document.createElement('p');
   mentorBio.innerHTML = bio;
   return mentorBio;
 }
 
 /**
- * Creates a name tag for mentor card.
+ * Creates a name tag for a mentor card.
  * @param {String} name
  * @return {HTMLElement} mentorName
  */
-function createName(name) {
+function createNameHeader(name) {
   const mentorName = document.createElement('h5');
   mentorName.className = 'card-title text-primary';
   mentorName.innerHTML = name;
@@ -219,7 +182,7 @@ function createGitHubLink(gitHubID) {
  * @param {String[]} interestTags
  * @return {HTMLElement} tagDiv
  */
-function createTagDiv(interestTags) {
+function createInterestTagsDiv(interestTags) {
   const tagDiv = document.createElement('div');
   tagDiv.className = 'd-flex justify-content-center p-3';
   for (const tagText of interestTags) {
@@ -237,40 +200,50 @@ function createTagDiv(interestTags) {
  * @param {String[]} projectIDs
  * @return {HTMLElement} projectsDiv
  */
-function createProjectsDiv(projectIDs) {
+async function createProjectLinks(projectIDs) {
   const projectsDiv = document.createElement('div');
   projectsDiv.className = 'd-flex justify-content-center p-3';
   for (const projectID of projectIDs) {
-    const projectUrl = new URL('/project', window.location.origin);
-    projectUrl.searchParams.append('projectId', Number(projectID));
-    const fetchRequest = fetch(projectUrl, {
-      method: 'get',
-    });
-    standardizeFetchErrors(
-        fetchRequest,
-        'Failed to communicate with the server, please try again later.',
-        'Encountered a server error, please try again later.')
-        .then((response) => response.json()).then((data) => {
-          console.log('got project data');
-          console.log(data);
-          const projectElement = document.createElement('a');
-          projectElement.href =
-              new URL('/projects.html#/' + projectID, window.location.origin);
-          projectElement.className = 'card-holder border border-muted' +
-              ' text-muted mr-1 mb-1 badge text-center';
-          const cardTitleElement = document.createElement('h4');
-          cardTitleElement.className = 'card-title dark-emph';
-          cardTitleElement.innerText = data.previewData.name;
-          projectElement.appendChild(cardTitleElement);
-          projectsDiv.append(projectElement);
-        })
-        .catch((errorResponse) => {
-          console.error(
-              `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-          alert(errorResponse.userMessage);
-        });
+    const name = await getProjectName(projectID);
+    const projectElement = document.createElement('a');
+    projectElement.href =
+          new URL('/projects.html#/' + projectID, window.location.origin);
+    projectElement.className = 'card-holder border border-muted' +
+          ' text-muted mr-1 mb-1 badge text-center';
+    const cardTitleElement = document.createElement('h4');
+    cardTitleElement.className = 'card-title dark-emph';
+    cardTitleElement.innerText = name;
+    projectElement.appendChild(cardTitleElement);
+    projectsDiv.append(projectElement);
   }
   return projectsDiv;
+}
+
+/**
+ * Creates a project link.
+ * @param {String} projectID
+ * @return {String} name
+ */
+function getProjectName(projectID) {
+  const projectUrl = new URL('/project', window.location.origin);
+  projectUrl.searchParams.append('projectId', Number(projectID));
+  const fetchRequest = fetch(projectUrl, {
+    method: 'get',
+    });
+  return standardizeFetchErrors(
+      fetchRequest,
+      'Failed to communicate with the server, please try again later.',
+      'Encountered a server error, please try again later.')
+    .then((response) => response.json()).then((data) => {
+      console.log('got project data');
+      console.log(data.previewData.name);
+      return data.previewData.name;
+    })
+    .catch((errorResponse) => {
+      console.error(
+          `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
+        alert(errorResponse.userMessage);
+    });
 }
 
 /**
