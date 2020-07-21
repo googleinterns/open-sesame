@@ -40,7 +40,7 @@ public class MentorsServlet extends HttpServlet {
 
   // Function to add a mock mentor to the database to use for formatting, testing, etc.
   /* Note: on the dev server we only have access to datastore entities added from our own
-     computers. This function lets anyone demo a universal mock mentor. */
+  computers. This function lets anyone demo a universal mock mentor. */
   public void addMockMentor(HttpServletResponse response) throws ServletException, IOException {
     GHRepository testRepo;
     GitHub gitHub = GitHubGetter.getGitHub();
