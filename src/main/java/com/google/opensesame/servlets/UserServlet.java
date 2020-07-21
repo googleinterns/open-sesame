@@ -22,8 +22,8 @@ import org.kohsuke.github.GitHub;
 public class UserServlet extends HttpServlet {
 
   @Override
-  // Get a specific user. Return the currently signed-in user if no userId is
-  // supplied.
+  // Get a user by their userId. Return the currently signed-in user if no
+  // userId is supplied.
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String userId = request.getParameter("userID");
     if (userId == null) {
@@ -56,10 +56,11 @@ public class UserServlet extends HttpServlet {
   }
 
   @Override
-  // Send a user to datastore. Update the current information about the user if one exists.
+  // Send a user to datastore. Update the current information about the user if
+  // one exists.
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String userGitHubAuthToken = request.getParameter("gitHubAuthToken");
-    if (userGitHubAuthToken == null) {
+    String gitHubAuthToken = request.getParameter("gitHubAuthToken");
+    if (gitHubAuthToken == null) {
       ErrorResponse.sendJsonError(
           response,
           "GitHub OAuth token was never supplied",
@@ -67,11 +68,6 @@ public class UserServlet extends HttpServlet {
           "User could not be authenticated by GitHub, please try again");
       return;
     }
-    String[] interestTagsParam = request.getParameterValues("interestTags");
-    if (interestTagsParam == null) {
-      interestTagsParam = new String[] {};
-    }
-    ArrayList<String> userTags = new ArrayList<>(Arrays.asList(interestTagsParam));
 
     User user = AuthServlet.getAuthorizedUser();
     if (user == null) {
@@ -83,12 +79,15 @@ public class UserServlet extends HttpServlet {
       return;
     }
 
-    String userId = user.getUserId();
+    String[] interestTags = request.getParameterValues("interestTags");
+    if (interestTags == null) {
+      interestTags = new String[] {};
+    }
 
     // Get User information from GitHub using the Oath token.
     GHMyself userGHMyself;
     try {
-      userGHMyself = GitHub.connectUsingOAuth(userGitHubAuthToken).getMyself();
+      userGHMyself = GitHub.connectUsingOAuth(gitHubAuthToken).getMyself();
     } catch (Exception e) {
       ErrorResponse.sendJsonError(
           response,
@@ -99,9 +98,20 @@ public class UserServlet extends HttpServlet {
           "User could not be authenticated by GitHub, please try again");
       return;
     }
-    // Build and send the User's datastore entity
-    ofy().save().entity(new UserEntity(userId, userGHMyself.getLogin(), userTags, user.getEmail()));
-    // TODO: add check for hasProfile.
+
+    String userId = user.getUserId();
+    // Build and save the user's datastore entity
+    ofy()
+      .save()
+      .entity(
+        new UserEntity(
+          userId, 
+          userGHMyself.getLogin(), 
+          new ArrayList<String>(Arrays.asList(interestTags)), 
+          user.getEmail()
+        )
+      )
+      .now();
   }
-  // TODO: make function to get users
+  // TODO: make function to get users given a list of UserIds.
 }
