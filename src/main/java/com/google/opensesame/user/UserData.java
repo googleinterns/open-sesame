@@ -10,7 +10,7 @@ import org.kohsuke.github.GitHub;
 /**
  * A fully fleshed out User of OpenSesame containing information sourced from GitHub. To conserve
  * API calls, It would be best to only build UserData where neccesary. The main use of this class is
- * to send data to the frontend as a JSON with Gson.
+ * to send data to the frontend as a JSON with Gson. It is essentially a serialization tool.
  */
 public class UserData {
   private Boolean isMentor;
@@ -29,7 +29,7 @@ public class UserData {
   /**
    * Create a UserData from a given UserEntity
    *
-   * <p>Note: Emails will only ever be stored in a UserObject if the current user is authorized with
+   * Note: Emails will only ever be stored in a UserObject if the current user is authorized with
    * the AuthServlet.
    *
    * @param userEntity
