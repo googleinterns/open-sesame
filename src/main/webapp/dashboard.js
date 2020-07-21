@@ -1,4 +1,4 @@
-import { getUser } from './user.js';
+import {getUser} from './user.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
@@ -124,7 +124,7 @@ function addTag(tagText, tagDiv) {
 }
 
 /**
- * Append a tag representing a project with the Id @param projectID and the 
+ * Append a tag representing a project with the Id @param projectID and the
  * name @param projectName to the div @param projectDiv
  * @param {string} projectName the name of the project in question.
  * @param {string} projectID the id used to distinguish projects in the
@@ -197,9 +197,9 @@ function getProject(projectID) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-    fetchRequest,
-    'Failed to communicate with the server. Please try again later.',
-    'An error occcured while retrieving this project.' +
+      fetchRequest,
+      'Failed to communicate with the server. Please try again later.',
+      'An error occcured while retrieving this project.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest.then((response) => response.json());
