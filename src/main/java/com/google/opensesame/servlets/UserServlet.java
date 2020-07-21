@@ -102,16 +102,14 @@ public class UserServlet extends HttpServlet {
     String userId = user.getUserId();
     // Build and save the user's datastore entity
     ofy()
-      .save()
-      .entity(
-        new UserEntity(
-          userId, 
-          userGHMyself.getLogin(), 
-          new ArrayList<String>(Arrays.asList(interestTags)), 
-          user.getEmail()
-        )
-      )
-      .now();
+        .save()
+        .entity(
+            new UserEntity(
+                userId,
+                userGHMyself.getLogin(),
+                new ArrayList<String>(Arrays.asList(interestTags)),
+                user.getEmail()))
+        .now();
   }
   // TODO: make function to get users given a list of UserIds.
 }

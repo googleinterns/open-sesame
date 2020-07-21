@@ -29,11 +29,10 @@ public class UserData {
   /**
    * Create a UserData from a given UserEntity
    *
-   * Note: Emails will only ever be stored in a UserObject if the current user
-   * is authorized with the AuthServlet. This is to avoid unauthorised users 
-   * from contacting our mentors. We want to avoid email spam as much as
-   * possible and we do not see the need to share user emails unathorized 
-   * personnel.
+   * <p>Note: Emails will only ever be stored in a UserObject if the current user is authorized with
+   * the AuthServlet. This is to avoid unauthorised users from contacting our mentors. We want to
+   * avoid email spam as much as possible and we do not see the need to share user emails
+   * unathorized personnel.
    *
    * @param userEntity
    * @throws IOException
