@@ -80,8 +80,6 @@ describe('Navbar component', () => {
   it('does not display the restricted link while loading auth data', () => {
     render(<Navbar urls={navbarUrls} loading={true} />);
 
-    expect(screen.queryByText('Home')).not.toBeNull();
-    expect(screen.queryByText('Projects')).not.toBeNull();
     expect(screen.queryByText('Dashboard')).toBeNull();
   });
 });
