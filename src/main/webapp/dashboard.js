@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
@@ -124,8 +124,8 @@ function addTag(tagText, tagDiv) {
 }
 
 /**
- * Append a tag representing a project with the Id @param projectID and the name
- * @param projectName to the div @param projectDiv
+ * Append a tag representing a project with the Id @param projectID and the 
+ * name @param projectName to the div @param projectDiv
  * @param {string} projectName the name of the project in question.
  * @param {string} projectID the id used to distinguish projects in the
  * database.
@@ -137,7 +137,7 @@ function addProjectTag(projectName, projectID, projectDiv) {
     ' project-tag badge';
   projectTagElement.innerText = projectName;
   projectTagElement.href =
-    new URL('/projects.html' + '#/' + projectID, window.location.origin);
+    new URL('/projects.html#/' + projectID, window.location.origin);
   projectDiv.append(projectTagElement);
 }
 
@@ -157,7 +157,7 @@ function createLocation(location) {
  * tag representing the project to the div @param projectTagRow. The appended
  * tag is linked to the project's entry on the OpenSesame project page.
  * @param {string} projectID - Datastore Id of a given project.
- * @param {HTMLElement} projectTagRow - div element to append the tag to.
+ * @param {HTMLElement} projectTagDiv - div element to append the tag to.
  */
 async function addProject(projectID, projectTagDiv) {
   const projectData = await getProject(projectID);
@@ -193,13 +193,13 @@ function createRowElement() {
  * @return {Project} Data about the project with th id @param projectID
  */
 function getProject(projectID) {
-  const fetchURL = '/project' + '?projectId=' + projectID;
+  const fetchURL = '/project?projectId=' + projectID;
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetchRequest,
-      'Failed to communicate with the server. Please try again later.',
-      'An error occcured while retrieving this project.' +
+    fetchRequest,
+    'Failed to communicate with the server. Please try again later.',
+    'An error occcured while retrieving this project.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest.then((response) => response.json());
