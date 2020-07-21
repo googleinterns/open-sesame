@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * The User Entity is designed to directly interface with datastore using Objectify. It holds the
- * neccesary information to generate a UserObject.
+ * neccesary information to generate a UserData.
  */
 @Entity
 public class UserEntity {
