@@ -229,21 +229,21 @@ function getProjectName(projectID) {
   projectUrl.searchParams.append('projectId', Number(projectID));
   const fetchRequest = fetch(projectUrl, {
     method: 'get',
-    });
+  });
   return standardizeFetchErrors(
       fetchRequest,
       'Failed to communicate with the server, please try again later.',
       'Encountered a server error, please try again later.')
-    .then((response) => response.json()).then((data) => {
-      console.log('got project data');
-      console.log(data.previewData.name);
-      return data.previewData.name;
-    })
-    .catch((errorResponse) => {
-      console.error(
-          `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
+      .then((response) => response.json()).then((data) => {
+        console.log('got project data');
+        console.log(data.previewData.name);
+        return data.previewData.name;
+      })
+      .catch((errorResponse) => {
+        console.error(
+            `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
         alert(errorResponse.userMessage);
-    });
+      });
 }
 
 /**
