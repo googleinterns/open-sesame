@@ -1,13 +1,17 @@
 package com.google.opensesame.servlets;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
+import com.google.opensesame.projects.ProjectEntity;
+import com.google.opensesame.user.UserData;
+import com.google.opensesame.user.UserEntity;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,56 +24,51 @@ import org.kohsuke.github.GitHub;
 public class MentorsServlet extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<MentorObject> mentors = new ArrayList<MentorObject>();
-    ArrayList<String> projects = new ArrayList<String>();
-    projects.add("OpenSesame");
-
-    ArrayList<String> ObiSkills = new ArrayList<String>();
-    ObiSkills.add("Meme god");
-    ObiSkills.add("HTML wrangler");
-    MentorObject Obi =
-        new PersonBuilder()
-            .name("Obi")
-            .gitHubID("Obinnabii")
-            .description("Obi is awesome.")
-            .interestTags(ObiSkills)
-            .projectIDs(projects)
-            .buildMentor();
-    mentors.add(Obi);
-
-    ArrayList<String> SamiSkills = new ArrayList<String>();
-    SamiSkills.add("Stone carver");
-    SamiSkills.add("Bootstrap convert");
-    MentorObject Sami =
-        new PersonBuilder()
-            .name("Sami")
-            .gitHubID("Sami-2000")
-            .description("Sami is fun.")
-            .interestTags(SamiSkills)
-            .projectIDs(projects)
-            .buildMentor();
-    mentors.add(Sami);
-
-    ArrayList<String> RichiSkills = new ArrayList<String>();
-    RichiSkills.add("Minecraft boss");
-    RichiSkills.add("React wizard");
-    MentorObject Richi =
-        new PersonBuilder()
-            .name("Richi")
-            .gitHubID("Richie78321")
-            .description("Richi is cool.")
-            .interestTags(RichiSkills)
-            .projectIDs(projects)
-            .buildMentor();
-    mentors.add(Richi);
-
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    List<UserEntity> mentorEntities = ofy().load().type(UserEntity.class).list();
+    ArrayList<UserData> mentors = new ArrayList<UserData>();
+    for (UserEntity entity : mentorEntities) {
+      if (entity.isMentor()) {
+        mentors.add(new UserData(entity));
+      }
+    }
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
     response.getWriter().println(jsonMentors);
   }
 
-  // This function sends an error if invalid input is found.
+  // Function to add a mock mentor to the database to use for formatting, testing, etc.
+  /* Note: on the dev server we only have access to datastore entities added from our own
+  computers. This function lets anyone demo a universal mock mentor. */
+  public void addMockMentor(HttpServletResponse response) throws ServletException, IOException {
+    GHRepository testRepo;
+    GitHub gitHub = GitHubGetter.getGitHub();
+    try {
+      testRepo = gitHub.getRepository("googleinterns/step22-2020");
+    } catch (Exception e) {
+      error(response, "Failed to access test repo.", 400, "Test repo not found");
+      return;
+    }
+    Long testRepoID = testRepo.getId();
+    ProjectEntity testProject = ProjectEntity.fromRepositoryIdOrNew(testRepoID.toString());
+    String id = "mock_id";
+    if (!testProject.mentorIds.contains(id)) {
+      testProject.mentorIds.add(id);
+    }
+    ofy().save().entity(testProject);
+
+    ArrayList<String> interests = new ArrayList<String>();
+    interests.add("skateboarding");
+    ArrayList<String> mentees = new ArrayList<String>();
+    ArrayList<String> projects = new ArrayList<String>();
+    projects.add(testRepoID.toString());
+    UserEntity mockMentor =
+        new UserEntity(id, "Sami-2000", interests, "samialves@google.com", projects, mentees);
+    ofy().save().entity(mockMentor);
+  }
+
+  // Send an error to response.
   public void error(
       HttpServletResponse response, String errorMessage, int statusCode, String userMessage)
       throws ServletException, IOException {
@@ -90,28 +89,43 @@ public class MentorsServlet extends HttpServlet {
     String repoUrl = request.getParameter("inputRepo");
     String repoName = repoUrl.replaceFirst("https://github.com/", "");
     GitHub gitHub = GitHubGetter.getGitHub();
+    GHRepository inputRepo;
     try {
-      GHRepository inputRepo = gitHub.getRepository(repoName);
+      inputRepo = gitHub.getRepository(repoName);
     } catch (Exception e) {
       error(response, "Repo not found: Please enter a valid repo url.", 400, "Repo not found");
       return;
     }
 
-    // TODO: Send Richie the GHRepository ID and person ID to add to projects database
-    //      Send to a function in the ProjectEntity.java class
+    String userID;
+    try {
+      userID = AuthServlet.getAuthorizedUser().getUserId();
+    } catch (Exception e) {
+      error(response, "You must be logged in.", 401, "User not logged in");
+      return;
+    }
 
-    String userID = AuthServlet.getAuthorizedUser().getUserId();
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Long inputRepoID = inputRepo.getId();
+    ProjectEntity newProject = ProjectEntity.fromRepositoryIdOrNew(inputRepoID.toString());
+    if (!newProject.mentorIds.contains(userID)) {
+      newProject.mentorIds.add(userID);
+    }
+    ofy().save().entity(newProject).now();
 
-    // This section is commented out until we have populated datastore to refer to.
-    /*try {
-      Entity personEntity = datastore.get(KeyFactory.stringToKey(userID));
-    } catch (EntityNotFoundException e) {
-      error(response, "You must be logged in.", 401, "User not logged in.");
-      // TODO: Handle this exception (which should never occur if datastore is working properly)
-    }*/
+    UserEntity user;
+    try {
+      user = ofy().load().type(UserEntity.class).id(userID).now();
+    } catch (Exception e) {
+      error(response, "You must sign up for opensesame first.", 401, "User not registered.");
+      return;
+    }
 
-    // TODO: Add a mentor entity as a child of the user entity.
+    if (!user.projectIds.contains(Long.toString(inputRepoID))) {
+      user.projectIds.add(Long.toString(inputRepoID));
+    }
+
+    ofy().save().entity(user);
+
     response.setContentType("application/json;");
     response.getWriter().println(new Gson().toJson("success"));
     return;

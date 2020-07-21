@@ -1,19 +1,30 @@
 import checkTesting from '../../../checkTesting.js';
 import NavbarLink from './NavbarLink.js';
 import AuthButton from './AuthButton.js';
+import {authDataType, navbarLinkType} from '../navbar_prop_types.js';
 checkTesting();
 
 /**
  * @typedef NavbarUrl
  * @property {string} href
  * @property {string} name
+ * @property {boolean} requiresAuth
+ */
+/**
+ * @typedef NavbarProps
+ * @property {NavbarUrl[]} urls
+ * @property {boolean} loading
+ * @property {?Object} authData
  */
 /**
  * Returns a React navbar component.
- * @param {{urls: NavbarUrl[]}} props
+ * @param {NavbarProps} props
  * @return {React.Component} Returns the navbar.
  */
 export default function Navbar(props) {
+  const authenticated =
+      !props.loading && props.authData.authorized && props.authData.hasProfile;
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="/">Open Sesame</a>
@@ -28,20 +39,33 @@ export default function Navbar(props) {
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ml-auto">
-          {props.urls.map((url, i) =>
-            <NavbarLink key={i} href={url.href} name={url.name} />)}
+          {props.urls.map((url, i) => renderNavbarLink(url, authenticated))}
         </ul>
       </div>
       <div className="ml-1">
-        <AuthButton />
+        <AuthButton loading={props.loading} authData={props.authData} />
       </div>
     </nav>
   );
 }
 
+/**
+ * Determines whether or not to render a NavbarLink depending on the
+ * authentication status of the user.
+ * @param {NavbarUrl} url
+ * @param {boolean} authenticated
+ * @return {?React.Component} Returns the NavbarLink or null.
+ */
+function renderNavbarLink(url, authenticated) {
+  if (authenticated || !url.requiresAuth) {
+    return <NavbarLink key={url.href} url={url} />;
+  } else {
+    return null;
+  }
+}
+
 Navbar.propTypes = {
-  urls: PropTypes.arrayOf(PropTypes.shape({
-    href: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
+  urls: PropTypes.arrayOf(navbarLinkType).isRequired,
+  loading: PropTypes.bool.isRequired,
+  authData: authDataType,
 };
