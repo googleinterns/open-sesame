@@ -69,7 +69,7 @@ function createAboutMe(user) {
     userEmailButton.style.display = 'none';
   }
   userEmailButton.href = 'mailto:' + user.email;
-  if (user.interestTags != []) {
+  if (user.interestTags !== []) {
     aboutMeCardDiv.append(createCardTitle('Interest Tags'));
     const interestTagRow = createRowElement();
     for (const tag of user.interestTags) {
@@ -78,7 +78,7 @@ function createAboutMe(user) {
     aboutMeCardDiv.append(interestTagRow);
   }
 
-  if (user.projectIDs != []) {
+  if (user.projectIDs !== []) {
     aboutMeCardDiv.append(createCardTitle('Projects'));
     const projectTagRow = createRowElement();
     for (const projectID of user.projectIds) {
