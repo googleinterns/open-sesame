@@ -296,7 +296,7 @@ function submitForm(e) {
     console.log('valid url');
     window.location.href = '/dashboard.html';
   }).catch((errorResponse) => {
-    if (errorResponse.statusCode == 400) {
+    if (errorResponse.statusCode === 400) {
       const errorContainer = document.getElementById('error-message-container');
       errorContainer.innerText = errorResponse.message;
     } else {
