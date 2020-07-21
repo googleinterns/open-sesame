@@ -1,11 +1,11 @@
-import { getUser } from './user.js';
+import {getUser} from './user.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
 } from './js/fetch_handler.js';
 
 /**
- * A User. 
+ * A User.
  * This datatype is a JS interpretation of the UserData Java Object returned
  * from the java servlet. For more information, please look at the
  * {@link ../java/com/google/opensesame/user/UserData UserData file}
@@ -197,9 +197,9 @@ function getProject(projectID) {
   const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-    fetchRequest,
-    'Failed to communicate with the server. Please try again later.',
-    'An error occcured while retrieving this project.' +
+      fetchRequest,
+      'Failed to communicate with the server. Please try again later.',
+      'An error occcured while retrieving this project.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest.then((response) => response.json());

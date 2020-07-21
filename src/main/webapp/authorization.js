@@ -17,7 +17,7 @@ const firebaseConfig = {
  *
  * NOTE: Firebase documentation can be found
  * {@link https://firebase.google.com/docs/reference/js here}
- * 
+ *
  * NOTE: The authorization.js file location might change.
  */
 class GitHubAuthorizer {
@@ -46,7 +46,7 @@ class GitHubAuthorizer {
    * must be signed out and signed in again. It is important to keep in mind
    * that this token expires and must be used swiftly after calling
    * toggleSignIn() or signIn(). If authorization is yet to be toggled, this
-   * will return null. If an error occurs during authorization, it will again 
+   * will return null. If an error occurs during authorization, it will again
    * be set to null. This property will be set to null on sign out as well.
    *
    * NOTE: In the event that an access token times out, the token will still be
@@ -92,10 +92,10 @@ class GitHubAuthorizer {
   signIn() {
     const provider = new this.firebase.auth.GithubAuthProvider();
     return this.getFirebase().auth().signInWithPopup(provider)
-      .then((result) => {
-        this.token = result.credential.accessToken;
-        return result;
-      });
+        .then((result) => {
+          this.token = result.credential.accessToken;
+          return result;
+        });
   }
 
   /**
