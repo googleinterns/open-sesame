@@ -15,11 +15,11 @@ export default function ExpandedProject(props) {
   }
 
   const project = props.project;
-  const projectTags = project.previewData.topicTags;
+  const projectTags = project.topicTags;
   // Adds the primary language to the list of project tags. TODO add
   // different types of tags in the future to make it easier to differentiate
   // topics from languages.
-  projectTags.unshift(project.previewData.primaryLanguage);
+  projectTags.unshift(project.primaryLanguage);
 
   return (
     <div className="container-fluid">
@@ -29,7 +29,7 @@ export default function ExpandedProject(props) {
           <div className="card mx-1 mb-2">
             <div className="card-body px-3 py-2">
               <h1 className="card-title emphasis">
-                {project.previewData.name}
+                {project.name}
               </h1>
               <TagList tags={projectTags} />
             </div>
@@ -48,7 +48,7 @@ export default function ExpandedProject(props) {
           <div className="card mx-1">
             {/* TODO : Add README renderer instead of description. */}
             <div className="card-body px-3 py-2">
-              {project.previewData.description}
+              {project.description}
             </div>
           </div>
         </div>
