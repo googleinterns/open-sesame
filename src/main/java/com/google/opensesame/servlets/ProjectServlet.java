@@ -26,12 +26,12 @@ public class ProjectServlet extends HttpServlet {
 
   /**
    * Returns a boolean parameter from a request. If the parameter does not exist, its value is
-   * assumed to be false, but if the value does exist and it is not a valid boolean it returns
-   * null.
+   * assumed to be false, but if the value does exist and it is not a valid boolean it returns null.
+   *
    * @param request The request to get the parameter from.
    * @param parameter The name of the boolean parameter.
    * @return Returns the value of the parameter, the assumed value, or null if the value is not a
-   *    valid boolean.
+   *     valid boolean.
    */
   private static Boolean booleanFromRequest(HttpServletRequest request, String parameter) {
     String parameterValue = request.getParameter(parameter);
@@ -48,17 +48,17 @@ public class ProjectServlet extends HttpServlet {
 
   /**
    * Creates a collection of ProjectData from a collection of ProjectEntities.
+   *
    * @param projectEntities
    * @param getFullData
    * @param getPreviewData
    * @return Returns the created collection of ProjectData.
    * @throws IOException Throws if there was an error retrieving the GitHub repository associated
-   *    with a ProjectEntity.
+   *     with a ProjectEntity.
    */
   private static Collection<ProjectData> createProjectData(
-      Collection<ProjectEntity> projectEntities, 
-      boolean getFullData, 
-      boolean getPreviewData) throws IOException {
+      Collection<ProjectEntity> projectEntities, boolean getFullData, boolean getPreviewData)
+      throws IOException {
     List<ProjectData> projectData = new ArrayList<ProjectData>();
     for (ProjectEntity projectEntity : projectEntities) {
       ProjectData newProjectData = new ProjectData(projectEntity);
@@ -82,7 +82,7 @@ public class ProjectServlet extends HttpServlet {
     Boolean getFullData = booleanFromRequest(request, FULL_DATA_PARAM);
     if (getFullData == null) {
       ErrorResponse.sendJsonError(
-          response, 
+          response,
           "Invalid boolean value for the " + FULL_DATA_PARAM + " parameter",
           HttpServletResponse.SC_BAD_REQUEST,
           "Failed to interpret the request. Please try again later.");
@@ -90,10 +90,10 @@ public class ProjectServlet extends HttpServlet {
     Boolean getPreviewData = booleanFromRequest(request, PREVIEW_DATA_PARAM);
     if (getPreviewData == null) {
       ErrorResponse.sendJsonError(
-        response, 
-        "Invalid boolean value for the " + PREVIEW_DATA_PARAM + " parameter",
-        HttpServletResponse.SC_BAD_REQUEST,
-        "Failed to interpret the request. Please try again later.");
+          response,
+          "Invalid boolean value for the " + PREVIEW_DATA_PARAM + " parameter",
+          HttpServletResponse.SC_BAD_REQUEST,
+          "Failed to interpret the request. Please try again later.");
     }
 
     String[] projectIds = request.getParameterValues(PROJECT_ID_PARAM);
@@ -104,10 +104,10 @@ public class ProjectServlet extends HttpServlet {
 
       if (projectIds.length != projectEntities.size()) {
         ErrorResponse.sendJsonError(
-          response, 
-          "One or more of the supplied IDs is invalid and those projects could not be found.",
-          HttpServletResponse.SC_NOT_FOUND,
-          "One or more of the requested projects does not exist. Please try again later.");
+            response,
+            "One or more of the supplied IDs is invalid and those projects could not be found.",
+            HttpServletResponse.SC_NOT_FOUND,
+            "One or more of the requested projects does not exist. Please try again later.");
       }
     } else {
       // TODO(Richie): Add parameters for ordering and filtering the query.
@@ -116,7 +116,7 @@ public class ProjectServlet extends HttpServlet {
       projectEntities = ofy().load().type(ProjectEntity.class).order("-numMentors").list();
     }
 
-    String projectDataJson = 
+    String projectDataJson =
         gson.toJson(createProjectData(projectEntities, getFullData, getPreviewData));
     response.setStatus(HttpServletResponse.SC_OK);
     response.setContentType("application/json;");
