@@ -1,4 +1,4 @@
-import { getUser } from './user.js';
+import {getUser} from './user.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
@@ -204,7 +204,7 @@ function getProject(projectID) {
       'Failed to communicate with the server. Please try again later.',
       'An error occcured while retrieving this project.' +
       ' Please try again later.')
-    .then((response) => response.json());
+      .then((response) => response.json());
 }
 
 /**

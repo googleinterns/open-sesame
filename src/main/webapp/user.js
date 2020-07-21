@@ -18,7 +18,7 @@ function getUser(userID = null) { //eslint-disable-line
       'Failed to communicate with the server. Please try again later.',
       'An error occcured while retrieving this account.' +
       ' Please try again later.')
-    .then((response) => response.json());
+      .then((response) => response.json());
 }
 
-export { getUser };
+export {getUser};
