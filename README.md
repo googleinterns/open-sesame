@@ -48,39 +48,39 @@ this project can be found in the [LintingAndTestingCI.yaml](.github/workflows/Li
 
 Any Actions that create commits. Needs to use a Personal Accesss Token to
 trigger new workflows on the commits that it has made. By Default, GitHub makes 
-it so that any commit made by an Action
-https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
+it so that any commit made by an Action will not trigger a new workflow
+(essentially, Linters are not run on linted code). To bypass this, any action that
+makes a commit must use a Personal Access Token when run. Further infomation can be found 
+[here](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token)
 
 Action dependencies are Cached according to the GitHub Actions Cacheing tutorial
-found here
-https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
+found [here](https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows)
 
 
 ### Building and Testing
-The ```job``` labeled ```BuildAndTest``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file. This job runs the ```npm run verify``` command in [package.json](package.json). ```npm run verify``` is a command that runs all the available tests in this repo and builds the OpenSesame Platform with the available code.
+The ```job``` labeled ```BuildAndTest``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles building and testing during Continuous Integration. This job runs the ```npm run verify``` command in [package.json](package.json). ```npm run verify``` is a command that runs all the available tests in this repo and builds the OpenSesame Platform with the available code.
 
-__NOTE: If this code does not build, It will be prevented from merging with Master__ 
+__NOTE:__ If code does not build, It will be prevented from merging with Master. 
 
 ### Linting
 #### Java Linter
-The ```job``` labeled ```JavaFormat``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file. This job formats Java code and commits any changes it makes
-with the message _"Google Java Format"_.
+The ```job``` labeled ```JavaFormat``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles Java Linting. This job formats Java code to meet Google Style Guide standards. Any chnages made by this linter are committed with the message _"Google Java Format"_. This Action was built using the [Google Java Format](https://github.com/marketplace/actions/google-java-format#google-java-format-action) GitHub Action.
 
 #### JavaScript Linter
 We use ```ESLint``` to lint our JavaScript code. OpenSesame's version of ```ESLint```
 runs using the rules defined in our [.eslitrc](./.eslintrc) file (google and react style guide standards).
 
-The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file. This job is built on three main steps.
+The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles JavaScript Libnting. This ```job``` is built on three main steps.
 
-1. Run the locally installed ESLint Linter (ESLint is a part of the Projects
-dependencies). The local linter is set to format code with the "--fix" option.
+1. Run the locally installed ESLint Linter (ESLint is a part of OpenSesame's
+dependencies). The local linter is set to format code with the ```--fix``` option.
 
 2. Commit changes made during the previous step(1) with the [git-auto-commit-action](https://github.com/marketplace/actions/git-auto-commit#git-auto-commit-action). Commits are made with the message _"Apply ESLint Changes"_.
 
 3. Run the [ESLint Action](https://github.com/marketplace/actions/eslint-action#eslint-action) GitHub Action that annotates ESLint errors and warnings in PRs. This steps makes the style violations evident when looking at PR diffs in the file changes PR tab. 
 
 ##### Locally Running ESLint 
-Run the local ESLint JavaScript linter with:
+Run the local ```ESLint``` JavaScript linter with:
 ```
 $ npm install eslint  # if not installed already.
 $ ./node_modules/eslint/bin/eslint.js <file or folder>
