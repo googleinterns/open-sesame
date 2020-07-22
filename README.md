@@ -1,4 +1,4 @@
-# Open Sesame: an Open Source Mentorship Platform
+# Open Sesame: a Mentorship Platform for Open Source
 Open Sesame is a platform intended to make contributing to open source less intimidating by matching first-time contributors to experienced mentors.
 
 ## React Integration
