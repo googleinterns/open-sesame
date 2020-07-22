@@ -1,65 +1,46 @@
 import {getUser} from './user.js';
+import {
+  standardizeFetchErrors,
+  makeRelativeUrlAbsolute,
+} from './js/fetch_handler.js';
 
 /**
- * A project
- * @typedef {Object} Project
- * @property {string} name - the name of a given project.
- * @property {Mentee List} mentees - the list of mentees under a given project.
- */
-
-/**
- * A mentee
- * @typedef {Object} Mentee
- * @property {string} image -the link to a mentee's image
- * @property {string} name - the name of the mentee
- * @property {string} starLink - the link to the action that rewards a given
- *                               mentee with a star
- */
-
-/**
- * A User
+ * A User.
+ * This datatype is a JS interpretation of the UserData Java Object returned
+ * from the java servlet. For more information, please look at the
+ * {@link ../java/com/google/opensesame/user/UserData UserData file}
  * @typedef {Object} User
- * @property {string List} interestTags - The user's tags
+ * @property {string[]} interestTags - The user's tags
  * @property {string} bio - The bio of the user
  * @property {string} email - the email address of the user
  * @property {string} gitHubURL: - The user's github page
  * @property {string} image - The User's profile picture
  * @property {string} location - the location of the user
  * @property {string} name - the name of the user
+ * @property {boolean} isMentor - true if the user is a mentor for a project
+ *                                false otherwise.
+ * @property {string[]} projectIds - A List of Projects a user is working on.
  */
 
 /**
- * Fake information for the hardcoded stage.
+ * A Project from datastore.
+ * This datatype is a JS interpretation of the UserData Java Object returned
+ * from the java servlet. For more information, please look at the
+ * [ProjectData file]{@link ../java/com/google/opensesame/projects/ProjectData}
+ * @typedef {Object} Project
+ * @property {ProjectPreview} projectPreview - The data used to showcase a
+ *                                             project on the projects page
  */
-/** @const {string} */
-const dummyImg = 'images/dior.jpg';
-const dummyProjectName = 'Kubernetes';
-const dummyGitHubID = 'Obinnabii';
 
-
-/** @const {Mentee List} */
-const dummyMentees = [{
-  name: 'Richi',
-  starLink: '#givestar',
-  image: dummyImg,
-},
-{
-  name: 'Obi',
-  starLink: '#givestar',
-  image: dummyImg,
-},
-{
-  name: 'Sami',
-  starLink: '#givestar',
-  image: dummyImg,
-},
-];
-
-/** @const {Project} */
-const dummyProject = {
-  name: dummyProjectName,
-  mentees: dummyMentees,
-};
+/**
+ * Data contained in a project from Datastore.
+ * This datatype is a JS interpretation of the UserData Java Object returned
+ * from the java servlet. For more information, please look at the
+ * [ProjectPreviewData file]
+ * {@link ../java/com/google/opensesame/projects/ProjectPreviewData}
+ * @typedef {Object} ProjectPreview
+ * @property {string} name - The name of the project.
+ */
 
 // ELEMENTS_FOR_ABOUT_ME_SECTION
 /**
@@ -69,11 +50,8 @@ const dummyProject = {
 const aboutMeCardDiv = document.getElementById('about-me-card-body');
 const userBioElement = document.getElementById('user-bio');
 const userImageElement = document.getElementById('user-image');
-const userNameAndLocationElement =
-  document.getElementById('user-name-location');
-const userTagRow = document.getElementById('user-tag-row');
 const userGithubButton = document.getElementById('user-github');
-const affiliationsDiv = document.getElementById('affiliations');
+const userEmailButton = document.getElementById('user-email');
 
 /**
  * Populate the card element 'aboutMeCardDiv' with information about a
@@ -86,16 +64,40 @@ function createAboutMe(user) {
 
   userImageElement.src = user.image;
 
+  const userNameAndLocationElement =
+    document.getElementById('user-name-location');
   userNameAndLocationElement.innerHTML = user.name + '<br>';
-  const userLocation = createLocation(user.location);
-  userNameAndLocationElement.append(userLocation);
-
-  userBioElement.innerText = user.bio;
+  if (user.location) {
+    const userLocation = createLocation(user.location);
+    userNameAndLocationElement.append(userLocation);
+  }
 
   userGithubButton.href = user.gitHubURL;
+  if (!user.email) {
+    userEmailButton.style.display = 'none';
+  }
+  userEmailButton.href = 'mailto:' + user.email;
 
-  for (const tag of user.interestTags) {
-    addTag(tag, userTagRow);
+  if (user.bio) {
+    userBioElement.innerText = user.bio;
+  }
+
+  if (user.interestTags) {
+    aboutMeCardDiv.append(createCardTitle('Interest Tags'));
+    const interestTagRow = createRowElement();
+    for (const tag of user.interestTags) {
+      addTag(tag, interestTagRow);
+    }
+    aboutMeCardDiv.append(interestTagRow);
+  }
+
+  if (user.projectIds) {
+    aboutMeCardDiv.append(createCardTitle('Projects'));
+    const projectTagRow = createRowElement();
+    for (const projectID of user.projectIds) {
+      addProject(projectID, projectTagRow);
+    }
+    aboutMeCardDiv.append(projectTagRow);
   }
 }
 
@@ -125,6 +127,24 @@ function addTag(tagText, tagDiv) {
 }
 
 /**
+ * Append a tag representing a project with the Id @param projectID and the
+ * name @param projectName to the div @param projectDiv
+ * @param {string} projectName the name of the project in question.
+ * @param {string} projectID the id used to distinguish projects in the
+ * database.
+ * @param {HTMLElement} projectDiv the div the project tag is to be added to.
+ */
+function addProjectTag(projectName, projectID, projectDiv) {
+  const projectTagElement = document.createElement('a');
+  projectTagElement.className = 'border border-muted text-muted mr-1 mb-1' +
+    ' project-tag badge';
+  projectTagElement.innerText = projectName;
+  projectTagElement.href =
+    new URL('/projects.html#/' + projectID, window.location.origin);
+  projectDiv.append(projectTagElement);
+}
+
+/**
  * Creates a small element with a given @param location
  * @param {string} location text for a given location.
  * @return {HTMLElement} location small element
@@ -136,33 +156,15 @@ function createLocation(location) {
 }
 
 /**
- * Populate the AFFILIATION_DIV with information about the commitments a mentor
- * has made to @param projectObject.
- * @param {Project} projectObject
+ * Get the project stored in Datastore with the Id @param projectID and append a
+ * tag representing the project to the div @param projectTagRow. The appended
+ * tag is linked to the project's entry on the OpenSesame project page.
+ * @param {string} projectID - Datastore Id of a given project.
+ * @param {HTMLElement} projectTagDiv - div element to append the tag to.
  */
-function addProject(projectObject) {
-  const projectCardElement = createProjectCard(projectObject.name);
-  affiliationsDiv.append(projectCardElement);
-  const menteeRow = createRowElement();
-  for (const mentee of projectObject.mentees) {
-    menteeRow.append(createMenteeCard(mentee));
-  }
-  projectCardElement.append(menteeRow);
-}
-
-/**
- * Return a project card div element with the title @param projectName
- * @param {string} projectName
- * @return {HTMLElement} div representing a project card with the
- * title @param projectName
- */
-function createProjectCard(projectName) {
-  const projectCardElement = document.createElement('div');
-  projectCardElement.className = 'card container card-holder col-12' +
-    ' text-center project-card p-3 m-3';
-  const projectTitleElement = createCardTitle(projectName);
-  projectCardElement.append(projectTitleElement);
-  return projectCardElement;
+async function addProject(projectID, projectTagDiv) {
+  const projectData = await getProject(projectID);
+  addProjectTag(projectData.previewData.name, projectID, projectTagDiv);
 }
 
 /**
@@ -171,30 +173,10 @@ function createProjectCard(projectName) {
  * @return {HTMLElement} div representing a card title with @param titleText
  */
 function createCardTitle(titleText) {
-  const cardTitleElement = document.createElement('h4');
-  cardTitleElement.className = 'card-title dark-emph';
+  const cardTitleElement = document.createElement('h5');
+  cardTitleElement.className = 'dark-emph row mt-1 mb-0';
   cardTitleElement.innerText = titleText;
   return cardTitleElement;
-}
-
-/**
- * Return a card with information about a given @param mentee object and
- * a link to send @param mentee a star
- * @param {Mentee} mentee
- * @return {HTMLElement} card with information about a given mentee
- */
-function createMenteeCard(mentee) {
-  const menteeCardElement = document.createElement('div');
-  menteeCardElement.className = 'card card-holder col-' +
-    ' text-center m-1 p-2';
-
-  const menteeCardBody = document.createElement('div');
-  menteeCardBody.className = 'card-body';
-  menteeCardElement.append(menteeCardBody);
-  menteeCardBody.append(createMenteeCardImage(mentee.image));
-  menteeCardBody.append(createCardTitle(mentee.name));
-  menteeCardBody.append(createStarButton(mentee.starLink));
-  return menteeCardElement;
 }
 
 /**
@@ -203,42 +185,35 @@ function createMenteeCard(mentee) {
  */
 function createRowElement() {
   const rowElement = document.createElement('div');
-  rowElement.className = 'row p-3';
+  rowElement.className = 'row p-2';
   return rowElement;
 }
 
 /**
- * Return an anchor of the class star that perform the acton @param link
- * @param {string} link
- * @return {HTMLElement} anchor that performs the given action
+ * Get the project with the Id @param projectID from Datastore using the
+ * /project servlet.
+ * @param {string} projectID the id used to store a project in datastore.
+ * @return {Project} Data about the project with th id @param projectID
  */
-function createStarButton(link) {
-  const starButton = document.createElement('a');
-  starButton.className = 'star';
-  starButton.innerText = 'Send star';
-  starButton.href = link;
-  return starButton;
-}
+function getProject(projectID) {
+  const fetchURL = '/project?projectId=' + projectID;
+  const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
 
-/**
- * Return a small image with the source @param imgSrc
- * @param {string} imgSrc
- * @return {HTMLElement} image object
- */
-function createMenteeCardImage(imgSrc) {
-  const menteeCardImage = document.createElement('img');
-  menteeCardImage.className = 'card-img-top mentee-card-img';
-  menteeCardImage.src = imgSrc;
-  return menteeCardImage;
+  return standardizeFetchErrors(
+      fetchRequest,
+      'Failed to communicate with the server. Please try again later.',
+      'An error occcured while retrieving this project.' +
+      ' Please try again later.')
+      .then((response) => response.json());
 }
 
 /**
  * Call functions to populate page sections with data.
  */
-function setUpPage() {
-  getUser(dummyGitHubID).then(createAboutMe);
-  addProject(dummyProject);
-  addProject(dummyProject);
+async function setUpPage() {
+  const user = await getUser();
+  // TODO: redirect to sign up/in page if the user is not found.
+  createAboutMe(user);
 }
 
 window.onload = setUpPage;

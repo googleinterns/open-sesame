@@ -8,12 +8,15 @@ const firebaseConfig = {
  * Object used for GitHub authorization and as a wrapper for Firebase.
  * It handles Firebase initialization on instantiation and holds nifty
  * functions for handling GitHub authorization. We are using a class to have
- * access tokens persist for ease of use on the backend,
+ * access tokens persist for ease of use on the backend.
  *
  * Make sure to include the scripts below in any HTML file that uses this class.
  *
  * <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
  * <script type="module" src="authorization.js"></script>
+ *
+ * NOTE: Firebase documentation can be found
+ * {@link https://firebase.google.com/docs/reference/js here}
  *
  * NOTE: The authorization.js file location might change.
  */
@@ -27,7 +30,7 @@ class GitHubAuthorizer {
      * GitHubAuthorizer
      * @type {Firebase}
      */
-    this.firebase = firebase; // eslint-disable-line
+    this.firebase = firebase; // eslint-disable-line no-undef
 
     this.initializeFirebase();
 
@@ -42,15 +45,15 @@ class GitHubAuthorizer {
    * The most recent access token for the GitHub API. To refresh this, the user
    * must be signed out and signed in again. It is important to keep in mind
    * that this token expires and must be used swiftly after calling
-   * toggleSignIn(). If authorization is yet to be toggled, this will return
-   * null. If an error occurs during authorization, it will again be set to
-   * null. This property will be set to null on sign out as well.
+   * toggleSignIn() or signIn(). If authorization is yet to be toggled, this
+   * will return null. If an error occurs during authorization, it will again
+   * be set to null. This property will be set to null on sign out as well.
    *
    * NOTE: In the event that an access token times out, the token will still be
    * available here and so, a non-null token is not a good sign of a valid
    * token.
    *
-   * @return {string} most recent token or null
+   * @return {?string} most recent token or null
    */
   getToken() {
     return this.token;
@@ -61,7 +64,7 @@ class GitHubAuthorizer {
    * purposes, this function will serve as a true/false value in an if
    * statement.
    *
-   * @return {Firebase.User} current user or null
+   * @return {?Firebase.User} current user or null
    */
   getUser() {
     return this.getFirebase().auth().currentUser;
@@ -122,7 +125,7 @@ class GitHubAuthorizer {
    *
    * NOTE: this function is asynchronous and should be used with an await
    *
-   * @return { Firebase.UserCredential | null} credentials of the
+   * @return {?Firebase.UserCredential} credentials of the
    * authorized user or null the user is signed out
    */
   toggleSignIn() {

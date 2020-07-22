@@ -1,11 +1,14 @@
 package com.google.opensesame.projects;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.opensesame.github.GitHubGetter;
-import com.google.opensesame.servlets.MentorObject;
-import com.google.opensesame.servlets.PersonBuilder;
+import com.google.opensesame.user.UserData;
+import com.google.opensesame.user.UserEntity;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
@@ -41,68 +44,22 @@ public class ProjectData {
     ProjectPreviewData previewData =
         ProjectPreviewData.fromProjectEntity(projectEntity, repository);
 
-    // TODO : Use helper function to get mentors by ID. Sami is currently working on this.
-    // Will use mock data for now.
-    List<MentorObject> mentors = createMentorMockData();
+    Map<String, UserEntity> userEntities =
+        ofy().load().type(UserEntity.class).ids(projectEntity.mentorIds);
+    ArrayList<UserData> mentors = new ArrayList<UserData>();
+    for (UserEntity entity : userEntities.values()) {
+      mentors.add(new UserData(entity));
+    }
 
     return new ProjectData(previewData, mentors);
-  }
-
-  /**
-   * This is a temporary function that creates mentor mock data. This will be removed when a helper
-   * function is created for getting mentors by ID.
-   *
-   * @return Returns the mentor mock data.
-   * @throws IOException
-   */
-  private static List<MentorObject> createMentorMockData() throws IOException {
-    List<MentorObject> mentors = new ArrayList<MentorObject>();
-
-    ArrayList<String> ObiSkills = new ArrayList<String>();
-    ObiSkills.add("Meme god");
-    ObiSkills.add("HTML wrangler");
-    MentorObject Obi =
-        new PersonBuilder()
-            .name("Obi")
-            .gitHubID("Obinnabii")
-            .description("Obi is awesome.")
-            .interestTags(ObiSkills)
-            .buildMentor();
-    mentors.add(Obi);
-
-    ArrayList<String> SamiSkills = new ArrayList<String>();
-    SamiSkills.add("Stone carver");
-    SamiSkills.add("Bootstrap convert");
-    MentorObject Sami =
-        new PersonBuilder()
-            .name("Sami")
-            .gitHubID("Sami-2000")
-            .description("Sami is fun.")
-            .interestTags(SamiSkills)
-            .buildMentor();
-    mentors.add(Sami);
-
-    ArrayList<String> RichiSkills = new ArrayList<String>();
-    RichiSkills.add("Minecraft boss");
-    RichiSkills.add("React wizard");
-    MentorObject Richi =
-        new PersonBuilder()
-            .name("Richi")
-            .gitHubID("Richie78321")
-            .description("Richi is cool.")
-            .interestTags(RichiSkills)
-            .buildMentor();
-    mentors.add(Richi);
-
-    return mentors;
   }
 
   // This is currently in its most basic form. In the future there will be more data that differs
   // from the preview data.
   private final ProjectPreviewData previewData;
-  private final List<MentorObject> mentors;
+  private final List<UserData> mentors;
 
-  public ProjectData(ProjectPreviewData previewData, List<MentorObject> mentors) {
+  public ProjectData(ProjectPreviewData previewData, List<UserData> mentors) {
     this.previewData = previewData;
     this.mentors = mentors;
   }

@@ -16,6 +16,7 @@
   "globals": {
     "React": "readonly",
     "ReactDOM": "readonly",
-    "PropTypes": "readonly"
+    "PropTypes": "readonly",
+    "ReactRouterDOM": "readonly",
   }
 }
