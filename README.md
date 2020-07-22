@@ -42,8 +42,45 @@ To [increase the hourly GitHub API rate limit](https://developer.github.com/v3/#
 </env-variables>
 ```
 
-## Linting
-Run the linter with:
+## Continuous Integration 
+The configurations for linters and Continuous intigeration GitHub Actions run on
+this project can be found in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file.
+
+Any Actions that create commits. Needs to use a Personal Accesss Token to
+trigger new workflows on the commits that it has made. By Default, GitHub makes 
+it so that any commit made by an Action
+https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
+
+Action dependencies are Cached according to the GitHub Actions Cacheing tutorial
+found here
+https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
+
+
+### Building and Testing
+The ```job``` labeled ```BuildAndTest``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file. This job runs the ```npm run verify``` command in [package.json](package.json). ```npm run verify``` is a command that runs all the available tests in this repo and builds the OpenSesame Platform with the available code.
+
+__NOTE: If this code does not build, It will be prevented from merging with Master__ 
+
+### Linting
+#### Java Linter
+The ```job``` labeled ```JavaFormat``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file. This job formats Java code and commits any changes it makes
+with the message _"Google Java Format"_.
+
+#### JavaScript Linter
+We use ```ESLint``` to lint our JavaScript code. OpenSesame's version of ```ESLint```
+runs using the rules defined in our [.eslitrc](./.eslintrc) file (google and react style guide standards).
+
+The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file. This job is built on three main steps.
+
+1. Run the locally installed ESLint Linter (ESLint is a part of the Projects
+dependencies). The local linter is set to format code with the "--fix" option.
+
+2. Commit changes made during the previous step(1) with the [git-auto-commit-action](https://github.com/marketplace/actions/git-auto-commit#git-auto-commit-action). Commits are made with the message _"Apply ESLint Changes"_.
+
+3. Run the [ESLint Action](https://github.com/marketplace/actions/eslint-action#eslint-action) GitHub Action that annotates ESLint errors and warnings in PRs. This steps makes the style violations evident when looking at PR diffs in the file changes PR tab. 
+
+##### Locally Running ESLint 
+Run the local ESLint JavaScript linter with:
 ```
 $ npm install eslint  # if not installed already.
 $ ./node_modules/eslint/bin/eslint.js <file or folder>
@@ -55,12 +92,15 @@ JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest
 * [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for testing React.
 
 The tests are also automatically run when using the `npm run dev-server` command to start a development server.
+
 ### JavaScript Testing
 JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest, additional functionality is added with:
 * [jest-dom](https://github.com/testing-library/jest-dom) for testing the DOM.
 * [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for testing React.
+
 ### Java Testing
 Java unit testing is done with [JUnit 4](https://junit.org/junit4/).
+
 ### Adding tests
 **To add another JS test**, simply add a JS file that ends with `.test.js` (ex: `script.test.js`) and it will automatically be run by Jest.
 **To add another Java test**, add a Java file to the testing directory `src/test/java/`. Be sure to follow the Java conventions for package directory structure, for example if you're testing a package in `com.google.opensesame.github`, the test should be placed in the directory `src/test/java/com/google/opensesame/github`.

@@ -6,12 +6,17 @@ on:
       - '**'
 
 jobs:
-  JavaFormat:
+  JavaFormat: #Format Java Code to meet the Google Java Style
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # v2 minimum required
         with:
-          token: ${{secrets.PAT_TOKEN}} # Re-running Linter on auto commit
+          token: ${{secrets.PAT_TOKEN}} # Re-running the Linter on auto commits.
+          # To re-run a GitHub Action on a Commit made by a GitHub Action, The
+          # action that commits needs to run with a Personal Access token (PAT_TOKEN).
+          # To change the current PAT_TOKEN, check the repository settings.
+          # for more information see
+          # (https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token)
       # Recommended: latest versions of Google Java Format require JDK 11+
       - name: Use Java 11
         uses: actions/setup-java@v1
@@ -28,12 +33,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        token: ${{secrets.PAT_TOKEN}}
+        token: ${{secrets.PAT_TOKEN}} # Re-running Linter on auto commit
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-    - name: Cache local npm dependencies
+    # Cache npm dependencies to speed up subsequent runs of the GitHub Actions 
+    # Linter
+    - name: Cache local npm dependencies 
       uses: actions/cache@v2
       with:
         path: ~/.npm
@@ -42,20 +49,28 @@ jobs:
           ${{ runner.os }}-node-  
     - name: Install dependencies
       run: npm install
+      # Run the installed version of ESLint and fix Javascript code
     - name: Run ESLint
       continue-on-error: true
-      run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix
+      run: npx eslint "src/**" --ext .js,.jsx,.ts,.tsx --fix 
+      # Commit changes made during the previous step
     - name: Commit ESLint changes
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Apply ESLint changes.
+      # Run the ESLint GitHub Action for showing un-fixable JavaScript style 
+      # violations. The reason
     - name: Annotate ESLint errors
       uses: hallee/eslint-action@1.0.3
       if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
       with:
         repo-token: ${{secrets.GITHUB_TOKEN}}
 
-  BuildAndTest:
+  BuildAndTest:  # Check that the current Code can be built and all the current 
+  # tests pass. This check is a safegaurd to ensure that the master branch is
+  # never broken. BuildAndTest is set to be a compulsory check that must pass
+  # before any merges are made to master. This can be changed in the branch
+  # protection settings.
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2 
@@ -67,6 +82,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '10.x'
+    # Cache npm dependencies to speed up subsequent runs of the GitHub Actions Linter
     - name: Cache local npm dependencies
       uses: actions/cache@v2
       with:
@@ -74,6 +90,7 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
+    # Cache mvn dependencies to speed up subsequent runs of the GitHub Actions Linter
     - name: Cache local Maven repository
       uses: actions/cache@v2
       with:
@@ -82,6 +99,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: Install Dependencies
-      run: npm install    
+      run: npm install
     - name: Build and check for errors
       run: npm run verify
