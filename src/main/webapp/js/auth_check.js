@@ -5,31 +5,31 @@ import {
 
 /**
  * Creates the authentication fetch request.
- * @return {Promise} Returns the authentication fetch request. 
+ * @return {Promise} Returns the authentication fetch request.
  */
 function createAuthFetch() {
   const errorFormattedRequest = standardizeFetchErrors(
       fetch(makeRelativeUrlAbsolute('/auth')),
-      "Failed to communicate with authentication server.",
-      "Failed to verify authentication.");
+      'Failed to communicate with authentication server.',
+      'Failed to verify authentication.');
   return errorFormattedRequest
       .then((response) => response.json()).then((authData) => {
-    // Any uses of authDataFetch after the fetch request has already been
-    // completed will immediately resolve with the authentication data.
-    authDataFetch = Promise.resolve(authData);
-    return authData;
-  }).catch((errorResponse) => {
-    // Any uses of authDataFetch after the fetch request has already failed
-    // will immediately reject with the error.
-    authDataFetch = Promise.reject(errorResponse);
-    return Promise.reject(errorResponse);
-  });
+        // Any uses of authDataFetch after the fetch request has already been
+        // completed will immediately resolve with the authentication data.
+        authDataFetch = Promise.resolve(authData);
+        return authData;
+      }).catch((errorResponse) => {
+        // Any uses of authDataFetch after the fetch request has already failed
+        // will immediately reject with the error.
+        authDataFetch = Promise.reject(errorResponse);
+        return Promise.reject(errorResponse);
+      });
 }
 
 /**
  * A promise that returns the authentication data once it has been fetched.
  * This is useful if you need to define more advanced behavior with the
- * authentication data. 
+ * authentication data.
  * @type {Promise}
  */
 export let authDataFetch = createAuthFetch();
