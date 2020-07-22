@@ -42,7 +42,7 @@ To [increase the hourly GitHub API rate limit](https://developer.github.com/v3/#
 </env-variables>
 ```
 
-## Continuous Integration 
+## Continuous Integration (CI)
 The configurations for linters and Continuous intigeration GitHub Actions run on
 this project can be found in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file.
 
@@ -51,10 +51,10 @@ trigger new workflows on the commits that it has made. By Default, GitHub makes
 it so that any commit made by an Action will not trigger a new workflow
 (essentially, Linters are not run on linted code). To bypass this, any action that
 makes a commit must use a Personal Access Token when run. Further infomation can be found 
-[here](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token)
+[here](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token).
 
-Action dependencies are Cached according to the GitHub Actions Cacheing tutorial
-found [here](https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows)
+Action dependencies are Cached to speed up CI according to the GitHub Actions Cacheing tutorial
+found [here](https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows).
 
 
 ### Building and Testing
