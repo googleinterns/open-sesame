@@ -1,25 +1,27 @@
 import checkTesting from '../../../checkTesting.js';
+import {navbarLinkType} from '../navbar_prop_types.js';
 checkTesting();
 
 /**
  * Returns a React navbar link component.
- * @param {{href: string, name: string}} props
+ * @param {{url: NavbarLink}} props
  * @return {React.Component} Returns the navbar link.
  */
 export default function NavbarLink(props) {
+  const url = props.url;
+
   let classes = 'nav-item';
-  if (props.href === window.location.pathname) {
+  if (url.href === window.location.pathname) {
     classes += ' active';
   }
 
   return (
     <div className={classes}>
-      <a className="nav-link" href={props.href}>{props.name}</a>
+      <a className="nav-link" href={url.href}>{url.name}</a>
     </div>
   );
 }
 
 NavbarLink.propTypes = {
-  href: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  url: navbarLinkType.isRequired,
 };
