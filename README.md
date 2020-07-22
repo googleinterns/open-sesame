@@ -62,7 +62,7 @@ The ```job``` labeled ```BuildAndTest``` in the [LintingAndTestingCI.yaml](.gith
 
 ### Linting
 #### Java Linter
-The ```job``` labeled ```JavaFormat``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles Java Linting. This job formats Java code to meet Google Style Guide standards. Any chnages made by this linter are committed with the message _"Google Java Format"_. This Action was built using the [Google Java Format](https://github.com/marketplace/actions/google-java-format#google-java-format-action) GitHub Action.
+The ```job``` labeled ```JavaFormat``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles Java Linting. This job formats Java code to meet Google Style Guide standards. Any changes made by this linter are committed with the message _"Google Java Format"_. This Action was built using the [Google Java Format](https://github.com/marketplace/actions/google-java-format#google-java-format-action) GitHub Action.
 
 #### JavaScript Linter
 We use ```ESLint``` to lint our JavaScript code. OpenSesame's version of ```ESLint```
@@ -113,6 +113,6 @@ As a naming convention, Java Files that end in ```Entity``` refer to ```Objectif
 
 __for example,__ If ```X``` is an aspect of our website with unique data that we plan to store in Datastore. We will handle it with an Objectify enabled ```XEntity``` Java class. If X also requires data from GitHub, we will have an additional ```XData``` Java class that builds on ```XEntity``` by populating its fields using the GitHub API. ```XData``` can then be converted to a ```JSON``` with the ```Gson``` Library and sent to the frontend using the ```XServlet```.
 
-![Diagram of Data Structuring convention](https://docs.google.com/drawings/d/e/2PACX-1vRdkD7vudlKLi7RL_3hsI7gdFg5WxN2kHCpC7pvl7E9nvJGJBDFaCv1i3PcKXKCXnomEaLls112Eqjx/pub?w=960&h=720)
+![Diagram of Data Structuring convention](https://pasteboard.co/JiSqZY4.png)
 
 This convention allows us to manipulate data on the backend without having to waste API calls if there is no need to.
