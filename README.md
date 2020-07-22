@@ -65,5 +65,20 @@ Java unit testing is done with [JUnit 4](https://junit.org/junit4/).
 **To add another JS test**, simply add a JS file that ends with `.test.js` (ex: `script.test.js`) and it will automatically be run by Jest.
 **To add another Java test**, add a Java file to the testing directory `src/test/java/`. Be sure to follow the Java conventions for package directory structure, for example if you're testing a package in `com.google.opensesame.github`, the test should be placed in the directory `src/test/java/com/google/opensesame/github`.
 
+## User Authentication and Sign Up
+User signup consists of three parts:
+1. Website authentication (a user creates an account on our website)
+  * This is done using the [Users API](https://cloud.google.com/appengine/docs/standard/java/users)
+  * In the future this could be migrated to the [Firebase Admin SDK](https://firebase.google.com/docs/reference/admin) or similar OAuth-based authentication API such that GitHub authentication and website authentication could become a single step.
+2. GitHub authentication (a user verifies ownership of a GitHub account, which is then linked with the account on our website)
+  * This is done using [Firebase Authentication](https://firebase.google.com/docs/auth) with [GitHub OAuth](https://docs.github.com/en/developers/apps/about-apps#about-oauth-apps)
+  * An access token is granted to the user, which is then sent to the server during the profile creation step and verified on the backend. 
+  * Once the access token is verified, the user has proven ownership of that GitHub account, and it is then stored by ID in the website profile.
+3. Profile creation (a user with an authorized account can add more information about themselves)
+  * After a user completes website authentication, they are redirected to a form for profile creation.
+  * GitHub authentication is completed during profile creation.
+
+A user is only considered to have an account on Open Sesame if they have completed all three steps outlined above.
+
 ## File Structure
 Please refer to [this](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html) resource to learn more about what each project directory should be used for, and take a look at [this section](https://maven.apache.org/guides/getting-started/#how-do-i-make-my-first-maven-project) of the Maven getting started guide to see how the project naming scheme affects directory structure.
