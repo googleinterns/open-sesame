@@ -27,8 +27,9 @@ function createAuthFetch() {
 }
 
 /**
- * A promise that returns the authentication data. This is useful if you need
- * to define more advanced behavior with the authentication data. 
+ * A promise that returns the authentication data once it has been fetched.
+ * This is useful if you need to define more advanced behavior with the
+ * authentication data. 
  * @type {Promise}
  */
 export let authDataFetch = createAuthFetch();
