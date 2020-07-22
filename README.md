@@ -54,11 +54,11 @@ makes a commit must use a Personal Access Token when run. Further infomation can
 Action dependencies are Cached to speed up CI according to the GitHub Actions Cacheing tutorial
 found [here](https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows).
 
+__NOTE:__ A proposed PR must pass all CI checks or it will be prevented from merging with Master.
+
 
 ### Building and Testing
-The ```job``` labeled ```BuildAndTest``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles building and testing during Continuous Integration. This job runs the ```npm run verify``` command in [package.json](package.json). ```npm run verify``` is a command that runs all the available tests in this repo and builds the OpenSesame Platform with the available code.
-
-__NOTE:__ If code does not build, It will be prevented from merging with Master. 
+The ```job``` labeled ```BuildAndTest``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles building and testing during Continuous Integration. This job runs the ```npm run verify``` command in [package.json](package.json). ```npm run verify``` is a command that runs all the available tests in this repo and builds the OpenSesame Platform with the available code. 
 
 ### Linting
 #### Java Linter
