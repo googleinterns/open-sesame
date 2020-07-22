@@ -68,7 +68,7 @@ The ```job``` labeled ```JavaFormat``` in the [LintingAndTestingCI.yaml](.github
 We use ```ESLint``` to lint our JavaScript code. OpenSesame's version of ```ESLint```
 runs using the rules defined in our [.eslitrc](./.eslintrc) file (google and react style guide standards).
 
-The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles JavaScript Libnting. This ```job``` is built on three main steps.
+The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles JavaScript Linting. This ```job``` is built on three main steps.
 
 1. Run the locally installed ESLint Linter (ESLint is a part of OpenSesame's
 dependencies). The local linter is set to format code with the ```--fix``` option.
