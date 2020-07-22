@@ -113,6 +113,6 @@ As a naming convention, Java Files that end in ```Entity``` refer to ```Objectif
 
 __for example,__ If ```X``` is an aspect of our website with unique data that we plan to store in Datastore. We will handle it with an Objectify enabled ```XEntity``` Java class. If X also requires data from GitHub, we will have an additional ```XData``` Java class that builds on ```XEntity``` by populating its fields using the GitHub API. ```XData``` can then be converted to a ```JSON``` with the ```Gson``` Library and sent to the frontend using the ```XServlet```.
 
-![Diagram of Data Structuring convention](https://pasteboard.co/JiSqZY4.png)
+![Diagram of Data Structuring convention](blob:https://pasteboard.co/0a15530a-4172-4bb9-b40b-467daf338208)
 
 This convention allows us to manipulate data on the backend without having to waste API calls if there is no need to.
