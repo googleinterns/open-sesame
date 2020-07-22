@@ -16,6 +16,19 @@
   color: white;
 }
 
+.btn-main {
+  width: 50%;
+}
+
+.emphasis-box {
+  background-color: rebeccapurple;
+}
+
+.mission {
+  display: inline;
+  color: white;
+}
+
 .btn-emphasis:hover {
   background-color: purple;
   border: none;
