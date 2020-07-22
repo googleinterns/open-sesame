@@ -2,7 +2,6 @@
  * @typedef SignUpData
  * @property {string} gitHubAuthToken
  * @property {string[]} interestTags
- * @property {string} emailAddress
  */
 import {gitHubAuthorizer} from './authorization.js';
 import {
@@ -116,21 +115,7 @@ function createSignupRequest() {
     encodedBody.append('interestTags', interestTag);
   });
 
-  const fetchRequest = fetch(makeRelativeUrlAbsolute('/user'), {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: encodedBody,
-  });
-
-  const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetchRequest,
-      'Failed to communicate with the server. Please try again later.',
-      'An error occcured while creating your account.' +
-    ' Please try again later.');
-
-  return errorFormattedFetchRequest;
+  return postUser(encodedBody);
 }
 
 /**
@@ -145,9 +130,6 @@ function createSignupBody() {
     return null;
   }
 
-  const emailAddress =
-      document.getElementById('signup-form').elements['userEmail'].value;
-
   let interestCheckBox = document.getElementById('check1');
   const interestTags = [];
   for (let i = 2; interestCheckBox; i++) {
@@ -161,8 +143,28 @@ function createSignupBody() {
   return {
     gitHubAuthToken: gitHubAuthorizer.getToken(),
     interestTags,
-    emailAddress,
   };
+}
+
+/**
+ * Posts a user to the servlet
+ * @param {URLSearchParams} userParams parameters with the users information
+ * @return {?Promise} Returns a prepared post user fetch request.
+ */
+function postUser(userParams) {
+  const fetchRequest = fetch(makeRelativeUrlAbsolute('/user'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: userParams,
+  });
+
+  return standardizeFetchErrors(
+      fetchRequest,
+      'Failed to communicate with the server. Please try again later.',
+      'An error occcured while creating your account.' +
+      ' Please try again later.');
 }
 
 initSignupForm();

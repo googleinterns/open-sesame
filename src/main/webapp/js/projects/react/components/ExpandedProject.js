@@ -36,12 +36,10 @@ export default function ExpandedProject(props) {
           </div>
           <div className="ml-1 emphasis">Mentors:</div>
           <div className="d-flex flex-wrap mb-2">
-            {/* TODO : Use the mentor User ID as the key. Once it is
-                available. */}
-            {project.mentors.map((mentor, i) => {
+            {project.mentors.map((mentor) => {
               return (
-                <div className="p-1 col-lg-3">
-                  <MentorCard key={i} mentor={mentor} />
+                <div className="p-1 col-lg-3" key={mentor.userId}>
+                  <MentorCard mentor={mentor} />
                 </div>
               );
             })}
