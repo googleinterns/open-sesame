@@ -1,5 +1,5 @@
-import TagList from './TagList.js';
-import MentorCard from './MentorCard.js';
+import {TagList} from './TagList.js';
+import {MentorCard} from './MentorCard.js';
 import {expandedProjectType} from '../prop_types.js';
 
 /**
