@@ -23,5 +23,6 @@ export function checkTesting() {
     global.React = require('react');
     global.fetch = require('fetch-mock-jest');
     global.ReactRouterDOM = require('react-router-dom');
+    global.mailtouiApp = require('mailtoui');
   }
 }
