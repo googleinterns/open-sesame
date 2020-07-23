@@ -68,7 +68,7 @@ The ```job``` labeled ```JavaFormat``` in the [LintingAndTestingCI.yaml](.github
 We use ```ESLint``` to lint our JavaScript code. OpenSesame's version of ```ESLint```
 runs using the rules defined in our [.eslitrc](./.eslintrc) file (google and react style guide standards).
 
-The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles JavaScript Linting. This ```job``` is built on three main steps.
+The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles JavaScript Linting. This ```job``` performs three main steps:
 
 1. Run the locally installed ESLint Linter (ESLint is a part of OpenSesame's
 dependencies). The local linter is set to format code with the ```--fix``` option.
@@ -109,7 +109,7 @@ Please refer to [this](https://maven.apache.org/guides/introduction/introduction
 ### Data Structures and Naming
 Opensesame only intends to store Data that can’t be sourced from GitHub in Datastore. When Data is sent to the front-end, we plan to conditionally populate Information sourced from GitHub. This is to conserve API calls.
 
-As a naming convention, Java Files that end in ```Entity``` refer to ```Objectify``` enabled classes that represent data as it is stored in datastore. Java files that end in ```Data``` refer to classes that represent data that is sent to the frontend. ```Data``` classes directly translate to the ```JSONs``` that are retreived when ```GET``` requests are sent to the various opensesame Java servlets.
+As a naming convention, Java Files that end in ```Entity``` refer to ```Objectify``` enabled classes that represent data as it is stored in datastore. Java files that end in ```Data``` refer to classes that represent data that is sent to the frontend. ```Data``` classes are directly serialized to the ```JSON``` that is retreived when ```GET``` requests are sent to the various OpenSesame Java servlets.
 
 __for example,__ If ```X``` is an aspect of our website with unique data that we plan to store in Datastore. We will handle it with an Objectify enabled ```XEntity``` Java class. If X also requires data from GitHub, we will have an additional ```XData``` Java class that builds on ```XEntity``` by populating its fields using the GitHub API. ```XData``` can then be converted to a ```JSON``` with the ```Gson``` Library and sent to the frontend using the ```XServlet```.
 
