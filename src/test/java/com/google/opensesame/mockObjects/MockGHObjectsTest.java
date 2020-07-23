@@ -13,7 +13,7 @@ import org.kohsuke.github.GHUser;
 public class MockGHObjectsTest {
   @Test
   public void mockUserSetupTests() throws IOException {
-    GHUser mockUser = MockGHObjects.setupMockUser();
+    GHUser mockUser = MockGHObjects.createMockUser();
     assertEquals(mockUser.getBio(), MockGHObjects.MOCK_BIO);
     assertEquals(mockUser.getName(), MockGHObjects.MOCK_GHUSER_NAME);
     assertEquals(mockUser.getAvatarUrl(), MockGHObjects.MOCK_AVATAR_URL);
@@ -23,7 +23,7 @@ public class MockGHObjectsTest {
 
   @Test
   public void mockRepositorySetupTests() throws IOException {
-    GHRepository mockRepository = MockGHObjects.setupMockRepository();
+    GHRepository mockRepository = MockGHObjects.createMockRepository();
     assertEquals(mockRepository.getDescription(), MockGHObjects.MOCK_DESCRIPTION);
     assertEquals(mockRepository.getName(), MockGHObjects.MOCK_GHREPO_NAME);
     assertEquals(mockRepository.listTopics(), MockGHObjects.MOCK_TOPICS);

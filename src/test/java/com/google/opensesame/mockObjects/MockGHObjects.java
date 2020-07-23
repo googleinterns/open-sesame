@@ -15,17 +15,17 @@ public class MockGHObjects {
 
   // #### MOCK GHUser ####
 
-  /** The name of the mocked GHUser returned by setupMockUser() */
+  /** The name of the mocked GHUser returned by createMockUser() */
   public static String MOCK_GHUSER_NAME = "MOCK_NAME";
-  /** The bio of the mocked GHUser returned by setupMockUser() */
+  /** The bio of the mocked GHUser returned by createMockUser() */
   public static String MOCK_BIO = "MOCK_BIO";
-  /** The Avatar URL of the mocked GHUser returned by setupMockUser() */
+  /** The Avatar URL of the mocked GHUser returned by createMockUser() */
   public static String MOCK_AVATAR_URL = "MOCK_AVATAR_URL";
-  /** The bio of the mocked GHUser returned by setupMockUser() */
+  /** The location of the mocked GHUser returned by createMockUser() */
   public static String MOCK_LOCTAION = "MOCK_LOCTAION";
 
   /**
-   * The HTML URL of the mocked GHUser returned by setupMockUser()
+   * The HTML URL of the mocked GHUser returned by createMockUser()
    *
    * @throws MalformedURLException
    */
@@ -48,7 +48,7 @@ public class MockGHObjects {
    * @return a mocked instance of a GHUser
    * @throws IOException
    */
-  public static GHUser setupMockUser() throws IOException {
+  public static GHUser createMockUser() throws IOException {
     // Create A GHUser Stub
     GHUser mockGHUser = mock(GHUser.class);
     when(mockGHUser.getAvatarUrl()).thenReturn(MOCK_AVATAR_URL);
@@ -61,14 +61,14 @@ public class MockGHObjects {
 
   // #### MOCK GHRepository ####
 
-  /** The Language of the mocked GHRepository returned by setupMockRepository() */
+  /** The Language of the mocked GHRepository returned by createMockRepository() */
   public static String MOCK_LANGUAGE = "MOCK_LANGUAGE";
-  /** The name of the mocked GHRepository returned by setupMockRepository() */
+  /** The name of the mocked GHRepository returned by createMockRepository() */
   public static String MOCK_GHREPO_NAME = "MOCK_REPO_NAME";
-  /** The description of the mocked GHRepository returned by setupMockRepository() */
+  /** The description of the mocked GHRepository returned by createMockRepository() */
   public static String MOCK_DESCRIPTION = "MOCK_DESCRIPTION";
   /**
-   * The topics of the mocked GHRepository returned by setupMockRepository(). ["TOPIC 1","TOPIC 2"]
+   * The topics of the mocked GHRepository returned by createMockRepository(). ["TOPIC 1","TOPIC 2"]
    * represented as a List.
    */
   public static List<String> MOCK_TOPICS = createMockTopics();
@@ -98,7 +98,7 @@ public class MockGHObjects {
    * @return a mocked instance of a GHRepository
    * @throws IOException
    */
-  public static GHRepository setupMockRepository() throws IOException {
+  public static GHRepository createMockRepository() throws IOException {
     GHRepository mockGHRepository = mock(GHRepository.class);
     when(mockGHRepository.getDescription()).thenReturn(MOCK_DESCRIPTION);
     when(mockGHRepository.getLanguage()).thenReturn(MOCK_LANGUAGE);
