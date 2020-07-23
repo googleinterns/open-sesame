@@ -1,12 +1,12 @@
 import {mentorType} from '../prop_types.js';
-import TagList from './TagList.js';
+import {TagList} from './TagList.js';
 
 /**
  * A card to display basic information about a project mentor.
  * @param {Object} props
  * @return {React.Component} Returns the react component.
  */
-export default function MentorCard(props) {
+export function MentorCard(props) {
   const mentor = props.mentor;
 
   return (

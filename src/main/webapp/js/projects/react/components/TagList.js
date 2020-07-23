@@ -3,7 +3,7 @@
  * @param {{tags: string[]}} props
  * @return {React.Component} Returns a React component list of tags.
  */
-export default function TagList(props) {
+export function TagList(props) {
   return (
     <div className="d-flex flex-wrap">
       {props.tags.map((tag, i) => {
