@@ -11,7 +11,7 @@ export default function ExpandedProject(props) {
   React.useEffect(() => {
     mailtouiApp.run();
   });
-  
+
   if (props.loading) {
     return (
       <h2 className="text-center mt-1">Loading project...</h2>
