@@ -7,7 +7,7 @@ import {expandedProjectType} from '../prop_types.js';
  * @param {Object} props
  * @return {React.Component} Returns the React component.
  */
-export default function ExpandedProject(props) {
+export function ExpandedProject(props) {
   if (props.loading) {
     return (
       <h2 className="text-center mt-1">Loading project...</h2>

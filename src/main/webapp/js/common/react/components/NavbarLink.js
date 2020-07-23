@@ -7,7 +7,7 @@ checkTesting();
  * @param {{url: NavbarLink}} props
  * @return {React.Component} Returns the navbar link.
  */
-export default function NavbarLink(props) {
+export function NavbarLink(props) {
   const url = props.url;
 
   let classes = 'nav-item';
