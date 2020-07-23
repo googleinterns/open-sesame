@@ -99,7 +99,6 @@ public class ProjectServlet extends HttpServlet {
     String[] projectIds = request.getParameterValues(PROJECT_ID_PARAM);
     Collection<ProjectEntity> projectEntities;
     if (projectIds != null) {
-      // Get projects by ID if IDs were specified.
       projectEntities = ofy().load().type(ProjectEntity.class).ids(projectIds).values();
 
       if (projectIds.length != projectEntities.size()) {
