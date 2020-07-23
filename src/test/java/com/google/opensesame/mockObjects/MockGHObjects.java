@@ -8,7 +8,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
 
@@ -106,5 +105,4 @@ public class MockGHObjects {
     when(mockGHRepository.listTopics()).thenReturn(MOCK_TOPICS);
     return mockGHRepository;
   }
-  
 }
