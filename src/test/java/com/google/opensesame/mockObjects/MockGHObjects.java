@@ -95,7 +95,7 @@ public class MockGHObjects {
    *
    *     <p>NOTE: all functions return fixtures defined in this class
    *
-   * @return a mocked instance of a GHUser
+   * @return a mocked instance of a GHRepository
    * @throws IOException
    */
   public static GHRepository setupMockRepository() throws IOException {
