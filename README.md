@@ -107,7 +107,9 @@ Java unit testing is done with [JUnit 4](https://junit.org/junit4/).
 Please refer to [this](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html) resource to learn more about what each project directory should be used for, and take a look at [this section](https://maven.apache.org/guides/getting-started/#how-do-i-make-my-first-maven-project) of the Maven getting started guide to see how the project naming scheme affects directory structure.
 
 ### Data Structures and Naming
-Opensesame only intends to store Data that can’t be sourced from GitHub in Datastore. When Data is sent to the front-end, we plan to conditionally populate Information sourced from GitHub. This is to conserve API calls.
+The only data OpenSesame intends to store in Datastore is data that can’t be sourced from GitHub. Getting Data directly from GitHub allows us avoid issues where OpenSesame data is out of sync with GitHub.
+
+When Data is sent to the front-end, we plan to conditionally populate Information sourced from GitHub. Conditional population of GitHub data will help us conserve our limited API calls.
 
 As a naming convention, Java Files that end in ```Entity``` refer to ```Objectify``` enabled classes that represent data as it is stored in datastore. Java files that end in ```Data``` refer to classes that represent data that is sent to the frontend. ```Data``` classes are directly serialized to the ```JSON``` that is retreived when ```GET``` requests are sent to the various OpenSesame Java servlets.
 
