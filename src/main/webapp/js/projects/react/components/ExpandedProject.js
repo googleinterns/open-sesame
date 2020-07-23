@@ -38,7 +38,7 @@ export function ExpandedProject(props) {
           <div className="d-flex flex-wrap mb-2">
             {project.mentors.map((mentor) => {
               return (
-                <div className="p-1 col-lg-3" key={mentor.userId}>
+                <div className="p-1 col-lg-3" key={mentor.userID}>
                   <MentorCard mentor={mentor} />
                 </div>
               );
