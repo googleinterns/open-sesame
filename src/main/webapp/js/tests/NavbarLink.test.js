@@ -1,5 +1,5 @@
 import React from 'react';
-import NavbarLink from '../components/NavbarLink.js';
+import NavbarLink from '../common/react/components/NavbarLink.js';
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 

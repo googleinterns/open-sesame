@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../components/Navbar.js';
+import Navbar from '../common/react/components/Navbar.js';
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 
