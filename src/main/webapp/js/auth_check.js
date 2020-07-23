@@ -33,6 +33,7 @@ function createAuthFetch() {
  * @type {Promise}
  */
 export let authDataFetch = createAuthFetch();
+
 /**
  * Performs an authentication check and redirects if the user is not
  * authenticated. If a no profile redirect is not provided, the user will be
