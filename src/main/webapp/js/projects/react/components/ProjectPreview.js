@@ -1,5 +1,7 @@
 import {TagList} from './TagList.js';
 import {projectPreviewType} from '../prop_types.js';
+import {checkTesting} from '../../../checkTesting.js';
+checkTesting();
 
 const Link = ReactRouterDOM.Link;
 
