@@ -21,7 +21,7 @@ checkTesting();
  * @param {NavbarProps} props
  * @return {React.Component} Returns the navbar.
  */
-export default function Navbar(props) {
+export function Navbar(props) {
   const authenticated =
       !props.loading && props.authData.authorized && props.authData.hasProfile;
 
