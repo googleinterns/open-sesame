@@ -184,7 +184,7 @@ function createRowElement() {
  * @return {ProjectName} Data about the project with th id @param projectID
  */
 function getProject(projectID) {
-  const fetchURL = makeRelativeUrlAbsolute('/projects');
+  const fetchURL = makeRelativeUrlAbsolute('/projects/name');
   fetchURL.searchParams.append('projectId', projectID);
 
   const errorFormattedFetchRequest = standardizeFetchErrors(

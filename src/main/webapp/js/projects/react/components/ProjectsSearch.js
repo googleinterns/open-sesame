@@ -110,9 +110,8 @@ function ExpandedProjectFetcher() {
  */
 function createProjectFetchGetter(projectId) {
   return (signal) => {
-    const projectUrl = makeRelativeUrlAbsolute('/projects');
+    const projectUrl = makeRelativeUrlAbsolute('/projects/full');
     projectUrl.searchParams.append('projectId', projectId);
-    projectUrl.searchParams.append('fullData', true);
     const fetchRequest = fetch(projectUrl, {
       method: 'get',
       signal: signal,
@@ -132,8 +131,7 @@ function createProjectFetchGetter(projectId) {
  * @return {Promise} Returns the fetch request.
  */
 function createProjectPreviewFetch(signal) {
-  const projectUrl = makeRelativeUrlAbsolute('/projects');
-  projectUrl.searchParams.append('previewData', true);
+  const projectUrl = makeRelativeUrlAbsolute('/projects/preview');
   const fetchRequest = fetch(projectUrl, {
     method: 'get',
     signal: signal,

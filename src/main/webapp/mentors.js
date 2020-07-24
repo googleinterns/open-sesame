@@ -228,7 +228,7 @@ async function createProjectLinks(projectIDs) {
  * @return {String} name
  */
 function getProjectName(projectID) {
-  const projectUrl = new URL('/projects', window.location.origin);
+  const projectUrl = new URL('/projects/name', window.location.origin);
   projectUrl.searchParams.append('projectId', Number(projectID));
   const fetchRequest = fetch(projectUrl, {
     method: 'get',
