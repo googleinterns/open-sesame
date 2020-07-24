@@ -59,7 +59,7 @@ public class MockGHObjects {
     when(mockGHUser.getAvatarUrl()).thenReturn(MOCK_AVATAR_URL);
     when(mockGHUser.getBio()).thenReturn(MOCK_BIO);
     when(mockGHUser.getHtmlUrl()).thenReturn(MOCK_HTML_URL());
-    when(mockGHUser.getLocation()).thenReturn(MOCK_LOCTAION);
+    when(mockGHUser.getLocation()).thenReturn(MOCK_LOCATION);
     when(mockGHUser.getName()).thenReturn(MOCK_GHUSER_NAME);
     return mockGHUser;
   }
