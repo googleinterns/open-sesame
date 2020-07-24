@@ -19,8 +19,8 @@ function renderButton(dataFetcher) {
 
 const buttonContainer = document.getElementById('auth-button-container');
 ReactDOM.render(
-      <DataFetcher
-        createFetchRequest={() => authDataFetch}
-        render={renderButton} />,
-      buttonContainer);
+    <DataFetcher
+      createFetchRequest={() => authDataFetch}
+      render={renderButton} />,
+    buttonContainer);
 
