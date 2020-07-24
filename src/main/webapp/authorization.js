@@ -30,7 +30,7 @@ class GitHubAuthorizer {
      * GitHubAuthorizer
      * @type {Firebase}
      */
-    this.firebase = firebase; // eslint-disable-line no-undef
+    this.firebase = firebase;
 
     this.initializeFirebase();
 
@@ -92,10 +92,10 @@ class GitHubAuthorizer {
   signIn() {
     const provider = new this.firebase.auth.GithubAuthProvider();
     return this.getFirebase().auth().signInWithPopup(provider)
-        .then((result) => {
-          this.token = result.credential.accessToken;
-          return result;
-        });
+      .then((result) => {
+        this.token = result.credential.accessToken;
+        return result;
+      });
   }
 
   /**

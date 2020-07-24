@@ -19,5 +19,6 @@
     "PropTypes": "readonly",
     "ReactRouterDOM": "readonly",
     "mailtouiApp": "readonly",
+    "firebase": "readonly"
   }
 }
