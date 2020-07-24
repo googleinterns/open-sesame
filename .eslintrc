@@ -18,6 +18,6 @@
     "ReactDOM": "readonly",
     "PropTypes": "readonly",
     "ReactRouterDOM": "readonly",
-    // "mailtouiApp": "readonly",
+    "mailtouiApp": "readonly"
   }
 }
