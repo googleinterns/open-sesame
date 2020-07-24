@@ -37,6 +37,7 @@ const urls = [
  */
 function initNavbar() {
   const navbarContainer = document.getElementById('navbar-container');
+  navbarContainer.classList.add('sticky-top');
   ReactDOM.render(
       <DataFetcher
         createFetchRequest={() => authDataFetch}
