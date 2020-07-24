@@ -65,6 +65,7 @@ public class ProjectData {
 
   /**
    * Gets the name of the repository or returns a cached value if it exists.
+   *
    * @return Returns the name of the repository.
    */
   public String getName() {
@@ -77,6 +78,7 @@ public class ProjectData {
 
   /**
    * Gets the repository description and caches it or returns a cached value if it exists.
+   *
    * @return Returns the repository description.
    */
   public String getDescription() {
@@ -89,6 +91,7 @@ public class ProjectData {
 
   /**
    * Gets the repository topic tags and caches them or returns cached values if they exist.
+   *
    * @return Returns the repository topic tags.
    */
   public List<String> getTopicTags() throws IOException {
@@ -101,18 +104,20 @@ public class ProjectData {
 
   /**
    * Gets the repository's primary language and caches it or returns a cached value if it exists.
+   *
    * @return Returns the repository's primary language.
    */
   public String getPrimaryLanguage() {
     if (primaryLanguage == null) {
       primaryLanguage = repository.getLanguage();
     }
-    
+
     return primaryLanguage;
   }
 
   /**
    * Gets the number of mentors and caches it or returns a cached value if it exists.
+   *
    * @return Returns the number of mentors.
    */
   public int getNumMentors() {
@@ -125,6 +130,7 @@ public class ProjectData {
 
   /**
    * Gets the repository ID and caches it or returns a cached value if it exists.
+   *
    * @return Returns the repository ID.
    */
   public String getRepositoryId() {
@@ -137,12 +143,13 @@ public class ProjectData {
 
   /**
    * Gets the mentors and caches them or returns cached values if they exist.
+   *
    * @return Returns the mentors.
    */
   public List<UserData> getMentors() throws IOException {
     if (mentors == null) {
       Map<String, UserEntity> userEntities =
-        ofy().load().type(UserEntity.class).ids(projectEntity.mentorIds);
+          ofy().load().type(UserEntity.class).ids(projectEntity.mentorIds);
       mentors = new ArrayList<UserData>();
       for (UserEntity entity : userEntities.values()) {
         mentors.add(new UserData(entity));

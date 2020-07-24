@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ProjectNameServlet extends HttpServlet {
   /**
    * Creates project name data from a ProjectEntity from datastore.
+   *
    * @param projectEntity The ProjectEntity from datastore.
    * @return Returns the project name data.
    * @throws IOException
@@ -29,7 +30,7 @@ public class ProjectNameServlet extends HttpServlet {
   }
 
   private static Gson gson = new Gson();
-  
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Collection<ProjectEntity> projectEntities = ProjectEntity.queryFromRequest(request, response);

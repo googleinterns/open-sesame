@@ -16,11 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 public class ProjectPreviewServlet extends HttpServlet {
   /**
    * Creates project preview data from a ProjectEntity from datastore.
+   *
    * @param projectEntity The ProjectEntity from datastore.
    * @return Returns the project preview data.
    * @throws IOException
    */
-  public static ProjectData createProjectPreviewData(ProjectEntity projectEntity) throws IOException {
+  public static ProjectData createProjectPreviewData(ProjectEntity projectEntity)
+      throws IOException {
     ProjectData projectData = new ProjectData(projectEntity);
     projectData.getName();
     projectData.getDescription();
@@ -33,7 +35,7 @@ public class ProjectPreviewServlet extends HttpServlet {
   }
 
   private static Gson gson = new Gson();
-  
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Collection<ProjectEntity> projectEntities = ProjectEntity.queryFromRequest(request, response);

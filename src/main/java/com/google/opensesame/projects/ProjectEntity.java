@@ -22,15 +22,15 @@ public class ProjectEntity {
 
   /**
    * Queries for ProjectEntities in the datastore based on a servlet request.
+   *
    * @param request The servlet request defining the query.
    * @param response The servlet response to send errors to.
    * @return Returns a collection of ProjectEntities from the query or null if the query was
-   *    invalid.
+   *     invalid.
    * @throws IOException
    */
   public static Collection<ProjectEntity> queryFromRequest(
-      HttpServletRequest request, 
-      HttpServletResponse response) throws IOException {
+      HttpServletRequest request, HttpServletResponse response) throws IOException {
     String[] projectIds = request.getParameterValues(PROJECT_ID_PARAM);
     Collection<ProjectEntity> projectEntities;
     if (projectIds != null) {
@@ -53,7 +53,7 @@ public class ProjectEntity {
 
     return projectEntities;
   }
-  
+
   /**
    * Get a project entity with a specified repository ID from the datastore or create a new one if
    * one does not exist in the datastore.

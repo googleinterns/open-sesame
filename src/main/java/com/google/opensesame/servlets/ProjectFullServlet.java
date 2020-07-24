@@ -15,8 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/projects/full")
 public class ProjectFullServlet extends HttpServlet {
   /**
-   * Creates full project data, including data about the project mentors, from a ProjectEntity
-   * from datastore.
+   * Creates full project data, including data about the project mentors, from a ProjectEntity from
+   * datastore.
+   *
    * @param projectEntity The ProjectEntity from datastore.
    * @return Returns the full project data.
    * @throws IOException
