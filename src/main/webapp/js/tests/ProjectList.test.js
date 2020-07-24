@@ -19,19 +19,19 @@ const mockProjectPreviews = [
     primaryLanguage: 'Primary Language',
     numMentors: 1,
     repositoryId: '45717250',
-  }
+  },
 ];
 
 describe('Project preview list', () => {
   it('renders', () => {
     const elem = render(<ProjectList
-        loading={false}
-        projectPreviews={mockProjectPreviews}
-        inRouter={false} />);
+      loading={false}
+      projectPreviews={mockProjectPreviews}
+      inRouter={false} />);
 
     expect(elem.container.firstChild).not.toBeNull();
   });
-  
+
   it('renders while loading', () => {
     const elem = render(<ProjectList loading={true} inRouter={false} />);
 
@@ -40,9 +40,9 @@ describe('Project preview list', () => {
 
   it('displays project previews', () => {
     render(<ProjectList
-        loading={false}
-        projectPreviews={mockProjectPreviews}
-        inRouter={false} />);
+      loading={false}
+      projectPreviews={mockProjectPreviews}
+      inRouter={false} />);
 
     expect(screen.queryByText(mockProjectPreviews[0].name)).not.toBeNull();
     expect(screen.queryByText(mockProjectPreviews[1].name)).not.toBeNull();

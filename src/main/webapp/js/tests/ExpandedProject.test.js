@@ -19,7 +19,7 @@ const mockProject = {
       gitHubURL: 'https://github.com/Richie78321',
       image: 'https://avatars3.githubusercontent.com/u/31116115?v=4',
       location: 'Pennsylvania, USA',
-      name: 'Richie Goulazian'
+      name: 'Richie Goulazian',
     },
     {
       userID: '2',
@@ -27,15 +27,15 @@ const mockProject = {
       gitHubURL: 'https://github.com/Sami-2000',
       image: 'https://avatars1.githubusercontent.com/u/50716380?v=4',
       name: 'Sami Alves',
-    }
+    },
   ],
 };
 
 describe('Project breakout page', () => {
   it('renders', () => {
     const elem = render(<ExpandedProject
-        loading={false}
-        project={mockProject} />);
+      loading={false}
+      project={mockProject} />);
 
     expect(elem.container.firstChild).not.toBeNull();
   });
@@ -56,7 +56,7 @@ describe('Project breakout page', () => {
   it('provides the connect button on mentor cards with email', () => {
     render(<ExpandedProject loading={false} project={mockProject} />);
 
-    const mentorCard = 
+    const mentorCard =
         screen.getByText(mockProject.mentors[0].name).closest('.card');
     expect(getByText(mentorCard, 'Connect'))
         .toHaveAttribute('href', `mailto:${mockProject.mentors[0].email}`);

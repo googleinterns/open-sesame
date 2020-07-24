@@ -29,9 +29,9 @@ export function ProjectList(props) {
       {props.projectPreviews.map((projectPreview) => {
         return (
           <div className="p-1 col-lg-4" key={projectPreview.repositoryId}>
-            <ProjectPreview 
-                projectPreview={projectPreview}
-                inRouter={props.inRouter} />
+            <ProjectPreview
+              projectPreview={projectPreview}
+              inRouter={props.inRouter} />
           </div>
         );
       })}
