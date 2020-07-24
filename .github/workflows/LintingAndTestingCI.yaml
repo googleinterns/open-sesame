@@ -59,14 +59,14 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Apply ESLint changes.
-    #   # Run the ESLint GitHub Action for showing un-fixable JavaScript style 
-    #   # violations. This action is not built to fix code but it makes it easier
-    #   # to find the errors caught by ESLint in the file changes PR tab.
-    # - name: Annotate ESLint errors
-    #   uses: hallee/eslint-action@1.0.3
-    #   if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
-    #   with:
-    #     repo-token: ${{secrets.GITHUB_TOKEN}}
+      # Run the ESLint GitHub Action for showing un-fixable JavaScript style 
+      # violations. This action is not built to fix code but it makes it easier
+      # to find the errors caught by ESLint in the file changes PR tab.
+    - name: Annotate ESLint errors
+      uses: hallee/eslint-action@1.0.3
+      if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
+      with:
+        repo-token: ${{secrets.GITHUB_TOKEN}}
 
   BuildAndTest:  # Check that the current Code can be built and all the current 
   # tests pass. This check is a safegaurd to ensure that the master branch is
