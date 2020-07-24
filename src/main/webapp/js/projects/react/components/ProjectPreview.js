@@ -28,8 +28,8 @@ export function ProjectPreview(props) {
       <div className="card-body pb-0">
         {inRouter ?
             <Link
-                to={'/' + projectPreview.repositoryId}
-                className="stretched-link">
+              to={'/' + projectPreview.repositoryId}
+              className="stretched-link">
               <h5 className="card-title emphasis">{projectPreview.name}</h5>
             </Link> :
             <a href={'/projects.html#/' + projectPreview.repositoryId}>
