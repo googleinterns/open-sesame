@@ -17,7 +17,7 @@ public class MockGHObjectsTest {
     assertEquals(mockUser.getBio(), MockGHObjects.MOCK_BIO);
     assertEquals(mockUser.getName(), MockGHObjects.MOCK_GHUSER_NAME);
     assertEquals(mockUser.getAvatarUrl(), MockGHObjects.MOCK_AVATAR_URL);
-    assertEquals(mockUser.getLocation(), MockGHObjects.MOCK_LOCTAION);
+    assertEquals(mockUser.getLocation(), MockGHObjects.MOCK_LOCATION);
     assertEquals(mockUser.getHtmlUrl().toString(), MockGHObjects.MOCK_HTML_URL().toString());
   }
 
