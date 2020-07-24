@@ -74,7 +74,7 @@ User signup consists of three parts:
   * This is done using [Firebase Authentication](https://firebase.google.com/docs/auth) with [GitHub OAuth](https://docs.github.com/en/developers/apps/about-apps#about-oauth-apps)
   * An access token is granted to the user, which is then sent to the server during the profile creation step and verified on the backend. 
   * Once the access token is verified, the user has proven ownership of that GitHub account, and it is then stored by ID in the website profile.
-3. Profile creation (a user with an authorized account can add more information about themselves)
+3. Profile creation (a user with an authorized account can add more information about themselves, such as interest tags)
   * After a user completes website authentication, they are redirected to a form for profile creation.
   * GitHub authentication is completed during profile creation.
 
