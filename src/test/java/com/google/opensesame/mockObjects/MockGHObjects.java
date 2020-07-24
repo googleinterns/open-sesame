@@ -11,6 +11,12 @@ import java.util.List;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
 
+/** 
+ * MockGHObjects is a helper class with two main static functions to help
+ * mock the kohsuke GitHub API during testing;
+ * createMockUser() - Creates a mock GHUser instance.
+ * createMockRepository() - Creates a mock GHRepository instance.
+ */
 public class MockGHObjects {
 
   // #### MOCK GHUser ####
@@ -79,10 +85,10 @@ public class MockGHObjects {
    * @return ["TOPIC 1","TOPIC 2"] represented as a List.
    */
   private static List<String> createMockTopics() {
-    List<String> MOCK_TOPICS = new ArrayList<String>();
-    MOCK_TOPICS.add("TOPIC 1");
-    MOCK_TOPICS.add("TOPIC 2");
-    return MOCK_TOPICS;
+    List<String> mockTopics = new ArrayList<String>();
+    mockTopics.add("TOPIC 1");
+    mockTopics.add("TOPIC 2");
+    return mockTopics;
   }
 
   /**
