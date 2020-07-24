@@ -7,26 +7,25 @@ import com.google.opensesame.user.UserData;
 import com.google.opensesame.user.UserEntity;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.kohsuke.github.GHRepository;
 
 /**
- * A class containing the data for a project. This is intended to be serialized and sent to the
- * client. A ProjectData object can define as many or as few of the fields as necessary depending on
- * the use case, as undefined values will not be serialized to JSON and will therefore not be sent
- * to the client.
+ * A read-only utility class for converting a ProjectEntity datastore object into a POJO for JSON
+ * serialization.
  */
 public class ProjectData {
   private transient GHRepository repository;
   private transient ProjectEntity projectEntity;
-  public String name;
-  public String description;
-  public List<String> topicTags;
-  public String primaryLanguage;
-  public Integer numMentors;
-  public String repositoryId;
-  public List<UserData> mentors;
+  private String name = null;
+  private String description = null;
+  private List<String> topicTags = null;
+  private String primaryLanguage = null;
+  private Integer numMentors = null;
+  private String repositoryId = null;
+  private List<UserData> mentors = null;
 
   /**
    * Create a ProjectData object from a ProjectEntity and its associated GitHub repository.
@@ -65,50 +64,91 @@ public class ProjectData {
   }
 
   /**
-   * Assigns the name of this project.
-   *
-   * @return Returns the ProjectData instance with the data assigned.
+   * Gets the name of the repository or returns a cached value if it exists.
+   * @return Returns the name of the repository.
    */
-  public ProjectData withName() {
-    name = repository.getName();
-
-    return this;
-  }
-
-  /**
-   * Creates and assigns the data needed to preview the project on the frontend.
-   *
-   * @return Returns the ProjectData instance with the data assigned.
-   * @throws IOException Throws if there is an error communicating with the GitHub API.
-   */
-  public ProjectData withPreviewData() throws IOException {
-    this.withName();
-
-    description = repository.getDescription();
-    topicTags = repository.listTopics();
-    primaryLanguage = repository.getLanguage();
-    numMentors = projectEntity.mentorIds.size();
-
-    return this;
-  }
-
-  /**
-   * Creates and assigns the data needed to view the full breakout page of a project on the
-   * frontend.
-   *
-   * @return Returns the ProjectData instance with the data assigned.
-   * @throws IOException Throws if there is an error communicating with the GitHub API.
-   */
-  public ProjectData withFullData() throws IOException {
-    this.withPreviewData();
-
-    Map<String, UserEntity> userEntities =
-        ofy().load().type(UserEntity.class).ids(projectEntity.mentorIds);
-    mentors = new ArrayList<UserData>();
-    for (UserEntity entity : userEntities.values()) {
-      mentors.add(new UserData(entity));
+  public String getName() {
+    if (name == null) {
+      name = repository.getName();
     }
 
-    return this;
+    return name;
+  }
+
+  /**
+   * Gets the repository description and caches it or returns a cached value if it exists.
+   * @return Returns the repository description.
+   */
+  public String getDescription() {
+    if (description == null) {
+      description = repository.getDescription();
+    }
+
+    return description;
+  }
+
+  /**
+   * Gets the repository topic tags and caches them or returns cached values if they exist.
+   * @return Returns the repository topic tags.
+   */
+  public List<String> getTopicTags() throws IOException {
+    if (topicTags == null) {
+      topicTags = repository.listTopics();
+    }
+
+    return Collections.unmodifiableList(topicTags);
+  }
+
+  /**
+   * Gets the repository's primary language and caches it or returns a cached value if it exists.
+   * @return Returns the repository's primary language.
+   */
+  public String getPrimaryLanguage() {
+    if (primaryLanguage == null) {
+      primaryLanguage = repository.getLanguage();
+    }
+    
+    return primaryLanguage;
+  }
+
+  /**
+   * Gets the number of mentors and caches it or returns a cached value if it exists.
+   * @return Returns the number of mentors.
+   */
+  public int getNumMentors() {
+    if (numMentors == null) {
+      numMentors = projectEntity.numMentors;
+    }
+
+    return numMentors;
+  }
+
+  /**
+   * Gets the repository ID and caches it or returns a cached value if it exists.
+   * @return Returns the repository ID.
+   */
+  public String getRepositoryId() {
+    if (repositoryId == null) {
+      repositoryId = projectEntity.repositoryId;
+    }
+
+    return repositoryId;
+  }
+
+  /**
+   * Gets the mentors and caches them or returns cached values if they exist.
+   * @return Returns the mentors.
+   */
+  public List<UserData> getMentors() throws IOException {
+    if (mentors == null) {
+      Map<String, UserEntity> userEntities =
+        ofy().load().type(UserEntity.class).ids(projectEntity.mentorIds);
+      mentors = new ArrayList<UserData>();
+      for (UserEntity entity : userEntities.values()) {
+        mentors.add(new UserData(entity));
+      }
+    }
+
+    return Collections.unmodifiableList(mentors);
   }
 }
