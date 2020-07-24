@@ -92,10 +92,10 @@ class GitHubAuthorizer {
   signIn() {
     const provider = new this.firebase.auth.GithubAuthProvider();
     return this.getFirebase().auth().signInWithPopup(provider)
-      .then((result) => {
-        this.token = result.credential.accessToken;
-        return result;
-      });
+        .then((result) => {
+          this.token = result.credential.accessToken;
+          return result;
+        });
   }
 
   /**
