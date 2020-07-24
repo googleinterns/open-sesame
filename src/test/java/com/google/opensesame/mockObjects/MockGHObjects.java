@@ -27,7 +27,7 @@ public class MockGHObjects {
   /** The Avatar URL of the mocked GHUser returned by createMockUser() */
   public static String MOCK_AVATAR_URL = "MOCK_AVATAR_URL";
   /** The location of the mocked GHUser returned by createMockUser() */
-  public static String MOCK_LOCTAION = "MOCK_LOCTAION";
+  public static String MOCK_LOCATION = "MOCK_LOCATION";
 
   /**
    * The HTML URL of the mocked GHUser returned by createMockUser()
