@@ -50,6 +50,7 @@ function getMentors() {
       console.log(mentor);
       mentorsContainer.appendChild(createMentorElement(mentor));
     }
+    mailtouiApp.run();
   })
       .catch((errorResponse) => {
         console.error(
@@ -111,6 +112,7 @@ function createMentorElement(mentor) {
 function createEmailLink(email) {
   const mentorEmail = document.createElement('a');
   mentorEmail.href = 'mailto: ' + email;
+  mentorEmail.className = 'mailtoui';
   mentorEmail.innerText = 'Send Email Introduction';
   return mentorEmail;
 }

@@ -2,13 +2,13 @@
  * @fileoverview The highest-order component of the mentored project search
  * page. This handles the loading of project preview data.
  */
-import ProjectList from './ProjectList.js';
+import {ProjectList} from './ProjectList.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
 } from '../../../fetch_handler.js';
 import {DataFetcher} from '../../../common/react/components/DataFetcher.js';
-import ExpandedProject from './ExpandedProject.js';
+import {ExpandedProject} from './ExpandedProject.js';
 
 // Using HashRouter instead of standard BrowserRouter because it supports
 // client-side routing that doesn't interfere with server-side
@@ -22,7 +22,7 @@ const Route = ReactRouterDOM.Route;
  * The main project search page react component.
  * @extends React.Component
  */
-export default class ProjectsSearch extends React.Component {
+export class ProjectsSearch extends React.Component {
   /**
    * Create the projects search page react component.
    * @param {{}} props

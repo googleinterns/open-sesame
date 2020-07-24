@@ -1,4 +1,4 @@
-import checkTesting from '../../../checkTesting.js';
+import {checkTesting} from '../../../checkTesting.js';
 import {authDataType} from '../navbar_prop_types.js';
 checkTesting();
 
@@ -10,7 +10,7 @@ const USER_SIGNUP_URL = '/signup.html';
  * @param {Object} props
  * @return {React.Component} Returns the React component.
  */
-export default function AuthButton(props) {
+export function AuthButton(props) {
   const authData = props.authData;
 
   let classList = 'btn btn-emphasis';

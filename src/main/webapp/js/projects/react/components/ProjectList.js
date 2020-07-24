@@ -1,4 +1,4 @@
-import ProjectPreview from './ProjectPreview.js';
+import {ProjectPreview} from './ProjectPreview.js';
 import {projectPreviewType} from '../prop_types.js';
 
 /**
@@ -15,7 +15,7 @@ import {projectPreviewType} from '../prop_types.js';
  * @return {React.Component} Returns a React component which is a list of
  * project previews.
  */
-export default function ProjectList(props) {
+export function ProjectList(props) {
   if (props.loading) {
     return (
       <h2 className="text-center mt-1">Loading projects...</h2>
