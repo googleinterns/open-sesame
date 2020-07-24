@@ -1,4 +1,4 @@
-import TagList from './TagList.js';
+import {TagList} from './TagList.js';
 import {projectPreviewType} from '../prop_types.js';
 
 const Link = ReactRouterDOM.Link;
@@ -8,7 +8,7 @@ const Link = ReactRouterDOM.Link;
  * @param {{projectPreview: ProjectPreviewData}} props
  * @return {React.Component} Returns a React component project preview card.
  */
-export default function ProjectPreview(props) {
+export function ProjectPreview(props) {
   const projectPreview = props.projectPreview;
   const projectTags = projectPreview.topicTags;
   // Adds the primary language to the list of project tags. Should add
