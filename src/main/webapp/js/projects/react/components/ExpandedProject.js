@@ -1,5 +1,5 @@
-import TagList from './TagList.js';
-import MentorCard from './MentorCard.js';
+import {TagList} from './TagList.js';
+import {MentorCard} from './MentorCard.js';
 import {expandedProjectType} from '../prop_types.js';
 
 /**
@@ -7,7 +7,7 @@ import {expandedProjectType} from '../prop_types.js';
  * @param {Object} props
  * @return {React.Component} Returns the React component.
  */
-export default function ExpandedProject(props) {
+export function ExpandedProject(props) {
   if (props.loading) {
     return (
       <h2 className="text-center mt-1">Loading project...</h2>
@@ -38,7 +38,7 @@ export default function ExpandedProject(props) {
           <div className="d-flex flex-wrap mb-2">
             {project.mentors.map((mentor) => {
               return (
-                <div className="p-1 col-lg-3" key={mentor.userId}>
+                <div className="p-1 col-lg-3" key={mentor.userID}>
                   <MentorCard mentor={mentor} />
                 </div>
               );

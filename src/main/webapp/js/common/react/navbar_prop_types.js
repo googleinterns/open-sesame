@@ -1,4 +1,4 @@
-import checkTesting from '../../checkTesting.js';
+import {checkTesting} from '../../checkTesting.js';
 checkTesting();
 
 export const authDataType = PropTypes.shape({
