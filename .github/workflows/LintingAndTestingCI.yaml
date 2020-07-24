@@ -52,7 +52,7 @@ jobs:
       run: npm install
       # Run the installed version of ESLint and fix Javascript code.
     - name: Run ESLint
-      run: npx eslint "src/**" --ext .js,.jsx,.ts,.tsx --fix 
+      run: npx eslint . --ext .js,.jsx,.ts,.tsx --fix 
       # Commit changes made during the previous step.
     - name: Commit ESLint changes
       uses: stefanzweifel/git-auto-commit-action@v4
