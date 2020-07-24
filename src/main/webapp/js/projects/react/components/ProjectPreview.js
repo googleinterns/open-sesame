@@ -11,6 +11,11 @@ const Link = ReactRouterDOM.Link;
  * @return {React.Component} Returns a React component project preview card.
  */
 export function ProjectPreview(props) {
+  let inRouter = props.inRouter;
+  if (inRouter === undefined) {
+    inRouter = false;
+  }
+
   const projectPreview = props.projectPreview;
   const projectTags = projectPreview.topicTags;
   // Adds the primary language to the list of project tags. Should add
@@ -21,11 +26,15 @@ export function ProjectPreview(props) {
   return (
     <div className="project-card card h-100">
       <div className="card-body pb-0">
-        <Link
-          to={'/' + projectPreview.repositoryId}
-          className="stretched-link">
-          <h5 className="card-title emphasis">{projectPreview.name}</h5>
-        </Link>
+        {inRouter ?
+            <Link
+                to={'/' + projectPreview.repositoryId}
+                className="stretched-link">
+              <h5 className="card-title emphasis">{projectPreview.name}</h5>
+            </Link> :
+            <a href={'/projects.html#/' + projectPreview.repositoryId}>
+              {projectPreview.name}
+            </a>}
         <TagList tags={projectTags} />
         <p>{projectPreview.description}</p>
       </div>
@@ -44,4 +53,5 @@ export function ProjectPreview(props) {
 
 ProjectPreview.propTypes = {
   projectPreview: projectPreviewType.isRequired,
+  inRouter: PropTypes.bool,
 };

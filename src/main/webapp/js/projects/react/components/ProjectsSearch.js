@@ -67,7 +67,8 @@ function ProjectPreviewFetcher() {
     return (
       <ProjectList
         loading={dataFetcherState.isFetching}
-        projectPreviews={dataFetcherState.data} />
+        projectPreviews={dataFetcherState.data}
+        inRouter={true} />
     );
   };
 

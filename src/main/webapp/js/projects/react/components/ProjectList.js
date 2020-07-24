@@ -1,5 +1,7 @@
 import {ProjectPreview} from './ProjectPreview.js';
 import {projectPreviewType} from '../prop_types.js';
+import {checkTesting} from '../../../checkTesting.js';
+checkTesting();
 
 /**
  * @typedef {Object} ProjectPreviewData
@@ -27,7 +29,9 @@ export function ProjectList(props) {
       {props.projectPreviews.map((projectPreview) => {
         return (
           <div className="p-1 col-lg-4" key={projectPreview.repositoryId}>
-            <ProjectPreview projectPreview={projectPreview} />
+            <ProjectPreview 
+                projectPreview={projectPreview}
+                inRouter={props.inRouter} />
           </div>
         );
       })}
@@ -38,4 +42,5 @@ export function ProjectList(props) {
 ProjectList.propTypes = {
   loading: PropTypes.bool.isRequired,
   projectPreviews: PropTypes.arrayOf(projectPreviewType),
+  inRouter: PropTypes.bool.isRequired,
 };
