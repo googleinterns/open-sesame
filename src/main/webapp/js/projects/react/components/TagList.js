@@ -1,3 +1,6 @@
+import {checkTesting} from '../../../checkTesting.js';
+checkTesting();
+
 /**
  * A horizontal list of badge-based tags.
  * @param {{tags: string[]}} props
