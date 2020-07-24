@@ -42,8 +42,43 @@ To [increase the hourly GitHub API rate limit](https://developer.github.com/v3/#
 </env-variables>
 ```
 
-## Linting
-Run the linter with:
+## Continuous Integration (CI)
+The configurations for linters and Continuous intigeration GitHub Actions run on
+this project can be found in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file.
+
+By Default, GitHub makes it so that any commit made by an Action will not trigger a new workflow
+(essentially, Linters are not run on linted code). To bypass this, any action that
+makes a commit must use a Personal Access Token when run. Further infomation can be found 
+[here](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token).
+
+Action dependencies are Cached to speed up CI according to the GitHub Actions Cacheing tutorial
+found [here](https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows).
+
+__NOTE:__ A proposed PR must pass all CI checks or it will be prevented from merging with Master.
+
+
+### Building and Testing
+The ```job``` labeled ```BuildAndTest``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles building and testing during Continuous Integration. This job runs the ```npm run verify``` command in [package.json](package.json). ```npm run verify``` is a command that runs all the available tests in this repo and builds the OpenSesame Platform with the available code. 
+
+### Linting
+#### Java Linter
+The ```job``` labeled ```JavaFormat``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles Java Linting. This job formats Java code to meet Google Style Guide standards. Any changes made by this linter are committed with the message _"Google Java Format"_. This Action was built using the [Google Java Format](https://github.com/marketplace/actions/google-java-format#google-java-format-action) GitHub Action.
+
+#### JavaScript Linter
+We use ```ESLint``` to lint our JavaScript code. OpenSesame's version of ```ESLint```
+runs using the rules defined in our [.eslitrc](./.eslintrc) file (google and react style guide standards).
+
+The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles JavaScript Linting. This ```job``` performs three main steps:
+
+1. Run the locally installed ESLint Linter (ESLint is a part of OpenSesame's
+dependencies). The local linter is set to format code with the ```--fix``` option.
+
+2. Commit changes made during the previous step(1) with the [git-auto-commit-action](https://github.com/marketplace/actions/git-auto-commit#git-auto-commit-action). Commits are made with the message _"Apply ESLint Changes"_.
+
+3. Run the [ESLint Action](https://github.com/marketplace/actions/eslint-action#eslint-action) GitHub Action that annotates ESLint errors and warnings in PRs. This steps makes the style violations evident when looking at PR diffs in the file changes PR tab. 
+
+##### Locally Running ESLint 
+Run the local ```ESLint``` JavaScript linter with:
 ```
 $ npm install eslint  # if not installed already.
 $ ./node_modules/eslint/bin/eslint.js <file or folder>
@@ -55,12 +90,15 @@ JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest
 * [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for testing React.
 
 The tests are also automatically run when using the `npm run dev-server` command to start a development server.
+
 ### JavaScript Testing
 JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest, additional functionality is added with:
 * [jest-dom](https://github.com/testing-library/jest-dom) for testing the DOM.
 * [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for testing React.
+
 ### Java Testing
 Java unit testing is done with [JUnit 4](https://junit.org/junit4/).
+
 ### Adding tests
 **To add another JS test**, simply add a JS file that ends with `.test.js` (ex: `script.test.js`) and it will automatically be run by Jest.
 **To add another Java test**, add a Java file to the testing directory `src/test/java/`. Be sure to follow the Java conventions for package directory structure, for example if you're testing a package in `com.google.opensesame.github`, the test should be placed in the directory `src/test/java/com/google/opensesame/github`.
@@ -82,3 +120,16 @@ A user is only considered to have an account on Open Sesame if they have complet
 
 ## File Structure
 Please refer to [this](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html) resource to learn more about what each project directory should be used for, and take a look at [this section](https://maven.apache.org/guides/getting-started/#how-do-i-make-my-first-maven-project) of the Maven getting started guide to see how the project naming scheme affects directory structure.
+
+### Data Structures and Naming
+The only data OpenSesame intends to store in Datastore is data that can’t be sourced from GitHub. Getting Data directly from GitHub allows us avoid issues where OpenSesame data is out of sync with GitHub.
+
+When Data is sent to the front-end, we plan to conditionally populate Information sourced from GitHub. Conditional population of GitHub data will help us conserve our limited API calls.
+
+As a naming convention, Java Files that end in ```Entity``` refer to ```Objectify``` enabled classes that represent data as it is stored in datastore. Java files that end in ```Data``` refer to classes that represent data that is sent to the frontend. ```Data``` classes are directly serialized to the ```JSON``` that is retreived when ```GET``` requests are sent to the various OpenSesame Java servlets.
+
+__for example,__ If ```X``` is an aspect of our website with unique data that we plan to store in Datastore. We will handle it with an Objectify enabled ```XEntity``` Java class. If X also requires data from GitHub, we will have an additional ```XData``` Java class that builds on ```XEntity``` by populating its fields using the GitHub API. ```XData``` can then be converted to a ```JSON``` with the ```Gson``` Library and sent to the frontend using the ```XServlet```.
+
+![Diagram of Data Structuring convention](https://i.postimg.cc/8PzT3yqn/sql1-N6j51-FA2-FYi-Ena1-S4-Q.png)
+
+This convention allows us to manipulate data on the backend without having to waste API calls if there is no need to.
