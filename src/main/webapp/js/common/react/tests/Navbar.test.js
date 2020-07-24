@@ -40,10 +40,10 @@ describe('Navbar component', () => {
 
   it('displays the names of the urls', () => {
     render(
-        <Navbar 
-            urls={navbarUrls}
-            loading={false}
-            authData={defaultMockAuthData} />);
+        <Navbar
+          urls={navbarUrls}
+          loading={false}
+          authData={defaultMockAuthData} />);
 
     expect(screen.queryByText('Home')).not.toBeNull();
     expect(screen.queryByText('Projects')).not.toBeNull();
@@ -53,10 +53,10 @@ describe('Navbar component', () => {
 
   it('contains the urls', () => {
     render(
-        <Navbar 
-            urls={navbarUrls}
-            loading={false}
-            authData={defaultMockAuthData} />);
+        <Navbar
+          urls={navbarUrls}
+          loading={false}
+          authData={defaultMockAuthData} />);
 
     expect(screen.getByText('Home')).toHaveAttribute('href', '/');
     expect(screen.getByText('Projects'))
