@@ -23,23 +23,11 @@ import {
  */
 
 /**
- * A Project from datastore.
- * This datatype is a JS interpretation of the UserData Java Object returned
- * from the java servlet. For more information, please look at the
+ * The name of a project from datastore.
  * [ProjectData file]{@link ../java/com/google/opensesame/projects/ProjectData}
- * @typedef {Object} Project
- * @property {ProjectPreview} projectPreview - The data used to showcase a
- *                                             project on the projects page
- */
-
-/**
- * Data contained in a project from Datastore.
- * This datatype is a JS interpretation of the UserData Java Object returned
- * from the java servlet. For more information, please look at the
- * [ProjectPreviewData file]
- * {@link ../java/com/google/opensesame/projects/ProjectPreviewData}
- * @typedef {Object} ProjectPreview
- * @property {string} name - The name of the project.
+ * @typedef {Object} ProjectName
+ * @property {string} name
+ * @property {string} repositoryId
  */
 
 // ELEMENTS_FOR_ABOUT_ME_SECTION
@@ -164,7 +152,7 @@ function createLocation(location) {
  */
 async function addProject(projectID, projectTagDiv) {
   const projectData = await getProject(projectID);
-  addProjectTag(projectData.previewData.name, projectID, projectTagDiv);
+  addProjectTag(projectData.name, projectID, projectTagDiv);
 }
 
 /**
@@ -193,18 +181,20 @@ function createRowElement() {
  * Get the project with the Id @param projectID from Datastore using the
  * /project servlet.
  * @param {string} projectID the id used to store a project in datastore.
- * @return {Project} Data about the project with th id @param projectID
+ * @return {ProjectName} Data about the project with th id @param projectID
  */
 function getProject(projectID) {
-  const fetchURL = '/project?projectId=' + projectID;
-  const fetchRequest = fetch(makeRelativeUrlAbsolute(fetchURL));
+  const fetchURL = makeRelativeUrlAbsolute('/projects/name');
+  fetchURL.searchParams.append('projectId', projectID);
 
-  return standardizeFetchErrors(
-      fetchRequest,
+  const errorFormattedFetchRequest = standardizeFetchErrors(
+      fetch(fetchURL),
       'Failed to communicate with the server. Please try again later.',
       'An error occcured while retrieving this project.' +
-      ' Please try again later.')
-      .then((response) => response.json());
+    ' Please try again later.');
+
+  return errorFormattedFetchRequest
+      .then((response) => response.json()).then((projects) => projects[0]);
 }
 
 /**

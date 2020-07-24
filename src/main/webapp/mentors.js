@@ -50,6 +50,7 @@ function getMentors() {
       console.log(mentor);
       mentorsContainer.appendChild(createMentorElement(mentor));
     }
+    mailtouiApp.run();
   })
       .catch((errorResponse) => {
         console.error(
@@ -111,6 +112,7 @@ function createMentorElement(mentor) {
 function createEmailLink(email) {
   const mentorEmail = document.createElement('a');
   mentorEmail.href = 'mailto: ' + email;
+  mentorEmail.className = 'mailtoui';
   mentorEmail.innerText = 'Send Email Introduction';
   return mentorEmail;
 }
@@ -226,7 +228,7 @@ async function createProjectLinks(projectIDs) {
  * @return {String} name
  */
 function getProjectName(projectID) {
-  const projectUrl = new URL('/project', window.location.origin);
+  const projectUrl = new URL('/projects/name', window.location.origin);
   projectUrl.searchParams.append('projectId', Number(projectID));
   const fetchRequest = fetch(projectUrl, {
     method: 'get',
@@ -237,8 +239,8 @@ function getProjectName(projectID) {
       'Encountered a server error, please try again later.')
       .then((response) => response.json()).then((data) => {
         console.log('got project data');
-        console.log(data.previewData.name);
-        return data.previewData.name;
+        console.log(data[0].name);
+        return data[0].name;
       })
       .catch((errorResponse) => {
         console.error(

@@ -7,60 +7,155 @@ import com.google.opensesame.user.UserData;
 import com.google.opensesame.user.UserEntity;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /**
- * A class containing all relevant data for a project. This is intended to be serialized and sent to
- * the client.
+ * A read-only utility class for converting a ProjectEntity datastore object into a POJO for JSON
+ * serialization.
  */
 public class ProjectData {
-  /**
-   * Creates project data from a ProjectEntity.
-   *
-   * @param projectEntity A project entity from datastore or manually created.
-   * @return Returns the created ProjectData.
-   * @throws IOException Throws when there is an error communicating with the GitHub API.
-   */
-  public static ProjectData fromProjectEntity(ProjectEntity projectEntity) throws IOException {
-    GitHub gitHub = GitHubGetter.getGitHub();
-    GHRepository repository = gitHub.getRepositoryById(projectEntity.repositoryId);
-
-    return fromProjectEntity(projectEntity, repository);
-  }
+  private transient GHRepository repository;
+  private transient ProjectEntity projectEntity;
+  private String name = null;
+  private String description = null;
+  private List<String> topicTags = null;
+  private String primaryLanguage = null;
+  private Integer numMentors = null;
+  private String repositoryId = null;
+  private List<UserData> mentors = null;
 
   /**
-   * Creates project data from a ProjectEntity and the associated GitHub repository.
+   * Create a ProjectData object from a ProjectEntity and its associated GitHub repository.
    *
-   * @param projectEntity A project entity from datastore or manually created.
-   * @param repository The GitHub repository associated with the project.
-   * @return Returns the created ProjectData.
-   * @throws IOException Throws when there is an error communicating with the GitHub API.
+   * <p>The main use of this constructor is for testing, where the GitHub repository must be mocked.
+   * However, in the case where the GHRepository associated with a ProjectEntity has already been
+   * created, it would be preferred to use this constructor to save GitHub API calls by not
+   * recreating the GHRepository.
+   *
+   * @param projectEntity
+   * @param repository
+   * @throws IllegalArgumentException Throws if the ProjectEntity does not have the same repository
+   *     ID as the supplied GitHub repository.
    */
-  public static ProjectData fromProjectEntity(ProjectEntity projectEntity, GHRepository repository)
-      throws IOException {
-    ProjectPreviewData previewData =
-        ProjectPreviewData.fromProjectEntity(projectEntity, repository);
-
-    Map<String, UserEntity> userEntities =
-        ofy().load().type(UserEntity.class).ids(projectEntity.mentorIds);
-    ArrayList<UserData> mentors = new ArrayList<UserData>();
-    for (UserEntity entity : userEntities.values()) {
-      mentors.add(new UserData(entity));
+  public ProjectData(ProjectEntity projectEntity, GHRepository repository)
+      throws IllegalArgumentException {
+    if (!Long.toString(repository.getId()).equals(projectEntity.repositoryId)) {
+      throw new IllegalArgumentException(
+          "The project entity and its GitHub repository do not share the same repository ID.");
     }
 
-    return new ProjectData(previewData, mentors);
+    this.projectEntity = projectEntity;
+    this.repository = repository;
+    repositoryId = projectEntity.repositoryId;
   }
 
-  // This is currently in its most basic form. In the future there will be more data that differs
-  // from the preview data.
-  private final ProjectPreviewData previewData;
-  private final List<UserData> mentors;
+  /**
+   * Create a ProjectData object from a ProjectEntity.
+   *
+   * @param projectEntity
+   * @throws IOException Throws if there was an error retrieving the GitHub repository associated
+   *     with this ProjectEntity.
+   */
+  public ProjectData(ProjectEntity projectEntity) throws IOException {
+    this(projectEntity, GitHubGetter.getGitHub().getRepositoryById(projectEntity.repositoryId));
+  }
 
-  public ProjectData(ProjectPreviewData previewData, List<UserData> mentors) {
-    this.previewData = previewData;
-    this.mentors = mentors;
+  /**
+   * Gets the name of the repository or returns a cached value if it exists.
+   *
+   * @return Returns the name of the repository.
+   */
+  public String getName() {
+    if (name == null) {
+      name = repository.getName();
+    }
+
+    return name;
+  }
+
+  /**
+   * Gets the repository description and caches it or returns a cached value if it exists.
+   *
+   * @return Returns the repository description.
+   */
+  public String getDescription() {
+    if (description == null) {
+      description = repository.getDescription();
+    }
+
+    return description;
+  }
+
+  /**
+   * Gets the repository topic tags and caches them or returns cached values if they exist.
+   *
+   * @return Returns the repository topic tags.
+   */
+  public List<String> getTopicTags() throws IOException {
+    if (topicTags == null) {
+      topicTags = repository.listTopics();
+    }
+
+    return Collections.unmodifiableList(topicTags);
+  }
+
+  /**
+   * Gets the repository's primary language and caches it or returns a cached value if it exists.
+   *
+   * @return Returns the repository's primary language.
+   */
+  public String getPrimaryLanguage() {
+    if (primaryLanguage == null) {
+      primaryLanguage = repository.getLanguage();
+    }
+
+    return primaryLanguage;
+  }
+
+  /**
+   * Gets the number of mentors and caches it or returns a cached value if it exists.
+   *
+   * @return Returns the number of mentors.
+   */
+  public int getNumMentors() {
+    if (numMentors == null) {
+      numMentors = projectEntity.numMentors;
+    }
+
+    return numMentors;
+  }
+
+  /**
+   * Gets the repository ID and caches it or returns a cached value if it exists.
+   *
+   * @return Returns the repository ID.
+   */
+  public String getRepositoryId() {
+    if (repositoryId == null) {
+      repositoryId = projectEntity.repositoryId;
+    }
+
+    return repositoryId;
+  }
+
+  /**
+   * Gets the mentors and caches them or returns cached values if they exist.
+   *
+   * @return Returns the mentors.
+   */
+  public List<UserData> getMentors() throws IOException {
+    if (mentors == null) {
+      Map<String, UserEntity> userEntities =
+          ofy().load().type(UserEntity.class).ids(projectEntity.mentorIds);
+      mentors = new ArrayList<UserData>();
+      for (UserEntity entity : userEntities.values()) {
+        mentors.add(new UserData(entity));
+      }
+    }
+
+    return Collections.unmodifiableList(mentors);
   }
 }
