@@ -15,8 +15,7 @@ import {
  * @property {string} email - the email address of the user
  * @property {string} gitHubURL: - The user's github page
  * @property {string} image - The User's profile picture
- * @property {string} location - T
- * he location of the user
+ * @property {string} location - The location of the user
  * @property {string} name - The name of the user
  * @property {boolean} isMentor - true if the user is a mentor for a project
  *                                false otherwise.
