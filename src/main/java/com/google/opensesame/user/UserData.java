@@ -1,5 +1,7 @@
 package com.google.opensesame.user;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
 import com.google.opensesame.projects.ProjectData;
@@ -9,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
  * A fully fleshed out User of OpenSesame containing information sourced from GitHub. To conserve
@@ -50,7 +51,7 @@ public class UserData {
       email = null;
     }
     isMentor = userEntity.isMentor;
-    
+
     // GitHub query TODO: make this more testable by extracting GitHub.
     generateProjects(userEntity.projectIds);
     final GitHub gitHub = GitHubGetter.getGitHub();
@@ -117,19 +118,19 @@ public class UserData {
     return projects;
   }
 
-  /** 
-   * Add the {@code ProjectData} associated with the projects in
-   * {@code projectIds} to {@code this.projects}.
+  /**
+   * Add the {@code ProjectData} associated with the projects in {@code projectIds} to {@code
+   * this.projects}.
+   *
    * @param projectIds
-  */
-  private void generateProjects(ArrayList<String> projectIds) 
-  throws IOException {
-      Map<String, ProjectEntity> projectEntities =
-          ofy().load().type(ProjectEntity.class).ids(projectIds);
-      for (ProjectEntity entity : projectEntities.values()) {
-        ProjectData curProject = new ProjectData(entity);
-        curProject.getName();
-        projects.add(curProject);
-      }
+   */
+  private void generateProjects(ArrayList<String> projectIds) throws IOException {
+    Map<String, ProjectEntity> projectEntities =
+        ofy().load().type(ProjectEntity.class).ids(projectIds);
+    for (ProjectEntity entity : projectEntities.values()) {
+      ProjectData curProject = new ProjectData(entity);
+      curProject.getName();
+      projects.add(curProject);
+    }
   }
 }

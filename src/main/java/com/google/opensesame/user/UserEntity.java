@@ -34,12 +34,11 @@ public class UserEntity {
     interestTags = userData.getTags();
     email = userData.getEmail();
     userId = userData.getUserID();
-    projectIds = new ArrayList<String>(
-      userData.getProjects()
-      .stream()
-      .map(x -> x.getRepositoryId())
-      .collect(Collectors.toList())
-    );
+    projectIds =
+        new ArrayList<String>(
+            userData.getProjects().stream()
+                .map(x -> x.getRepositoryId())
+                .collect(Collectors.toList()));
   }
 
   // TODO: Cut down the number of constructors.
