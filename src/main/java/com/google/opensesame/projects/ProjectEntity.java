@@ -9,6 +9,7 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.OnLoad;
 import com.googlecode.objectify.annotation.OnSave;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,6 +20,21 @@ import javax.servlet.http.HttpServletResponse;
 @Entity
 public class ProjectEntity {
   public static final String PROJECT_ID_PARAM = "projectId";
+
+  /**
+   * The names of ProjectEntity fields that have the @Index Objectify annotation and can be
+   * sorted and filtered by in Datastore.
+   */
+  public static List<String> queryableFields;
+  static {
+    Field[] fields = ProjectEntity.class.getDeclaredFields();
+    queryableFields = new ArrayList<String>();
+    for (Field field : fields) {
+      if (field.isAnnotationPresent(Index.class)) {
+        queryableFields.add(field.getName());
+      }
+    }
+  }
 
   /**
    * Queries for ProjectEntities in the datastore based on a servlet request.
