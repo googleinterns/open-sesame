@@ -41,9 +41,9 @@ export function Navbar(props) {
         <ul className="navbar-nav ml-auto">
           {props.urls.map((url, i) => renderNavbarLink(url, authenticated))}
         </ul>
-      </div>
-      <div className="ml-1">
-        <AuthButton loading={props.loading} authData={props.authData} />
+        <div className="form-inline ml-lg-1 my-2 my-lg-0">
+          <AuthButton loading={props.loading} authData={props.authData} />
+        </div>
       </div>
     </nav>
   );
