@@ -30,7 +30,7 @@ class GitHubAuthorizer {
      * GitHubAuthorizer
      * @type {Firebase}
      */
-    this.firebase = firebase; // eslint-disable-line no-undef
+    this.firebase = firebase;
 
     this.initializeFirebase();
 
