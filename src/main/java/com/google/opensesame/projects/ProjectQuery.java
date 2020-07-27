@@ -4,6 +4,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import com.google.opensesame.util.ErrorResponse;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.cmd.Query;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -12,10 +13,8 @@ import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 public class ProjectQuery {
   public static final String FILTER_QUERY_PARAM = "filter";
-  public static final String FILTER_QUERY_REGEX = "^[A-Za-z]+ (>|>=|!=|=|<|<=) .+$";
 
   /**
    * The names of ProjectEntity fields that have the @Index Objectify annotation and can be
@@ -41,7 +40,7 @@ public class ProjectQuery {
    * @param HttpServletResponse The servlet response to send errors to.
    * @return Returns the list of FilterQueries or null if an error was encountered while parsing.
    */
-  private static List<QueryFilter> filterQueriesFromRequest(
+  private static List<QueryFilter> queryFiltersFromRequest(
       HttpServletRequest request,
       HttpServletResponse response) throws IOException {
     String[] filterRequests = request.getParameterValues(FILTER_QUERY_PARAM);
@@ -49,12 +48,16 @@ public class ProjectQuery {
       return Arrays.asList();
     }
 
-    List<QueryFilter> filterQueries = new ArrayList<QueryFilter>();
+    List<QueryFilter> queryFilters = new ArrayList<QueryFilter>();
     for (String filterRequest : filterRequests) {
-      filterQueries.add(QueryFilter.fromString(filterRequest, response));
+      QueryFilter queryFilter = QueryFilter.fromString(filterRequest, response);
+      if (queryFilter == null) {
+        return null; 
+      }
+      queryFilters.add(queryFilter);
     }
 
-    return filterQueries;
+    return queryFilters;
   }
 
   /**
@@ -84,7 +87,20 @@ public class ProjectQuery {
     } else {
       // TODO(Richie): Add pagination support.
       // TODO(Richie): Add ordering support.
-      projectEntities = ofy().load().type(ProjectEntity.class).order("-numMentors").list();
+      Query<ProjectEntity> projectEntityQuery = 
+          ofy().load().type(ProjectEntity.class).order("-numMentors");
+      
+      List<QueryFilter> queryFilters = queryFiltersFromRequest(request, response);
+      if (queryFilters == null) {
+        return null;
+      }
+
+      for (QueryFilter queryFilter : queryFilters) {
+        projectEntityQuery = 
+            projectEntityQuery.filter(queryFilter.condition, queryFilter.comparisonObject);
+      }
+
+      projectEntities = projectEntityQuery.list();
     }
 
     return projectEntities;

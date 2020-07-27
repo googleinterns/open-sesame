@@ -124,9 +124,9 @@ public class ProjectQueryTest {
   }
 
   @Test
-  public void queryWithoutIds() throws IOException {
+  public void queryWithNoParams() throws IOException {
     // Expect to receive all ProjectEntities in order of descending number of mentors because no
-    // list of IDs was supplied.
+    // additional parameters were supplied.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
 
@@ -135,6 +135,35 @@ public class ProjectQueryTest {
         new ProjectEntity[] {firstMockProject, secondMockProject, thirdMockProject};
     assertNotNull(queryResult);
     assertArrayEquals(expectedQueryResult, queryResult.toArray());
+  }
+
+  @Test
+  public void queryWithFilter() throws IOException {
+    // Expect to receive all ProjectEntities with 2 or more mentors, in order of descending number
+    // of mentors.
+
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
+        .thenReturn(new String[] {"numMentors >= 2"});
+
+    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
+    ProjectEntity[] expectedQueryResult =
+        new ProjectEntity[] {firstMockProject, secondMockProject};
+    assertNotNull(queryResult);
+    assertArrayEquals(expectedQueryResult, queryResult.toArray());
+  }
+
+  @Test
+  public void queryWithInvalidFilter() throws IOException {
+    // Expect to receive an error response of 400 because the supplied filter is invalid.
+
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
+        .thenReturn(new String[] {"numMentors>= 2"});
+
+    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
+    assertNull(queryResult);
+    verify(mockResponse, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
   }
 
   @Test
