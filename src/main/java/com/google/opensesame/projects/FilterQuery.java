@@ -25,9 +25,7 @@ class FilterQuery {
    * @throws IOException
    */
   public static FilterQuery fromString(
-      String filterQueryString,
-      HttpServletResponse response,
-      List<Field> queryableFields) throws IOException {
+      String filterQueryString, HttpServletResponse response) throws IOException {
     if (!filterQueryString.matches(FILTER_QUERY_REGEX)) {
       ErrorResponse.sendJsonError(
           response,
@@ -39,7 +37,7 @@ class FilterQuery {
 
     String[] splitFilterRequest = filterQueryString.split(" ");
     String filterFieldName = splitFilterRequest[0];
-    Optional<Field> filterField = queryableFields.stream()
+    Optional<Field> filterField = ProjectQuery.queryableFields.stream()
         .filter((field) -> field.getName().equals(filterFieldName))
         .findFirst();
     if (!filterField.isPresent()) {

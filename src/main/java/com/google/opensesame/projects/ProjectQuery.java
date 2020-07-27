@@ -51,7 +51,7 @@ public class ProjectQuery {
 
     List<FilterQuery> filterQueries = new ArrayList<FilterQuery>();
     for (String filterRequest : filterRequests) {
-      filterQueries.add(FilterQuery.fromString(filterRequest, response, queryableFields));
+      filterQueries.add(FilterQuery.fromString(filterRequest, response));
     }
 
     return filterQueries;
@@ -83,6 +83,7 @@ public class ProjectQuery {
       }
     } else {
       // TODO(Richie): Add pagination support.
+      // TODO(Richie): Add ordering support.
       projectEntities = ofy().load().type(ProjectEntity.class).order("-numMentors").list();
     }
 
