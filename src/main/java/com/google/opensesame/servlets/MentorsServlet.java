@@ -32,7 +32,6 @@ public class MentorsServlet extends HttpServlet {
     for (UserEntity entity : mentorEntities) {
       if (entity.isMentor()) {
         UserData mentorData = new UserData(entity);
-        mentorData.getProjects();
         mentors.add(mentorData);
       }
     }
