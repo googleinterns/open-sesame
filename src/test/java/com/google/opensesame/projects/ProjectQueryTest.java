@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class ProjectEntityTest {
+public class ProjectQueryTest {
   private final LocalServiceTestHelper helper =
       new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
   private Closeable session;
@@ -89,7 +89,7 @@ public class ProjectEntityTest {
     when(request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM))
         .thenReturn(new String[] {firstMockProject.repositoryId, secondMockProject.repositoryId});
 
-    Collection<ProjectEntity> queryResult = ProjectEntity.queryFromRequest(request, mockResponse);
+    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
     Collection<ProjectEntity> expected = Arrays.asList(firstMockProject, secondMockProject);
     assertNotNull(queryResult);
     assertTrue(queryResult.size() == expected.size() && queryResult.containsAll(expected));
@@ -103,7 +103,7 @@ public class ProjectEntityTest {
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM)).thenReturn(new String[] {});
 
-    Collection<ProjectEntity> queryResult = ProjectEntity.queryFromRequest(request, mockResponse);
+    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
     assertNotNull(queryResult);
     assertTrue(queryResult.size() == 0);
     verify(mockResponse, never()).setStatus(anyInt());
@@ -118,7 +118,7 @@ public class ProjectEntityTest {
     when(request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM))
         .thenReturn(new String[] {firstMockProject.repositoryId, "invalidID"});
 
-    Collection<ProjectEntity> queryResult = ProjectEntity.queryFromRequest(request, mockResponse);
+    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
     assertNull(queryResult);
     verify(mockResponse, times(1)).setStatus(HttpServletResponse.SC_NOT_FOUND);
   }
@@ -130,7 +130,7 @@ public class ProjectEntityTest {
 
     HttpServletRequest request = mock(HttpServletRequest.class);
 
-    Collection<ProjectEntity> queryResult = ProjectEntity.queryFromRequest(request, mockResponse);
+    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
     ProjectEntity[] expectedQueryResult =
         new ProjectEntity[] {firstMockProject, secondMockProject, thirdMockProject};
     assertNotNull(queryResult);
@@ -143,7 +143,7 @@ public class ProjectEntityTest {
     // with the supplied ID already exists.
 
     ProjectEntity projectEntity =
-        ProjectEntity.fromRepositoryIdOrNew(firstMockProject.repositoryId);
+        ProjectQuery.fromRepositoryIdOrNew(firstMockProject.repositoryId);
 
     assertEquals(firstMockProject, projectEntity);
   }
@@ -154,7 +154,7 @@ public class ProjectEntityTest {
     // exists in the Datastore.
 
     String newId = "newId";
-    ProjectEntity projectEntity = ProjectEntity.fromRepositoryIdOrNew(newId);
+    ProjectEntity projectEntity = ProjectQuery.fromRepositoryIdOrNew(newId);
 
     assertEquals(newId, projectEntity.repositoryId);
   }
