@@ -13,6 +13,9 @@
   display: inline;
 }
 
+.mission .lead {
+  font-size: 60%;
+}
 
 .anchor-emphasis:hover,
 .dark-emphasis {
