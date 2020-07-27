@@ -5,6 +5,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.OnSave;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * The User Entity is designed to directly interface with datastore using Objectify. It holds the
@@ -20,8 +21,6 @@ public class UserEntity {
   public ArrayList<String> interestTags;
   /** Datastore IDs of projects the given user has decided to mentor for. */
   public ArrayList<String> projectIds = new ArrayList<String>();
-  /** Datastore IDs of mentees that have expressed interest in being mentored by this user. */
-  public ArrayList<String> menteeIds = new ArrayList<String>();
 
   public UserEntity() {}
 
@@ -35,8 +34,12 @@ public class UserEntity {
     interestTags = userData.getTags();
     email = userData.getEmail();
     userId = userData.getUserID();
-    projectIds = userData.getProjectIDs();
-    menteeIds = userData.getMenteeIDs();
+    projectIds = new ArrayList<String>(
+      userData.getProjects()
+      .stream()
+      .map(x -> x.getRepositoryId())
+      .collect(Collectors.toList())
+    );
   }
 
   // TODO: Cut down the number of constructors.
@@ -75,27 +78,6 @@ public class UserEntity {
     this.projectIds = projectIds;
   }
 
-  /**
-   * Create a User entity with the given information.
-   *
-   * @param userId
-   * @param gitHubId
-   * @param interestTags
-   * @param email
-   * @param projectIds
-   * @param menteeIds
-   */
-  public UserEntity(
-      String userId,
-      String gitHubId,
-      ArrayList<String> interestTags,
-      String email,
-      ArrayList<String> projectIds,
-      ArrayList<String> menteeIds) {
-    this(userId, gitHubId, interestTags, email, projectIds);
-    this.menteeIds = menteeIds;
-  }
-
   @OnSave
   protected void setIsMentor() {
     isMentor = isMentor();
@@ -111,13 +93,5 @@ public class UserEntity {
    */
   public void addProject(String projectId) {
     projectIds.add(projectId);
-  }
-
-  /**
-   * Add a mentee Id to the list of mentee Ids associated with this instance of the UserEntity.
-   * Remember to store this change in datastore.
-   */
-  public void addMentee(String menteeId) {
-    menteeIds.add(menteeId);
   }
 }

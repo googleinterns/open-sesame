@@ -1,18 +1,15 @@
 package com.google.opensesame.user;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
 import com.google.opensesame.projects.ProjectData;
 import com.google.opensesame.projects.ProjectEntity;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
  * A fully fleshed out User of OpenSesame containing information sourced from GitHub. To conserve
@@ -22,9 +19,7 @@ import org.kohsuke.github.GitHub;
 public class UserData {
   private Boolean isMentor;
   private final ArrayList<String> interestTags;
-  private final ArrayList<String> menteeIds;
-  private final ArrayList<String> projectIds;
-  private List<ProjectData> projects = null;
+  private final ArrayList<ProjectData> projects = new ArrayList<ProjectData>();
   private final String bio;
   private final String gitHubID;
   private final String gitHubURL;
@@ -54,11 +49,10 @@ public class UserData {
     if (AuthServlet.getAuthorizedUser() == null) {
       email = null;
     }
-    projectIds = userEntity.projectIds;
-    menteeIds = userEntity.menteeIds;
     isMentor = userEntity.isMentor;
-
+    
     // GitHub query TODO: make this more testable by extracting GitHub.
+    generateProjects(userEntity.projectIds);
     final GitHub gitHub = GitHubGetter.getGitHub();
     final GHUser userGitAccount = gitHub.getUser(gitHubID);
     bio = userGitAccount.getBio();
@@ -118,46 +112,24 @@ public class UserData {
     return userID;
   }
 
-  /** @return a list of ids of projects a user is involved in. */
-  public ArrayList<String> getProjectIDs() {
-    return projectIds;
+  /** @return a list of of projects a user is involved in. */
+  public ArrayList<ProjectData> getProjects() {
+    return projects;
   }
 
-  /** @return a list of ids of mentees a user is currently mentoring. */
-  public ArrayList<String> getMenteeIDs() {
-    return menteeIds;
-  }
-
-  // ** @return a list of project data objects associated with a mentor. */
-  public List<ProjectData> getProjects() throws IOException {
-    if (this.projects == null) {
+  /** 
+   * Add the {@code ProjectData} associated with the projects in
+   * {@code projectIds} to {@code this.projects}.
+   * @param projectIds
+  */
+  private void generateProjects(ArrayList<String> projectIds) 
+  throws IOException {
       Map<String, ProjectEntity> projectEntities =
           ofy().load().type(ProjectEntity.class).ids(projectIds);
-      this.projects = new ArrayList<ProjectData>();
       for (ProjectEntity entity : projectEntities.values()) {
         ProjectData curProject = new ProjectData(entity);
         curProject.getName();
-        this.projects.add(curProject);
+        projects.add(curProject);
       }
-    }
-
-    return Collections.unmodifiableList(this.projects);
-  }
-
-  /**
-   * Add a project to the list of projects associated with this instance of UserData. Remember to
-   * store this change in datastore with a UserEntity.
-   */
-  public void addProject(String projectId) {
-    projectIds.add(projectId);
-    isMentor = true;
-  }
-
-  /**
-   * Add a project to the list of projects associated with this instance of UserData. Remember to
-   * store this change in datastore with a UserEntity.
-   */
-  public void addMentee(String menteeId) {
-    projectIds.add(menteeId);
   }
 }

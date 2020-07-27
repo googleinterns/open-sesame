@@ -63,11 +63,10 @@ public class MentorsServlet extends HttpServlet {
 
     ArrayList<String> interests = new ArrayList<String>();
     interests.add("skateboarding");
-    ArrayList<String> mentees = new ArrayList<String>();
     ArrayList<String> projects = new ArrayList<String>();
     projects.add(testRepoID.toString());
     UserEntity mockMentor =
-        new UserEntity(id, "Sami-2000", interests, "samialves@google.com", projects, mentees);
+        new UserEntity(id, "Sami-2000", interests, "samialves@google.com", projects);
     ofy().save().entity(mockMentor);
   }
 
