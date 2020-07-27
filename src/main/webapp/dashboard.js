@@ -76,7 +76,7 @@ function createAboutMe(user) {
     aboutMeCardDiv.append(interestTagRow);
   }
 
-  if (user.projectIds) {
+  if (user.projects) {
     aboutMeCardDiv.append(createCardTitle('Projects'));
     const projectTagRow = createRowElement();
     for (const project of user.projects) {
