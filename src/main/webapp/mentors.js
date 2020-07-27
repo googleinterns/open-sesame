@@ -18,7 +18,6 @@ function initForm() {
  * User Object
  * @typedef {Object} User
  * @property {string[]} interestTags - The user's tags
- * @property {string[]} projectIDs - The user's project IDs
  * @property {ProjectData[]} projects - The user's projects
  * @property {string} bio - The bio of the user
  * @property {string} email - the email address of the user
