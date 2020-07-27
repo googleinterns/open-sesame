@@ -6,26 +6,26 @@ import java.lang.reflect.Field;
 import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
-class FilterQuery {
+class QueryFilter {
   public static final String FILTER_QUERY_REGEX = "^[A-Za-z]+ (>|>=|!=|=|<|<=) .+$";
 
   /**
-   * Parses a FilterQuery from a string. 
+   * Parses a QueryFilter from a string. 
    * 
-   * FilterQuery strings should be in the format "fieldName >= value".
+   * QueryFilter strings should be in the format "fieldName >= value".
    * Examples:
    * <blockquote>
    * "numMentors >= 2"
    * "numInterestedUsers = 0"
    * </blockquote>
-   * @param filterQueryString The filter query string.
+   * @param QueryFilterString The filter query string.
    * @param response The servlet response to send errors to.
-   * @return Returns the FilterQuery or null if there was an error parsing the string.
+   * @return Returns the QueryFilter or null if there was an error parsing the string.
    * @throws IOException
    */
-  public static FilterQuery fromString(
-      String filterQueryString, HttpServletResponse response) throws IOException {
-    if (!filterQueryString.matches(FILTER_QUERY_REGEX)) {
+  public static QueryFilter fromString(
+      String QueryFilterString, HttpServletResponse response) throws IOException {
+    if (!QueryFilterString.matches(FILTER_QUERY_REGEX)) {
       ErrorResponse.sendJsonError(
           response,
           "Invalid filter query.",
@@ -34,7 +34,7 @@ class FilterQuery {
       return null;
     }
 
-    String[] splitFilterRequest = filterQueryString.split(" ");
+    String[] splitFilterRequest = QueryFilterString.split(" ");
     String filterFieldName = splitFilterRequest[0];
     Optional<Field> filterField = ProjectQuery.queryableFields.stream()
         .filter((field) -> field.getName().equals(filterFieldName))
@@ -65,13 +65,13 @@ class FilterQuery {
     }
 
     String comparator = splitFilterRequest[1];
-    return new FilterQuery(filterFieldName + " " + comparator, comparisonObject);
+    return new QueryFilter(filterFieldName + " " + comparator, comparisonObject);
   }
   
   public final String condition;
   public final Object comparisonObject;
 
-  private FilterQuery(String condition, Object comparisonObject) {
+  private QueryFilter(String condition, Object comparisonObject) {
     this.condition = condition;
     this.comparisonObject = comparisonObject;
   }

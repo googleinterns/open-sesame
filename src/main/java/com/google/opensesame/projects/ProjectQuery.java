@@ -35,13 +35,13 @@ public class ProjectQuery {
   /**
    * Gets the filter queries from a servlet request. Returns null if any errors are encountered
    * while parsing the filter queries.
-   * See {@link com.google.opensesame.projects.FilterQuery.fromString} for more information on how
+   * See {@link com.google.opensesame.projects.QueryFilter.fromString} for more information on how
    * FilterQueries are parsed.
    * @param HttpServletRequest The request to get the filter queries from.
    * @param HttpServletResponse The servlet response to send errors to.
    * @return Returns the list of FilterQueries or null if an error was encountered while parsing.
    */
-  private static List<FilterQuery> filterQueriesFromRequest(
+  private static List<QueryFilter> filterQueriesFromRequest(
       HttpServletRequest request,
       HttpServletResponse response) throws IOException {
     String[] filterRequests = request.getParameterValues(FILTER_QUERY_PARAM);
@@ -49,9 +49,9 @@ public class ProjectQuery {
       return Arrays.asList();
     }
 
-    List<FilterQuery> filterQueries = new ArrayList<FilterQuery>();
+    List<QueryFilter> filterQueries = new ArrayList<QueryFilter>();
     for (String filterRequest : filterRequests) {
-      filterQueries.add(FilterQuery.fromString(filterRequest, response));
+      filterQueries.add(QueryFilter.fromString(filterRequest, response));
     }
 
     return filterQueries;

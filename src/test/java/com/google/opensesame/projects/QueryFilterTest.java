@@ -18,7 +18,7 @@ import org.junit.runners.JUnit4;
 import org.junit.Test;
 
 @RunWith(JUnit4.class)
-public class FilterQueryTest {
+public class QueryFilterTest {
   private HttpServletResponse mockResponse;
   private StringWriter responseStringWriter;
 
@@ -30,48 +30,48 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void parseFilterQuery() throws IOException {
-    FilterQuery filterQuery = 
-        FilterQuery.fromString("numMentors > 123", mockResponse);
+  public void parseQueryFilter() throws IOException {
+    QueryFilter QueryFilter = 
+        QueryFilter.fromString("numMentors > 123", mockResponse);
 
-    assertNotNull(filterQuery);
-    assertEquals("numMentors >", filterQuery.condition);
-    assertEquals(123, filterQuery.comparisonObject);
+    assertNotNull(QueryFilter);
+    assertEquals("numMentors >", QueryFilter.condition);
+    assertEquals(123, QueryFilter.comparisonObject);
   }
 
   @Test
   public void handlesInvalidString1() throws IOException {
-    FilterQuery filterQuery = 
-        FilterQuery.fromString("numMentors> 123", mockResponse);
+    QueryFilter QueryFilter = 
+        QueryFilter.fromString("numMentors> 123", mockResponse);
 
-    assertNull(filterQuery);
+    assertNull(QueryFilter);
     verify(mockResponse, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
   }
 
   @Test
   public void handlesInvalidString2() throws IOException {
-    FilterQuery filterQuery = 
-        FilterQuery.fromString("numMentors => 123", mockResponse);
+    QueryFilter QueryFilter = 
+        QueryFilter.fromString("numMentors => 123", mockResponse);
 
-    assertNull(filterQuery);
+    assertNull(QueryFilter);
     verify(mockResponse, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
   }
 
   @Test
   public void handlesInvalidField() throws IOException {
-    FilterQuery filterQuery = 
-        FilterQuery.fromString("notAFieldInProjectEntity > 123", mockResponse);
+    QueryFilter QueryFilter = 
+        QueryFilter.fromString("notAFieldInProjectEntity > 123", mockResponse);
 
-    assertNull(filterQuery);
+    assertNull(QueryFilter);
     verify(mockResponse, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
   }
 
   @Test
   public void handlesInvalidComparisonValue() throws IOException {
-    FilterQuery filterQuery = 
-        FilterQuery.fromString("numMentors > wontConvertToNumMentorsFieldType", mockResponse);
+    QueryFilter QueryFilter = 
+        QueryFilter.fromString("numMentors > wontConvertToNumMentorsFieldType", mockResponse);
 
-    assertNull(filterQuery);
+    assertNull(QueryFilter);
     verify(mockResponse, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
   }
 }
