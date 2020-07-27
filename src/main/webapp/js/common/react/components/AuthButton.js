@@ -2,7 +2,8 @@ import {checkTesting} from '../../../checkTesting.js';
 import {authDataType} from '../navbar_prop_types.js';
 checkTesting();
 
-const USER_SIGNUP_URL = '/signup.html';
+export const USER_SIGNUP_URL = '/signup.html';
+export const HOME_URL = '/';
 
 /**
  * Login/Logout button that changes its appearance based on the inputted
@@ -20,7 +21,7 @@ export function AuthButton(props) {
     // The button is disabled while the authorization data is being loaded.
     classList += ' disabled';
     linkText = 'Log In';
-    authLink = '/';
+    authLink = HOME_URL;
   } else {
     if (authData.authorized) {
       if (authData.hasProfile) {
