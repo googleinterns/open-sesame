@@ -65,4 +65,12 @@ public final class GitHubGetter {
   public static void mockGitHub(GitHub mockGitHub) {
     gitHub = mockGitHub;
   }
+
+  /**
+   * Removes the mocked GitHub API interface so that the following calls to getGitHub() will no
+   * longer return the provided instance.
+   */
+  public static void removeGitHubMock() {
+    gitHub = null;
+  }
 }
