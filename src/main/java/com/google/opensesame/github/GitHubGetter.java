@@ -56,10 +56,10 @@ public final class GitHubGetter {
   }
 
   /**
-   * Sets the GitHub API interface to the provided instance so that all of the following calls
-   * to getGitHub() will return this instance. This is intended to be used for mocking the GitHub
-   * API interface while testing and should not be elsewhere.
-   * 
+   * Sets the GitHub API interface to the provided instance so that all of the following calls to
+   * getGitHub() will return this instance. This is intended to be used for mocking the GitHub API
+   * interface while testing and should not be elsewhere.
+   *
    * @param mockGitHub
    */
   public static void mockGitHub(GitHub mockGitHub) {
