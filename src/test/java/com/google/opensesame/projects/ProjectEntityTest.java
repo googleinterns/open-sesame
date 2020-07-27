@@ -28,20 +28,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.junit.Test;
 
 @RunWith(JUnit4.class)
 public class ProjectEntityTest {
-  private final LocalServiceTestHelper helper = 
+  private final LocalServiceTestHelper helper =
       new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
   private Closeable session;
 
   private ProjectEntity firstMockProject;
   private ProjectEntity secondMockProject;
   private ProjectEntity thirdMockProject;
-  
+
   private HttpServletResponse mockResponse;
   private StringWriter responseStringWriter;
 
@@ -59,12 +59,12 @@ public class ProjectEntityTest {
 
   @Before
   public void mockProjectSetUp() {
-    firstMockProject = new ProjectEntity(
-        "273537467", Arrays.asList("Mentor 1", "Mentor 2", "Mentor 3"), Arrays.asList());
-    secondMockProject = 
+    firstMockProject =
+        new ProjectEntity(
+            "273537467", Arrays.asList("Mentor 1", "Mentor 2", "Mentor 3"), Arrays.asList());
+    secondMockProject =
         new ProjectEntity("45717250", Arrays.asList("Mentor 1", "Mentor 2"), Arrays.asList());
-    thirdMockProject = 
-        new ProjectEntity("20580498", Arrays.asList("Mentor 1"), Arrays.asList());
+    thirdMockProject = new ProjectEntity("20580498", Arrays.asList("Mentor 1"), Arrays.asList());
     ofy().save().entities(firstMockProject, secondMockProject, thirdMockProject).now();
   }
 
@@ -80,14 +80,14 @@ public class ProjectEntityTest {
     session.close();
     helper.tearDown();
   }
-  
+
   @Test
   public void queryByIds() throws IOException {
     // Expect to receive the ProjectEntities with the corresponding repository IDs.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM))
-        .thenReturn(new String[] { firstMockProject.repositoryId, secondMockProject.repositoryId });
+        .thenReturn(new String[] {firstMockProject.repositoryId, secondMockProject.repositoryId});
 
     Collection<ProjectEntity> queryResult = ProjectEntity.queryFromRequest(request, mockResponse);
     Collection<ProjectEntity> expected = Arrays.asList(firstMockProject, secondMockProject);
@@ -116,7 +116,7 @@ public class ProjectEntityTest {
 
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM))
-        .thenReturn(new String[] { firstMockProject.repositoryId, "invalidID" });
+        .thenReturn(new String[] {firstMockProject.repositoryId, "invalidID"});
 
     Collection<ProjectEntity> queryResult = ProjectEntity.queryFromRequest(request, mockResponse);
     assertNull(queryResult);
@@ -131,8 +131,8 @@ public class ProjectEntityTest {
     HttpServletRequest request = mock(HttpServletRequest.class);
 
     Collection<ProjectEntity> queryResult = ProjectEntity.queryFromRequest(request, mockResponse);
-    ProjectEntity[] expectedQueryResult = 
-        new ProjectEntity[] { firstMockProject, secondMockProject, thirdMockProject };
+    ProjectEntity[] expectedQueryResult =
+        new ProjectEntity[] {firstMockProject, secondMockProject, thirdMockProject};
     assertNotNull(queryResult);
     assertArrayEquals(expectedQueryResult, queryResult.toArray());
   }
@@ -142,7 +142,7 @@ public class ProjectEntityTest {
     // Expect the function to return an existing ProjectEntity from the Datastore because an entity
     // with the supplied ID already exists.
 
-    ProjectEntity projectEntity = 
+    ProjectEntity projectEntity =
         ProjectEntity.fromRepositoryIdOrNew(firstMockProject.repositoryId);
 
     assertEquals(firstMockProject, projectEntity);
