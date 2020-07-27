@@ -199,7 +199,7 @@ function createInterestTagsDiv(interestTags) {
 
 /**
  * Creates a block of project tags.
- * @param {String[]} projectIDs
+ * @param {ProjectData[]} projects
  * @return {HTMLElement} projectsDiv
  */
 function createProjectLinks(projects) {
@@ -208,7 +208,8 @@ function createProjectLinks(projects) {
   for (const project of projects) {
     const projectElement = document.createElement('a');
     projectElement.href =
-          new URL('/projects.html#/' + project.repositoryId, window.location.origin);
+          new URL('/projects.html#/' + 
+               project.repositoryId, window.location.origin);
     projectElement.className = 'card-holder border border-muted' +
           ' text-muted mr-1 mb-1 badge text-center';
     const cardTitleElement = document.createElement('h4');
