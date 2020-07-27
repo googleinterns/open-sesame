@@ -3,7 +3,6 @@ package com.google.opensesame.projects;
 import com.google.opensesame.util.ErrorResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
