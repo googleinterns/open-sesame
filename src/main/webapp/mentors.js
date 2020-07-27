@@ -209,7 +209,7 @@ function createProjectLinks(projects) {
   for (const project of projects) {
     const projectElement = document.createElement('a');
     projectElement.href =
-          new URL('/projects.html#/' + 
+          new URL('/projects.html#/' +
                project.repositoryId, window.location.origin);
     projectElement.className = 'card-holder border border-muted' +
           ' text-muted mr-1 mb-1 badge text-center';
