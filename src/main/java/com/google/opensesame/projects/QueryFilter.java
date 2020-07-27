@@ -10,21 +10,23 @@ class QueryFilter {
   public static final String FILTER_QUERY_REGEX = "^[A-Za-z]+ (>|>=|!=|=|<|<=) .+$";
 
   /**
-   * Parses a QueryFilter from a string. 
-   * 
-   * QueryFilter strings should be in the format "fieldName >= value".
-   * Examples:
+   * Parses a QueryFilter from a string.
+   *
+   * <p>QueryFilter strings should be in the format "fieldName >= value". Examples:
+   *
    * <blockquote>
-   * "numMentors >= 2"
-   * "numInterestedUsers = 0"
+   *
+   * "numMentors >= 2" "numInterestedUsers = 0"
+   *
    * </blockquote>
+   *
    * @param QueryFilterString The filter query string.
    * @param response The servlet response to send errors to.
    * @return Returns the QueryFilter or null if there was an error parsing the string.
    * @throws IOException
    */
-  public static QueryFilter fromString(
-      String QueryFilterString, HttpServletResponse response) throws IOException {
+  public static QueryFilter fromString(String QueryFilterString, HttpServletResponse response)
+      throws IOException {
     if (!QueryFilterString.matches(FILTER_QUERY_REGEX)) {
       ErrorResponse.sendJsonError(
           response,
@@ -36,9 +38,10 @@ class QueryFilter {
 
     String[] splitFilterRequest = QueryFilterString.split(" ");
     String filterFieldName = splitFilterRequest[0];
-    Optional<Field> filterField = ProjectQuery.queryableFields.stream()
-        .filter((field) -> field.getName().equals(filterFieldName))
-        .findFirst();
+    Optional<Field> filterField =
+        ProjectQuery.queryableFields.stream()
+            .filter((field) -> field.getName().equals(filterFieldName))
+            .findFirst();
     if (!filterField.isPresent()) {
       ErrorResponse.sendJsonError(
           response,
@@ -51,14 +54,17 @@ class QueryFilter {
     String comparisonValue = splitFilterRequest[2];
     Object comparisonObject;
     try {
-      comparisonObject = 
+      comparisonObject =
           filterField.get().getType().getConstructor(String.class).newInstance(comparisonValue);
     } catch (Exception e) {
       // TODO(Richie): Handle the exceptions more specifically.
       ErrorResponse.sendJsonError(
           response,
           "Cannot parse the comparison value '"
-              + comparisonValue + "' for the field '" + filterFieldName + "'.",
+              + comparisonValue
+              + "' for the field '"
+              + filterFieldName
+              + "'.",
           HttpServletResponse.SC_BAD_REQUEST,
           "Unable to query for projects. Please try again later.");
       return null;
@@ -67,7 +73,7 @@ class QueryFilter {
     String comparator = splitFilterRequest[1];
     return new QueryFilter(filterFieldName + " " + comparator, comparisonObject);
   }
-  
+
   public final String condition;
   public final Object comparisonObject;
 

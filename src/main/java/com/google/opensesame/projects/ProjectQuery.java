@@ -13,14 +13,16 @@ import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 public class ProjectQuery {
   public static final String FILTER_QUERY_PARAM = "filter";
 
   /**
-   * The names of ProjectEntity fields that have the @Index Objectify annotation and can be
-   * sorted and filtered by in Datastore.
+   * The names of ProjectEntity fields that have the @Index Objectify annotation and can be sorted
+   * and filtered by in Datastore.
    */
   public static List<Field> queryableFields;
+
   static {
     Field[] fields = ProjectEntity.class.getDeclaredFields();
     queryableFields = new ArrayList<Field>();
@@ -33,16 +35,16 @@ public class ProjectQuery {
 
   /**
    * Gets the filter queries from a servlet request. Returns null if any errors are encountered
-   * while parsing the filter queries.
-   * See {@link com.google.opensesame.projects.QueryFilter.fromString} for more information on how
+   * while parsing the filter queries. See {@link
+   * com.google.opensesame.projects.QueryFilter.fromString} for more information on how
    * FilterQueries are parsed.
+   *
    * @param HttpServletRequest The request to get the filter queries from.
    * @param HttpServletResponse The servlet response to send errors to.
    * @return Returns the list of FilterQueries or null if an error was encountered while parsing.
    */
   private static List<QueryFilter> queryFiltersFromRequest(
-      HttpServletRequest request,
-      HttpServletResponse response) throws IOException {
+      HttpServletRequest request, HttpServletResponse response) throws IOException {
     String[] filterRequests = request.getParameterValues(FILTER_QUERY_PARAM);
     if (filterRequests == null) {
       return Arrays.asList();
@@ -52,7 +54,7 @@ public class ProjectQuery {
     for (String filterRequest : filterRequests) {
       QueryFilter queryFilter = QueryFilter.fromString(filterRequest, response);
       if (queryFilter == null) {
-        return null; 
+        return null;
       }
       queryFilters.add(queryFilter);
     }
@@ -87,16 +89,16 @@ public class ProjectQuery {
     } else {
       // TODO(Richie): Add pagination support.
       // TODO(Richie): Add ordering support.
-      Query<ProjectEntity> projectEntityQuery = 
+      Query<ProjectEntity> projectEntityQuery =
           ofy().load().type(ProjectEntity.class).order("-numMentors");
-      
+
       List<QueryFilter> queryFilters = queryFiltersFromRequest(request, response);
       if (queryFilters == null) {
         return null;
       }
 
       for (QueryFilter queryFilter : queryFilters) {
-        projectEntityQuery = 
+        projectEntityQuery =
             projectEntityQuery.filter(queryFilter.condition, queryFilter.comparisonObject);
       }
 

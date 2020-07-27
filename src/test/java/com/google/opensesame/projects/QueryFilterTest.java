@@ -13,9 +13,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.junit.Test;
 
 @RunWith(JUnit4.class)
 public class QueryFilterTest {
@@ -31,8 +31,7 @@ public class QueryFilterTest {
 
   @Test
   public void parseQueryFilter() throws IOException {
-    QueryFilter queryFilter = 
-        QueryFilter.fromString("numMentors > 123", mockResponse);
+    QueryFilter queryFilter = QueryFilter.fromString("numMentors > 123", mockResponse);
 
     assertNotNull(queryFilter);
     assertEquals("numMentors >", queryFilter.condition);
@@ -41,8 +40,7 @@ public class QueryFilterTest {
 
   @Test
   public void handlesInvalidString1() throws IOException {
-    QueryFilter queryFilter = 
-        QueryFilter.fromString("numMentors> 123", mockResponse);
+    QueryFilter queryFilter = QueryFilter.fromString("numMentors> 123", mockResponse);
 
     assertNull(queryFilter);
     verify(mockResponse, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -50,8 +48,7 @@ public class QueryFilterTest {
 
   @Test
   public void handlesInvalidString2() throws IOException {
-    QueryFilter queryFilter = 
-        QueryFilter.fromString("numMentors => 123", mockResponse);
+    QueryFilter queryFilter = QueryFilter.fromString("numMentors => 123", mockResponse);
 
     assertNull(queryFilter);
     verify(mockResponse, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -59,7 +56,7 @@ public class QueryFilterTest {
 
   @Test
   public void handlesInvalidField() throws IOException {
-    QueryFilter queryFilter = 
+    QueryFilter queryFilter =
         QueryFilter.fromString("notAFieldInProjectEntity > 123", mockResponse);
 
     assertNull(queryFilter);
@@ -68,7 +65,7 @@ public class QueryFilterTest {
 
   @Test
   public void handlesInvalidComparisonValue() throws IOException {
-    QueryFilter queryFilter = 
+    QueryFilter queryFilter =
         QueryFilter.fromString("numMentors > wontConvertToNumMentorsFieldType", mockResponse);
 
     assertNull(queryFilter);

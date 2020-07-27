@@ -147,8 +147,7 @@ public class ProjectQueryTest {
         .thenReturn(new String[] {"numMentors >= 2"});
 
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
-    ProjectEntity[] expectedQueryResult =
-        new ProjectEntity[] {firstMockProject, secondMockProject};
+    ProjectEntity[] expectedQueryResult = new ProjectEntity[] {firstMockProject, secondMockProject};
     assertNotNull(queryResult);
     assertArrayEquals(expectedQueryResult, queryResult.toArray());
   }
@@ -171,8 +170,7 @@ public class ProjectQueryTest {
     // Expect the function to return an existing ProjectEntity from the Datastore because an entity
     // with the supplied ID already exists.
 
-    ProjectEntity projectEntity =
-        ProjectQuery.fromRepositoryIdOrNew(firstMockProject.repositoryId);
+    ProjectEntity projectEntity = ProjectQuery.fromRepositoryIdOrNew(firstMockProject.repositoryId);
 
     assertEquals(firstMockProject, projectEntity);
   }
