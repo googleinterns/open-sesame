@@ -51,7 +51,7 @@ public class ProjectQuery {
 
     List<FilterQuery> filterQueries = new ArrayList<FilterQuery>();
     for (String filterRequest : filterRequests) {
-      filterQueries.add(FilterQuery.fromString(filterRequest, response));
+      filterQueries.add(FilterQuery.fromString(filterRequest, response, queryableFields));
     }
 
     return filterQueries;

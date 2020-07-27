@@ -3,6 +3,7 @@ package com.google.opensesame.projects;
 import com.google.opensesame.util.ErrorResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +25,9 @@ class FilterQuery {
    * @throws IOException
    */
   public static FilterQuery fromString(
-      String filterQueryString, HttpServletResponse response) throws IOException {
+      String filterQueryString,
+      HttpServletResponse response,
+      List<Field> queryableFields) throws IOException {
     if (!filterQueryString.matches(FILTER_QUERY_REGEX)) {
       ErrorResponse.sendJsonError(
           response,
@@ -36,7 +39,7 @@ class FilterQuery {
 
     String[] splitFilterRequest = filterQueryString.split(" ");
     String filterFieldName = splitFilterRequest[0];
-    Optional<Field> filterField = ProjectQuery.queryableFields.stream()
+    Optional<Field> filterField = queryableFields.stream()
         .filter((field) -> field.getName().equals(filterFieldName))
         .findFirst();
     if (!filterField.isPresent()) {
