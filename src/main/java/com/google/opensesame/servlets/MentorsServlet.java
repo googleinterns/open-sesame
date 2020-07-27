@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
 import com.google.opensesame.projects.ProjectEntity;
+import com.google.opensesame.projects.ProjectQuery;
 import com.google.opensesame.user.UserData;
 import com.google.opensesame.user.UserEntity;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class MentorsServlet extends HttpServlet {
       return;
     }
     Long testRepoID = testRepo.getId();
-    ProjectEntity testProject = ProjectEntity.fromRepositoryIdOrNew(testRepoID.toString());
+    ProjectEntity testProject = ProjectQuery.fromRepositoryIdOrNew(testRepoID.toString());
     String id = "mock_id";
     if (!testProject.mentorIds.contains(id)) {
       testProject.mentorIds.add(id);
@@ -106,7 +107,7 @@ public class MentorsServlet extends HttpServlet {
     }
 
     Long inputRepoID = inputRepo.getId();
-    ProjectEntity newProject = ProjectEntity.fromRepositoryIdOrNew(inputRepoID.toString());
+    ProjectEntity newProject = ProjectQuery.fromRepositoryIdOrNew(inputRepoID.toString());
     if (!newProject.mentorIds.contains(userID)) {
       newProject.mentorIds.add(userID);
     }
