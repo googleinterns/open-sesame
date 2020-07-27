@@ -44,7 +44,7 @@ describe('Auth button', () => {
   it('is added to the DOM', () => {
     const elem =
         render(<AuthButton loading={false} authData={mockAuthData1} />);
-    
+
     expect(elem.container.firstChild).not.toBeNull();
   });
 
