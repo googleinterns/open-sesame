@@ -1,11 +1,13 @@
-export const projectPreviewType = PropTypes.shape({
+const projectPreviewData = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   topicTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   primaryLanguage: PropTypes.string.isRequired,
   numMentors: PropTypes.number.isRequired,
   repositoryId: PropTypes.string.isRequired,
-});
+};
+
+export const projectPreviewType = PropTypes.shape(projectPreviewData);
 
 export const mentorType = PropTypes.shape({
   bio: PropTypes.string,
@@ -17,6 +19,6 @@ export const mentorType = PropTypes.shape({
 });
 
 export const expandedProjectType = PropTypes.shape({
-  previewData: projectPreviewType.isRequired,
+  ...projectPreviewData,
   mentors: PropTypes.arrayOf(mentorType).isRequired,
 });
