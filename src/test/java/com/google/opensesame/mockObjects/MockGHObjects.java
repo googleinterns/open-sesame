@@ -121,7 +121,7 @@ public class MockGHObjects {
 
   // #### MOCK GHMyself ####
 
-  /** The login of the mocked GHUMyself object returned by createMockMyself() */
+  /** The login of the mocked GHMyself object returned by createMockMyself() */
   public static String MOCK_LOGIN = "MOCK_LOGIN";
 
   /**
@@ -131,7 +131,7 @@ public class MockGHObjects {
    *
    *     <p>NOTE: MOCK_LOGIN is a fixture in this class
    *
-   * @return a mocked instance of a GHUser
+   * @return a mocked instance of a GHMyself Object
    * @throws IOException
    */
   public static GHMyself createMockMyself() throws IOException {
