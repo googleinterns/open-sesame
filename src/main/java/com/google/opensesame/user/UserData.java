@@ -128,7 +128,7 @@ public class UserData {
     return menteeIds;
   }
 
-  //** @return a list of project data objects associated with a mentor. */
+  // ** @return a list of project data objects associated with a mentor. */
   public List<ProjectData> getProjects() throws IOException {
     if (this.projects == null) {
       Map<String, ProjectEntity> projectEntities =
