@@ -37,7 +37,7 @@ public class UserEntity {
     projectIds =
         new ArrayList<String>(
             userData.getProjects().stream()
-                .map(x -> x.getRepositoryId())
+                .map(projectData -> projectData.getRepositoryId())
                 .collect(Collectors.toList()));
   }
 
