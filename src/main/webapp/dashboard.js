@@ -1,8 +1,4 @@
-import {getUser} from './user.js';
-import {
-  standardizeFetchErrors,
-  makeRelativeUrlAbsolute,
-} from './js/fetch_handler.js';
+import { getUser } from './user.js';
 
 /**
  * A User.
@@ -84,7 +80,7 @@ function createAboutMe(user) {
     aboutMeCardDiv.append(createCardTitle('Projects'));
     const projectTagRow = createRowElement();
     for (const project of user.projects) {
-      addProject(project, projectTagRow);
+      addProjectTag(project, projectTagRow);
     }
     aboutMeCardDiv.append(projectTagRow);
   }
