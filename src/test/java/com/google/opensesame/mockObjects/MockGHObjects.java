@@ -1,15 +1,14 @@
 package com.google.opensesame.mockObjects;
 
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.Matchers.anyString;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.kohsuke.github.GHMyself;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
@@ -120,15 +119,14 @@ public class MockGHObjects {
     return mockGHRepository;
   }
 
-   // #### MOCK GHMyself ####
+  // #### MOCK GHMyself ####
 
   /** The login of the mocked GHUMyself object returned by createMockMyself() */
   public static String MOCK_LOGIN = "MOCK_LOGIN";
 
-
   /**
-   * Creates an instance of a GHMyself mocked with Mockito. The mocked object comes with the following
-   * functions predefined;
+   * Creates an instance of a GHMyself mocked with Mockito. The mocked object comes with the
+   * following functions predefined;
    * <li>getLogin() -> MOCK_LOGIN
    *
    *     <p>NOTE: MOCK_LOGIN is a fixture in this class
@@ -143,18 +141,15 @@ public class MockGHObjects {
     return mockGHMyself;
   }
 
-
   // #### MOCK GitHub API ####
 
   /**
-   * Creates an instance of a GitHub mocked with Mockito. The mocked object comes with the
-   * following functions predefined;
-   * <li>getMyself() -> GHMyself returned by 
-   * {@link #createMockMyself() createMockMyself}
-   * <li>getUser(String anyString) -> GHUser returned by
-   * {@link #createMockUser() createMockUser}
-   * <li>getRepositoryById(String anyString) -> GHRepository returned by
-   * {@link #createMockRepository() createMockRepository}
+   * Creates an instance of a GitHub mocked with Mockito. The mocked object comes with the following
+   * functions predefined;
+   * <li>getMyself() -> GHMyself returned by {@link #createMockMyself() createMockMyself}
+   * <li>getUser(String anyString) -> GHUser returned by {@link #createMockUser() createMockUser}
+   * <li>getRepositoryById(String anyString) -> GHRepository returned by {@link
+   *     #createMockRepository() createMockRepository}
    *
    *     <p>NOTE: all functions return fixtures defined in this class
    *
@@ -163,13 +158,9 @@ public class MockGHObjects {
    */
   public static GitHub createMockGitHub() throws IOException {
     GitHub mockGitHub = mock(GitHub.class);
-    when(mockGitHub.getMyself())
-        .thenReturn(createMockMyself());
-    when(mockGitHub.getUser(anyString()))
-        .thenReturn(createMockUser());
-    when(mockGitHub.getRepositoryById(anyString()))
-        .thenReturn(createMockRepository());
+    when(mockGitHub.getMyself()).thenReturn(createMockMyself());
+    when(mockGitHub.getUser(anyString())).thenReturn(createMockUser());
+    when(mockGitHub.getRepositoryById(anyString())).thenReturn(createMockRepository());
     return mockGitHub;
   }
-  
 }
