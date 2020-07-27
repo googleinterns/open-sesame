@@ -110,7 +110,7 @@ function ExpandedProjectFetcher() {
  */
 function createProjectFetchGetter(projectId) {
   return (signal) => {
-    const projectUrl = makeRelativeUrlAbsolute('/project');
+    const projectUrl = makeRelativeUrlAbsolute('/projects/full');
     projectUrl.searchParams.append('projectId', projectId);
     const fetchRequest = fetch(projectUrl, {
       method: 'get',
@@ -121,7 +121,7 @@ function createProjectFetchGetter(projectId) {
         fetchRequest,
         'Failed to communicate with the server, please try again later.',
         'Encountered a server error, please try again later.')
-        .then((response) => response.json());
+        .then((response) => response.json()).then((projects) => projects[0]);
   };
 }
 
@@ -131,7 +131,8 @@ function createProjectFetchGetter(projectId) {
  * @return {Promise} Returns the fetch request.
  */
 function createProjectPreviewFetch(signal) {
-  const fetchRequest = fetch(makeRelativeUrlAbsolute('/project-previews'), {
+  const projectUrl = makeRelativeUrlAbsolute('/projects/preview');
+  const fetchRequest = fetch(projectUrl, {
     method: 'get',
     signal: signal,
   });

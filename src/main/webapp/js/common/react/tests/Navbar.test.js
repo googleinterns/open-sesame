@@ -15,13 +15,18 @@ const navbarUrls = [
     requiresAuth: false,
   },
   {
+    href: '/mentors.html',
+    name: 'Mentors',
+    requiresAuth: false,
+  },
+  {
     href: '/dashboard.html',
     name: 'Dashboard',
     requiresAuth: true,
   },
 ];
 
-const mockAuthData = {
+const defaultMockAuthData = {
   authorized: true,
   hasProfile: true,
 };
@@ -35,20 +40,29 @@ describe('Navbar component', () => {
 
   it('displays the names of the urls', () => {
     render(
-        <Navbar urls={navbarUrls} loading={false} authData={mockAuthData} />);
+        <Navbar
+          urls={navbarUrls}
+          loading={false}
+          authData={defaultMockAuthData} />);
 
     expect(screen.queryByText('Home')).not.toBeNull();
     expect(screen.queryByText('Projects')).not.toBeNull();
+    expect(screen.queryByText('Mentors')).not.toBeNull();
     expect(screen.queryByText('Dashboard')).not.toBeNull();
   });
 
   it('contains the urls', () => {
     render(
-        <Navbar urls={navbarUrls} loading={false} authData={mockAuthData} />);
+        <Navbar
+          urls={navbarUrls}
+          loading={false}
+          authData={defaultMockAuthData} />);
 
     expect(screen.getByText('Home')).toHaveAttribute('href', '/');
     expect(screen.getByText('Projects'))
         .toHaveAttribute('href', '/projects.html');
+    expect(screen.getByText('Mentors'))
+        .toHaveAttribute('href', '/mentors.html');
     expect(screen.getByText('Dashboard'))
         .toHaveAttribute('href', '/dashboard.html');
   });
