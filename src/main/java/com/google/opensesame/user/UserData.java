@@ -1,9 +1,16 @@
 package com.google.opensesame.user;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.opensesame.auth.AuthServlet;
 import com.google.opensesame.github.GitHubGetter;
+import com.google.opensesame.projects.ProjectData;
+import com.google.opensesame.projects.ProjectEntity;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 
@@ -17,6 +24,7 @@ public class UserData {
   private final ArrayList<String> interestTags;
   private final ArrayList<String> menteeIds;
   private final ArrayList<String> projectIds;
+  private List<ProjectData> projects = null;
   private final String bio;
   private final String gitHubID;
   private final String gitHubURL;
@@ -118,6 +126,22 @@ public class UserData {
   /** @return a list of ids of mentees a user is currently mentoring. */
   public ArrayList<String> getMenteeIDs() {
     return menteeIds;
+  }
+
+  //** @return a list of project data objects associated with a mentor. */
+  public List<ProjectData> getProjects() throws IOException {
+    if (this.projects == null) {
+      Map<String, ProjectEntity> projectEntities =
+          ofy().load().type(ProjectEntity.class).ids(projectIds);
+      this.projects = new ArrayList<ProjectData>();
+      for (ProjectEntity entity : projectEntities.values()) {
+        ProjectData curProject = new ProjectData(entity);
+        curProject.getName();
+        this.projects.add(curProject);
+      }
+    }
+
+    return Collections.unmodifiableList(this.projects);
   }
 
   /**

@@ -94,8 +94,7 @@ function createMentorElement(mentor) {
     mentorCardBody.appendChild(createInterestTagsDiv(mentor.interestTags));
   }
   if (mentor.projectIds != null) {
-    createProjectLinks(mentor.projectIds)
-        .then((element) => mentorCardBody.appendChild(element));
+    mentorCardBody.appendChild(createProjectLinks(mentor.projects));
   }
 
   mentorCard.appendChild(mentorCardBody);
@@ -203,50 +202,22 @@ function createInterestTagsDiv(interestTags) {
  * @param {String[]} projectIDs
  * @return {HTMLElement} projectsDiv
  */
-async function createProjectLinks(projectIDs) {
+function createProjectLinks(projects) {
   const projectsDiv = document.createElement('div');
   projectsDiv.className = 'd-flex justify-content-center p-3';
-  for (const projectID of projectIDs) {
-    const name = await getProjectName(projectID);
+  for (const project of projects) {
     const projectElement = document.createElement('a');
     projectElement.href =
-          new URL('/projects.html#/' + projectID, window.location.origin);
+          new URL('/projects.html#/' + project.repositoryId, window.location.origin);
     projectElement.className = 'card-holder border border-muted' +
           ' text-muted mr-1 mb-1 badge text-center';
     const cardTitleElement = document.createElement('h4');
     cardTitleElement.className = 'card-title dark-emph';
-    cardTitleElement.innerText = name;
+    cardTitleElement.innerText = project.name;
     projectElement.appendChild(cardTitleElement);
     projectsDiv.append(projectElement);
   }
   return projectsDiv;
-}
-
-/**
- * Creates a project link.
- * @param {String} projectID
- * @return {String} name
- */
-function getProjectName(projectID) {
-  const projectUrl = new URL('/projects/name', window.location.origin);
-  projectUrl.searchParams.append('projectId', Number(projectID));
-  const fetchRequest = fetch(projectUrl, {
-    method: 'get',
-  });
-  return standardizeFetchErrors(
-      fetchRequest,
-      'Failed to communicate with the server, please try again later.',
-      'Encountered a server error, please try again later.')
-      .then((response) => response.json()).then((data) => {
-        console.log('got project data');
-        console.log(data[0].name);
-        return data[0].name;
-      })
-      .catch((errorResponse) => {
-        console.error(
-            `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-        alert(errorResponse.userMessage);
-      });
 }
 
 /**
