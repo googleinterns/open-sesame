@@ -164,7 +164,6 @@ function createRowElement() {
  */
 async function setUpPage() {
   const user = await getUser();
-  // TODO: redirect to sign up/in page if the user is not found.
   createAboutMe(user);
 }
 
