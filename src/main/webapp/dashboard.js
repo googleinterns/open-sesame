@@ -1,8 +1,4 @@
 import {getUser} from './user.js';
-import {
-  standardizeFetchErrors,
-  makeRelativeUrlAbsolute,
-} from './js/fetch_handler.js';
 
 /**
  * A User.
@@ -15,17 +11,17 @@ import {
  * @property {string} email - the email address of the user
  * @property {string} gitHubURL: - The user's github page
  * @property {string} image - The User's profile picture
- * @property {string} location - the location of the user
- * @property {string} name - the name of the user
+ * @property {string} location - The location of the user
+ * @property {string} name - The name of the user
  * @property {boolean} isMentor - true if the user is a mentor for a project
  *                                false otherwise.
- * @property {string[]} projectIds - A List of Projects a user is working on.
+ * @property {ProjectData[]} projects - A List of projects a user is working on.
  */
 
 /**
  * The name of a project from datastore.
  * [ProjectData file]{@link ../java/com/google/opensesame/projects/ProjectData}
- * @typedef {Object} ProjectName
+ * @typedef {Object} ProjectData
  * @property {string} name
  * @property {string} repositoryId
  */
@@ -80,11 +76,11 @@ function createAboutMe(user) {
     aboutMeCardDiv.append(interestTagRow);
   }
 
-  if (user.projectIds) {
+  if (user.projects) {
     aboutMeCardDiv.append(createCardTitle('Projects'));
     const projectTagRow = createRowElement();
-    for (const projectID of user.projectIds) {
-      addProject(projectID, projectTagRow);
+    for (const project of user.projects) {
+      addProjectTag(project, projectTagRow);
     }
     aboutMeCardDiv.append(projectTagRow);
   }
@@ -116,20 +112,17 @@ function addTag(tagText, tagDiv) {
 }
 
 /**
- * Append a tag representing a project with the Id @param projectID and the
- * name @param projectName to the div @param projectDiv
- * @param {string} projectName the name of the project in question.
- * @param {string} projectID the id used to distinguish projects in the
- * database.
+ * Append a tag representing @param project to the div @param projectDiv
+ * @param {ProjectData} project the project in question.
  * @param {HTMLElement} projectDiv the div the project tag is to be added to.
  */
-function addProjectTag(projectName, projectID, projectDiv) {
+function addProjectTag(project, projectDiv) {
   const projectTagElement = document.createElement('a');
   projectTagElement.className = 'border border-muted text-muted mr-1 mb-1' +
     ' project-tag badge';
-  projectTagElement.innerText = projectName;
+  projectTagElement.innerText = project.name;
   projectTagElement.href =
-    new URL('/projects.html#/' + projectID, window.location.origin);
+    new URL('/projects.html#/' + project.repositoryId, window.location.origin);
   projectDiv.append(projectTagElement);
 }
 
@@ -142,18 +135,6 @@ function createLocation(location) {
   const userLocation = document.createElement('small');
   userLocation.innerText = location;
   return userLocation;
-}
-
-/**
- * Get the project stored in Datastore with the Id @param projectID and append a
- * tag representing the project to the div @param projectTagRow. The appended
- * tag is linked to the project's entry on the OpenSesame project page.
- * @param {string} projectID - Datastore Id of a given project.
- * @param {HTMLElement} projectTagDiv - div element to append the tag to.
- */
-async function addProject(projectID, projectTagDiv) {
-  const projectData = await getProject(projectID);
-  addProjectTag(projectData.name, projectID, projectTagDiv);
 }
 
 /**
@@ -174,28 +155,8 @@ function createCardTitle(titleText) {
  */
 function createRowElement() {
   const rowElement = document.createElement('div');
-  rowElement.className = 'row p-2';
+  rowElement.className = 'row p-2 flex-wrap';
   return rowElement;
-}
-
-/**
- * Get the project with the Id @param projectID from Datastore using the
- * /project servlet.
- * @param {string} projectID the id used to store a project in datastore.
- * @return {ProjectName} Data about the project with th id @param projectID
- */
-function getProject(projectID) {
-  const fetchURL = makeRelativeUrlAbsolute('/projects/name');
-  fetchURL.searchParams.append('projectId', projectID);
-
-  const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetch(fetchURL),
-      'Failed to communicate with the server. Please try again later.',
-      'An error occcured while retrieving this project.' +
-    ' Please try again later.');
-
-  return errorFormattedFetchRequest
-      .then((response) => response.json()).then((projects) => projects[0]);
 }
 
 /**
