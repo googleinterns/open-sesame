@@ -52,8 +52,8 @@ public class UserData {
     }
     isMentor = userEntity.isMentor;
 
-    // GitHub query TODO: make this more testable by extracting GitHub.
-    generateProjects(userEntity.projectIds);
+    // GitHub query 
+    loadProjects(userEntity.projectIds);
     final GitHub gitHub = GitHubGetter.getGitHub();
     final GHUser userGitAccount = gitHub.getUser(gitHubID);
     bio = userGitAccount.getBio();
@@ -124,7 +124,7 @@ public class UserData {
    *
    * @param projectIds
    */
-  private void generateProjects(ArrayList<String> projectIds) throws IOException {
+  private void loadProjects(ArrayList<String> projectIds) throws IOException {
     Map<String, ProjectEntity> projectEntities =
         ofy().load().type(ProjectEntity.class).ids(projectIds);
     for (ProjectEntity entity : projectEntities.values()) {
