@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 
 /**
  * A User.
@@ -28,28 +28,39 @@ import {getUser} from './user.js';
 
 // ELEMENTS_FOR_ABOUT_ME_SECTION
 /**
+ * Ids of elements from dashboard.html.
+ * @type {string}
+ */
+export const ABOUT_ME_CARD_ID = 'about-me-card-body';
+export const USER_BIO_ID = 'user-bio';
+export const USER_IMAGE_ID = 'user-image';
+export const USER_GITHUB_ID = 'user-github';
+export const USER_EMAIL_ID = 'user-email';
+export const USER_NAME_LOCATION_ID = 'user-name-location';
+
+/**
  * Elements from dashboard.html.
  * @type {HTMLElement}
  */
-const aboutMeCardDiv = document.getElementById('about-me-card-body');
-const userBioElement = document.getElementById('user-bio');
-const userImageElement = document.getElementById('user-image');
-const userGithubButton = document.getElementById('user-github');
-const userEmailButton = document.getElementById('user-email');
+const aboutMeCardDiv = document.getElementById(ABOUT_ME_CARD_ID);
+const userBioElement = document.getElementById(USER_BIO_ID);
+const userImageElement = document.getElementById(USER_IMAGE_ID);
+const userGithubButton = document.getElementById(USER_GITHUB_ID);
+const userEmailButton = document.getElementById(USER_EMAIL_ID);
 
 /**
  * Populate the card element 'aboutMeCardDiv' with information about a
  * given user.
  * @param {User} user
  */
-function createAboutMe(user) {
+export function createAboutMe(user) {
   const editButton = createEditButton('#');
   aboutMeCardDiv.prepend(editButton);
 
   userImageElement.src = user.image;
 
   const userNameAndLocationElement =
-    document.getElementById('user-name-location');
+    document.getElementById(USER_NAME_LOCATION_ID);
   userNameAndLocationElement.innerHTML = user.name + '<br>';
   if (user.location) {
     const userLocation = createLocation(user.location);
@@ -91,7 +102,7 @@ function createAboutMe(user) {
  * @param {string} link the href link to the action the edit button will perform
  * @return {HTMLElement} edit button
  */
-function createEditButton(link) {
+export function createEditButton(link) {
   const editButton = document.createElement('a');
   editButton.className = 'float-right bold';
   editButton.innerText = 'Edit';
@@ -104,7 +115,7 @@ function createEditButton(link) {
  * @param {string} tagText the text in the tag element.
  * @param {HTMLElement} tagDiv the div the tag is to be added to.
  */
-function addTag(tagText, tagDiv) {
+export function addTag(tagText, tagDiv) {
   const tagElement = document.createElement('div');
   tagElement.className = 'border border-muted text-muted mr-1 mb-1 badge';
   tagElement.innerText = tagText;
@@ -116,7 +127,7 @@ function addTag(tagText, tagDiv) {
  * @param {ProjectData} project the project in question.
  * @param {HTMLElement} projectDiv the div the project tag is to be added to.
  */
-function addProjectTag(project, projectDiv) {
+export function addProjectTag(project, projectDiv) {
   const projectTagElement = document.createElement('a');
   projectTagElement.className = 'border border-muted text-muted mr-1 mb-1' +
     ' project-tag badge';
@@ -131,7 +142,7 @@ function addProjectTag(project, projectDiv) {
  * @param {string} location text for a given location.
  * @return {HTMLElement} location small element
  */
-function createLocation(location) {
+export function createLocation(location) {
   const userLocation = document.createElement('small');
   userLocation.innerText = location;
   return userLocation;
@@ -142,7 +153,7 @@ function createLocation(location) {
  * @param {string} titleText
  * @return {HTMLElement} div representing a card title with @param titleText
  */
-function createCardTitle(titleText) {
+export function createCardTitle(titleText) {
   const cardTitleElement = document.createElement('h5');
   cardTitleElement.className = 'dark-emph row mt-1 mb-0';
   cardTitleElement.innerText = titleText;
@@ -153,7 +164,7 @@ function createCardTitle(titleText) {
  * Return a bootstrap row element
  * @return {HTMLElement} bootstrap row div
  */
-function createRowElement() {
+export function createRowElement() {
   const rowElement = document.createElement('div');
   rowElement.className = 'row p-2';
   return rowElement;
