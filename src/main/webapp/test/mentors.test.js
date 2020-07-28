@@ -1,9 +1,10 @@
 import * as Mentors from '../mentors.js';
 import '@testing-library/jest-dom/extend-expect';
+import {getByText} from '@testing-library/dom';
 
 const mockMentor = {
   interestTags: ['interest1', 'interest2'],
-  projects: [{respositoryID: 'mockRepoID', name: 'mockProjectName'}],
+  projects: [{respositoryID: 'mockRepoID', name: 'mockProjectName'},],
   bio: 'This is the mock bio.',
   email: 'samialves@google.com',
   gitHubID: 'mockGitID',
@@ -13,59 +14,29 @@ const mockMentor = {
 };
 
 describe('Mentor card', () => {
-  it('is created', () => {
+  it('is created with all expected componenets', () => {
     const mentorElement = Mentors.createMentorElement(mockMentor);
     expect(mentorElement).not.toBeNull();
-  });
+    expect(getByText(mentorElement, mockMentor.name)).not.toBeNull();
+    expect(getByText(mentorElement, mockMentor.location)).not.toBeNull();
+    expect(getByText(mentorElement, mockMentor.bio)).not.toBeNull();
 
-  it('has the correct image element', () => {
-    const imgElement = Mentors.createImg(mockMentor.image);
-    expect(imgElement.getAttribute('class')).toBe('mentor-picture');
-    expect(imgElement.getAttribute('src')).toBe(mockMentor.image);
-  });
+    mockMentor.interestTags.forEach(function(interest) {
+      expect(getByText(mentorElement, interest)).not.toBeNull();
+    });
+    mockMentor.projects.forEach(function(project) {
+      expect(getByText(mentorElement, project.name)).not.toBeNull();
+    });
 
-  it('has the correct name element', () => {
-    const nameElement = Mentors.createNameHeader(mockMentor.name);
-    expect(nameElement.getAttribute('class')).toBe('card-title text-primary');
-    expect(nameElement.innerHTML).toBe(mockMentor.name);
-  });
-
-  it('has the correct location element', () => {
-    const locationElement = Mentors.createLocationHeader(mockMentor.location);
-    expect(locationElement.getAttribute('class'))
-        .toBe('card-subtitle text-muted text-center mb-1');
-    expect(locationElement.innerText).toBe(mockMentor.location);
-  });
-
-  it('has the correct bio element', () => {
-    const bioElement = Mentors.createBioParagraph(mockMentor.bio);
-    expect(bioElement.innerHTML).toBe(mockMentor.bio);
-  });
-
-  it('has the correct email element', () => {
-    const emailElement = Mentors.createEmailLink(mockMentor.email);
-    expect(emailElement.innerText).toBe('Send Email Introduction');
+    const emailElement = getByText(mentorElement, 'Send Email Introduction');
     expect(emailElement.getAttribute('href'))
         .toBe('mailto: ' + mockMentor.email);
-    expect(emailElement.getAttribute('class')).toBe('mailtoui');
-  });
 
-  it('has the correct GitHub element', () => {
-    const gitHubElement = Mentors.createGitHubLink(mockMentor.gitHubID);
-    expect(gitHubElement.innerText).toBe('GitHub Profile');
+    const gitHubElement = getByText(mentorElement, 'GitHub Profile');
     expect(gitHubElement.getAttribute('href'))
         .toBe('https://github.com/' + mockMentor.gitHubID);
-    expect(gitHubElement.getAttribute('class')).toBe('btn btn-primary');
-  });
 
-  it('has the correct interest list', () => {
-    const tagsElement = Mentors.createInterestTagsDiv(mockMentor.interestTags);
-    expect(tagsElement.getAttribute('class'))
-        .toBe('d-flex justify-content-center p-3');
-    const tags = tagsElement
-        .getElementsByClassName('border border-muted ' +
-        'text-muted mr-1 mb-1 badge text-center');
-    expect(tags.item(0).innerText).toBe('interest1');
-    expect(tags.item(1).innerText).toBe('interest2');
+    const imgElements = mentorElement.getElementsByClassName('mentor-picture');
+    expect(imgElements[0].getAttribute('src')).toBe(mockMentor.image);
   });
 });
