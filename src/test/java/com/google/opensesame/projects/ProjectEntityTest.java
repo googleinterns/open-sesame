@@ -91,6 +91,7 @@ public class ProjectEntityTest {
 
     Collection<ProjectEntity> queryResult = ProjectEntity.queryFromRequest(request, mockResponse);
     Collection<ProjectEntity> expected = Arrays.asList(firstMockProject, secondMockProject);
+
     assertNotNull(queryResult);
     assertTrue(queryResult.size() == expected.size() && queryResult.containsAll(expected));
     verify(mockResponse, never()).setStatus(anyInt());
