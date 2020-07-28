@@ -1,7 +1,7 @@
-import {getMentors, createMentorElement, createEmailLink, createLocationHeader, createImg, createBioParagraph, createNameHeader, createGitHubLink, createInterestTagsDiv} from '../mentors.js';
+import {createMentorElement, createEmailLink, createLocationHeader, createImg, 
+    createBioParagraph, createNameHeader, createGitHubLink, createInterestTagsDiv} 
+    from '../mentors.js';
 import '@testing-library/jest-dom/extend-expect';
-
- global.mailtouiApp = {run: () => {}};
 
 const mockMentor = {
   interestTags: ['interest1', 'interest2'],
@@ -34,7 +34,8 @@ describe('Mentor card', () => {
 
   it('has the correct location element', () => {
     const locationElement = createLocationHeader(mockMentor.location);
-    expect(locationElement.getAttribute('class')).toBe('card-subtitle text-muted text-center mb-1');
+    expect(locationElement.getAttribute('class'))
+        .toBe('card-subtitle text-muted text-center mb-1');
     expect(locationElement.innerText).toBe(mockMentor.location);
   });
 
@@ -46,21 +47,26 @@ describe('Mentor card', () => {
   it('has the correct email element', () => {
     const emailElement = createEmailLink(mockMentor.email);
     expect(emailElement.innerText).toBe('Send Email Introduction');
-    expect(emailElement.getAttribute('href')).toBe('mailto: ' + mockMentor.email);
+    expect(emailElement.getAttribute('href'))
+        .toBe('mailto: ' + mockMentor.email);
     expect(emailElement.getAttribute('class')).toBe('mailtoui');
   });
 
   it('has the correct GitHub element', () => {
     const gitHubElement = createGitHubLink(mockMentor.gitHubID);
     expect(gitHubElement.innerText).toBe('GitHub Profile');
-    expect(gitHubElement.getAttribute('href')).toBe('https://github.com/' + mockMentor.gitHubID);
+    expect(gitHubElement.getAttribute('href'))
+        .toBe('https://github.com/' + mockMentor.gitHubID);
     expect(gitHubElement.getAttribute('class')).toBe('btn btn-primary');
   });
 
   it('has the correct interest list', () => {
     const tagsElement = createInterestTagsDiv(mockMentor.interestTags);
-    expect(tagsElement.getAttribute('class')).toBe('d-flex justify-content-center p-3');
-    const tags = tagsElement.getElementsByClassName('border border-muted text-muted mr-1 mb-1 badge text-center');
+    expect(tagsElement.getAttribute('class'))
+        .toBe('d-flex justify-content-center p-3');
+    const tags = tagsElement
+        .getElementsByClassName('border border-muted ' 
+        + 'text-muted mr-1 mb-1 badge text-center');
     expect(tags.item(0).innerText).toBe('interest1');
     expect(tags.item(1).innerText).toBe('interest2');
   });
