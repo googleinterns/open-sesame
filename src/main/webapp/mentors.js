@@ -1,4 +1,4 @@
-import {standardizeFetchErrors} from '/js/fetch_handler.js';
+import {standardizeFetchErrors} from './js/fetch_handler.js';
 
 getMentors();
 initForm();
@@ -64,7 +64,7 @@ function getMentors() {
  * @param {Object} mentor
  * @return {HTMLElement} mentorContainer
  */
-function createMentorElement(mentor) {
+export function createMentorElement(mentor) {
   const mentorContainer = document.createElement('div');
   mentorContainer.className = 'p-1 col-lg-4';
 
@@ -109,7 +109,7 @@ function createMentorElement(mentor) {
  * @param {String} email
  * @return {HTMLElement} mentorEmail
  */
-function createEmailLink(email) {
+export function createEmailLink(email) {
   const mentorEmail = document.createElement('a');
   mentorEmail.href = 'mailto: ' + email;
   mentorEmail.className = 'mailtoui';
@@ -122,7 +122,7 @@ function createEmailLink(email) {
  * @param {String} location
  * @return {HTMLElement} mentorLocation
  */
-function createLocationHeader(location) {
+export function createLocationHeader(location) {
   const mentorLocation = document.createElement('h6');
   mentorLocation.className = 'card-subtitle text-muted text-center mb-1';
   mentorLocation.innerText = location;
@@ -134,7 +134,7 @@ function createLocationHeader(location) {
  * @param {String} img
  * @return {HTMLElement} mentorImg
  */
-function createImg(img) {
+export function createImg(img) {
   const mentorImg = document.createElement('img');
   mentorImg.className = 'mentor-picture';
   mentorImg.src = img;
@@ -146,7 +146,7 @@ function createImg(img) {
  * @param {String} bio
  * @return {HTMLElement} mentorBio
  */
-function createBioParagraph(bio) {
+export function createBioParagraph(bio) {
   const mentorBio = document.createElement('p');
   mentorBio.innerHTML = bio;
   return mentorBio;
@@ -157,7 +157,7 @@ function createBioParagraph(bio) {
  * @param {String} name
  * @return {HTMLElement} mentorName
  */
-function createNameHeader(name) {
+export function createNameHeader(name) {
   const mentorName = document.createElement('h5');
   mentorName.className = 'card-title text-primary';
   mentorName.innerHTML = name;
@@ -169,7 +169,7 @@ function createNameHeader(name) {
  * @param {String} gitHubID
  * @return {HTMLElement} userGithubButton
  */
-function createGitHubLink(gitHubID) {
+export function createGitHubLink(gitHubID) {
   const gitHubBaseUrl = 'https://github.com/';
   const gitLink = gitHubBaseUrl.concat(gitHubID);
   const userGithubButton = document.createElement('a');
@@ -185,7 +185,7 @@ function createGitHubLink(gitHubID) {
  * @param {String[]} interestTags
  * @return {HTMLElement} tagDiv
  */
-function createInterestTagsDiv(interestTags) {
+export function createInterestTagsDiv(interestTags) {
   const tagDiv = document.createElement('div');
   tagDiv.className = 'd-flex justify-content-center p-3';
   for (const tagText of interestTags) {
