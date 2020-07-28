@@ -65,6 +65,7 @@ function createAboutMe(user) {
     userEmailButton.style.display = 'none';
   }
   userEmailButton.href = 'mailto:' + user.email;
+  mailtouiApp.run();
 
   if (user.bio) {
     userBioElement.innerText = user.bio;
