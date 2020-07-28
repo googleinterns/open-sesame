@@ -1,3 +1,6 @@
+import {setGlobalsIfTesting} from '../../setTestingGlobals.js';
+setGlobalsIfTesting();
+
 const projectPreviewData = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -10,12 +13,14 @@ const projectPreviewData = {
 export const projectPreviewType = PropTypes.shape(projectPreviewData);
 
 export const mentorType = PropTypes.shape({
+  userID: PropTypes.string.isRequired,
   bio: PropTypes.string,
   email: PropTypes.string,
   interestTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   gitHubURL: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  location: PropTypes.string,
 });
 
 export const expandedProjectType = PropTypes.shape({
