@@ -48,14 +48,14 @@ describe('Auth button', () => {
     expect(elem.container.firstChild).not.toBeNull();
   });
 
-  it('handles if authorization data is loading', () => {
+  it('is disabled if authorization data is loading', () => {
     render(<AuthButton loading={true} />);
 
     expect(screen.getByText('Log In')).not.toBeNull();
     expect(screen.getByText('Log In')).toHaveClass('disabled');
   });
 
-  it('handles if user is authorized and has a profile', () => {
+  it('shows "Log Out" if user is authorized and has a profile', () => {
     render(<AuthButton loading={false} authData={mockAuthData1} />);
 
     expect(screen.getByText('Log Out')).not.toBeNull();
@@ -64,7 +64,7 @@ describe('Auth button', () => {
     expect(screen.getByText('Log Out')).not.toHaveClass('disabled');
   });
 
-  it('handles if user is authorized and has no profile', () => {
+  it('shows "Create Profile" if user is authorized and has no profile', () => {
     render(<AuthButton loading={false} authData={mockAuthData2} />);
 
     expect(screen.getByText('Create Profile')).not.toBeNull();
@@ -73,7 +73,7 @@ describe('Auth button', () => {
     expect(screen.getByText('Create Profile')).not.toHaveClass('disabled');
   });
 
-  it('handles if user is not authorized', () => {
+  it('shows "Log In" if user is not authorized', () => {
     render(<AuthButton loading={false} authData={mockAuthData3} />);
 
     expect(screen.getByText('Log In')).not.toBeNull();
