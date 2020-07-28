@@ -1,6 +1,6 @@
-import {checkTesting} from '../../../checkTesting.js';
+import {setGlobalsIfTesting} from '../../../setTestingGlobals.js';
 import {navbarLinkType} from '../navbar_prop_types.js';
-checkTesting();
+setGlobalsIfTesting();
 
 /**
  * Returns a React navbar link component.

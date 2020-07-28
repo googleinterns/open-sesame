@@ -1,7 +1,7 @@
 import {ProjectPreview} from './ProjectPreview.js';
 import {projectPreviewType} from '../prop_types.js';
-import {checkTesting} from '../../../checkTesting.js';
-checkTesting();
+import {setGlobalsIfTesting} from '../../../setTestingGlobals.js';
+setGlobalsIfTesting();
 
 /**
  * @typedef {Object} ProjectPreviewData

@@ -1,5 +1,5 @@
-import {checkTesting} from '../../../checkTesting.js';
-checkTesting();
+import {setGlobalsIfTesting} from '../../../setTestingGlobals.js';
+setGlobalsIfTesting();
 
 /**
  * A horizontal list of badge-based tags.
