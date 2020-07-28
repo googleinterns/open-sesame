@@ -3,12 +3,14 @@
  * page. This handles the loading of project preview data.
  */
 import {ProjectList} from './ProjectList.js';
+import {DataFetcher} from '../../../common/react/components/DataFetcher.js';
+import {ExpandedProject} from './ExpandedProject.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
 } from '../../../fetch_handler.js';
-import {DataFetcher} from '../../../common/react/components/DataFetcher.js';
-import {ExpandedProject} from './ExpandedProject.js';
+import {checkTesting} from '../../../checkTesting.js';
+checkTesting();
 
 // Using HashRouter instead of standard BrowserRouter because it supports
 // client-side routing that doesn't interfere with server-side
@@ -67,7 +69,8 @@ function ProjectPreviewFetcher() {
     return (
       <ProjectList
         loading={dataFetcherState.isFetching}
-        projectPreviews={dataFetcherState.data} />
+        projectPreviews={dataFetcherState.data}
+        inRouter={true} />
     );
   };
 
