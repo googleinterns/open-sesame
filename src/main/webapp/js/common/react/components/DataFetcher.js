@@ -40,9 +40,9 @@
  * @property {function(AbortSignal): Promise} createFetchRequest
  * @property {function(DataFetcherState): React.Component} render
  */
-import {checkTesting} from '../../../checkTesting.js';
+import {setGlobalsIfTesting} from '../../../setTestingGlobals.js';
 import {basicErrorHandling} from '../../../fetch_handler.js';
-checkTesting();
+setGlobalsIfTesting();
 
 /**
  * A generic data fetching component that can be used for fetching data for any

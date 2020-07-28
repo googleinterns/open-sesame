@@ -1,5 +1,5 @@
-import {checkTesting} from '../../checkTesting.js';
-checkTesting();
+import {setGlobalsIfTesting} from '../../setTestingGlobals.js';
+setGlobalsIfTesting();
 
 const projectPreviewData = {
   name: PropTypes.string.isRequired,

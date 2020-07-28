@@ -1,6 +1,6 @@
-import {checkTesting} from '../../../checkTesting.js';
+import {setGlobalsIfTesting} from '../../../setTestingGlobals.js';
 import {authDataType} from '../navbar_prop_types.js';
-checkTesting();
+setGlobalsIfTesting();
 
 const USER_SIGNUP_URL = '/signup.html';
 
