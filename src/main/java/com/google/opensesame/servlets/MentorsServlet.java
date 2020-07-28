@@ -28,17 +28,11 @@ public class MentorsServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     addMockMentor(response); // TODO: remove by production
-    List<UserData> mentors =
-        ofy().load().type(UserEntity.class).filter("isMentor", true).list().stream()
-            .map(
-                userEntity -> {
-                  try {
-                    return new UserData(userEntity);
-                  } catch (IOException e) {
-                    return null;
-                  }
-                })
-            .collect(Collectors.toList());
+    List<UserEntity> mentorEntities = ofy().load().type(UserEntity.class).filter("isMentor", true).list();
+    ArrayList<UserData> mentors = new ArrayList<UserData>();
+    for (UserEntity mentorEntity : mentorEntities) {
+      mentors.add(new UserData(mentorEntity));
+    }
 
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
