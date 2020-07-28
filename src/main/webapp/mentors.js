@@ -187,7 +187,7 @@ function createGitHubLink(gitHubID) {
  */
 function createInterestTagsDiv(interestTags) {
   const tagDiv = document.createElement('div');
-  tagDiv.className = 'd-flex justify-content-center p-3';
+  tagDiv.className = 'd-flex flex-wrap justify-content-center p-3';
   for (const tagText of interestTags) {
     const tagElement = document.createElement('div');
     tagElement.className =
