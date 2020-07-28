@@ -52,7 +52,7 @@ public class ProjectEntityTest {
   }
 
   @Before
-  public void objectifySetUp() throws IOException {
+  public void objectifyStartSession() throws IOException {
     session = ObjectifyService.begin();
     helper.setUp();
   }
@@ -76,7 +76,7 @@ public class ProjectEntityTest {
   }
 
   @After
-  public void objectifyTearDown() {
+  public void objectifyEndSession() {
     session.close();
     helper.tearDown();
   }
