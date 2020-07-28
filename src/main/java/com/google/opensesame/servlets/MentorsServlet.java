@@ -26,13 +26,14 @@ public class MentorsServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    List<UserEntity> mentorEntities = ofy().load().type(UserEntity.class).list();
+    addMockMentor(response); // TODO: remove by production
+    List<UserEntity> mentorEntities =
+        ofy().load().type(UserEntity.class).filter("isMentor", true).list();
     ArrayList<UserData> mentors = new ArrayList<UserData>();
-    for (UserEntity entity : mentorEntities) {
-      if (entity.isMentor()) {
-        mentors.add(new UserData(entity));
-      }
+    for (UserEntity mentorEntity : mentorEntities) {
+      mentors.add(new UserData(mentorEntity));
     }
+
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
     response.getWriter().println(jsonMentors);
@@ -60,11 +61,10 @@ public class MentorsServlet extends HttpServlet {
 
     ArrayList<String> interests = new ArrayList<String>();
     interests.add("skateboarding");
-    ArrayList<String> mentees = new ArrayList<String>();
     ArrayList<String> projects = new ArrayList<String>();
     projects.add(testRepoID.toString());
     UserEntity mockMentor =
-        new UserEntity(id, "Sami-2000", interests, "samialves@google.com", projects, mentees);
+        new UserEntity(id, "Sami-2000", interests, "samialves@google.com", projects);
     ofy().save().entity(mockMentor);
   }
 
