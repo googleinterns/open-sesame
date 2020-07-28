@@ -1,6 +1,4 @@
-import {createMentorElement, createEmailLink, createLocationHeader, createImg, 
-    createBioParagraph, createNameHeader, createGitHubLink, createInterestTagsDiv} 
-    from '../mentors.js';
+import * as Mentors from '../mentors.js';
 import '@testing-library/jest-dom/extend-expect';
 
 const mockMentor = {
@@ -16,36 +14,36 @@ const mockMentor = {
 
 describe('Mentor card', () => {
   it('is created', () => {
-    const mentorElement = createMentorElement(mockMentor);
+    const mentorElement = Mentors.createMentorElement(mockMentor);
     expect(mentorElement).not.toBeNull();
   });
 
   it('has the correct image element', () => {
-    const imgElement = createImg(mockMentor.image);
+    const imgElement = Mentors.createImg(mockMentor.image);
     expect(imgElement.getAttribute('class')).toBe('mentor-picture');
     expect(imgElement.getAttribute('src')).toBe(mockMentor.image);
   });
 
   it('has the correct name element', () => {
-    const nameElement = createNameHeader(mockMentor.name);
+    const nameElement = Mentors.createNameHeader(mockMentor.name);
     expect(nameElement.getAttribute('class')).toBe('card-title text-primary');
     expect(nameElement.innerHTML).toBe(mockMentor.name);
   });
 
   it('has the correct location element', () => {
-    const locationElement = createLocationHeader(mockMentor.location);
+    const locationElement = Mentors.createLocationHeader(mockMentor.location);
     expect(locationElement.getAttribute('class'))
         .toBe('card-subtitle text-muted text-center mb-1');
     expect(locationElement.innerText).toBe(mockMentor.location);
   });
 
   it('has the correct bio element', () => {
-    const bioElement = createBioParagraph(mockMentor.bio);
+    const bioElement = Mentors.createBioParagraph(mockMentor.bio);
     expect(bioElement.innerHTML).toBe(mockMentor.bio);
   });
 
   it('has the correct email element', () => {
-    const emailElement = createEmailLink(mockMentor.email);
+    const emailElement = Mentors.createEmailLink(mockMentor.email);
     expect(emailElement.innerText).toBe('Send Email Introduction');
     expect(emailElement.getAttribute('href'))
         .toBe('mailto: ' + mockMentor.email);
@@ -53,7 +51,7 @@ describe('Mentor card', () => {
   });
 
   it('has the correct GitHub element', () => {
-    const gitHubElement = createGitHubLink(mockMentor.gitHubID);
+    const gitHubElement = Mentors.createGitHubLink(mockMentor.gitHubID);
     expect(gitHubElement.innerText).toBe('GitHub Profile');
     expect(gitHubElement.getAttribute('href'))
         .toBe('https://github.com/' + mockMentor.gitHubID);
@@ -61,7 +59,7 @@ describe('Mentor card', () => {
   });
 
   it('has the correct interest list', () => {
-    const tagsElement = createInterestTagsDiv(mockMentor.interestTags);
+    const tagsElement = Mentors.createInterestTagsDiv(mockMentor.interestTags);
     expect(tagsElement.getAttribute('class'))
         .toBe('d-flex justify-content-center p-3');
     const tags = tagsElement
