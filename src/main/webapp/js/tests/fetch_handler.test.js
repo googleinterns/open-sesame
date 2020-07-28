@@ -1,5 +1,5 @@
 /* global fail */
-import {standardizeFetchErrors} from './fetch_handler.js';
+import {standardizeFetchErrors} from '../fetch_handler.js';
 const fetchMock = require('fetch-mock-jest').sandbox();
 
 const fetchFailedMessage = 'Fetch failed';

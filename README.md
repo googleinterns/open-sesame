@@ -68,14 +68,13 @@ The ```job``` labeled ```JavaFormat``` in the [LintingAndTestingCI.yaml](.github
 We use ```ESLint``` to lint our JavaScript code. OpenSesame's version of ```ESLint```
 runs using the rules defined in our [.eslitrc](./.eslintrc) file (google and react style guide standards).
 
-The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles JavaScript Linting. This ```job``` performs three main steps:
+The ```job``` labeled ```ESLint``` in the [LintingAndTestingCI.yaml](.github/workflows/LintingAndTestingCI.yaml) file handles JavaScript Linting. This ```job``` performs two main steps:
 
 1. Run the locally installed ESLint Linter (ESLint is a part of OpenSesame's
-dependencies). The local linter is set to format code with the ```--fix``` option.
+dependencies). The local linter is set to format code with the ```--fix``` option. 
+Any ESLint errors and warnings that can't be fixed with the ```--fix``` option are annotated in the file changes PR tab.
 
 2. Commit changes made during the previous step(1) with the [git-auto-commit-action](https://github.com/marketplace/actions/git-auto-commit#git-auto-commit-action). Commits are made with the message _"Apply ESLint Changes"_.
-
-3. Run the [ESLint Action](https://github.com/marketplace/actions/eslint-action#eslint-action) GitHub Action that annotates ESLint errors and warnings in PRs. This steps makes the style violations evident when looking at PR diffs in the file changes PR tab. 
 
 ##### Locally Running ESLint 
 Run the local ```ESLint``` JavaScript linter with:
