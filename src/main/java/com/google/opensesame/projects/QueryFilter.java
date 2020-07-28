@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * A Datastore filter stored in the form used by Objectify when loading entities from the Datastore.
- * 
- * See here for how Objectify conducts filtering on a query:
+ *
+ * <p>See here for how Objectify conducts filtering on a query:
  * https://www.javadoc.io/static/com.googlecode.objectify/objectify/6.0.6/com/googlecode/objectify/cmd/Query.html#filter(java.lang.String,java.lang.Object)
  */
 class QueryFilter {
@@ -21,10 +21,14 @@ class QueryFilter {
    *
    * <p>QueryFilter strings should be in the format "fieldName <comparator> value". Examples:
    *
-   * <blockquote><pre>
+   * <blockquote>
+   *
+   * <pre>
    * "numMentors >= 2"
    * "numInterestedUsers = 0"
-   * </pre></blockquote>
+   * </pre>
+   *
+   * </blockquote>
    *
    * @param QueryFilterString The filter query string.
    * @param response The servlet response to send errors to.

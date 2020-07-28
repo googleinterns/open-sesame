@@ -14,9 +14,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Helper functions for querying the projects Datastore.
- */
+/** Helper functions for querying the projects Datastore. */
 public class ProjectQuery {
   public static final String FILTER_QUERY_PARAM = "filter";
 
@@ -37,10 +35,9 @@ public class ProjectQuery {
   }
 
   /**
-   * Gets the query filters from a servlet request. Returns null if any errors are encountered
-   * while parsing the query filters. See {@link
-   * com.google.opensesame.projects.QueryFilter.fromString} for more information on how
-   * QueryFilters are parsed.
+   * Gets the query filters from a servlet request. Returns null if any errors are encountered while
+   * parsing the query filters. See {@link com.google.opensesame.projects.QueryFilter.fromString}
+   * for more information on how QueryFilters are parsed.
    *
    * @param HttpServletRequest The request to get the filter queries from.
    * @param HttpServletResponse The servlet response to send errors to.
