@@ -155,7 +155,7 @@ function createCardTitle(titleText) {
  */
 function createRowElement() {
   const rowElement = document.createElement('div');
-  rowElement.className = 'row p-2';
+  rowElement.className = 'row p-2 flex-wrap';
   return rowElement;
 }
 
