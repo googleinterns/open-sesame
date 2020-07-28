@@ -111,5 +111,4 @@ public class UserServlet extends HttpServlet {
                 user.getEmail()))
         .now();
   }
-  // TODO: make function to get users given a list of UserIds.
 }
