@@ -52,7 +52,7 @@ public class UserData {
     }
     isMentor = userEntity.isMentor;
 
-    // GitHub query 
+    // GitHub query
     loadProjects(userEntity.projectIds);
     final GitHub gitHub = GitHubGetter.getGitHub();
     final GHUser userGitAccount = gitHub.getUser(gitHubID);

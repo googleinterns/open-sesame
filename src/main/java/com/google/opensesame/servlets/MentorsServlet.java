@@ -1,5 +1,7 @@
 package com.google.opensesame.servlets;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
@@ -11,14 +13,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 @WebServlet("/mentors")
 public class MentorsServlet extends HttpServlet {
@@ -27,20 +28,18 @@ public class MentorsServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     addMockMentor(response); // TODO: remove by production
-    List<UserData> mentors = 
-    ofy().load().type(UserEntity.class)
-    .filter("isMentor", true)
-    .list()
-    .stream()
-    .map(userEntity -> {
-              try {
-                return new UserData(userEntity);
-              } catch (IOException e) {                
-              return null;
-              }
-            })
-    .collect(Collectors.toList());
-    
+    List<UserData> mentors =
+        ofy().load().type(UserEntity.class).filter("isMentor", true).list().stream()
+            .map(
+                userEntity -> {
+                  try {
+                    return new UserData(userEntity);
+                  } catch (IOException e) {
+                    return null;
+                  }
+                })
+            .collect(Collectors.toList());
+
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
     response.getWriter().println(jsonMentors);
