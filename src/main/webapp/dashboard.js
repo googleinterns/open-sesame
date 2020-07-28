@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 import {
   standardizeFetchErrors,
   makeRelativeUrlAbsolute,
@@ -174,7 +174,7 @@ function createCardTitle(titleText) {
  */
 function createRowElement() {
   const rowElement = document.createElement('div');
-  rowElement.className = 'row p-2';
+  rowElement.className = 'row p-2 flex-wrap';
   return rowElement;
 }
 
@@ -189,13 +189,13 @@ function getProject(projectID) {
   fetchURL.searchParams.append('projectId', projectID);
 
   const errorFormattedFetchRequest = standardizeFetchErrors(
-      fetch(fetchURL),
-      'Failed to communicate with the server. Please try again later.',
-      'An error occcured while retrieving this project.' +
+    fetch(fetchURL),
+    'Failed to communicate with the server. Please try again later.',
+    'An error occcured while retrieving this project.' +
     ' Please try again later.');
 
   return errorFormattedFetchRequest
-      .then((response) => response.json()).then((projects) => projects[0]);
+    .then((response) => response.json()).then((projects) => projects[0]);
 }
 
 /**
