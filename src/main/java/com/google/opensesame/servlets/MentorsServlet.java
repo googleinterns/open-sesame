@@ -12,7 +12,6 @@ import com.google.opensesame.user.UserEntity;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +27,8 @@ public class MentorsServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     addMockMentor(response); // TODO: remove by production
-    List<UserEntity> mentorEntities = ofy().load().type(UserEntity.class).filter("isMentor", true).list();
+    List<UserEntity> mentorEntities =
+        ofy().load().type(UserEntity.class).filter("isMentor", true).list();
     ArrayList<UserData> mentors = new ArrayList<UserData>();
     for (UserEntity mentorEntity : mentorEntities) {
       mentors.add(new UserData(mentorEntity));
