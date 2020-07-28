@@ -62,7 +62,7 @@ public final class GitHubGetter {
    *
    * @param mockGitHub
    */
-  public static void mockGitHub(GitHub mockGitHub) {
+  public static void setGitHubForTests(GitHub mockGitHub) {
     gitHub = mockGitHub;
   }
 
