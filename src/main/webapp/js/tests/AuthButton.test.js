@@ -43,8 +43,8 @@ const UNAUTHORIZED_AUTH_DATA = {
 describe('Auth button', () => {
   it('is added to the DOM', () => {
     const elem = render(<AuthButton
-        loading={false}
-        authData={AUTHORIZED_WITH_PROFILE_AUTH_DATA} />);
+      loading={false}
+      authData={AUTHORIZED_WITH_PROFILE_AUTH_DATA} />);
 
     expect(elem.container.firstChild).not.toBeNull();
   });
@@ -58,8 +58,8 @@ describe('Auth button', () => {
 
   it('shows "Log Out" if user is authorized and has a profile', () => {
     render(<AuthButton
-        loading={false}
-        authData={AUTHORIZED_WITH_PROFILE_AUTH_DATA} />);
+      loading={false}
+      authData={AUTHORIZED_WITH_PROFILE_AUTH_DATA} />);
 
     expect(screen.getByText('Log Out')).not.toBeNull();
     expect(screen.getByText('Log Out'))
@@ -69,8 +69,8 @@ describe('Auth button', () => {
 
   it('shows "Create Profile" if user is authorized and has no profile', () => {
     render(<AuthButton
-        loading={false}
-        authData={AUTHORIZED_WITHOUT_PROFILE_AUTH_DATA} />);
+      loading={false}
+      authData={AUTHORIZED_WITHOUT_PROFILE_AUTH_DATA} />);
 
     expect(screen.getByText('Create Profile')).not.toBeNull();
     expect(screen.getByText('Create Profile'))
