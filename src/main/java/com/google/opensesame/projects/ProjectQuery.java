@@ -14,6 +14,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Helper functions for querying the projects Datastore.
+ */
 public class ProjectQuery {
   public static final String FILTER_QUERY_PARAM = "filter";
 

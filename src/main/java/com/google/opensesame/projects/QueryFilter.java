@@ -6,19 +6,25 @@ import java.lang.reflect.Field;
 import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * A Datastore filter stored in the form used by Objectify when loading entities from the Datastore.
+ * 
+ * See here for how Objectify conducts filtering on a query:
+ * https://www.javadoc.io/static/com.googlecode.objectify/objectify/6.0.6/com/googlecode/objectify/cmd/Query.html#filter(java.lang.String,java.lang.Object)
+ */
 class QueryFilter {
   public static final String FILTER_QUERY_REGEX = "^[A-Za-z]+ (>|>=|!=|=|<|<=) .+$";
 
   /**
-   * Parses a QueryFilter from a string.
+   * Parses a QueryFilter from a string and responds with errors to the provided servlet response
+   * object.
    *
-   * <p>QueryFilter strings should be in the format "fieldName >= value". Examples:
+   * <p>QueryFilter strings should be in the format "fieldName <comparator> value". Examples:
    *
-   * <blockquote>
-   *
-   * "numMentors >= 2" "numInterestedUsers = 0"
-   *
-   * </blockquote>
+   * <blockquote><pre>
+   * "numMentors >= 2"
+   * "numInterestedUsers = 0"
+   * </pre></blockquote>
    *
    * @param QueryFilterString The filter query string.
    * @param response The servlet response to send errors to.
@@ -77,7 +83,7 @@ class QueryFilter {
   public final String condition;
   public final Object comparisonObject;
 
-  private QueryFilter(String condition, Object comparisonObject) {
+  public QueryFilter(String condition, Object comparisonObject) {
     this.condition = condition;
     this.comparisonObject = comparisonObject;
   }
