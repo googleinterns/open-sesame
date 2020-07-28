@@ -12,9 +12,9 @@ public class UserEntityTest {
   @Test
   public void isMentorTest() throws IOException {
     UserEntity mockUser = new UserEntity();
-    assertEquals(false, mockUser.isMentor());
+    assertEquals(mockUser.isMentor(), false);
 
     mockUser.addProject("12345L");
-    assertEquals(true, mockUser.isMentor());
+    assertEquals(mockUser.isMentor(), true);
   }
 }
