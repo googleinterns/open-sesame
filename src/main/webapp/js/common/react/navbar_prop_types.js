@@ -1,5 +1,5 @@
-import {checkTesting} from '../../checkTesting.js';
-checkTesting();
+import {setGlobalsIfTesting} from '../../setTestingGlobals.js';
+setGlobalsIfTesting();
 
 export const authDataType = PropTypes.shape({
   authorized: PropTypes.bool.isRequired,
