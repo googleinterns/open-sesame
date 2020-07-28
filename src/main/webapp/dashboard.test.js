@@ -1,1 +1,1 @@
-import * as Dashboard from "./dashboard.js"
+import * as Dashboard from './dashboard.js';
