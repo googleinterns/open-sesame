@@ -17,11 +17,12 @@
  * allows modules to be imported from a browser context in the same way that
  * they are imported below, instead of via script tags in the HTML document.
  */
-export function checkTesting() {
+export function setGlobalsIfTesting() {
   if ((typeof process !== 'undefined') && (process.release.name === 'node')) {
     global.PropTypes = require('prop-types');
     global.React = require('react');
     global.fetch = require('fetch-mock-jest');
     global.ReactRouterDOM = require('react-router-dom');
+    global.mailtouiApp = {run: () => {}};
   }
 }

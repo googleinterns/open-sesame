@@ -1,8 +1,8 @@
-import {checkTesting} from '../../../checkTesting.js';
+import {setGlobalsIfTesting} from '../../../setTestingGlobals.js';
 import {NavbarLink} from './NavbarLink.js';
 import {AuthButton} from './AuthButton.js';
 import {authDataType, navbarLinkType} from '../navbar_prop_types.js';
-checkTesting();
+setGlobalsIfTesting();
 
 /**
  * @typedef NavbarUrl
