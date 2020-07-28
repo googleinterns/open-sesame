@@ -163,7 +163,7 @@ function createRowElement() {
  * Call functions to populate page sections with data.
  */
 async function setUpPage() {
-const user = await getUser();
+  const user = await getUser();
   createAboutMe(user);
 }
 
