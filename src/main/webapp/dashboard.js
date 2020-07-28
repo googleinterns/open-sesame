@@ -202,12 +202,7 @@ function getProject(projectID) {
  * Call functions to populate page sections with data.
  */
 async function setUpPage() {
-  const user = await getUser()
-      .catch((errorResponse) => {
-        console.error(
-            `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-        alert(errorResponse.userMessage);
-      });
+const user = await getUser();
   createAboutMe(user);
 }
 
