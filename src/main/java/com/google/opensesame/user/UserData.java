@@ -19,16 +19,16 @@ import org.kohsuke.github.GitHub;
  */
 public class UserData {
   private Boolean isMentor;
-  private final ArrayList<String> interestTags;
   private final ArrayList<ProjectData> projects = new ArrayList<ProjectData>();
+  private final ArrayList<String> interestTags;
   private final String bio;
   private final String gitHubID;
   private final String gitHubURL;
   private final String image;
   private final String location;
-  private final String name;
   private final String userID;
   private String email;
+  private String name;
 
   /**
    * Create a UserData from a given UserEntity
@@ -60,6 +60,9 @@ public class UserData {
     image = userGitAccount.getAvatarUrl();
     location = userGitAccount.getLocation();
     name = userGitAccount.getName();
+    if (name == null){
+      name  = gitHubID;
+    }
     gitHubURL = userGitAccount.getHtmlUrl().toString();
   }
 
