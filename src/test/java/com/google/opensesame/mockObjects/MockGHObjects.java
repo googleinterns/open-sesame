@@ -49,7 +49,6 @@ public class MockGHObjects {
    * <li>getName() -> MOCK_NAME
    * <li>getHtmlUrl().toString() -> MOCK_HTML_URL();
    * <li>getLogin() -> MOCK_LOGIN
-   * 
    *
    *     <p>NOTE: all functions return fixtures defined in this class. MOCK_HTML_URL() is a function
    *     due to complications with Java's URL Class.
