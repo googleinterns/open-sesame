@@ -65,8 +65,8 @@ public class UserData {
     image = userGitAccount.getAvatarUrl();
     location = userGitAccount.getLocation();
     name = userGitAccount.getName();
-    if (name == null){
-      name  = gitHubID;
+    if (name == null) {
+      name = gitHubID;
     }
     gitHubURL = userGitAccount.getHtmlUrl().toString();
   }
