@@ -63,8 +63,8 @@ describe('Mentor card', () => {
     expect(tagsElement.getAttribute('class'))
         .toBe('d-flex justify-content-center p-3');
     const tags = tagsElement
-        .getElementsByClassName('border border-muted ' 
-        + 'text-muted mr-1 mb-1 badge text-center');
+        .getElementsByClassName('border border-muted ' +
+        'text-muted mr-1 mb-1 badge text-center');
     expect(tags.item(0).innerText).toBe('interest1');
     expect(tags.item(1).innerText).toBe('interest2');
   });
