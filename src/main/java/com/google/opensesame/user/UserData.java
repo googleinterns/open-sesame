@@ -37,6 +37,11 @@ public class UserData {
    * the AuthServlet. This is to avoid unauthorised users from contacting our mentors. We want to
    * avoid email spam as much as possible and we do not see the need to share user emails
    * unathorized personnel.
+   * 
+   * <p>Note: If a user's name is not defined on GitHub, this datastructure will
+   * set the user's GitHub login ID as the user's name.
+   * i.e {@code if (name == null);}
+   * {@code name = gitHubID}
    *
    * @param userEntity
    * @throws IOException
