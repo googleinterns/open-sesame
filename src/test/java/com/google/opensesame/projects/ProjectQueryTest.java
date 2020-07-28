@@ -52,7 +52,7 @@ public class ProjectQueryTest {
   }
 
   @Before
-  public void objectifySetUp() throws IOException {
+  public void objectifyStartSession() throws IOException {
     session = ObjectifyService.begin();
     helper.setUp();
   }
@@ -76,13 +76,13 @@ public class ProjectQueryTest {
   }
 
   @After
-  public void objectifyTearDown() {
+  public void objectifyEndSession() {
     session.close();
     helper.tearDown();
   }
 
   @Test
-  public void queryByIds() throws IOException {
+  public void queryByIdsShouldReturnProjectsWithThoseIds() throws IOException {
     // Expect to receive the ProjectEntities with the corresponding repository IDs.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
@@ -91,13 +91,14 @@ public class ProjectQueryTest {
 
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
     Collection<ProjectEntity> expected = Arrays.asList(firstMockProject, secondMockProject);
+
     assertNotNull(queryResult);
     assertTrue(queryResult.size() == expected.size() && queryResult.containsAll(expected));
     verify(mockResponse, never()).setStatus(anyInt());
   }
 
   @Test
-  public void queryNoIds() throws IOException {
+  public void queryWithNoIdsShouldReturnEmpty() throws IOException {
     // Expect to receive no ProjectEntities because the list of IDs was defined but empty.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
@@ -110,7 +111,7 @@ public class ProjectQueryTest {
   }
 
   @Test
-  public void queryWithInvalidId() throws IOException {
+  public void queryWithInvalidIdShouldRaiseError() throws IOException {
     // Expect to receive an error response of 404 (resource not found) because one or more IDs
     // could not be found within the Datastore.
 
@@ -124,9 +125,9 @@ public class ProjectQueryTest {
   }
 
   @Test
-  public void queryWithNoParams() throws IOException {
+  public void queryWithoutIdsShouldReturnAllProjects() throws IOException {
     // Expect to receive all ProjectEntities in order of descending number of mentors because no
-    // additional parameters were supplied.
+    // list of IDs was supplied.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
 
@@ -138,45 +139,18 @@ public class ProjectQueryTest {
   }
 
   @Test
-  public void queryWithFilter() throws IOException {
-    // Expect to receive all ProjectEntities with 2 or more mentors, in order of descending number
-    // of mentors.
-
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
-        .thenReturn(new String[] {"numMentors >= 2"});
-
-    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
-    ProjectEntity[] expectedQueryResult = new ProjectEntity[] {firstMockProject, secondMockProject};
-    assertNotNull(queryResult);
-    assertArrayEquals(expectedQueryResult, queryResult.toArray());
-  }
-
-  @Test
-  public void queryWithInvalidFilter() throws IOException {
-    // Expect to receive an error response of 400 because the supplied filter is invalid.
-
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
-        .thenReturn(new String[] {"numMentors>= 2"});
-
-    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request, mockResponse);
-    assertNull(queryResult);
-    verify(mockResponse, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
-  }
-
-  @Test
-  public void fromRepositoryId() {
+  public void fromExistingRepositoryIdShouldReturnExistingProject() {
     // Expect the function to return an existing ProjectEntity from the Datastore because an entity
     // with the supplied ID already exists.
 
-    ProjectEntity projectEntity = ProjectQuery.fromRepositoryIdOrNew(firstMockProject.repositoryId);
+    ProjectEntity projectEntity =
+        ProjectQuery.fromRepositoryIdOrNew(firstMockProject.repositoryId);
 
     assertEquals(firstMockProject, projectEntity);
   }
 
   @Test
-  public void fromNewRepositoryId() {
+  public void fromNewRepositoryIdShouldReturnNewProject() {
     // Expect the function to return a new ProjectEntity because no entity with that supplied ID
     // exists in the Datastore.
 
