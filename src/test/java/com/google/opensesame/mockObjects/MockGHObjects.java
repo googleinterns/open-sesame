@@ -8,8 +8,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import org.kohsuke.github.GHMyself;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
+import org.kohsuke.github.GitHub;
 
 /**
  * MockGHObjects is a helper class with two main static functions to help mock the kohsuke GitHub
@@ -46,6 +48,7 @@ public class MockGHObjects {
    * <li>getLocation() -> MOCK_LOCATION
    * <li>getName() -> MOCK_NAME
    * <li>getHtmlUrl().toString() -> MOCK_HTML_URL();
+   * <li>getLogin() -> MOCK_LOGIN
    *
    *     <p>NOTE: all functions return fixtures defined in this class. MOCK_HTML_URL() is a function
    *     due to complications with Java's URL Class.
@@ -61,6 +64,7 @@ public class MockGHObjects {
     when(mockGHUser.getHtmlUrl()).thenReturn(MOCK_HTML_URL());
     when(mockGHUser.getLocation()).thenReturn(MOCK_LOCATION);
     when(mockGHUser.getName()).thenReturn(MOCK_GHUSER_NAME);
+    when(mockGHUser.getLogin()).thenReturn(MOCK_LOGIN);
     return mockGHUser;
   }
 
@@ -72,6 +76,8 @@ public class MockGHObjects {
   public static String MOCK_GHREPO_NAME = "MOCK_REPO_NAME";
   /** The description of the mocked GHRepository returned by createMockRepository() */
   public static String MOCK_DESCRIPTION = "MOCK_DESCRIPTION";
+  /** The Id of the mocked GHRepository returned by createMockRepository() */
+  public static Long MOCK_ID = 123456L;
   /**
    * The topics of the mocked GHRepository returned by createMockRepository(). ["TOPIC 1","TOPIC 2"]
    * represented as a List.
@@ -94,6 +100,7 @@ public class MockGHObjects {
    * Creates an instance of a GHRepository mocked with Mockito. The mocked repository comes with the
    * following functions predefined;
    * <li>getDescription() -> MOCK_DESCRIPTION
+   * <li>getId() -> MOCK_ID
    * <li>getLanguage() -> MOCK_LANGUAGE
    * <li>getName() -> MOCK_REPO_NAME
    * <li>listTopics() -> MOCK_TOPICS
@@ -109,6 +116,52 @@ public class MockGHObjects {
     when(mockGHRepository.getLanguage()).thenReturn(MOCK_LANGUAGE);
     when(mockGHRepository.getName()).thenReturn(MOCK_GHREPO_NAME);
     when(mockGHRepository.listTopics()).thenReturn(MOCK_TOPICS);
+    when(mockGHRepository.getId()).thenReturn(MOCK_ID);
     return mockGHRepository;
+  }
+
+  // #### MOCK GHMyself ####
+
+  /** The login of the mocked GHMyself object returned by createMockMyself() */
+  public static String MOCK_LOGIN = "MOCK_LOGIN";
+
+  /**
+   * Creates an instance of a GHMyself mocked with Mockito. The mocked object comes with the
+   * following functions predefined;
+   * <li>getLogin() -> MOCK_LOGIN
+   *
+   *     <p>NOTE: MOCK_LOGIN is a fixture in this class
+   *
+   * @return a mocked instance of a GHMyself Object
+   * @throws IOException
+   */
+  public static GHMyself createMockMyself() throws IOException {
+    // Create A GHUser Stub
+    GHMyself mockGHMyself = mock(GHMyself.class);
+    when(mockGHMyself.getLogin()).thenReturn(MOCK_LOGIN);
+    return mockGHMyself;
+  }
+
+  // #### MOCK GitHub API ####
+
+  /**
+   * Creates an instance of a GitHub mocked with Mockito. The mocked object comes with the following
+   * functions predefined;
+   * <li>getMyself() -> GHMyself returned by {@link #createMockMyself() createMockMyself}
+   * <li>getUser(String anyString) -> GHUser returned by {@link #createMockUser() createMockUser}
+   * <li>getRepositoryById(String anyString) -> GHRepository returned by {@link
+   *     #createMockRepository() createMockRepository}
+   *
+   *     <p>NOTE: all functions return fixtures defined in this class
+   *
+   * @return a mocked instance of a GitHub
+   * @throws IOException
+   */
+  public static GitHub createMockGitHub() throws IOException {
+    GitHub mockGitHub = mock(GitHub.class);
+    when(mockGitHub.getMyself()).thenReturn(createMockMyself());
+    when(mockGitHub.getUser(MOCK_LOGIN)).thenReturn(createMockUser());
+    when(mockGitHub.getRepositoryById(MOCK_ID.toString())).thenReturn(createMockRepository());
+    return mockGitHub;
   }
 }
