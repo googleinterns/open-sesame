@@ -18,8 +18,8 @@ public class ProjectQuery {
   public static final String FILTER_QUERY_PARAM = "filter";
 
   /**
-   * The names of ProjectEntity fields that have the @Index Objectify annotation and can be sorted
-   * and filtered by in Datastore.
+   * The fields of ProjectEntity that have the @Index Objectify annotation and can be used for
+   * sorting and filtering in Datastore.
    */
   public static List<Field> queryableFields;
 
@@ -34,16 +34,16 @@ public class ProjectQuery {
   }
 
   /**
-   * Gets the filter queries from a servlet request. Returns null if any errors are encountered
-   * while parsing the filter queries. See {@link
+   * Gets the query filters from a servlet request. Returns null if any errors are encountered
+   * while parsing the query filters. See {@link
    * com.google.opensesame.projects.QueryFilter.fromString} for more information on how
-   * FilterQueries are parsed.
+   * QueryFilters are parsed.
    *
    * @param HttpServletRequest The request to get the filter queries from.
    * @param HttpServletResponse The servlet response to send errors to.
-   * @return Returns the list of FilterQueries or null if an error was encountered while parsing.
+   * @return Returns the list of QueryFilters or null if an error was encountered while parsing.
    */
-  private static List<QueryFilter> queryFiltersFromRequest(
+  private static List<QueryFilter> getQueryFiltersFromRequest(
       HttpServletRequest request, HttpServletResponse response) throws IOException {
     String[] filterRequests = request.getParameterValues(FILTER_QUERY_PARAM);
     if (filterRequests == null) {
@@ -92,7 +92,7 @@ public class ProjectQuery {
       Query<ProjectEntity> projectEntityQuery =
           ofy().load().type(ProjectEntity.class).order("-numMentors");
 
-      List<QueryFilter> queryFilters = queryFiltersFromRequest(request, response);
+      List<QueryFilter> queryFilters = getQueryFiltersFromRequest(request, response);
       if (queryFilters == null) {
         return null;
       }
