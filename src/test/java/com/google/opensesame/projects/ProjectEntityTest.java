@@ -82,7 +82,7 @@ public class ProjectEntityTest {
   }
 
   @Test
-  public void queryByIds() throws IOException {
+  public void queryByIdsShouldReturnProjectsWithThoseIds() throws IOException {
     // Expect to receive the ProjectEntities with the corresponding repository IDs.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
@@ -98,7 +98,7 @@ public class ProjectEntityTest {
   }
 
   @Test
-  public void queryNoIds() throws IOException {
+  public void queryWithNoIdsShouldReturnEmpty() throws IOException {
     // Expect to receive no ProjectEntities because the list of IDs was defined but empty.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
@@ -111,7 +111,7 @@ public class ProjectEntityTest {
   }
 
   @Test
-  public void queryWithInvalidId() throws IOException {
+  public void queryWithInvalidIdShouldRaiseError() throws IOException {
     // Expect to receive an error response of 404 (resource not found) because one or more IDs
     // could not be found within the Datastore.
 
@@ -125,7 +125,7 @@ public class ProjectEntityTest {
   }
 
   @Test
-  public void queryWithoutIds() throws IOException {
+  public void queryWithoutIdsShouldReturnAllProjects() throws IOException {
     // Expect to receive all ProjectEntities in order of descending number of mentors because no
     // list of IDs was supplied.
 
@@ -139,7 +139,7 @@ public class ProjectEntityTest {
   }
 
   @Test
-  public void fromRepositoryId() {
+  public void fromExistingRepositoryIdShouldReturnExistingProject() {
     // Expect the function to return an existing ProjectEntity from the Datastore because an entity
     // with the supplied ID already exists.
 
@@ -150,7 +150,7 @@ public class ProjectEntityTest {
   }
 
   @Test
-  public void fromNewRepositoryId() {
+  public void fromNewRepositoryIdShouldReturnNewProject() {
     // Expect the function to return a new ProjectEntity because no entity with that supplied ID
     // exists in the Datastore.
 
