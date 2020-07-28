@@ -1,6 +1,5 @@
 package com.google.opensesame.mockObjects;
 
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,6 +48,8 @@ public class MockGHObjects {
    * <li>getLocation() -> MOCK_LOCATION
    * <li>getName() -> MOCK_NAME
    * <li>getHtmlUrl().toString() -> MOCK_HTML_URL();
+   * <li>getLogin() -> MOCK_LOGIN
+   * 
    *
    *     <p>NOTE: all functions return fixtures defined in this class. MOCK_HTML_URL() is a function
    *     due to complications with Java's URL Class.
@@ -64,6 +65,7 @@ public class MockGHObjects {
     when(mockGHUser.getHtmlUrl()).thenReturn(MOCK_HTML_URL());
     when(mockGHUser.getLocation()).thenReturn(MOCK_LOCATION);
     when(mockGHUser.getName()).thenReturn(MOCK_GHUSER_NAME);
+    when(mockGHUser.getLogin()).thenReturn(MOCK_LOGIN);
     return mockGHUser;
   }
 
@@ -159,8 +161,8 @@ public class MockGHObjects {
   public static GitHub createMockGitHub() throws IOException {
     GitHub mockGitHub = mock(GitHub.class);
     when(mockGitHub.getMyself()).thenReturn(createMockMyself());
-    when(mockGitHub.getUser(anyString())).thenReturn(createMockUser());
-    when(mockGitHub.getRepositoryById(anyString())).thenReturn(createMockRepository());
+    when(mockGitHub.getUser(MOCK_LOGIN)).thenReturn(createMockUser());
+    when(mockGitHub.getRepositoryById(MOCK_ID.toString())).thenReturn(createMockRepository());
     return mockGitHub;
   }
 }
