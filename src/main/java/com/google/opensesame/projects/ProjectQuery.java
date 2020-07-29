@@ -83,7 +83,7 @@ public class ProjectQuery {
             response,
             "One or more of the supplied IDs is invalid and those projects could not be found.",
             HttpServletResponse.SC_NOT_FOUND,
-            "One or more of the requested projects does not exist. Please try again later.");
+            "One or more of the requested projects does not exist.");
         return null;
       }
     } else {

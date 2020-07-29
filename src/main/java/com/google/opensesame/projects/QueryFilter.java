@@ -42,7 +42,7 @@ class QueryFilter {
           response,
           "Invalid filter query.",
           HttpServletResponse.SC_BAD_REQUEST,
-          "Unable to query for projects. Please try again later.");
+          "Unable to query for projects.");
       return null;
     }
 
@@ -57,7 +57,7 @@ class QueryFilter {
           response,
           "Cannot filter by the field '" + filterFieldName + "'.",
           HttpServletResponse.SC_BAD_REQUEST,
-          "Unable to query for projects. Please try again later.");
+          "Unable to query for projects.");
       return null;
     }
 
@@ -76,7 +76,7 @@ class QueryFilter {
               + filterFieldName
               + "'.",
           HttpServletResponse.SC_BAD_REQUEST,
-          "Unable to query for projects. Please try again later.");
+          "Unable to query for projects.");
       return null;
     }
 
