@@ -26,7 +26,7 @@ public class MentorsServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    //addMockMentor(response); // TODO: remove by production
+    // addMockMentor(response); // TODO: remove by production
     List<UserEntity> mentorEntities =
         ofy().load().type(UserEntity.class).filter("isMentor", true).list();
     ArrayList<UserData> mentors = new ArrayList<UserData>();

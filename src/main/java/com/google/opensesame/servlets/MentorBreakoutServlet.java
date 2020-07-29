@@ -27,7 +27,8 @@ public class MentorBreakoutServlet extends HttpServlet {
       return;
     }
     if (!mentor.isMentor()) {
-      MentorsServlet.error(response, "Requested user is not a mentor.", 400, "Non-mentor requested");
+      MentorsServlet.error(
+          response, "Requested user is not a mentor.", 400, "Non-mentor requested");
     }
 
     UserData mentorData = new UserData(mentor);
