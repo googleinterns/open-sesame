@@ -53,7 +53,7 @@ public class MentorsServlet extends HttpServlet {
       return;
     }
     Long testRepoID = testRepo.getId();
-    ProjectEntity testProject = ProjectQuery.fromRepositoryIdOrNew(testRepoID.toString());
+    ProjectEntity testProject = ProjectEntity.fromRepositoryIdOrNew(testRepoID.toString());
     String id = "mock_id";
     if (!testProject.mentorIds.contains(id)) {
       testProject.mentorIds.add(id);
@@ -107,7 +107,7 @@ public class MentorsServlet extends HttpServlet {
     }
 
     Long inputRepoID = inputRepo.getId();
-    ProjectEntity newProject = ProjectQuery.fromRepositoryIdOrNew(inputRepoID.toString());
+    ProjectEntity newProject = ProjectEntity.fromRepositoryIdOrNew(inputRepoID.toString());
     if (!newProject.mentorIds.contains(userID)) {
       newProject.mentorIds.add(userID);
     }

@@ -1,5 +1,7 @@
 package com.google.opensesame.projects;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -12,6 +14,23 @@ import java.util.List;
 @Entity
 public class ProjectEntity {
   public static final String PROJECT_ID_PARAM = "projectId";
+
+  /**
+   * Get a project entity with a specified repository ID from the datastore or create a new one if
+   * one does not exist in the datastore.
+   *
+   * @param repositoryId The repository ID of the project.
+   * @return Returns the project entity from datastore or a new project entity.
+   */
+  public static ProjectEntity fromRepositoryIdOrNew(String repositoryId) {
+    ProjectEntity projectEntity = ofy().load().type(ProjectEntity.class).id(repositoryId).now();
+    if (projectEntity == null) {
+      projectEntity =
+          new ProjectEntity(repositoryId, new ArrayList<String>(), new ArrayList<String>());
+    }
+
+    return projectEntity;
+  }
 
   @Id public String repositoryId;
   public List<String> mentorIds;

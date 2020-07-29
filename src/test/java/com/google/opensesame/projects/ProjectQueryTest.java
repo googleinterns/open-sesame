@@ -2,7 +2,6 @@ package com.google.opensesame.projects;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -136,26 +135,5 @@ public class ProjectQueryTest {
         new ProjectEntity[] {firstMockProject, secondMockProject, thirdMockProject};
     assertNotNull(queryResult);
     assertArrayEquals(expectedQueryResult, queryResult.toArray());
-  }
-
-  @Test
-  public void fromExistingRepositoryIdShouldReturnExistingProject() {
-    // Expect the function to return an existing ProjectEntity from the Datastore because an entity
-    // with the supplied ID already exists.
-
-    ProjectEntity projectEntity = ProjectQuery.fromRepositoryIdOrNew(firstMockProject.repositoryId);
-
-    assertEquals(firstMockProject, projectEntity);
-  }
-
-  @Test
-  public void fromNewRepositoryIdShouldReturnNewProject() {
-    // Expect the function to return a new ProjectEntity because no entity with that supplied ID
-    // exists in the Datastore.
-
-    String newId = "newId";
-    ProjectEntity projectEntity = ProjectQuery.fromRepositoryIdOrNew(newId);
-
-    assertEquals(newId, projectEntity.repositoryId);
   }
 }
