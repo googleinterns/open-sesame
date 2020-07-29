@@ -108,7 +108,7 @@ export function createMentorElement(mentor) {
  * @param {String} email
  * @return {HTMLElement} mentorEmail
  */
-export function createEmailLink(email) {
+function createEmailLink(email) {
   const mentorEmail = document.createElement('a');
   mentorEmail.href = 'mailto: ' + email;
   mentorEmail.className = 'mailtoui';
@@ -121,7 +121,7 @@ export function createEmailLink(email) {
  * @param {String} location
  * @return {HTMLElement} mentorLocation
  */
-export function createLocationHeader(location) {
+function createLocationHeader(location) {
   const mentorLocation = document.createElement('h6');
   mentorLocation.className = 'card-subtitle text-muted text-center mb-1';
   mentorLocation.innerHTML = location;
@@ -133,7 +133,7 @@ export function createLocationHeader(location) {
  * @param {String} img
  * @return {HTMLElement} mentorImg
  */
-export function createImg(img) {
+function createImg(img) {
   const mentorImg = document.createElement('img');
   mentorImg.className = 'mentor-picture';
   mentorImg.src = img;
@@ -145,7 +145,7 @@ export function createImg(img) {
  * @param {String} bio
  * @return {HTMLElement} mentorBio
  */
-export function createBioParagraph(bio) {
+function createBioParagraph(bio) {
   const mentorBio = document.createElement('p');
   mentorBio.innerHTML = bio;
   return mentorBio;
@@ -156,7 +156,7 @@ export function createBioParagraph(bio) {
  * @param {String} name
  * @return {HTMLElement} mentorName
  */
-export function createNameHeader(name) {
+function createNameHeader(name) {
   const mentorName = document.createElement('h5');
   mentorName.className = 'card-title text-primary';
   mentorName.innerHTML = name;
@@ -168,7 +168,7 @@ export function createNameHeader(name) {
  * @param {String} gitHubID
  * @return {HTMLElement} userGithubButton
  */
-export function createGitHubLink(gitHubID) {
+function createGitHubLink(gitHubID) {
   const gitHubBaseUrl = 'https://github.com/';
   const gitLink = gitHubBaseUrl.concat(gitHubID);
   const userGithubButton = document.createElement('a');
@@ -184,7 +184,7 @@ export function createGitHubLink(gitHubID) {
  * @param {String[]} interestTags
  * @return {HTMLElement} tagDiv
  */
-export function createInterestTagsDiv(interestTags) {
+function createInterestTagsDiv(interestTags) {
   const tagDiv = document.createElement('div');
   tagDiv.className = 'd-flex flex-wrap justify-content-center p-3';
   for (const tagText of interestTags) {

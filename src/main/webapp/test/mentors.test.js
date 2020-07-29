@@ -1,4 +1,4 @@
-import * as Mentors from '../mentors.js';
+import * as mentors from '../mentors.js';
 import '@testing-library/jest-dom/extend-expect';
 import {getByText} from '@testing-library/dom';
 
@@ -13,29 +13,55 @@ const mockMentor = {
   name: 'Mocky the Mockster',
 };
 
-describe('Mentor card', () => {
-  it('is created with all expected componenets', () => {
-    const mentorElement = Mentors.createMentorElement(mockMentor);
-    expect(mentorElement).not.toBeNull();
-    expect(getByText(mentorElement, mockMentor.name)).not.toBeNull();
-    expect(getByText(mentorElement, mockMentor.location)).not.toBeNull();
-    expect(getByText(mentorElement, mockMentor.bio)).not.toBeNull();
+let mentorElement = {};
 
+describe('Mentor card', () => {
+
+  beforeEach(() => {
+    mentorElement = mentors.createMentorElement(mockMentor);
+  });
+
+  it('is created', () => {
+    expect(mentorElement).not.toBeNull();
+  });
+
+  it('contains the name', () => {
+    expect(getByText(mentorElement, mockMentor.name)).not.toBeNull();
+  });
+
+  it('contains the location', () => {
+    expect(getByText(mentorElement, mockMentor.location)).not.toBeNull();
+  });
+
+  it('contains the bio', () => {
+    expect(getByText(mentorElement, mockMentor.bio)).not.toBeNull();
+  });
+
+  it('contains the interests', () => {
     mockMentor.interestTags.forEach(function(interest) {
       expect(getByText(mentorElement, interest)).not.toBeNull();
     });
+  });
+
+  it('contains the projects', () => {
     mockMentor.projects.forEach(function(project) {
       expect(getByText(mentorElement, project.name)).not.toBeNull();
     });
+  });
 
+  it('contains the email link', () => {
     const emailElement = getByText(mentorElement, 'Send Email Introduction');
     expect(emailElement.getAttribute('href'))
         .toBe('mailto: ' + mockMentor.email);
+  });
 
+  it('contains the GitHub link', () => {
     const gitHubElement = getByText(mentorElement, 'GitHub Profile');
     expect(gitHubElement.getAttribute('href'))
         .toBe('https://github.com/' + mockMentor.gitHubID);
+  });
 
+  it('contains the profile picture', () => {
     const imgElements = mentorElement.getElementsByClassName('mentor-picture');
     expect(imgElements[0].getAttribute('src')).toBe(mockMentor.image);
   });
