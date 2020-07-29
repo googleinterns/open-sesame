@@ -2,6 +2,7 @@ import {standardizeFetchErrors} from '/js/fetch_handler.js';
 
 getMentors();
 initForm();
+populateMentorInfo();
 
 /**
  * Initializes the mentor form and adds a listener for it.
@@ -15,6 +16,37 @@ function initForm() {
 }
 
 /**
+ * Poopulates mentor info for the mentor breakout pages.
+ */
+function populateMentorInfo() {
+  const mentorContainer = document.getElementById('mentor-breakout-container');
+  if (!mentorContainer) {
+    return;
+  }
+  const curUrl = new URL(window.location.href);
+  const userID = curUrl.searchParams.get('mentorID');
+  console.log(userID);
+  const url = new URL('/mentor_breakout', window.location.origin);
+  url.searchParams.append('mentorID', userID);
+  const fetchRequest = standardizeFetchErrors(
+      fetch(url),
+      'Failed to communicate with the server, please try again later.',
+      'Encountered a server error, please try again later.',
+  );
+
+  fetchRequest.then((response) => response.json()).then((mentor) => {
+    console.log(mentor);
+    mentorContainer.appendChild(createMentorElement(mentor));
+    mailtouiApp.run();
+  })
+      .catch((errorResponse) => {
+        console.error(
+            `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
+        alert(errorResponse.userMessage);
+      });
+}
+
+/**
  * User Object
  * @typedef {Object} User
  * @property {string[]} interestTags - The user's tags
@@ -25,6 +57,7 @@ function initForm() {
  * @property {string} image - The User's profile picture
  * @property {string} location - the location of the user
  * @property {string} name - the name of the user
+ * @property {string} userID - the user'd unique ID
  */
 
 /**
@@ -65,7 +98,11 @@ function getMentors() {
  * @return {HTMLElement} mentorContainer
  */
 function createMentorElement(mentor) {
-  const mentorContainer = document.createElement('div');
+  const mentorContainer = document.createElement('a');
+  let breakoutUrl = new URL('/mentor_breakout.html', window.location.origin);
+  console.log(mentor.userID);
+  breakoutUrl.searchParams.append('mentorID', mentor.userID);
+  mentorContainer.href = breakoutUrl;
   mentorContainer.className = 'p-1 col-lg-4';
 
   const mentorCard = document.createElement('div');
