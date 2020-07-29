@@ -21,9 +21,18 @@ public class MentorBreakoutServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     String userID = request.getParameter("mentorID");
-    UserEntity mentor = ofy().load().type(UserEntity.class).id(userID).now();
-    UserData mentorData = new UserData(mentor);
+    UserEntity mentor;
+    try {
+      mentor = ofy().load().type(UserEntity.class).id(userID).now();
+    } catch (Exception e) {
+      MentorsServlet.error(response, "Mentor not found.", 400, "Mentor not found");
+      return;
+    }
+    if (!mentor.isMentor()) {
+      MentorsServlet.error(response, "Requested user is not a mentor.", 400, "Non-mentor requested");
+    }
 
+    UserData mentorData = new UserData(mentor);
     String jsonMentor = new Gson().toJson(mentorData);
     response.setContentType("application/json;");
     response.getWriter().println(jsonMentor);
