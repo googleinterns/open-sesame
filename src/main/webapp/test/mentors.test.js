@@ -4,7 +4,7 @@ import {getByText} from '@testing-library/dom';
 
 const mockMentor = {
   interestTags: ['interest1', 'interest2'],
-  projects: [{respositoryID: 'mockRepoID', name: 'mockProjectName'},],
+  projects: [{respositoryID: 'mockRepoID', name: 'mockProjectName'}],
   bio: 'This is the mock bio.',
   email: 'samialves@google.com',
   gitHubID: 'mockGitID',
