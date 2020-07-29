@@ -82,6 +82,7 @@ public class UserEntity {
     isMentor = isMentor();
   }
 
+  /** @return true if user is a mentor for a project, false otherwise. */
   public boolean isMentor() {
     return !projectIds.isEmpty();
   }
