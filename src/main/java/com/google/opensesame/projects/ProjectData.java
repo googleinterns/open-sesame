@@ -162,7 +162,7 @@ public class ProjectData {
 
   /**
    * Gets the URL of the GitHub page for the repository.
-   * 
+   *
    * @return Returns the URL of the GitHub page.
    */
   public String getGitHubHtmlUrl() {
