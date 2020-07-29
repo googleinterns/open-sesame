@@ -99,7 +99,7 @@ function getMentors() {
  */
 function createMentorElement(mentor) {
   const mentorContainer = document.createElement('a');
-  let breakoutUrl = new URL('/mentor_breakout.html', window.location.origin);
+  const breakoutUrl = new URL('/mentor_breakout.html', window.location.origin);
   console.log(mentor.userID);
   breakoutUrl.searchParams.append('mentorID', mentor.userID);
   mentorContainer.href = breakoutUrl;

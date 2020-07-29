@@ -3,11 +3,9 @@ package com.google.opensesame.servlets;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.opensesame.user.UserData;
 import com.google.opensesame.user.UserEntity;
 import java.io.IOException;
-import java.net.URL;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
