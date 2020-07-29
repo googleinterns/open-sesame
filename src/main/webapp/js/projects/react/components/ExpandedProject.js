@@ -33,20 +33,20 @@ export function ExpandedProject(props) {
       <div className="row mt-4">
         <div className="col-md-9">
           <div className="card mx-1 mb-2">
-            <div className={"card-body px-3 py-2 d-inline-flex"
-                + " justify-content-between"}>
+            <div className={'card-body px-3 py-2 d-inline-flex' +
+                ' justify-content-between'}>
               <div>
                 <h1 className="card-title emphasis">
                   {project.name}
                 </h1>
                 <TagList tags={projectTags} />
               </div>
-              <div className={"d-flex mr-4 justify-content-center"
-                  + " align-items-center"}>
-                <a 
-                    href={project.gitHubHtmlUrl}
-                    className="emphasis"
-                    title={PROJECT_GITHUB_ICON_TITLE}>
+              <div className={'d-flex mr-4 justify-content-center' +
+                  ' align-items-center'}>
+                <a
+                  href={project.gitHubHtmlUrl}
+                  className="emphasis"
+                  title={PROJECT_GITHUB_ICON_TITLE}>
                   <i className="fab fa-3x fa-github-square"></i>
                 </a>
               </div>
