@@ -31,7 +31,7 @@ function populateMentorInfo() {
   const fetchRequest = standardizeFetchErrors(
       fetch(url),
       'Failed to communicate with the server, please try again later.',
-      'Encountered a server error, please try again later.',
+      'Encountered a server error.',
   );
 
   fetchRequest.then((response) => response.json()).then((mentor) => {
