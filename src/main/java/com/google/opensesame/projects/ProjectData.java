@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.kohsuke.github.GHContent;
+import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
 
 /**
@@ -26,6 +28,7 @@ public class ProjectData {
   private Integer numMentors = null;
   private String repositoryId = null;
   private List<UserData> mentors = null;
+  private String readmeUrl = null;
 
   /**
    * Create a ProjectData object from a ProjectEntity and its associated GitHub repository.
@@ -157,5 +160,27 @@ public class ProjectData {
     }
 
     return Collections.unmodifiableList(mentors);
+  }
+
+  private transient boolean receivedReadmeUrl = false;
+  /**
+   * Gets the URL to the raw markdown of the project README.md file. If the project has no
+   * README.md file, returns null.
+   * @return Returns the URL to the raw markdown of the project README.md file or null if the
+   *    project doesn't have a README.md file.
+   */
+  public String getReadmeUrl() throws IOException {
+    if (!receivedReadmeUrl) {
+      receivedReadmeUrl = true;
+      GHContent repoReadme;
+      try {
+        repoReadme = repository.getReadme();
+        readmeUrl = repoReadme.getDownloadUrl();
+      } catch (GHFileNotFoundException e) {
+        readmeUrl = null;
+      }
+    }
+
+    return readmeUrl;
   }
 }
