@@ -29,6 +29,7 @@ const mockProject = {
       name: 'Sami Alves',
     },
   ],
+  readmeHtml: '<h1>Test Readme HTML</h1>'
 };
 
 describe('Project breakout page', () => {
@@ -60,5 +61,11 @@ describe('Project breakout page', () => {
         screen.getByText(mockProject.mentors[0].name).closest('.card');
     expect(getByText(mentorCard, 'Connect'))
         .toHaveAttribute('href', `mailto:${mockProject.mentors[0].email}`);
+  });
+
+  it('renders the README HTML', () => {
+    render(<ExpandedProject loading={false} project={mockProject} />);
+
+    expect(screen.getByText('Test Readme HTML')).not.toBeNull();
   });
 });
