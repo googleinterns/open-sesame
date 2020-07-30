@@ -34,6 +34,7 @@ public class ProjectFullServlet extends HttpServlet {
     projectData.getNumMentors();
     projectData.getRepositoryId();
     projectData.getMentors();
+    projectData.getGitHubUrl();
 
     return projectData;
   }
