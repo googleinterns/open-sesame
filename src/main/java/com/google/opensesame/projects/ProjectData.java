@@ -167,8 +167,8 @@ public class ProjectData {
   private transient boolean repositoryReadmeLoaded = false;
   /**
    * Gets the repository README.md file or returns a cached version if it exists. If the repository
-   * does not have a README.md file, returns null. 
-   * 
+   * does not have a README.md file, returns null.
+   *
    * @return Returns the repository README.md file or returns null if the repository does not have
    *     one.
    */
@@ -187,10 +187,11 @@ public class ProjectData {
   }
 
   /**
-   * Gets the URL to the raw markdown of the project README.md file. If the project has no
-   * README.md file, returns null.
+   * Gets the URL to the raw markdown of the project README.md file. If the project has no README.md
+   * file, returns null.
+   *
    * @return Returns the URL to the raw markdown of the project README.md file or null if the
-   *    project doesn't have a README.md file.
+   *     project doesn't have a README.md file.
    * @throws IOException
    */
   public String getReadmeRawUrl() throws IOException {
@@ -203,11 +204,11 @@ public class ProjectData {
   }
 
   /**
-   * Gets the URL to the GitHub HTML page displaying the project README.md file.
-   * If the project has no README.md file, returns null.
-   * 
-   * @return Returns the URL to the GitHub HTML page displaying the project
-   *         README.md file or null if the project doesn't have a README.md file.
+   * Gets the URL to the GitHub HTML page displaying the project README.md file. If the project has
+   * no README.md file, returns null.
+   *
+   * @return Returns the URL to the GitHub HTML page displaying the project README.md file or null
+   *     if the project doesn't have a README.md file.
    * @throws IOException
    */
   public String getReadmeHtmlUrl() throws IOException {
