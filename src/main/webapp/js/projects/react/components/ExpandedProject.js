@@ -49,10 +49,16 @@ export function ExpandedProject(props) {
             })}
           </div>
           <div className="ml-1 emphasis">Description:</div>
-          <div className="card mx-1">
-            {/* TODO : Add README renderer instead of description. */}
-            <div className="card-body px-3 py-2">
-              {project.description}
+          <div className="card mx-1 mb-4">
+            <div className="card-body px-4 py-2">
+              {project.readmeHtml ?
+                  // The readme HTML is previously sanitized, so it is
+                  // acceptable to use dangerouslySetInnerHTML here. See:
+                  // https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+                  <span
+                      dangerouslySetInnerHTML={{__html: project.readmeHtml}}
+                      className="markdown-body"></span> :
+                  project.description}
             </div>
           </div>
         </div>
