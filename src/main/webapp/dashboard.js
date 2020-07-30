@@ -32,11 +32,11 @@ import { getUser } from './user.js';
  * @type {string}
  */
 const USER_BIO_ID = 'user-bio';
-const USER_GITHUB_ID = 'user-github';
 const USER_LOCATION_ID = 'user-id';
 const USER_NAME_LOCATION_ID = 'user-name-location';
 export const ABOUT_ME_CARD_ID = 'about-me-card-body';
 export const USER_EMAIL_ID = 'user-email';
+export const USER_GITHUB_ID = 'user-github';
 export const USER_IMAGE_ID = 'user-image';
 
 /**
