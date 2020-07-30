@@ -56,8 +56,8 @@ export function ExpandedProject(props) {
                   // acceptable to use dangerouslySetInnerHTML here. See:
                   // https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
                   <span
-                      dangerouslySetInnerHTML={{__html: project.readmeHtml}}
-                      className="markdown-body"></span> :
+                    dangerouslySetInnerHTML={{__html: project.readmeHtml}}
+                    className="markdown-body"></span> :
                   project.description}
             </div>
           </div>

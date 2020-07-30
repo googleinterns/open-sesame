@@ -141,7 +141,7 @@ function createProjectFetchGetter(projectId) {
 /**
  * Gets the project README markdown, converts it to HTML, sanitizes the HTML,
  * and then adds it to the project data as readmeHtml.
- * @param {Object} projectData 
+ * @param {Object} projectData
  * @param {AbortSignal} signal
  * @return {Promise} Returns a promise that resolves to the project data with
  *     the added readme HTML.
