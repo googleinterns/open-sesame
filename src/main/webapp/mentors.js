@@ -40,9 +40,10 @@ function populateMentorInfo() {
     mailtouiApp.run();
   })
       .catch((errorResponse) => {
-        console.error(
-            `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-        alert(errorResponse.userMessage);
+        console.error(error);
+        if (typeof(error.userMessage) !== 'undefined') {
+          alert(error.userMessage);
+        }
       });
 }
 
