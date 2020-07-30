@@ -37,26 +37,27 @@ export const USER_IMAGE_ID = 'user-image';
 export const USER_GITHUB_ID = 'user-github';
 export const USER_EMAIL_ID = 'user-email';
 export const USER_NAME_LOCATION_ID = 'user-name-location';
+export const USER_LOCATION_ID = "user-id";
 
 /**
  * Elements from dashboard.html.
  * @type {HTMLElement}
  */
-const aboutMeCardDiv = document.getElementById(ABOUT_ME_CARD_ID);
-const userBioElement = document.getElementById(USER_BIO_ID);
-const userImageElement = document.getElementById(USER_IMAGE_ID);
-const userGithubButton = document.getElementById(USER_GITHUB_ID);
-const userEmailButton = document.getElementById(USER_EMAIL_ID);
 
 /**
  * Populate the card element 'aboutMeCardDiv' with information about a
  * given user.
  * @param {User} user
+ * @param {Document} document - The HTML document to be this code will run on.
+ * This decision will help simplify testing. 
  */
-export function createAboutMe(user) {
+export function createAboutMe(user, document) {
+  const aboutMeCardDiv = document.getElementById(ABOUT_ME_CARD_ID);
+
   const editButton = createEditButton('#');
   aboutMeCardDiv.prepend(editButton);
 
+  const userImageElement = document.getElementById(USER_IMAGE_ID);
   userImageElement.src = user.image;
 
   const userNameAndLocationElement =
@@ -67,15 +68,18 @@ export function createAboutMe(user) {
     userNameAndLocationElement.append(userLocation);
   }
 
+  const userGithubButton = document.getElementById(USER_GITHUB_ID);
   userGithubButton.href = user.gitHubURL;
+  const userEmailButton = document.getElementById(USER_EMAIL_ID);
   if (!user.email) {
     userEmailButton.style.display = 'none';
   }
   userEmailButton.href = 'mailto:' + user.email;
   mailtouiApp.run();
 
+  const userBioElement = document.getElementById(USER_BIO_ID);
   if (user.bio) {
-    userBioElement.innerText = user.bio;
+    userBioElement.innerHTML = user.bio;
   }
 
   if (user.interestTags) {
@@ -105,7 +109,7 @@ export function createAboutMe(user) {
 export function createEditButton(link) {
   const editButton = document.createElement('a');
   editButton.className = 'float-right bold';
-  editButton.innerText = 'Edit';
+  editButton.innerHTML = 'Edit';
   editButton.href = link;
   return editButton;
 }
@@ -118,8 +122,17 @@ export function createEditButton(link) {
 export function addTag(tagText, tagDiv) {
   const tagElement = document.createElement('div');
   tagElement.className = 'border border-muted text-muted mr-1 mb-1 badge';
-  tagElement.innerText = tagText;
+  tagElement.innerHTML = tagText;
   tagDiv.append(tagElement);
+}
+
+/**
+ * @param {string} repositoryId the Id of a repository from GitHub
+ * @return {URL} a link to the project breakout page of the project 
+ * with @param repositoryId 
+ */
+export function createProjectBreakoutURL(repositoryId) {
+  return new URL('/projects.html#/' + repositoryId, window.location.origin);
 }
 
 /**
@@ -131,9 +144,8 @@ export function addProjectTag(project, projectDiv) {
   const projectTagElement = document.createElement('a');
   projectTagElement.className = 'border border-muted text-muted mr-1 mb-1' +
     ' project-tag badge';
-  projectTagElement.innerText = project.name;
-  projectTagElement.href =
-    new URL('/projects.html#/' + project.repositoryId, window.location.origin);
+  projectTagElement.innerHTML = project.name;
+  projectTagElement.href = createProjectBreakoutURL(project.repositoryId);
   projectDiv.append(projectTagElement);
 }
 
@@ -144,7 +156,8 @@ export function addProjectTag(project, projectDiv) {
  */
 export function createLocation(location) {
   const userLocation = document.createElement('small');
-  userLocation.innerText = location;
+  userLocation.id = USER_LOCATION_ID;
+  userLocation.innerHTML = location;
   return userLocation;
 }
 
@@ -156,7 +169,7 @@ export function createLocation(location) {
 export function createCardTitle(titleText) {
   const cardTitleElement = document.createElement('h5');
   cardTitleElement.className = 'dark-emph row mt-1 mb-0';
-  cardTitleElement.innerText = titleText;
+  cardTitleElement.innerHTML = titleText;
   return cardTitleElement;
 }
 
@@ -176,7 +189,7 @@ export function createRowElement() {
 async function setUpPage() {
   const user = await getUser();
   // TODO: redirect to sign up/in page if the user is not found.
-  createAboutMe(user);
+  createAboutMe(user, document);
 }
 
 window.onload = setUpPage;
