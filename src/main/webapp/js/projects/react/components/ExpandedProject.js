@@ -50,7 +50,7 @@ export function ExpandedProject(props) {
           </div>
           <div className="ml-1 emphasis">Description:</div>
           <div className="card mx-1 mb-4">
-            <div className="card-body px-4 py-2">
+            <div className="card-body p-4">
               {project.readmeHtml ?
                   // The readme HTML is previously sanitized, so it is
                   // acceptable to use dangerouslySetInnerHTML here. See:

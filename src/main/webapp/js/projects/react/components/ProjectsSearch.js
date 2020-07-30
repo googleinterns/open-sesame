@@ -129,7 +129,7 @@ function createProjectFetchGetter(projectId) {
       return response.json();
     }).then((projects) => {
       const projectData = projects[0];
-      if (projectData.readmeUrl) {
+      if (projectData.readmeRawUrl) {
         return getProjectReadme(projectData, signal);
       } else {
         return projectData;
@@ -147,11 +147,20 @@ function createProjectFetchGetter(projectId) {
  *     the added readme HTML.
  */
 function getProjectReadme(projectData, signal) {
-  return fetch(projectData.readmeUrl, {
+  return fetch(projectData.readmeRawUrl, {
     method: 'get',
     signal: signal,
   }).then((response) => response.text()).then((readmeMarkdown) => {
-    const readmeHtml = DOMPurify.sanitize(marked(readmeMarkdown));
+    // Turns a URL like for example:
+    // https://github.com/googleinterns/open-sesame/blob/master/README.md
+    // into:
+    // https://github.com/googleinterns/open-sesame/blob/master/
+    // for use as a base URL for relative links within the markdown.
+    const baseUrl = projectData.readmeHtmlUrl.substring(
+        0, projectData.readmeHtmlUrl.length - 'README.md'.length + 1);
+    const readmeHtml = DOMPurify.sanitize(marked(readmeMarkdown, {
+      baseUrl,
+    }));
     projectData.readmeHtml = readmeHtml;
     return projectData;
   });
