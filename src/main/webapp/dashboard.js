@@ -1,4 +1,4 @@
-import { getUser } from './user.js';
+import {getUser} from './user.js';
 
 /**
  * A User.
@@ -76,7 +76,7 @@ export function createAboutMe(user, document) {
 
   const userBioElement = document.getElementById(USER_BIO_ID);
   if (user.bio) {
-    const bioText = document.createTextNode(user.bio)
+    const bioText = document.createTextNode(user.bio);
     userBioElement.appendChild(bioText);
   }
 
@@ -155,7 +155,7 @@ function addProjectTag(project, projectDiv) {
 function createLocation(location) {
   const userLocation = document.createElement('small');
   userLocation.id = USER_LOCATION_ID;
-  const locationText = document.createTextNode(location)
+  const locationText = document.createTextNode(location);
   userLocation.appendChild(locationText);
   return userLocation;
 }
