@@ -1,4 +1,4 @@
-import {getUser} from './user.js';
+import { getUser } from './user.js';
 
 /**
  * A User.
@@ -31,13 +31,13 @@ import {getUser} from './user.js';
  * Ids of elements from dashboard.html.
  * @type {string}
  */
+const USER_BIO_ID = 'user-bio';
+const USER_GITHUB_ID = 'user-github';
+const USER_LOCATION_ID = 'user-id';
+const USER_NAME_LOCATION_ID = 'user-name-location';
 export const ABOUT_ME_CARD_ID = 'about-me-card-body';
-export const USER_BIO_ID = 'user-bio';
-export const USER_IMAGE_ID = 'user-image';
-export const USER_GITHUB_ID = 'user-github';
 export const USER_EMAIL_ID = 'user-email';
-export const USER_NAME_LOCATION_ID = 'user-name-location';
-export const USER_LOCATION_ID = 'user-id';
+export const USER_IMAGE_ID = 'user-image';
 
 /**
  * Elements from dashboard.html.
@@ -106,7 +106,7 @@ export function createAboutMe(user, document) {
  * @param {string} link the href link to the action the edit button will perform
  * @return {HTMLElement} edit button
  */
-export function createEditButton(link) {
+function createEditButton(link) {
   const editButton = document.createElement('a');
   editButton.className = 'float-right bold';
   editButton.innerHTML = 'Edit';
@@ -119,7 +119,7 @@ export function createEditButton(link) {
  * @param {string} tagText the text in the tag element.
  * @param {HTMLElement} tagDiv the div the tag is to be added to.
  */
-export function addTag(tagText, tagDiv) {
+function addTag(tagText, tagDiv) {
   const tagElement = document.createElement('div');
   tagElement.className = 'border border-muted text-muted mr-1 mb-1 badge';
   tagElement.innerHTML = tagText;
@@ -140,7 +140,7 @@ export function createProjectBreakoutURL(repositoryId) {
  * @param {ProjectData} project the project in question.
  * @param {HTMLElement} projectDiv the div the project tag is to be added to.
  */
-export function addProjectTag(project, projectDiv) {
+function addProjectTag(project, projectDiv) {
   const projectTagElement = document.createElement('a');
   projectTagElement.className = 'border border-muted text-muted mr-1 mb-1' +
     ' project-tag badge';
@@ -154,7 +154,7 @@ export function addProjectTag(project, projectDiv) {
  * @param {string} location text for a given location.
  * @return {HTMLElement} location small element
  */
-export function createLocation(location) {
+function createLocation(location) {
   const userLocation = document.createElement('small');
   userLocation.id = USER_LOCATION_ID;
   userLocation.innerHTML = location;
@@ -166,7 +166,7 @@ export function createLocation(location) {
  * @param {string} titleText
  * @return {HTMLElement} div representing a card title with @param titleText
  */
-export function createCardTitle(titleText) {
+function createCardTitle(titleText) {
   const cardTitleElement = document.createElement('h5');
   cardTitleElement.className = 'dark-emph row mt-1 mb-0';
   cardTitleElement.innerHTML = titleText;
@@ -177,7 +177,7 @@ export function createCardTitle(titleText) {
  * Return a bootstrap row element
  * @return {HTMLElement} bootstrap row div
  */
-export function createRowElement() {
+function createRowElement() {
   const rowElement = document.createElement('div');
   rowElement.className = 'row p-2 flex-wrap';
   return rowElement;
