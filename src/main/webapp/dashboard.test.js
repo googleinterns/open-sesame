@@ -1,19 +1,19 @@
 import * as dashboard from './dashboard.js';
 import '@testing-library/jest-dom/extend-expect';
-import {screen} from '@testing-library/dom';
+import { screen } from '@testing-library/dom';
 
 /**
  * @fileOverview this file is essentially testing that if correct information
  * about a user is gotten from the UserSevlet, It will be displayed in some way
  * on the Dashboard.html page.
  */
-global.mailtouiApp = {run: () => {}};
+global.mailtouiApp = { run: () => {} };
 
 const mockUserAllFields = {
   interestTags: ['interest1', 'interest2'],
   projects: [
-    {repositoryId: 'mockRepoID1', name: 'mockProjectName1'},
-    {repositoryId: 'mockRepoID2', name: 'mockProjectName2'},
+    { repositoryId: 'mockRepoID1', name: 'mockProjectName1' },
+    { repositoryId: 'mockRepoID2', name: 'mockProjectName2' },
   ],
   bio: 'This is the mock bio.',
   email: 'samialves@google.com',
@@ -82,7 +82,7 @@ describe('About me card of a user with no missing optional fields', () => {
 
   it('is populated with the correct location', () => {
     expect(screen.getByText(mockUserAllFields.location))
-        .not.toBeNull();
+      .not.toBeNull();
   });
 
   it('is populated with the correct name', () => {
@@ -104,8 +104,9 @@ describe('About me card of a user with no missing optional fields', () => {
       const projectTag = screen.getByText(project.name);
       expect(projectTag).not.toBeNull();
       expect(projectTag.href)
-          .toEqual(
-              dashboard.createProjectBreakoutURL(project.repositoryId).toString());
+        .toEqual(
+          dashboard.createProjectBreakoutURL(project.repositoryId)
+          .toString());
     });
   });
 
