@@ -29,7 +29,7 @@ const mockProject = {
       name: 'Sami Alves',
     },
   ],
-  readmeHtml: '<h1>Test Readme HTML</h1>'
+  readmeHtml: '<h1>Test Readme HTML</h1>',
 };
 
 describe('Project breakout page', () => {
