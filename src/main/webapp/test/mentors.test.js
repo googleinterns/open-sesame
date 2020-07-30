@@ -2,6 +2,11 @@ import * as mentors from '../mentors.js';
 import '@testing-library/jest-dom/extend-expect';
 import {getByText} from '@testing-library/dom';
 
+
+/**
+ * @fileOverview This file tests if mentor cards are correctly added 
+ * to the mentor search page.
+ */
 const mockMentor = {
   interestTags: ['interest1', 'interest2'],
   projects: [{respositoryID: 'mockRepoID', name: 'mockProjectName'}],
