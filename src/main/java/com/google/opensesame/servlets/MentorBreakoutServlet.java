@@ -19,6 +19,10 @@ public class MentorBreakoutServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     String userID = request.getParameter("mentorID");
+    if (userID == null) {
+      MentorsServlet.error(
+          response, "No mentor specified.", 400, "Missing mentor parameter");
+    }
     UserEntity mentor;
     try {
       mentor = ofy().load().type(UserEntity.class).id(userID).now();

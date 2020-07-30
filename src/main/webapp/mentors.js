@@ -2,7 +2,6 @@ import {standardizeFetchErrors} from '/js/fetch_handler.js';
 
 getMentors();
 initForm();
-populateMentorInfo();
 
 /**
  * Initializes the mentor form and adds a listener for it.
@@ -13,38 +12,6 @@ function initForm() {
     mentorForm.addEventListener('submit', submitForm);
   }
   return;
-}
-
-/**
- * Poopulates mentor info for the mentor breakout pages.
- */
-function populateMentorInfo() {
-  const mentorContainer = document.getElementById('mentor-breakout-container');
-  if (!mentorContainer) {
-    return;
-  }
-  const curUrl = new URL(window.location.href);
-  const userID = curUrl.searchParams.get('mentorID');
-  console.log(userID);
-  const url = new URL('/mentor_breakout', window.location.origin);
-  url.searchParams.append('mentorID', userID);
-  const fetchRequest = standardizeFetchErrors(
-      fetch(url),
-      'Failed to communicate with the server, please try again later.',
-      'Encountered a server error.',
-  );
-
-  fetchRequest.then((response) => response.json()).then((mentor) => {
-    console.log(mentor);
-    mentorContainer.appendChild(createMentorElement(mentor));
-    mailtouiApp.run();
-  })
-      .catch((errorResponse) => {
-        console.error(error);
-        if (typeof(error.userMessage) !== 'undefined') {
-          alert(error.userMessage);
-        }
-      });
 }
 
 /**
@@ -87,9 +54,10 @@ function getMentors() {
     mailtouiApp.run();
   })
       .catch((errorResponse) => {
-        console.error(
-            `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-        alert(errorResponse.userMessage);
+        console.error(errorResponse);
+        if (typeof(errorResponse.userMessage) !== 'undefined') {
+          alert(errorResponse.userMessage);
+        }
       });
 }
 
@@ -98,7 +66,7 @@ function getMentors() {
  * @param {Object} mentor
  * @return {HTMLElement} mentorContainer
  */
-function createMentorElement(mentor) {
+export function createMentorElement(mentor) {
   const mentorContainer = document.createElement('a');
   const breakoutUrl = new URL('/mentor_breakout.html', window.location.origin);
   console.log(mentor.userID);
@@ -286,9 +254,10 @@ function submitForm(e) {
       const errorContainer = document.getElementById('error-message-container');
       errorContainer.innerText = errorResponse.message;
     } else {
-      console.error(
-          `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-      alert(errorResponse.userMessage);
+      console.error(errorResponse);
+      if (typeof(errorResponse.userMessage) !== 'undefined') {
+        alert(errorResponse.userMessage);
+      }
     }
   });
 }
