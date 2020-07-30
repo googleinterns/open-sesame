@@ -4,7 +4,7 @@ import {getByText} from '@testing-library/dom';
 
 
 /**
- * @fileOverview This file tests if mentor cards are correctly added 
+ * @fileOverview This file tests if mentor cards are correctly added
  * to the mentor search page.
  */
 const mockMentor = {
