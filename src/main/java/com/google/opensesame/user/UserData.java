@@ -19,16 +19,16 @@ import org.kohsuke.github.GitHub;
  */
 public class UserData {
   private Boolean isMentor;
-  private final ArrayList<String> interestTags;
   private final ArrayList<ProjectData> projects = new ArrayList<ProjectData>();
+  private final ArrayList<String> interestTags;
   private final String bio;
   private final String gitHubID;
   private final String gitHubURL;
   private final String image;
   private final String location;
-  private final String name;
   private final String userID;
   private String email;
+  private String name;
 
   /**
    * Create a UserData from a given UserEntity
@@ -37,6 +37,9 @@ public class UserData {
    * the AuthServlet. This is to avoid unauthorised users from contacting our mentors. We want to
    * avoid email spam as much as possible and we do not see the need to share user emails
    * unathorized personnel.
+   *
+   * <p>Note: If a user's name is not defined on GitHub, this datastructure will set the user's
+   * GitHub login ID as the user's name. i.e {@code if (name == null);} {@code name = gitHubID}
    *
    * @param userEntity
    * @throws IOException
@@ -60,6 +63,9 @@ public class UserData {
     image = userGitAccount.getAvatarUrl();
     location = userGitAccount.getLocation();
     name = userGitAccount.getName();
+    if (name == null) {
+      name = gitHubID;
+    }
     gitHubURL = userGitAccount.getHtmlUrl().toString();
   }
 
