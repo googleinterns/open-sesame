@@ -1,19 +1,19 @@
 import * as dashboard from './dashboard.js';
 import '@testing-library/jest-dom/extend-expect';
-import { getByText } from '@testing-library/dom';
+import {getByText} from '@testing-library/dom';
 
 /**
- * @fileOverview this file is essentially testing that if correct information 
+ * @fileOverview this file is essentially testing that if correct information
  * about a user is gotten from the UserSevlet, It will be displayed in some way
  * on the Dashboard.html page.
  */
-global.mailtouiApp = { run: () => {} };
+global.mailtouiApp = {run: () => {}};
 
 const mockUserAllFields = {
   interestTags: ['interest1', 'interest2'],
   projects: [
-    { respositoryID: 'mockRepoID1', name: 'mockProjectName1' },
-    { respositoryID: 'mockRepoID2', name: 'mockProjectName2' },
+    {respositoryID: 'mockRepoID1', name: 'mockProjectName1'},
+    {respositoryID: 'mockRepoID2', name: 'mockProjectName2'},
   ],
   bio: 'This is the mock bio.',
   email: 'samialves@google.com',
@@ -27,11 +27,11 @@ const mockUserMissingOptionalFields = {
   name: 'Mocky the Mockster',
   image: 'http://localhost/image.jpg',
   gitHubID: 'mockGitID',
-}
+};
 
 // Note: Update this when the dashboard gets changed
 /**
- * Function to replicate the DOM of Dashboard.html 
+ * Function to replicate the DOM of Dashboard.html
  */
 function resetDocumentBody() {
   document.body.innerHTML = `

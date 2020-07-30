@@ -37,7 +37,7 @@ export const USER_IMAGE_ID = 'user-image';
 export const USER_GITHUB_ID = 'user-github';
 export const USER_EMAIL_ID = 'user-email';
 export const USER_NAME_LOCATION_ID = 'user-name-location';
-export const USER_LOCATION_ID = "user-id";
+export const USER_LOCATION_ID = 'user-id';
 
 /**
  * Elements from dashboard.html.
@@ -49,7 +49,7 @@ export const USER_LOCATION_ID = "user-id";
  * given user.
  * @param {User} user
  * @param {Document} document - The HTML document to be this code will run on.
- * This decision will help simplify testing. 
+ * This decision will help simplify testing.
  */
 export function createAboutMe(user, document) {
   const aboutMeCardDiv = document.getElementById(ABOUT_ME_CARD_ID);
@@ -128,8 +128,8 @@ export function addTag(tagText, tagDiv) {
 
 /**
  * @param {string} repositoryId the Id of a repository from GitHub
- * @return {URL} a link to the project breakout page of the project 
- * with @param repositoryId 
+ * @return {URL} a link to the project breakout page of the project
+ * with @param repositoryId
  */
 export function createProjectBreakoutURL(repositoryId) {
   return new URL('/projects.html#/' + repositoryId, window.location.origin);
