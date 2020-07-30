@@ -54,4 +54,24 @@ public final class GitHubGetter {
       return GitHub.connectAnonymously();
     }
   }
+
+  /**
+   * Sets the GitHub API interface to the provided instance so that all of the following calls to
+   * getGitHub() will return this instance. This is intended to be used for mocking the GitHub API
+   * interface while testing and should not be elsewhere.
+   *
+   * @param mockGitHub
+   */
+  public static void setGitHubForTests(GitHub mockGitHub) {
+    gitHub = mockGitHub;
+  }
+
+  /**
+   * Removes the mocked GitHub API interface so that the following calls to getGitHub() will no
+   * longer return the provided instance. This is intended to be used for mocking the GitHub API
+   * interface while testing and should not be elsewhere.
+   */
+  public static void removeGitHubMock() {
+    gitHub = null;
+  }
 }

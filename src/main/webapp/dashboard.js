@@ -179,7 +179,7 @@ export function createCardTitle(titleText) {
  */
 export function createRowElement() {
   const rowElement = document.createElement('div');
-  rowElement.className = 'row p-2';
+  rowElement.className = 'row p-2 flex-wrap';
   return rowElement;
 }
 
@@ -188,7 +188,6 @@ export function createRowElement() {
  */
 async function setUpPage() {
   const user = await getUser();
-  // TODO: redirect to sign up/in page if the user is not found.
   createAboutMe(user, document);
 }
 
