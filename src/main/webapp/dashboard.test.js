@@ -1,6 +1,6 @@
 import * as dashboard from './dashboard.js';
 import '@testing-library/jest-dom/extend-expect';
-import { getByText } from '@testing-library/dom';
+import { screen } from '@testing-library/dom';
 
 /**
  * @fileOverview this file is essentially testing that if correct information
@@ -18,6 +18,7 @@ const mockUserAllFields = {
   bio: 'This is the mock bio.',
   email: 'samialves@google.com',
   gitHubID: 'mockGitID',
+  gitHubURL: 'http://localhost/mockGitID',
   image: 'http://localhost/image.jpg',
   location: 'Mockville, Mocktana',
   name: 'Mocky the Mockster',
@@ -27,6 +28,7 @@ const mockUserMissingOptionalFields = {
   name: 'Mocky the Mockster',
   image: 'http://localhost/image.jpg',
   gitHubID: 'mockGitID',
+  gitHubURL: 'http://localhost/mockGitID',
 };
 
 // Note: Update this when the dashboard gets changed
@@ -67,43 +69,50 @@ describe('About me card of a user with no missing optional fields', () => {
     expect(userImage.src).toBe(mockUserAllFields.image);
   });
 
-  it('shows the email button', () => {
+  it('shows the right email button', () => {
     const userEmailButton = document.getElementById(dashboard.USER_EMAIL_ID);
     expect(userEmailButton).toBeVisible();
+    expect(userEmailButton.href).toBe('mailto:' + mockUserAllFields.email);
   });
 
+  it('has the right GitHub URL', () => {
+    const userGithubButton = document.getElementById(dashboard.USER_GITHUB_ID);
+    expect(userGithubButton.href).toBe(mockUserAllFields.gitHubURL);
+  })
+
   it('is populated with the correct location', () => {
-    const aboutMeCardDiv = document.getElementById(dashboard.ABOUT_ME_CARD_ID);
-    expect(getByText(aboutMeCardDiv, mockUserAllFields.location))
+    expect(screen.getByText(mockUserAllFields.location))
       .not.toBeNull();
   });
 
   it('is populated with the correct name', () => {
-    const aboutMeCardDiv = document.getElementById(dashboard.ABOUT_ME_CARD_ID);
-    expect(getByText(aboutMeCardDiv, mockUserAllFields.name)).not.toBeNull();
+    expect(screen.getByText(mockUserAllFields.name)).not.toBeNull();
   });
 
   it('is populated with the correct bio', () => {
-    const aboutMeCardDiv = document.getElementById(dashboard.ABOUT_ME_CARD_ID);
-    expect(getByText(aboutMeCardDiv, mockUserAllFields.bio)).not.toBeNull();
+    expect(screen.getByText(mockUserAllFields.bio)).not.toBeNull();
   });
 
   it('is populated with the correct interest tags', () => {
-    const aboutMeCardDiv = document.getElementById(dashboard.ABOUT_ME_CARD_ID);
     mockUserAllFields.interestTags.forEach(function(interest) {
-      expect(getByText(aboutMeCardDiv, interest)).not.toBeNull();
+      expect(screen.getByText(interest)).not.toBeNull();
     });
   });
 
   it('is populated with the correct project tags', () => {
-    const aboutMeCardDiv = document.getElementById(dashboard.ABOUT_ME_CARD_ID);
     mockUserAllFields.projects.forEach(function(project) {
-      const projectTag = getByText(aboutMeCardDiv, project.name);
+      const projectTag = screen.getByText(project.name);
       expect(projectTag).not.toBeNull();
       expect(projectTag.href)
-        .toBe(dashboard.createProjectBreakoutURL(project.repositoryId));
+        .toEqual(
+          dashboard.createProjectBreakoutURL(project.repositoryId).toString());
     });
   });
+
+  it('does not display undefined', () => {
+    expect(screen.queryByText('undefined')).toBeFalsy();
+  });
+
 });
 
 describe('About me card of a user with missing optional fields', () => {
@@ -116,4 +125,8 @@ describe('About me card of a user with missing optional fields', () => {
     const userEmailButton = document.getElementById(dashboard.USER_EMAIL_ID);
     expect(userEmailButton).not.toBeVisible();
   });
+
+  it('does not display undefined', () => {
+    expect(screen.queryByText('undefined')).toBeFalsy();
+  })
 });
