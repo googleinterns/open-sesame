@@ -21,7 +21,6 @@ const mockMentor = {
 let mentorElement = {};
 
 describe('Mentor card', () => {
-
   beforeEach(() => {
     mentorElement = mentors.createMentorElement(mockMentor);
   });
