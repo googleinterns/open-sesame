@@ -1,19 +1,19 @@
 import * as dashboard from './dashboard.js';
 import '@testing-library/jest-dom/extend-expect';
-import {getByText} from '@testing-library/dom';
+import { getByText } from '@testing-library/dom';
 
 /**
  * @fileOverview this file is essentially testing that if correct information
  * about a user is gotten from the UserSevlet, It will be displayed in some way
  * on the Dashboard.html page.
  */
-global.mailtouiApp = {run: () => {}};
+global.mailtouiApp = { run: () => {} };
 
 const mockUserAllFields = {
   interestTags: ['interest1', 'interest2'],
   projects: [
-    {respositoryId: 'mockRepoID1', name: 'mockProjectName1'},
-    {respositoryId: 'mockRepoID2', name: 'mockProjectName2'},
+    { repositoryId: 'mockRepoID1', name: 'mockProjectName1' },
+    { repositoryId: 'mockRepoID2', name: 'mockProjectName2' },
   ],
   bio: 'This is the mock bio.',
   email: 'samialves@google.com',
@@ -75,7 +75,7 @@ describe('About me card of a user with no missing optional fields', () => {
   it('is populated with the correct location', () => {
     const aboutMeCardDiv = document.getElementById(dashboard.ABOUT_ME_CARD_ID);
     expect(getByText(aboutMeCardDiv, mockUserAllFields.location))
-        .not.toBeNull();
+      .not.toBeNull();
   });
 
   it('is populated with the correct name', () => {
@@ -101,7 +101,7 @@ describe('About me card of a user with no missing optional fields', () => {
       const projectTag = getByText(aboutMeCardDiv, project.name);
       expect(projectTag).not.toBeNull();
       expect(projectTag.href)
-          .toBe(dashboard.createProjectBreakoutURL(project.respositoryId));
+        .toBe(dashboard.createProjectBreakoutURL(project.repositoryId));
     });
   });
 });
