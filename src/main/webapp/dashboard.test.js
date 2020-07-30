@@ -45,8 +45,7 @@ function resetDocumentBody() {
             mx-auto d-block user-img" src="#" alt="Card image">
         <h4 id="user-name-location" class="card-title dark-emph"></h4>
         <p id="user-bio" class="card-text"></p>
-        <a id="user-github" href="#" class="btn btn-primary btn-emphasis" 
-            role="button">
+        <a id="user-github" href="#">
           Github
         </a>
         <a id="user-email" href="#" 
