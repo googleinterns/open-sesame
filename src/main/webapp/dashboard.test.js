@@ -41,7 +41,7 @@ function resetDocumentBody() {
   <div id="about-me" class="container tab-pane active"><br>
     <div class="card card-holder col-12 ">
       <div id="about-me-card-body" class="card-body">
-        <img id="user-image" class="card-img-top img-thumbnail p-2 m-2 
+        <img id="${dashboard.USER_IMAGE_ID}" class="card-img-top img-thumbnail p-2 m-2 
             mx-auto d-block user-img" src="#" alt="Card image">
         <h4 id="user-name-location" class="card-title dark-emph"></h4>
         <p id="user-bio" class="card-text"></p>
