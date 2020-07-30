@@ -71,9 +71,6 @@ export function createAboutMe(user, document) {
   const userGithubButton = document.getElementById(USER_GITHUB_ID);
   userGithubButton.href = user.gitHubURL;
   const userEmailButton = document.getElementById(USER_EMAIL_ID);
-  if (!user.email) {
-    userEmailButton.style.display = 'none';
-  }
   userEmailButton.href = 'mailto:' + user.email;
   mailtouiApp.run();
 

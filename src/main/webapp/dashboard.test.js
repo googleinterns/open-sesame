@@ -27,6 +27,7 @@ const mockUserAllFields = {
 const mockUserMissingOptionalFields = {
   name: 'Mocky the Mockster',
   image: 'http://localhost/image.jpg',
+  email: 'samialves@google.com',
   gitHubID: 'mockGitID',
   gitHubURL: 'http://localhost/mockGitID',
 };
@@ -119,11 +120,6 @@ describe('About me card of a user with missing optional fields', () => {
   beforeAll(() => {
     resetDocumentBody();
     dashboard.createAboutMe(mockUserMissingOptionalFields, document);
-  });
-
-  it('hides the email button', () => {
-    const userEmailButton = document.getElementById(dashboard.USER_EMAIL_ID);
-    expect(userEmailButton).not.toBeVisible();
   });
 
   it('does not display undefined', () => {
