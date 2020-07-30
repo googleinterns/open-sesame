@@ -1,19 +1,19 @@
 import * as dashboard from './dashboard.js';
 import '@testing-library/jest-dom/extend-expect';
-import {screen} from '@testing-library/dom';
+import { screen } from '@testing-library/dom';
 
 /**
  * @fileOverview this file is essentially testing that if correct information
  * about a user is gotten from the UserSevlet, It will be displayed in some way
  * on the Dashboard.html page.
  */
-global.mailtouiApp = {run: () => {}};
+global.mailtouiApp = { run: () => {} };
 
 const mockUserAllFields = {
   interestTags: ['interest1', 'interest2'],
   projects: [
-    {repositoryId: 'mockRepoID1', name: 'mockProjectName1'},
-    {repositoryId: 'mockRepoID2', name: 'mockProjectName2'},
+    { repositoryId: 'mockRepoID1', name: 'mockProjectName1' },
+    { repositoryId: 'mockRepoID2', name: 'mockProjectName2' },
   ],
   bio: 'This is the mock bio.',
   email: 'samialves@google.com',
@@ -38,22 +38,16 @@ const mockUserMissingOptionalFields = {
  */
 function resetDocumentBody() {
   document.body.innerHTML = `
-  <div id="about-me" class="container tab-pane active"><br>
-    <div class="card card-holder col-12 ">
-      <div id="about-me-card-body" class="card-body">
-        <img id="${dashboard.USER_IMAGE_ID}" class="card-img-top img-thumbnail p-2 m-2 
-            mx-auto d-block user-img" src="#" alt="Card image">
-        <h4 id="user-name-location" class="card-title dark-emph"></h4>
-        <p id="user-bio" class="card-text"></p>
-        <a id="user-github" href="#">
-          Github
-        </a>
-        <a id="user-email" href="#" 
-            class="mailtoui btn btn-primary btn-emphasis" role="button">
-          Email Me
-        </a>
-      </div>
-    </div>
+  <div id="${dashboard.ABOUT_ME_CARD_ID}">
+    <img id="${dashboard.USER_IMAGE_ID}" src="#">
+    <h4 id="${dashboard.USER_NAME_LOCATION_ID}"></h4>
+    <p id="${dashboard.USER_BIO_ID}"></p>
+    <a id="${dashboard.USER_GITHUB_ID}" href="#">
+      Github
+    </a>
+    <a id="${dashboard.USER_EMAIL_ID}" href="#" >
+      Email Me
+    </a>
   </div>
   `;
 };
@@ -82,7 +76,7 @@ describe('About me card of a user with no missing optional fields', () => {
 
   it('is populated with the correct location', () => {
     expect(screen.getByText(mockUserAllFields.location))
-        .not.toBeNull();
+      .not.toBeNull();
   });
 
   it('is populated with the correct name', () => {
@@ -104,9 +98,9 @@ describe('About me card of a user with no missing optional fields', () => {
       const projectTag = screen.getByText(project.name);
       expect(projectTag).not.toBeNull();
       expect(projectTag.href)
-          .toEqual(
-              dashboard.createProjectBreakoutURL(project.repositoryId)
-                  .toString());
+        .toEqual(
+          dashboard.createProjectBreakoutURL(project.repositoryId)
+          .toString());
     });
   });
 
