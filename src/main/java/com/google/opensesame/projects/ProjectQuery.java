@@ -2,7 +2,7 @@ package com.google.opensesame.projects;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
-import com.google.opensesame.util.ErrorResponse;
+import com.google.opensesame.util.ServletValidationException;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.cmd.Query;
 import java.io.IOException;
@@ -19,8 +19,8 @@ public class ProjectQuery {
   public static final String FILTER_QUERY_PARAM = "filter";
 
   /**
-   * The fields of ProjectEntity that have the @Index Objectify annotation and can be used for
-   * sorting and filtering in Datastore.
+   * The fields of ProjectEntity that have the @Index Objectify annotation and can
+   * be used for sorting and filtering in Datastore.
    */
   public static List<Field> queryableFields;
 
@@ -35,16 +35,19 @@ public class ProjectQuery {
   }
 
   /**
-   * Gets the query filters from a servlet request. Returns null if any errors are encountered while
-   * parsing the query filters. See {@link com.google.opensesame.projects.QueryFilter.fromString}
-   * for more information on how QueryFilters are parsed.
+   * Gets the query filters from a servlet request. Returns null if any errors are
+   * encountered while parsing the query filters. See
+   * {@link com.google.opensesame.projects.QueryFilter.fromString} for more
+   * information on how QueryFilters are parsed.
    *
-   * @param HttpServletRequest The request to get the filter queries from.
+   * @param HttpServletRequest  The request to get the filter queries from.
    * @param HttpServletResponse The servlet response to send errors to.
-   * @return Returns the list of QueryFilters or null if an error was encountered while parsing.
+   * @return Returns the list of QueryFilters or null if an error was encountered
+   *         while parsing.
+   * @throws ServletValidationException
    */
-  private static List<QueryFilter> getQueryFiltersFromRequest(
-      HttpServletRequest request, HttpServletResponse response) throws IOException {
+  private static List<QueryFilter> getQueryFiltersFromRequest(HttpServletRequest request)
+      throws IOException, ServletValidationException {
     String[] filterRequests = request.getParameterValues(FILTER_QUERY_PARAM);
     if (filterRequests == null) {
       return Arrays.asList();
@@ -52,10 +55,7 @@ public class ProjectQuery {
 
     List<QueryFilter> queryFilters = new ArrayList<QueryFilter>();
     for (String filterRequest : filterRequests) {
-      QueryFilter queryFilter = QueryFilter.fromString(filterRequest, response);
-      if (queryFilter == null) {
-        return null;
-      }
+      QueryFilter queryFilter = QueryFilter.fromString(filterRequest);
       queryFilters.add(queryFilter);
     }
 
@@ -72,19 +72,17 @@ public class ProjectQuery {
    * @throws IOException
    */
   public static Collection<ProjectEntity> queryFromRequest(
-      HttpServletRequest request, HttpServletResponse response) throws IOException {
+      HttpServletRequest request) throws IOException, ServletValidationException {
     String[] projectIds = request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM);
     Collection<ProjectEntity> projectEntities;
     if (projectIds != null) {
       projectEntities = ofy().load().type(ProjectEntity.class).ids(projectIds).values();
 
       if (projectIds.length != projectEntities.size()) {
-        ErrorResponse.sendJsonError(
-            response,
+        throw new ServletValidationException(
             "One or more of the supplied IDs is invalid and those projects could not be found.",
-            HttpServletResponse.SC_NOT_FOUND,
-            "One or more of the requested projects does not exist.");
-        return null;
+            "One or more of the requested projects does not exist.",
+            HttpServletResponse.SC_NOT_FOUND);
       }
     } else {
       // TODO(Richie): Add pagination support.
@@ -92,7 +90,7 @@ public class ProjectQuery {
       Query<ProjectEntity> projectEntityQuery =
           ofy().load().type(ProjectEntity.class).order("-numMentors");
 
-      List<QueryFilter> queryFilters = getQueryFiltersFromRequest(request, response);
+      List<QueryFilter> queryFilters = getQueryFiltersFromRequest(request);
       if (queryFilters == null) {
         return null;
       }

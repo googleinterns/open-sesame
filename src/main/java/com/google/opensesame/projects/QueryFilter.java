@@ -1,6 +1,6 @@
 package com.google.opensesame.projects;
 
-import com.google.opensesame.util.ErrorResponse;
+import com.google.opensesame.util.ServletValidationException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Optional;
@@ -35,15 +35,13 @@ class QueryFilter {
    * @return Returns the QueryFilter or null if there was an error parsing the string.
    * @throws IOException
    */
-  public static QueryFilter fromString(String QueryFilterString, HttpServletResponse response)
-      throws IOException {
+  public static QueryFilter fromString(String QueryFilterString)
+      throws IOException, ServletValidationException {
     if (!QueryFilterString.matches(FILTER_QUERY_REGEX)) {
-      ErrorResponse.sendJsonError(
-          response,
+      throw new ServletValidationException(
           "Invalid filter query.",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "Unable to query for projects.");
-      return null;
+          "Unable to query for projects.",
+          HttpServletResponse.SC_BAD_REQUEST);
     }
 
     String[] splitFilterRequest = QueryFilterString.split(" ");
@@ -53,12 +51,10 @@ class QueryFilter {
             .filter((field) -> field.getName().equals(filterFieldName))
             .findFirst();
     if (!filterField.isPresent()) {
-      ErrorResponse.sendJsonError(
-          response,
+      throw new ServletValidationException(
           "Cannot filter by the field '" + filterFieldName + "'.",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "Unable to query for projects.");
-      return null;
+          "Unable to query for projects.",
+          HttpServletResponse.SC_BAD_REQUEST);
     }
 
     String comparisonValue = splitFilterRequest[2];
@@ -68,16 +64,14 @@ class QueryFilter {
           filterField.get().getType().getConstructor(String.class).newInstance(comparisonValue);
     } catch (Exception e) {
       // TODO(Richie): Handle the exceptions more specifically.
-      ErrorResponse.sendJsonError(
-          response,
+      throw new ServletValidationException(
           "Cannot parse the comparison value '"
               + comparisonValue
               + "' for the field '"
               + filterFieldName
               + "'.",
-          HttpServletResponse.SC_BAD_REQUEST,
-          "Unable to query for projects.");
-      return null;
+          "Unable to query for projects.",
+          HttpServletResponse.SC_BAD_REQUEST);
     }
 
     String comparator = splitFilterRequest[1];
