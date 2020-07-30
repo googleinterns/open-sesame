@@ -140,10 +140,11 @@ public class UserData {
     }
   }
 
-  /** @param {UserData} user2 the user to compare to
-    * @return an integer 'compatibility score' which represents
-    * how many shared interests two users have. 
-    */
+  /**
+   * @param {UserData} user2 the user to compare to
+   * @return an integer 'compatibility score' which represents how many shared interests two users
+   *     have.
+   */
   public int compatibility(UserData user2) {
     ArrayList<String> user1Interests = (ArrayList) this.interestTags.clone();
     ArrayList<String> user2Interests = (ArrayList) user2.interestTags.clone();
