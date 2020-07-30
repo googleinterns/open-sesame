@@ -57,7 +57,7 @@ function populateMentorInfo() {
  * @property {string} image - The User's profile picture
  * @property {string} location - the location of the user
  * @property {string} name - the name of the user
- * @property {string} userID - the user'd unique ID
+ * @property {string} userID - the user's unique ID
  */
 
 /**
