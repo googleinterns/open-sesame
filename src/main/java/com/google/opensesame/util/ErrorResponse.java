@@ -13,21 +13,22 @@ public class ErrorResponse {
    * convention for error responses. See fetch_handler.js for more information about how errors are
    * intended to be parsed by the recipient. The convention used here is intended to follow RESTful
    * API standards: https://blog.restcase.com/rest-api-error-codes-101/
+   *
    * @param response The place to send the response.
    * @param validationException A servlet validation exception to get the error information for the
    *     servlet response.
    * @throws IOException
    */
   public static void sendJsonError(
-      HttpServletResponse response,
-      ServletValidationException validationException) throws IOException {
+      HttpServletResponse response, ServletValidationException validationException)
+      throws IOException {
     sendJsonError(
         response,
         validationException.getMessage(),
         validationException.getStatusCode(),
         validationException.getUserMessage());
   }
-  
+
   /**
    * Sends an error response with a JSON body that follows the established Open Sesame API
    * convention for error responses. See fetch_handler.js for more information about how errors are

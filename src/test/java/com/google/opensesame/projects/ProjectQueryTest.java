@@ -23,13 +23,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.junit.Test;
 
 @RunWith(JUnit4.class)
 public class ProjectQueryTest {
-  private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
+  private final LocalServiceTestHelper helper =
+      new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
   private Closeable session;
 
   private ProjectEntity firstMockProject;
@@ -50,9 +51,11 @@ public class ProjectQueryTest {
 
   @Before
   public void mockProjectSetUp() {
-    firstMockProject = new ProjectEntity("273537467", Arrays.asList("Mentor 1", "Mentor 2", "Mentor 3"),
-        Arrays.asList());
-    secondMockProject = new ProjectEntity("45717250", Arrays.asList("Mentor 1", "Mentor 2"), Arrays.asList());
+    firstMockProject =
+        new ProjectEntity(
+            "273537467", Arrays.asList("Mentor 1", "Mentor 2", "Mentor 3"), Arrays.asList());
+    secondMockProject =
+        new ProjectEntity("45717250", Arrays.asList("Mentor 1", "Mentor 2"), Arrays.asList());
     thirdMockProject = new ProjectEntity("20580498", Arrays.asList("Mentor 1"), Arrays.asList());
     ofy().save().entities(firstMockProject, secondMockProject, thirdMockProject).now();
   }
@@ -100,14 +103,15 @@ public class ProjectQueryTest {
     when(request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM))
         .thenReturn(new String[] {firstMockProject.repositoryId, "invalidID"});
 
-    ServletValidationException validationException = Assert.assertThrows(
-        ServletValidationException.class,
-        () -> ProjectQuery.queryFromRequest(request));
+    ServletValidationException validationException =
+        Assert.assertThrows(
+            ServletValidationException.class, () -> ProjectQuery.queryFromRequest(request));
     assertEquals(HttpServletResponse.SC_NOT_FOUND, validationException.getStatusCode());
   }
 
   @Test
-  public void queryWithoutIdsShouldReturnAllProjects() throws IOException, ServletValidationException {
+  public void queryWithoutIdsShouldReturnAllProjects()
+      throws IOException, ServletValidationException {
     // Expect to receive all ProjectEntities in order of descending number of mentors because no
     // list of IDs was supplied.
 

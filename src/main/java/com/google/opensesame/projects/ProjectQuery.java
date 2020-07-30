@@ -19,8 +19,8 @@ public class ProjectQuery {
   public static final String FILTER_QUERY_PARAM = "filter";
 
   /**
-   * The fields of ProjectEntity that have the @Index Objectify annotation and can
-   * be used for sorting and filtering in Datastore.
+   * The fields of ProjectEntity that have the @Index Objectify annotation and can be used for
+   * sorting and filtering in Datastore.
    */
   public static List<Field> queryableFields;
 
@@ -35,15 +35,13 @@ public class ProjectQuery {
   }
 
   /**
-   * Gets the query filters from a servlet request. Returns null if any errors are
-   * encountered while parsing the query filters. See
-   * {@link com.google.opensesame.projects.QueryFilter.fromString} for more
-   * information on how QueryFilters are parsed.
+   * Gets the query filters from a servlet request. Returns null if any errors are encountered while
+   * parsing the query filters. See {@link com.google.opensesame.projects.QueryFilter.fromString}
+   * for more information on how QueryFilters are parsed.
    *
-   * @param HttpServletRequest  The request to get the filter queries from.
+   * @param HttpServletRequest The request to get the filter queries from.
    * @param HttpServletResponse The servlet response to send errors to.
-   * @return Returns the list of QueryFilters or null if an error was encountered
-   *         while parsing.
+   * @return Returns the list of QueryFilters or null if an error was encountered while parsing.
    * @throws ServletValidationException
    */
   private static List<QueryFilter> getQueryFiltersFromRequest(HttpServletRequest request)
@@ -71,8 +69,8 @@ public class ProjectQuery {
    *     invalid.
    * @throws IOException
    */
-  public static Collection<ProjectEntity> queryFromRequest(
-      HttpServletRequest request) throws IOException, ServletValidationException {
+  public static Collection<ProjectEntity> queryFromRequest(HttpServletRequest request)
+      throws IOException, ServletValidationException {
     String[] projectIds = request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM);
     Collection<ProjectEntity> projectEntities;
     if (projectIds != null) {
