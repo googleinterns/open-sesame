@@ -44,7 +44,7 @@ export function ExpandedProject(props) {
               <div className={'d-flex mr-4 justify-content-center' +
                   ' align-items-center'}>
                 <a
-                  href={project.gitHubHtmlUrl}
+                  href={project.gitHubUrl}
                   className="emphasis"
                   title={PROJECT_GITHUB_ICON_TITLE}>
                   <i className="fab fa-3x fa-github-square"></i>

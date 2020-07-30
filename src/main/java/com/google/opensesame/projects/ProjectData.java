@@ -26,7 +26,7 @@ public class ProjectData {
   private Integer numMentors = null;
   private String repositoryId = null;
   private List<UserData> mentors = null;
-  private String gitHubHtmlUrl = null;
+  private String gitHubUrl = null;
 
   /**
    * Create a ProjectData object from a ProjectEntity and its associated GitHub repository.
@@ -165,11 +165,11 @@ public class ProjectData {
    *
    * @return Returns the URL of the GitHub page.
    */
-  public String getGitHubHtmlUrl() {
-    if (gitHubHtmlUrl == null) {
-      gitHubHtmlUrl = repository.getHtmlUrl().toString();
+  public String getGitHubUrl() {
+    if (gitHubUrl == null) {
+      gitHubUrl = repository.getHtmlUrl().toString();
     }
 
-    return gitHubHtmlUrl;
+    return gitHubUrl;
   }
 }

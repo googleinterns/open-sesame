@@ -29,7 +29,7 @@ const mockProject = {
       name: 'Sami Alves',
     },
   ],
-  gitHubHtmlUrl: 'https://github.com/googleinterns/open-sesame',
+  gitHubUrl: 'https://github.com/googleinterns/open-sesame',
 };
 
 describe('Project breakout page', () => {
@@ -51,7 +51,7 @@ describe('Project breakout page', () => {
     render(<ExpandedProject loading={false} project={mockProject} />);
 
     expect(screen.getByTitle(PROJECT_GITHUB_ICON_TITLE))
-        .toHaveAttribute('href', mockProject.gitHubHtmlUrl);
+        .toHaveAttribute('href', mockProject.gitHubUrl);
   });
 
   it('renders the mentor cards', () => {

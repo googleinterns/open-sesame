@@ -26,5 +26,5 @@ export const mentorType = PropTypes.shape({
 export const expandedProjectType = PropTypes.shape({
   ...projectPreviewData,
   mentors: PropTypes.arrayOf(mentorType).isRequired,
-  gitHubHtmlUrl: PropTypes.string.isRequired,
+  gitHubUrl: PropTypes.string.isRequired,
 });
