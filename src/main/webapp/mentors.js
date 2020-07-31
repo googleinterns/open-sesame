@@ -25,6 +25,7 @@ function initForm() {
  * @property {string} image - The User's profile picture
  * @property {string} location - the location of the user
  * @property {string} name - the name of the user
+ * @property {string} userID - the user's unique ID
  */
 
 /**
@@ -53,9 +54,10 @@ function getMentors() {
     mailtouiApp.run();
   })
       .catch((errorResponse) => {
-        console.error(
-            `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-        alert(errorResponse.userMessage);
+        console.error(errorResponse);
+        if (typeof(errorResponse.userMessage) !== 'undefined') {
+          alert(errorResponse.userMessage);
+        }
       });
 }
 
@@ -65,7 +67,11 @@ function getMentors() {
  * @return {HTMLElement} mentorContainer
  */
 export function createMentorElement(mentor) {
-  const mentorContainer = document.createElement('div');
+  const mentorContainer = document.createElement('a');
+  const breakoutUrl = new URL('/mentor_breakout.html', window.location.origin);
+  console.log(mentor.userID);
+  breakoutUrl.searchParams.append('mentorID', mentor.userID);
+  mentorContainer.href = breakoutUrl;
   mentorContainer.className = 'p-1 col-lg-4';
 
   const mentorCard = document.createElement('div');
@@ -248,9 +254,10 @@ function submitForm(e) {
       const errorContainer = document.getElementById('error-message-container');
       errorContainer.innerText = errorResponse.message;
     } else {
-      console.error(
-          `Error ${errorResponse.statusCode}: ${errorResponse.message}`);
-      alert(errorResponse.userMessage);
+      console.error(errorResponse);
+      if (typeof(errorResponse.userMessage) !== 'undefined') {
+        alert(errorResponse.userMessage);
+      }
     }
   });
 }
