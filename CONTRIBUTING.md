@@ -26,6 +26,10 @@ Follow either of the two links above to access the appropriate CLA and instructi
 
 ### Contributing code
 
+***NOTE***: We **highly** recommend using [OpenSesame](https://step2020-279820.uc.r.appspot.com/)
+ to find a mentor and starting off from there. If you'd rather start working without one,
+ please follow the guidelines in this file.
+
 If you have improvements to OpenSesame, send us your pull requests! For those
 just getting started, Github has a
 [how to](https://help.github.com/articles/using-pull-requests/).
