@@ -78,9 +78,13 @@ Any ESLint errors and warnings that can't be fixed with the ```--fix``` option a
 
 ##### Locally Running ESLint 
 Run the local ```ESLint``` JavaScript linter with:
-```
+```Bash
 $ npm install eslint  # if not installed already.
 $ ./node_modules/eslint/bin/eslint.js <file or folder>
+```
+or
+```Bash
+$ npm run js-lint # runs on all OpenSesame js files
 ```
 
 ## Testing
