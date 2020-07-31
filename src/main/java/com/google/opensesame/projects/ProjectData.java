@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.kohsuke.github.GHContent;
+import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
 
 /**
@@ -26,6 +28,8 @@ public class ProjectData {
   private Integer numMentors = null;
   private String repositoryId = null;
   private List<UserData> mentors = null;
+  private String readmeRawUrl = null;
+  private String readmeHtmlUrl = null;
   private String gitHubUrl = null;
 
   /**
@@ -158,6 +162,63 @@ public class ProjectData {
     }
 
     return Collections.unmodifiableList(mentors);
+  }
+
+  private transient GHContent repositoryReadme = null;
+  private transient boolean repositoryReadmeLoaded = false;
+  /**
+   * Gets the repository README.md file or returns a cached version if it exists. If the repository
+   * does not have a README.md file, returns null.
+   *
+   * @return Returns the repository README.md file or returns null if the repository does not have
+   *     one.
+   */
+  private GHContent getRepositoryReadme() throws IOException {
+    if (!repositoryReadmeLoaded) {
+      try {
+        repositoryReadme = repository.getReadme();
+      } catch (GHFileNotFoundException e) {
+        repositoryReadme = null;
+      }
+
+      repositoryReadmeLoaded = true;
+    }
+
+    return repositoryReadme;
+  }
+
+  /**
+   * Gets the URL to the raw markdown of the project README.md file. If the project has no README.md
+   * file, returns null.
+   *
+   * @return Returns the URL to the raw markdown of the project README.md file or null if the
+   *     project doesn't have a README.md file.
+   * @throws IOException
+   */
+  public String getReadmeRawUrl() throws IOException {
+    GHContent repositoryReadme = getRepositoryReadme();
+    if (repositoryReadme != null) {
+      readmeRawUrl = repositoryReadme.getDownloadUrl();
+    }
+
+    return readmeRawUrl;
+  }
+
+  /**
+   * Gets the URL to the GitHub HTML page displaying the project README.md file. If the project has
+   * no README.md file, returns null.
+   *
+   * @return Returns the URL to the GitHub HTML page displaying the project README.md file or null
+   *     if the project doesn't have a README.md file.
+   * @throws IOException
+   */
+  public String getReadmeHtmlUrl() throws IOException {
+    GHContent repositoryReadme = getRepositoryReadme();
+    if (repositoryReadme != null) {
+      readmeHtmlUrl = repositoryReadme.getHtmlUrl();
+    }
+
+    return readmeHtmlUrl;
   }
 
   /**
