@@ -1,9 +1,7 @@
 package com.google.opensesame.projects;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -53,9 +51,14 @@ public class ProjectQueryTest {
   public void mockProjectSetUp() {
     firstMockProject =
         new ProjectEntity(
-            "273537467", Arrays.asList("Mentor 1", "Mentor 2", "Mentor 3"), Arrays.asList());
+            "273537467",
+            Arrays.asList("Mentor 1", "Mentor 2", "Mentor 3"),
+            Arrays.asList("User 1", "User 2"));
     secondMockProject =
-        new ProjectEntity("45717250", Arrays.asList("Mentor 1", "Mentor 2"), Arrays.asList());
+        new ProjectEntity(
+            "45717250",
+            Arrays.asList("Mentor 1", "Mentor 2"),
+            Arrays.asList("User 1"));
     thirdMockProject = new ProjectEntity("20580498", Arrays.asList("Mentor 1"), Arrays.asList());
     ofy().save().entities(firstMockProject, secondMockProject, thirdMockProject).now();
   }
@@ -78,7 +81,6 @@ public class ProjectQueryTest {
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
     Collection<ProjectEntity> expected = Arrays.asList(firstMockProject, secondMockProject);
 
-    assertNotNull(queryResult);
     assertTrue(queryResult.size() == expected.size() && queryResult.containsAll(expected));
   }
 
@@ -90,7 +92,6 @@ public class ProjectQueryTest {
     when(request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM)).thenReturn(new String[] {});
 
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
-    assertNotNull(queryResult);
     assertTrue(queryResult.size() == 0);
   }
 
@@ -112,15 +113,45 @@ public class ProjectQueryTest {
   @Test
   public void queryWithoutIdsShouldReturnAllProjects()
       throws IOException, ServletValidationException {
-    // Expect to receive all ProjectEntities in order of descending number of mentors because no
-    // list of IDs was supplied.
+    // Expect to receive all ProjectEntities because no list of IDs was supplied.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
 
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
-    ProjectEntity[] expectedQueryResult =
-        new ProjectEntity[] {firstMockProject, secondMockProject, thirdMockProject};
-    assertNotNull(queryResult);
-    assertArrayEquals(expectedQueryResult, queryResult.toArray());
+    Collection<ProjectEntity> expected =
+        Arrays.asList(firstMockProject, secondMockProject, thirdMockProject);
+
+    assertTrue(queryResult.size() == expected.size() && queryResult.containsAll(expected));
+  }
+
+  @Test
+  public void queryWithFilterShouldReturnFilteredResult()
+      throws IOException, ServletValidationException {
+    // Expect to receive only the ProjectEntities with two or more mentors.
+
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
+        .thenReturn(new String[] { "numMentors >= 2" });
+
+    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
+    Collection<ProjectEntity> expected = Arrays.asList(firstMockProject, secondMockProject);
+    
+    assertTrue(queryResult.size() == expected.size() && queryResult.containsAll(expected));
+  }
+
+  @Test
+  public void queryWithMultipleFiltersShouldReturnIntersectionOfResults()
+      throws IOException, ServletValidationException {
+    // Expect to receive only the ProjectEntity with two or more mentors and two or more
+    // interested users.
+
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
+        .thenReturn(new String[] { "numMentors >= 2", "numInterestedUsers > 1" });
+
+    Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
+    Collection<ProjectEntity> expected = Arrays.asList(firstMockProject);
+    
+    assertTrue(queryResult.size() == expected.size() && queryResult.containsAll(expected));
   }
 }
