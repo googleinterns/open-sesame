@@ -7,7 +7,7 @@ Before sending your pull requests, make sure you followed this list.
 - Read [contributing guidelines](#contributing-guidelines-and-standards).
 - Read our [README](README.md).
 - Ensure you have signed the [Contributor License Agreement (CLA)](https://cla.developers.google.com/).
-- Changes are consistent with the [Coding Style](#coding-style).
+- Check that your changes are consistent with the [Coding Style](#coding-style).
 
 ## How to become a contributor and submit your own code
 
@@ -27,8 +27,8 @@ Follow either of the two links above to access the appropriate CLA and instructi
 ### Contributing code
 
 ***NOTE***: We **highly** recommend using [OpenSesame](https://step2020-279820.uc.r.appspot.com/)
- to find a mentor and starting off from there. If you'd rather start working without one,
- please follow the guidelines in this file.
+ to find a mentor to help you get started on this project. If you'd rather start working 
+ without a mentor, please follow the guidelines in this file.
 
 If you have improvements to OpenSesame, send us your pull requests! For those
 just getting started, Github has a
@@ -37,9 +37,11 @@ just getting started, Github has a
 OpenSesame team members will be assigned to review your pull requests. Once the
 pull requests are approved by two team members and pass continuous integration
 checks, an OpenSesame member will squash and merge your pull request with the 
-master branch. After approval and merging, the site will be redeployed on a 
-monthly basis. This is done to ensure that we get a good amount of progress 
-onto the website before new versions are rolled out.
+master branch. The site will be redeployed on a monthly basis, so it may take a while
+for your changes to be deployed. Currently we deploy the site manually, which takes a while.
+To save us time we want to ensure that we get a good amount of progress 
+on the website before new versions are rolled out. If someone would like to automate
+our deployment process we would really appreciate it.
 
 If you want to contribute, start working through the OpenSesame codebase,
 navigate to the
@@ -54,7 +56,7 @@ start by looking into our documentation and proposing/fixing some
 [issues with the "documentation" label](https://github.com/googleinterns/open-sesame/issues?q=is%3Aissue+label%3Adocumentation).
 These are issues that we believe are particularly well suited for outside
 contributions, often because we probably won't get to them right now and it is 
-easier to find holes in documentation if you are new to the codebase. 
+easier to find holes in the documentation if you are new to the codebase. 
 
 ***NOTE***: If you decide to start on an issue, leave a comment so that other people know that
 you're working on it. If you want to help out, but not alone, use the issue
