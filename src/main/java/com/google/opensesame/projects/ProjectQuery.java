@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -89,13 +91,33 @@ public class ProjectQuery {
           ofy().load().type(ProjectEntity.class).order("-numMentors");
 
       List<QueryFilter> queryFilters = getQueryFiltersFromRequest(request);
-      if (queryFilters == null) {
-        return null;
-      }
+      if (queryFilters.size() > 0) {
+        List<ProjectEntity> intermediateIntersection = null;
 
-      for (QueryFilter queryFilter : queryFilters) {
-        projectEntityQuery =
-            projectEntityQuery.filter(queryFilter.condition, queryFilter.comparisonObject);
+        for (QueryFilter queryFilter : queryFilters) {
+          List<ProjectEntity> filteredProjects = ofy()
+              .load()
+              .type(ProjectEntity.class)
+              .filter(queryFilter.condition, queryFilter.comparisonObject)
+              .project("repositoryId")
+              .list();
+
+          if (intermediateIntersection != null) {
+            intermediateIntersection = filteredProjects.stream()
+                .filter(intermediateIntersection::contains).collect(Collectors.toList());
+          } else {
+            intermediateIntersection = filteredProjects;
+          }
+        }
+
+        projectEntities = ofy()
+            .load()
+            .type(ProjectEntity.class)
+            .ids(intermediateIntersection.stream().map((projectEntity) -> projectEntity.repositoryId)
+            .collect(Collectors.toList()))
+            .values();
+      } else {
+        projectEntities = ofy().load().type(ProjectEntity.class).list();
       }
 
       projectEntities = projectEntityQuery.list();
