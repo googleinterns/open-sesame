@@ -121,6 +121,17 @@ User signup consists of three parts:
 
 A user is only considered to have an account on Open Sesame if they have completed all three steps outlined above.
 
+## Common Troubleshooting Tips
+In the past, our developers have run into random issues building the codebase. 
+If all else fails while troubleshooting, tyr the following commands;
+
+- ```Bash
+$ npm install
+```
+- ```Bash
+$ mvn clean
+```
+
 ## File Structure
 Please refer to [this](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html) resource to learn more about what each project directory should be used for, and take a look at [this section](https://maven.apache.org/guides/getting-started/#how-do-i-make-my-first-maven-project) of the Maven getting started guide to see how the project naming scheme affects directory structure.
 
