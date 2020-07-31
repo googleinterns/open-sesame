@@ -56,9 +56,7 @@ public class ProjectQueryTest {
             Arrays.asList("User 1", "User 2"));
     secondMockProject =
         new ProjectEntity(
-            "45717250",
-            Arrays.asList("Mentor 1", "Mentor 2"),
-            Arrays.asList("User 1"));
+            "45717250", Arrays.asList("Mentor 1", "Mentor 2"), Arrays.asList("User 1"));
     thirdMockProject = new ProjectEntity("20580498", Arrays.asList("Mentor 1"), Arrays.asList());
     ofy().save().entities(firstMockProject, secondMockProject, thirdMockProject).now();
   }
@@ -131,11 +129,11 @@ public class ProjectQueryTest {
 
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
-        .thenReturn(new String[] { "numMentors >= 2" });
+        .thenReturn(new String[] {"numMentors >= 2"});
 
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
     Collection<ProjectEntity> expected = Arrays.asList(firstMockProject, secondMockProject);
-    
+
     assertTrue(queryResult.size() == expected.size() && queryResult.containsAll(expected));
   }
 
@@ -147,11 +145,11 @@ public class ProjectQueryTest {
 
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
-        .thenReturn(new String[] { "numMentors >= 2", "numInterestedUsers > 1" });
+        .thenReturn(new String[] {"numMentors >= 2", "numInterestedUsers > 1"});
 
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
     Collection<ProjectEntity> expected = Arrays.asList(firstMockProject);
-    
+
     assertTrue(queryResult.size() == expected.size() && queryResult.containsAll(expected));
   }
 }
