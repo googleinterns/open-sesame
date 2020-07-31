@@ -4,7 +4,6 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import com.google.opensesame.util.ServletValidationException;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.cmd.Query;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -92,15 +90,18 @@ public class ProjectQuery {
         List<ProjectEntity> intermediateIntersection = null;
 
         for (QueryFilter queryFilter : queryFilters) {
-          List<ProjectEntity> filteredProjects = ofy()
-              .load()
-              .type(ProjectEntity.class)
-              .filter(queryFilter.condition, queryFilter.comparisonObject)
-              .list();
+          List<ProjectEntity> filteredProjects =
+              ofy()
+                  .load()
+                  .type(ProjectEntity.class)
+                  .filter(queryFilter.condition, queryFilter.comparisonObject)
+                  .list();
 
           if (intermediateIntersection != null) {
-            intermediateIntersection = filteredProjects.stream()
-                .filter(intermediateIntersection::contains).collect(Collectors.toList());
+            intermediateIntersection =
+                filteredProjects.stream()
+                    .filter(intermediateIntersection::contains)
+                    .collect(Collectors.toList());
           } else {
             intermediateIntersection = filteredProjects;
           }
