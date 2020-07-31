@@ -123,7 +123,7 @@ A user is only considered to have an account on Open Sesame if they have complet
 
 ## Common Troubleshooting Tips
 In the past, our developers have run into random issues building the codebase. 
-If all else fails while troubleshooting, tyr the following commands;
+If all else fails while troubleshooting, try the following commands;
 
 - ```Bash
 $ npm install
