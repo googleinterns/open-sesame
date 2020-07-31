@@ -90,4 +90,5 @@ If you only want to run tests;
 npm run test # Runs all tests
 npm run js-test # Runs only JavaScript tests
 npm run java-test # Runs only Java tests 
+npm run verify # builds and tests code
 ```
