@@ -117,6 +117,14 @@ User signup consists of three parts:
 
 A user is only considered to have an account on Open Sesame if they have completed all three steps outlined above.
 
+## Deployment Steps
+When deploying Open Sesame to GCP, please follow these steps:
+1. Replace all imported JS scripts with their production counterparts. The individual instructions for each script will be located above the script tags in the HTML files where they are imported. This includes but is not limited to the React scripts and Firebase scripts.
+2. Look over the codebase TODOs and disable code that is intended to be disabled for production.
+3. Add the associated GitHub organization's `client-id` and `client-secret` to the App Engine environment variables located in `open-sesame/src/main/webapp/WEB-INF` to [increase the GitHub rate limit of the application](https://developer.github.com/v3/#oauth2-keysecret).
+4. Add the GCP project ID to the `pom.xml` file.
+5. Deploy!
+
 ## File Structure
 Please refer to [this](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html) resource to learn more about what each project directory should be used for, and take a look at [this section](https://maven.apache.org/guides/getting-started/#how-do-i-make-my-first-maven-project) of the Maven getting started guide to see how the project naming scheme affects directory structure.
 
