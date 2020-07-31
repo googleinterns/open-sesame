@@ -28,43 +28,56 @@ import {getUser} from './user.js';
 
 // ELEMENTS_FOR_ABOUT_ME_SECTION
 /**
+ * Ids of elements from dashboard.html.
+ * @type {string}
+ */
+export const USER_BIO_ID = 'user-bio';
+export const USER_LOCATION_ID = 'user-id';
+export const USER_NAME_LOCATION_ID = 'user-name-location';
+export const ABOUT_ME_CARD_ID = 'about-me-card-body';
+export const USER_EMAIL_ID = 'user-email';
+export const USER_GITHUB_ID = 'user-github';
+export const USER_IMAGE_ID = 'user-image';
+
+/**
  * Elements from dashboard.html.
  * @type {HTMLElement}
  */
-const aboutMeCardDiv = document.getElementById('about-me-card-body');
-const userBioElement = document.getElementById('user-bio');
-const userImageElement = document.getElementById('user-image');
-const userGithubButton = document.getElementById('user-github');
-const userEmailButton = document.getElementById('user-email');
 
 /**
  * Populate the card element 'aboutMeCardDiv' with information about a
  * given user.
  * @param {User} user
+ * @param {Document} document - The HTML document to be this code will run on.
+ * This decision will help simplify testing.
  */
-function createAboutMe(user) {
+export function createAboutMe(user, document) {
+  const aboutMeCardDiv = document.getElementById(ABOUT_ME_CARD_ID);
+
   const editButton = createEditButton('#');
   aboutMeCardDiv.prepend(editButton);
 
+  const userImageElement = document.getElementById(USER_IMAGE_ID);
   userImageElement.src = user.image;
 
   const userNameAndLocationElement =
-    document.getElementById('user-name-location');
+    document.getElementById(USER_NAME_LOCATION_ID);
   userNameAndLocationElement.innerHTML = user.name + '<br>';
   if (user.location) {
     const userLocation = createLocation(user.location);
     userNameAndLocationElement.append(userLocation);
   }
 
+  const userGithubButton = document.getElementById(USER_GITHUB_ID);
   userGithubButton.href = user.gitHubURL;
-  if (!user.email) {
-    userEmailButton.style.display = 'none';
-  }
+  const userEmailButton = document.getElementById(USER_EMAIL_ID);
   userEmailButton.href = 'mailto:' + user.email;
   mailtouiApp.run();
 
+  const userBioElement = document.getElementById(USER_BIO_ID);
   if (user.bio) {
-    userBioElement.innerText = user.bio;
+    const bioText = document.createTextNode(user.bio);
+    userBioElement.appendChild(bioText);
   }
 
   if (user.interestTags) {
@@ -94,7 +107,7 @@ function createAboutMe(user) {
 function createEditButton(link) {
   const editButton = document.createElement('a');
   editButton.className = 'float-right bold';
-  editButton.innerText = 'Edit';
+  editButton.innerHTML = 'Edit';
   editButton.href = link;
   return editButton;
 }
@@ -107,8 +120,17 @@ function createEditButton(link) {
 function addTag(tagText, tagDiv) {
   const tagElement = document.createElement('div');
   tagElement.className = 'border border-muted text-muted mr-1 mb-1 badge';
-  tagElement.innerText = tagText;
+  tagElement.innerHTML = tagText;
   tagDiv.append(tagElement);
+}
+
+/**
+ * @param {string} repositoryId the Id of a repository from GitHub
+ * @return {URL} a link to the project breakout page of the project
+ * with @param repositoryId
+ */
+export function createProjectBreakoutURL(repositoryId) {
+  return new URL('/projects.html#/' + repositoryId, window.location.origin);
 }
 
 /**
@@ -120,9 +142,8 @@ function addProjectTag(project, projectDiv) {
   const projectTagElement = document.createElement('a');
   projectTagElement.className = 'border border-muted text-muted mr-1 mb-1' +
     ' project-tag badge';
-  projectTagElement.innerText = project.name;
-  projectTagElement.href =
-    new URL('/projects.html#/' + project.repositoryId, window.location.origin);
+  projectTagElement.innerHTML = project.name;
+  projectTagElement.href = createProjectBreakoutURL(project.repositoryId);
   projectDiv.append(projectTagElement);
 }
 
@@ -133,7 +154,9 @@ function addProjectTag(project, projectDiv) {
  */
 function createLocation(location) {
   const userLocation = document.createElement('small');
-  userLocation.innerText = location;
+  userLocation.id = USER_LOCATION_ID;
+  const locationText = document.createTextNode(location);
+  userLocation.appendChild(locationText);
   return userLocation;
 }
 
@@ -145,7 +168,7 @@ function createLocation(location) {
 function createCardTitle(titleText) {
   const cardTitleElement = document.createElement('h5');
   cardTitleElement.className = 'dark-emph row mt-1 mb-0';
-  cardTitleElement.innerText = titleText;
+  cardTitleElement.innerHTML = titleText;
   return cardTitleElement;
 }
 
@@ -164,7 +187,7 @@ function createRowElement() {
  */
 async function setUpPage() {
   const user = await getUser();
-  createAboutMe(user);
+  createAboutMe(user, document);
 }
 
 window.onload = setUpPage;

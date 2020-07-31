@@ -1,5 +1,5 @@
 import React from 'react';
-import {ExpandedProject} from '../projects/react/components/ExpandedProject.js';
+import {ExpandedProject, PROJECT_GITHUB_ICON_TITLE} from '../projects/react/components/ExpandedProject.js'; // eslint-disable-line
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen, getByText} from '@testing-library/react';
 
@@ -30,6 +30,7 @@ const mockProject = {
     },
   ],
   readmeHtml: '<h1>Test Readme HTML</h1>',
+  gitHubUrl: 'https://github.com/googleinterns/open-sesame',
 };
 
 describe('Project breakout page', () => {
@@ -45,6 +46,13 @@ describe('Project breakout page', () => {
     const elem = render(<ExpandedProject loading={true} />);
 
     expect(elem.container.firstChild).not.toBeNull();
+  });
+
+  it('provides a link to the repository GitHub page', () => {
+    render(<ExpandedProject loading={false} project={mockProject} />);
+
+    expect(screen.getByTitle(PROJECT_GITHUB_ICON_TITLE))
+        .toHaveAttribute('href', mockProject.gitHubUrl);
   });
 
   it('renders the mentor cards', () => {
