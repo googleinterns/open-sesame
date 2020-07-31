@@ -13,7 +13,7 @@ Before sending your pull requests, make sure you followed this list.
 
 ### Contributor License Agreements
 
-We'd love to accept your patches! Before we can take them, we have to jump a couple of legal hurdles.
+We'd love to accept your patches! Before we can take them, you need to certify yourself as a Google Contributor. This allows you to retain ownership of the code you submit while granting Google the necessary legal rights to use that contribution. The CLA only needs to be signed once and it covers all Google projects.
 
 Please fill out either the individual or corporate Contributor License Agreement (CLA).
 
