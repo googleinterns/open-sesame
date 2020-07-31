@@ -1,4 +1,4 @@
-import {standardizeFetchErrors} from '/js/fetch_handler.js';
+import {standardizeFetchErrors} from './js/fetch_handler.js';
 
 getMentors();
 initForm();
@@ -64,7 +64,7 @@ function getMentors() {
  * @param {Object} mentor
  * @return {HTMLElement} mentorContainer
  */
-function createMentorElement(mentor) {
+export function createMentorElement(mentor) {
   const mentorContainer = document.createElement('div');
   mentorContainer.className = 'p-1 col-lg-4';
 
@@ -93,7 +93,7 @@ function createMentorElement(mentor) {
   if (mentor.interestTags != null) {
     mentorCardBody.appendChild(createInterestTagsDiv(mentor.interestTags));
   }
-  if (mentor.projectIds != null) {
+  if (mentor.projects != null) {
     mentorCardBody.appendChild(createProjectLinks(mentor.projects));
   }
 
@@ -112,7 +112,7 @@ function createEmailLink(email) {
   const mentorEmail = document.createElement('a');
   mentorEmail.href = 'mailto: ' + email;
   mentorEmail.className = 'mailtoui';
-  mentorEmail.innerText = 'Send Email Introduction';
+  mentorEmail.innerHTML = 'Send Email Introduction';
   return mentorEmail;
 }
 
@@ -124,7 +124,7 @@ function createEmailLink(email) {
 function createLocationHeader(location) {
   const mentorLocation = document.createElement('h6');
   mentorLocation.className = 'card-subtitle text-muted text-center mb-1';
-  mentorLocation.innerText = location;
+  mentorLocation.innerHTML = location;
   return mentorLocation;
 }
 
@@ -172,7 +172,7 @@ function createGitHubLink(gitHubID) {
   const gitHubBaseUrl = 'https://github.com/';
   const gitLink = gitHubBaseUrl.concat(gitHubID);
   const userGithubButton = document.createElement('a');
-  userGithubButton.innerText = 'GitHub Profile';
+  userGithubButton.innerHTML = 'GitHub Profile';
   userGithubButton.className = 'btn btn-primary';
   userGithubButton.role = 'button';
   userGithubButton.href = gitLink;
@@ -191,7 +191,7 @@ function createInterestTagsDiv(interestTags) {
     const tagElement = document.createElement('div');
     tagElement.className =
         'border border-muted text-muted mr-1 mb-1 badge text-center';
-    tagElement.innerText = tagText;
+    tagElement.innerHTML = tagText;
     tagDiv.append(tagElement);
   }
   return tagDiv;
@@ -214,7 +214,7 @@ function createProjectLinks(projects) {
           ' text-muted mr-1 mb-1 badge text-center';
     const cardTitleElement = document.createElement('h4');
     cardTitleElement.className = 'card-title dark-emph';
-    cardTitleElement.innerText = project.name;
+    cardTitleElement.innerHTML = project.name;
     projectElement.appendChild(cardTitleElement);
     projectsDiv.append(projectElement);
   }
