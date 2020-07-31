@@ -4,7 +4,7 @@
 
 Before sending your pull requests, make sure you followed this list.
 
-- Read [contributing guidelines](CONTRIBUTING.md).
+- Read [contributing guidelines](#contributing-code).
 - Ensure you have signed the [Contributor License Agreement (CLA)](https://cla.developers.google.com/).
 - Changes are consistent with the [Coding Style](#coding-style).
 
