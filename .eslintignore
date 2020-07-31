@@ -1,0 +1,5 @@
+# Maven Target
+target/
+
+# Ignore jsx-processed directories
+**/js-build/ 
