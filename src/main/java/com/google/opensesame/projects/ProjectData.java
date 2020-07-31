@@ -220,7 +220,7 @@ public class ProjectData {
 
     return readmeHtmlUrl;
   }
-  
+
   /**
    * Gets the URL of the GitHub page for the repository.
    *
