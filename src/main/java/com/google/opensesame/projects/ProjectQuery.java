@@ -87,9 +87,6 @@ public class ProjectQuery {
     } else {
       // TODO(Richie): Add pagination support.
       // TODO(Richie): Add ordering support.
-      Query<ProjectEntity> projectEntityQuery =
-          ofy().load().type(ProjectEntity.class).order("-numMentors");
-
       List<QueryFilter> queryFilters = getQueryFiltersFromRequest(request);
       if (queryFilters.size() > 0) {
         List<ProjectEntity> intermediateIntersection = null;
@@ -99,7 +96,6 @@ public class ProjectQuery {
               .load()
               .type(ProjectEntity.class)
               .filter(queryFilter.condition, queryFilter.comparisonObject)
-              .project("repositoryId")
               .list();
 
           if (intermediateIntersection != null) {
@@ -110,17 +106,10 @@ public class ProjectQuery {
           }
         }
 
-        projectEntities = ofy()
-            .load()
-            .type(ProjectEntity.class)
-            .ids(intermediateIntersection.stream().map((projectEntity) -> projectEntity.repositoryId)
-            .collect(Collectors.toList()))
-            .values();
+        projectEntities = intermediateIntersection;
       } else {
         projectEntities = ofy().load().type(ProjectEntity.class).list();
       }
-
-      projectEntities = projectEntityQuery.list();
     }
 
     return projectEntities;
