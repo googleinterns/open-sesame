@@ -45,7 +45,7 @@ start by trying one of the smaller/easier issues here i.e.
 [issues with the "good first issue" label](https://github.com/googleinterns/open-sesame/labels/good%20first%20issue)
 and then take a look at the
 [issues with the "contributions welcome" label](https://github.com/googleinterns/open-sesame/labels/stat%3Acontributions%20welcome).
-. If you want to get acquainted with the code first, It might be useful to
+ If you want to get acquainted with the code first, It might be useful to
 start by looking into our documentation and proposing/fixing some 
 [issues with the "documentation" label](https://github.com/googleinterns/open-sesame/issues?q=is%3Aissue+label%3Adocumentation).
 These are issues that we believe are particularly well suited for outside
