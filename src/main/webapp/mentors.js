@@ -203,8 +203,6 @@ function createInterestTagsDiv(interestTags) {
  * @return {HTMLElement} projectsDiv
  */
 function createProjectLinks(projects) {
-  console.log('In project link function');
-  console.log(projects);
   const projectsDiv = document.createElement('div');
   projectsDiv.className = 'd-flex justify-content-center p-3';
   for (const project of projects) {
