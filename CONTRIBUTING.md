@@ -33,7 +33,7 @@ OpenSesame team members will be assigned to review your pull requests. Once the
 pull requests are approved by two team members and pass continuous integration
 checks, an OpenSesame member will squash and merge your pul request with the 
 master branch. After approval and merging, the site will be redeployed on a 
-quaterly basis. This is done to ensure that we get a good amount of progress 
+monthly basis. This is done to ensure that we get a good amount of progress 
 onto the website before new versions are rolled out.
 
 If you want to contribute, start working through the OpenSesame codebase,
