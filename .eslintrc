@@ -20,5 +20,7 @@
     "ReactRouterDOM": "readonly",
     "mailtouiApp": "readonly",
     "firebase": "readonly",
+    "DOMPurify": "readonly",
+    "marked": "readonly",
   }
 }
