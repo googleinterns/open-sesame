@@ -67,11 +67,7 @@ function getMentors() {
  * @return {HTMLElement} mentorContainer
  */
 export function createMentorElement(mentor) {
-  const mentorContainer = document.createElement('a');
-  const breakoutUrl = new URL('/mentor_breakout.html', window.location.origin);
-  console.log(mentor.userID);
-  breakoutUrl.searchParams.append('mentorID', mentor.userID);
-  mentorContainer.href = breakoutUrl;
+  const mentorContainer = document.createElement('div');
   mentorContainer.className = 'p-1 col-lg-4';
 
   const mentorCard = document.createElement('div');
@@ -83,9 +79,19 @@ export function createMentorElement(mentor) {
   if (mentor.image != null) {
     mentorCardBody.appendChild(createImg(mentor.image));
   }
-  if (mentor.name != null) {
-    mentorCardBody.appendChild(createNameHeader(mentor.name));
-  }
+
+  const mentorNameContainer = document.createElement('a');
+  mentorNameContainer.className = 'stretched-link';
+  const breakoutUrl = new URL('/mentor_breakout.html', window.location.origin);
+  console.log(mentor.userID);
+  breakoutUrl.searchParams.append('mentorID', mentor.userID);
+  mentorNameContainer.href = breakoutUrl;
+  const mentorName = document.createElement('h5');
+  mentorName.className = 'card-title text-primary';
+  mentorName.innerHTML = mentor.name;
+  mentorNameContainer.appendChild(mentorName);
+  mentorCardBody.appendChild(mentorNameContainer);
+
   if (mentor.location != null) {
     mentorCardBody.appendChild(createLocationHeader(mentor.location));
   }
@@ -158,18 +164,6 @@ function createBioParagraph(bio) {
 }
 
 /**
- * Creates a name tag for a mentor card.
- * @param {String} name
- * @return {HTMLElement} mentorName
- */
-function createNameHeader(name) {
-  const mentorName = document.createElement('h5');
-  mentorName.className = 'card-title text-primary';
-  mentorName.innerHTML = name;
-  return mentorName;
-}
-
-/**
  * Creates a github profile button element from gitHub ID.
  * @param {String} gitHubID
  * @return {HTMLElement} userGithubButton
@@ -209,6 +203,8 @@ function createInterestTagsDiv(interestTags) {
  * @return {HTMLElement} projectsDiv
  */
 function createProjectLinks(projects) {
+  console.log('In project link function');
+  console.log(projects);
   const projectsDiv = document.createElement('div');
   projectsDiv.className = 'd-flex justify-content-center p-3';
   for (const project of projects) {
