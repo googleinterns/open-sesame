@@ -148,10 +148,11 @@ public class UserData {
    *     have.
    */
   public int compatibility(UserData user2) {
-    Set<String> commonInterests = interestTags.stream()
-        .distinct()
-        .filter(user2.interestTags::contains)
-        .collect(Collectors.toSet());
+    Set<String> commonInterests =
+        interestTags.stream()
+            .distinct()
+            .filter(user2.interestTags::contains)
+            .collect(Collectors.toSet());
     return commonInterests.size();
   }
 }
