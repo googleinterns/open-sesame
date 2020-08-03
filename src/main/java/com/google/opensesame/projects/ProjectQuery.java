@@ -35,14 +35,14 @@ public class ProjectQuery {
   }
 
   /**
-   * Gets the query filters from a servlet request. Returns null if any errors are encountered while
-   * parsing the query filters. See {@link com.google.opensesame.projects.QueryFilter.fromString}
-   * for more information on how QueryFilters are parsed.
+   * Gets the query filters from a servlet request.
    *
    * @param HttpServletRequest The request to get the filter queries from.
-   * @param HttpServletResponse The servlet response to send errors to.
-   * @return Returns the list of QueryFilters or null if an error was encountered while parsing.
-   * @throws ServletValidationException
+   * @return Returns the list of QueryFilters.
+   * @throws IOException
+   * @throws ServletValidationException Throws if any of the query filter strings in the request are
+   *     invalid. See {@link com.google.opensesame.projects.QueryFilter.fromString}
+   *     for more information on how QueryFilters are parsed.
    */
   private static List<QueryFilter> getQueryFiltersFromRequest(HttpServletRequest request)
       throws IOException, ServletValidationException {
@@ -64,10 +64,9 @@ public class ProjectQuery {
    * Queries for ProjectEntities in the datastore based on a servlet request.
    *
    * @param request The servlet request defining the query.
-   * @param response The servlet response to send errors to.
-   * @return Returns a collection of ProjectEntities from the query or null if the query was
-   *     invalid.
+   * @return Returns a collection of ProjectEntities from the query.
    * @throws IOException
+   * @throws ServletValidationException Throws if the query request is invalid.
    */
   public static Collection<ProjectEntity> queryFromRequest(HttpServletRequest request)
       throws IOException, ServletValidationException {

@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 class QueryFilter {
   /**
-   * Parses a QueryFilter from a string and responds with errors to the provided servlet response
-   * object.
+   * Parses a QueryFilter from a string.
    *
    * <p>QueryFilter strings should be in the format "fieldName <comparator> value". Examples:
    *
@@ -29,9 +28,9 @@ class QueryFilter {
    * </blockquote>
    *
    * @param QueryFilterString The filter query string.
-   * @param response The servlet response to send errors to.
-   * @return Returns the QueryFilter or null if there was an error parsing the string.
+   * @return Returns the QueryFilter parsed from the string.
    * @throws IOException
+   * @throws ServletValidationException Throws if there is an error parsing the query filter string.
    */
   public static QueryFilter fromString(String QueryFilterString)
       throws IOException, ServletValidationException {
