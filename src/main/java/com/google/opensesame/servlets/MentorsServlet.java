@@ -37,24 +37,26 @@ public class MentorsServlet extends HttpServlet {
       mentors.add(new UserData(mentorEntity));
     }
 
-    //If the user is logged in and has a profile, sort mentors by common interest.
+    // If the user is logged in and has a profile, sort mentors by common interest.
     User loggedInUser = AuthServlet.getAuthorizedUser();
     if (loggedInUser != null) {
       String userID = loggedInUser.getUserId();
       UserEntity curUser = ofy().load().type(UserEntity.class).id(userID).now();
       if (curUser != null) {
         final UserData curUserData = new UserData(curUser);
-        Collections.sort(mentors, new Comparator<UserData>() {
-          @Override
-          public int compare(UserData u1, UserData u2) {
-            Integer u1Compatibility = new Integer(u1.compatibility(curUserData));
-            Integer u2Compatibility = new Integer(u2.compatibility(curUserData));
-            return u2Compatibility.compareTo(u1Compatibility);
-          }
-        });
+        Collections.sort(
+            mentors,
+            new Comparator<UserData>() {
+              @Override
+              public int compare(UserData u1, UserData u2) {
+                Integer u1Compatibility = new Integer(u1.compatibility(curUserData));
+                Integer u2Compatibility = new Integer(u2.compatibility(curUserData));
+                return u2Compatibility.compareTo(u1Compatibility);
+              }
+            });
       }
     }
-    
+
     String jsonMentors = new Gson().toJson(mentors);
     response.setContentType("application/json;");
     response.getWriter().println(jsonMentors);

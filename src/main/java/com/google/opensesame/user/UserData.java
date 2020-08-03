@@ -142,10 +142,11 @@ public class UserData {
     }
   }
 
-  /** @param {UserData} user2 the user to compare to
-    * @return an integer 'compatibility score' which represents
-    * how many shared interests two users have. 
-    */
+  /**
+   * @param {UserData} user2 the user to compare to
+   * @return an integer 'compatibility score' which represents how many shared interests two users
+   *     have.
+   */
   public int compatibility(UserData user2) {
     Set<String> commonInterests = interestTags.stream()
         .distinct()
