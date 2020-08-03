@@ -56,9 +56,10 @@ class QueryFilter {
 
   /**
    * Gets the Field for the filter by its name.
+   *
    * @param filterFieldName The name of the field.
    * @return Returns the field.
-   * @throws ServletValidationException Throws if the filter field name is invalid. 
+   * @throws ServletValidationException Throws if the filter field name is invalid.
    */
   private static Field getFilterFieldFromName(String filterFieldName)
       throws ServletValidationException {
@@ -77,10 +78,11 @@ class QueryFilter {
   }
 
   /**
-   * Converts the filter value string to an object of the filter field type. 
-   * 
-   * The filter field type must have a constructor that takes a single string as an argument for
+   * Converts the filter value string to an object of the filter field type.
+   *
+   * <p>The filter field type must have a constructor that takes a single string as an argument for
    * this conversion.
+   *
    * @param valueString A string representing the value of the object.
    * @param filterField The field that this filter is filtering by.
    * @return Returns the object created from the value string.
