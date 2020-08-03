@@ -71,45 +71,69 @@ public class ProjectQuery {
   public static Collection<ProjectEntity> queryFromRequest(HttpServletRequest request)
       throws IOException, ServletValidationException {
     String[] projectIds = request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM);
-    Collection<ProjectEntity> projectEntities;
+    
     if (projectIds != null) {
-      projectEntities = ofy().load().type(ProjectEntity.class).ids(projectIds).values();
-
-      if (projectIds.length != projectEntities.size()) {
-        throw new ServletValidationException(
-            "One or more of the supplied IDs is invalid and those projects could not be found.",
-            "One or more of the requested projects does not exist.",
-            HttpServletResponse.SC_NOT_FOUND);
-      }
+      return getProjectEntitiesByIds(projectIds);
     } else {
       // TODO(Richie): Add pagination support.
       // TODO(Richie): Add ordering support.
       List<QueryFilter> queryFilters = getQueryFiltersFromRequest(request);
-      if (queryFilters.size() > 0) {
-        List<ProjectEntity> intermediateIntersection = null;
+      return getProjectEntitiesByQueryFilters(queryFilters);
+    }
+  }
 
-        for (QueryFilter queryFilter : queryFilters) {
-          List<ProjectEntity> filteredProjects =
-              ofy()
-                  .load()
-                  .type(ProjectEntity.class)
-                  .filter(queryFilter.condition, queryFilter.comparisonObject)
-                  .list();
+  /**
+   * Gets the ProjectEntities in the intersection of a list of QueryFilters.
+   * @param queryFilters The list of QueryFilters.
+   * @return Returns a collection of ProjectEntities in the intersection of the list of
+   *     QueryFilters.
+   */
+  public static Collection<ProjectEntity> getProjectEntitiesByQueryFilters(
+      List<QueryFilter> queryFilters) {
+    if (queryFilters.size() == 0) {
+      return ofy().load().type(ProjectEntity.class).list();
+    }
+    
+    List<ProjectEntity> intermediateIntersection = null;
+    for (QueryFilter queryFilter : queryFilters) {
+      List<ProjectEntity> filteredProjects =
+          ofy()
+              .load()
+              .type(ProjectEntity.class)
+              .filter(queryFilter.condition, queryFilter.comparisonObject)
+              .list();
 
-          if (intermediateIntersection != null) {
-            intermediateIntersection =
-                filteredProjects.stream()
-                    .filter(intermediateIntersection::contains)
-                    .collect(Collectors.toList());
-          } else {
-            intermediateIntersection = filteredProjects;
-          }
-        }
-
-        projectEntities = intermediateIntersection;
+      if (intermediateIntersection != null) {
+        intermediateIntersection =
+            filteredProjects.stream()
+                .filter(intermediateIntersection::contains)
+                .collect(Collectors.toList());
       } else {
-        projectEntities = ofy().load().type(ProjectEntity.class).list();
+        intermediateIntersection = filteredProjects;
       }
+    }
+
+    return intermediateIntersection;
+  }
+
+  /**
+   * Gets ProjectEntities from a list of project entity IDs and validates that all project entities
+   * are found.
+   * @param projectEntityIds The IDs of the ProjectEntities.
+   * @return Returns a collection of ProjectEntities with the provided IDs.
+   * @throws ServletValidationException Throws if not all ProjectEntities with the specified IDs
+   *     could be found.
+   */
+  public static Collection<ProjectEntity> getProjectEntitiesByIds(String[] projectEntityIds)
+      throws ServletValidationException {
+    Collection<ProjectEntity> projectEntities =
+        ofy().load().type(ProjectEntity.class).ids(projectEntityIds).values();
+
+    if (projectEntityIds.length != projectEntities.size()) {
+      throw new ServletValidationException(
+          "One or more of the supplied IDs is invalid and those projects could not be found.",
+          "One or more of the requested projects does not exist.",
+          HttpServletResponse.SC_NOT_FOUND);
     }
 
     return projectEntities;
