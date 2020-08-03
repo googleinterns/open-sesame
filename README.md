@@ -121,6 +121,14 @@ User signup consists of three parts:
 
 A user is only considered to have an account on Open Sesame if they have completed all three steps outlined above.
 
+## Deployment Steps
+When deploying Open Sesame to GCP, please follow these steps:
+1. Replace all imported JS scripts with their production counterparts. The individual instructions for each script will be located above the script tags in the HTML files where they are imported. This includes but is not limited to the React and PropType scripts.
+2. Look over the codebase TODOs and disable code that is intended to be disabled for production.
+3. Add the associated GitHub organization's `client-id` and `client-secret` to the App Engine environment variables located in `open-sesame/src/main/webapp/WEB-INF` to [increase the GitHub rate limit of the application](https://developer.github.com/v3/#oauth2-keysecret).
+4. Add the GCP project ID to the `pom.xml` file.
+5. Deploy!
+
 ## Common Troubleshooting Tips
 In the past, our developers have run into random issues building the codebase. 
 If all else fails while troubleshooting, try the following commands;
