@@ -9,6 +9,8 @@ import com.google.opensesame.projects.ProjectEntity;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 
@@ -138,5 +140,19 @@ public class UserData {
       curProject.getName();
       projects.add(curProject);
     }
+  }
+
+  /**
+   * @param {UserData} user2 the user to compare to
+   * @return an integer 'compatibility score' which represents how many shared interests two users
+   *     have.
+   */
+  public int compatibility(UserData user2) {
+    Set<String> commonInterests =
+        interestTags.stream()
+            .distinct()
+            .filter(user2.interestTags::contains)
+            .collect(Collectors.toSet());
+    return commonInterests.size();
   }
 }

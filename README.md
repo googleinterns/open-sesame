@@ -78,9 +78,13 @@ Any ESLint errors and warnings that can't be fixed with the ```--fix``` option a
 
 ##### Locally Running ESLint 
 Run the local ```ESLint``` JavaScript linter with:
-```
+```Bash
 $ npm install eslint  # if not installed already.
 $ ./node_modules/eslint/bin/eslint.js <file or folder>
+```
+or
+```Bash
+$ npm run js-lint # runs on all OpenSesame js files
 ```
 
 ## Testing
@@ -124,6 +128,15 @@ When deploying Open Sesame to GCP, please follow these steps:
 3. Add the associated GitHub organization's `client-id` and `client-secret` to the App Engine environment variables located in `open-sesame/src/main/webapp/WEB-INF` to [increase the GitHub rate limit of the application](https://developer.github.com/v3/#oauth2-keysecret).
 4. Add the GCP project ID to the `pom.xml` file.
 5. Deploy!
+
+## Common Troubleshooting Tips
+In the past, our developers have run into random issues building the codebase. 
+If all else fails while troubleshooting, try the following commands;
+
+```Bash 
+$ npm install
+$ mvn clean
+```
 
 ## File Structure
 Please refer to [this](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html) resource to learn more about what each project directory should be used for, and take a look at [this section](https://maven.apache.org/guides/getting-started/#how-do-i-make-my-first-maven-project) of the Maven getting started guide to see how the project naming scheme affects directory structure.
