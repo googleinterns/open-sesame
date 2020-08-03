@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
  * https://www.javadoc.io/static/com.googlecode.objectify/objectify/6.0.6/com/googlecode/objectify/cmd/Query.html#filter(java.lang.String,java.lang.Object)
  */
 class QueryFilter {
-  public static final String FILTER_QUERY_REGEX = "^[A-Za-z]+ (>|>=|!=|=|<|<=) [^\\s]+$";
-
   /**
    * Parses a QueryFilter from a string and responds with errors to the provided servlet response
    * object.
@@ -37,7 +35,8 @@ class QueryFilter {
    */
   public static QueryFilter fromString(String QueryFilterString)
       throws IOException, ServletValidationException {
-    if (!QueryFilterString.matches(FILTER_QUERY_REGEX)) {
+    String filterQueryRegex = "^[A-Za-z]+ (>|>=|!=|=|<|<=) [^\\s]+$";
+    if (!QueryFilterString.matches(filterQueryRegex)) {
       throw new ServletValidationException(
           "Invalid filter query.",
           "Unable to query for projects.",
