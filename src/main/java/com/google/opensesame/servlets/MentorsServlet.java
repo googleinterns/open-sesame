@@ -92,7 +92,7 @@ public class MentorsServlet extends HttpServlet {
   }
 
   // Send an error to response.
-  public void error(
+  public static void error(
       HttpServletResponse response, String errorMessage, int statusCode, String userMessage)
       throws ServletException, IOException {
     JsonObject responseObject = new JsonObject();
