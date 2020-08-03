@@ -44,6 +44,9 @@ class QueryFilter {
 
     String[] splitFilterRequest = QueryFilterString.split(" ");
     String filterFieldName = splitFilterRequest[0];
+    String comparator = splitFilterRequest[1];
+    String value = splitFilterRequest[2];
+
     Optional<Field> filterField =
         ProjectQuery.queryableFields.stream()
             .filter((field) -> field.getName().equals(filterFieldName))
@@ -55,16 +58,15 @@ class QueryFilter {
           HttpServletResponse.SC_BAD_REQUEST);
     }
 
-    String comparisonValue = splitFilterRequest[2];
-    Object comparisonObject;
+    Object valueObject;
     try {
-      comparisonObject =
-          filterField.get().getType().getConstructor(String.class).newInstance(comparisonValue);
+      valueObject =
+          filterField.get().getType().getConstructor(String.class).newInstance(value);
     } catch (Exception e) {
       // TODO(Richie): Handle the exceptions more specifically.
       throw new ServletValidationException(
           "Cannot parse the comparison value '"
-              + comparisonValue
+              + value
               + "' for the field '"
               + filterFieldName
               + "'.",
@@ -72,8 +74,7 @@ class QueryFilter {
           HttpServletResponse.SC_BAD_REQUEST);
     }
 
-    String comparator = splitFilterRequest[1];
-    return new QueryFilter(filterFieldName + " " + comparator, comparisonObject);
+    return new QueryFilter(filterFieldName + " " + comparator, valueObject);
   }
 
   public final String condition;
