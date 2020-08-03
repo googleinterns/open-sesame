@@ -34,6 +34,8 @@ public class ProjectFullServlet extends HttpServlet {
     projectData.getNumMentors();
     projectData.getRepositoryId();
     projectData.getMentors();
+    projectData.getReadmeRawUrl();
+    projectData.getReadmeHtmlUrl();
     projectData.getGitHubUrl();
 
     return projectData;

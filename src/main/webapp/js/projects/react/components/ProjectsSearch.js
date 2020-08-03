@@ -120,12 +120,50 @@ function createProjectFetchGetter(projectId) {
       signal: signal,
     });
 
-    return standardizeFetchErrors(
+    const errorFormattedFetchRequest = standardizeFetchErrors(
         fetchRequest,
         'Failed to communicate with the server, please try again later.',
-        'Encountered a server error, please try again later.')
-        .then((response) => response.json()).then((projects) => projects[0]);
+        'Encountered a server error, please try again later.');
+
+    return errorFormattedFetchRequest.then((response) => {
+      return response.json();
+    }).then((projects) => {
+      const projectData = projects[0];
+      if (projectData.readmeRawUrl) {
+        return getProjectReadme(projectData, signal);
+      } else {
+        return projectData;
+      }
+    });
   };
+}
+
+/**
+ * Gets the project README markdown, converts it to HTML, sanitizes the HTML,
+ * and then adds it to the project data as readmeHtml.
+ * @param {Object} projectData
+ * @param {AbortSignal} signal
+ * @return {Promise} Returns a promise that resolves to the project data with
+ *     the added readme HTML.
+ */
+function getProjectReadme(projectData, signal) {
+  return fetch(projectData.readmeRawUrl, {
+    method: 'get',
+    signal: signal,
+  }).then((response) => response.text()).then((readmeMarkdown) => {
+    // Turns a URL like for example:
+    // https://github.com/googleinterns/open-sesame/blob/master/README.md
+    // into:
+    // https://github.com/googleinterns/open-sesame/blob/master/
+    // for use as a base URL for relative links within the markdown.
+    const baseUrl = projectData.readmeHtmlUrl.substring(
+        0, projectData.readmeHtmlUrl.length - 'README.md'.length + 1);
+    const readmeHtml = DOMPurify.sanitize(marked(readmeMarkdown, {
+      baseUrl,
+    }));
+    projectData.readmeHtml = readmeHtml;
+    return projectData;
+  });
 }
 
 /**
