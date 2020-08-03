@@ -2,6 +2,7 @@ package com.google.opensesame.servlets;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import com.google.appengine.api.users.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.opensesame.auth.AuthServlet;
@@ -11,6 +12,8 @@ import com.google.opensesame.user.UserData;
 import com.google.opensesame.user.UserEntity;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,9 +31,30 @@ public class MentorsServlet extends HttpServlet {
       throws ServletException, IOException {
     List<UserEntity> mentorEntities =
         ofy().load().type(UserEntity.class).filter("isMentor", true).list();
+    System.out.println(mentorEntities);
     ArrayList<UserData> mentors = new ArrayList<UserData>();
     for (UserEntity mentorEntity : mentorEntities) {
       mentors.add(new UserData(mentorEntity));
+    }
+
+    // If the user is logged in and has a profile, sort mentors by common interest.
+    User loggedInUser = AuthServlet.getAuthorizedUser();
+    if (loggedInUser != null) {
+      String userID = loggedInUser.getUserId();
+      UserEntity curUser = ofy().load().type(UserEntity.class).id(userID).now();
+      if (curUser != null) {
+        final UserData curUserData = new UserData(curUser);
+        Collections.sort(
+            mentors,
+            new Comparator<UserData>() {
+              @Override
+              public int compare(UserData u1, UserData u2) {
+                Integer u1Compatibility = new Integer(u1.compatibility(curUserData));
+                Integer u2Compatibility = new Integer(u2.compatibility(curUserData));
+                return u2Compatibility.compareTo(u1Compatibility);
+              }
+            });
+      }
     }
 
     String jsonMentors = new Gson().toJson(mentors);
