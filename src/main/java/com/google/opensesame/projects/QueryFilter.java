@@ -45,8 +45,23 @@ class QueryFilter {
     String[] splitFilterRequest = QueryFilterString.split(" ");
     String filterFieldName = splitFilterRequest[0];
     String comparator = splitFilterRequest[1];
-    String value = splitFilterRequest[2];
+    String valueString = splitFilterRequest[2];
 
+    Field filterField = getFilterFieldFromName(filterFieldName);
+
+    Object valueObject = getValueObjectFromString(valueString, filterField);
+
+    return new QueryFilter(filterFieldName + " " + comparator, valueObject);
+  }
+
+  /**
+   * Gets the Field for the filter by its name.
+   * @param filterFieldName The name of the field.
+   * @return Returns the field.
+   * @throws ServletValidationException Throws if the filter field name is invalid. 
+   */
+  private static Field getFilterFieldFromName(String filterFieldName)
+      throws ServletValidationException {
     Optional<Field> filterField =
         ProjectQuery.queryableFields.stream()
             .filter((field) -> field.getName().equals(filterFieldName))
@@ -58,23 +73,38 @@ class QueryFilter {
           HttpServletResponse.SC_BAD_REQUEST);
     }
 
+    return filterField.get();
+  }
+
+  /**
+   * Converts the filter value string to an object of the filter field type. 
+   * 
+   * The filter field type must have a constructor that takes a single string as an argument for
+   * this conversion.
+   * @param valueString A string representing the value of the object.
+   * @param filterField The field that this filter is filtering by.
+   * @return Returns the object created from the value string.
+   * @throws ServletValidationException Throws if there is an error converting the value string into
+   *     an object.
+   */
+  private static Object getValueObjectFromString(String valueString, Field filterField)
+      throws ServletValidationException {
     Object valueObject;
     try {
-      valueObject =
-          filterField.get().getType().getConstructor(String.class).newInstance(value);
+      valueObject = filterField.getType().getConstructor(String.class).newInstance(valueString);
     } catch (Exception e) {
       // TODO(Richie): Handle the exceptions more specifically.
       throw new ServletValidationException(
           "Cannot parse the comparison value '"
-              + value
+              + valueString
               + "' for the field '"
-              + filterFieldName
+              + filterField.getName()
               + "'.",
           "Unable to query for projects.",
           HttpServletResponse.SC_BAD_REQUEST);
     }
 
-    return new QueryFilter(filterFieldName + " " + comparator, valueObject);
+    return valueObject;
   }
 
   public final String condition;
