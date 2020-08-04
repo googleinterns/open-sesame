@@ -16,7 +16,8 @@ class QueryFilter {
   /**
    * Parses a QueryFilter from a string.
    *
-   * <p>QueryFilter strings should be in the format "fieldName <comparator> comparisonValue". Examples:
+   * <p>QueryFilter strings should be in the format "fieldName <comparator> comparisonValue".
+   * Examples:
    *
    * <blockquote>
    *
@@ -49,7 +50,7 @@ class QueryFilter {
 
     Field filterField = getFilterFieldFromName(filterFieldName);
 
-    Object comparisonValueObject = 
+    Object comparisonValueObject =
         getComparisonValueObjectFromString(comparisonValueString, filterField);
 
     return new QueryFilter(filterFieldName + " " + comparator, comparisonValueObject);
@@ -80,10 +81,11 @@ class QueryFilter {
 
   /**
    * Converts the filter comparison value string into an object of the filter field's type that is
-   * constructed with the comparison value string. 
-   * 
-   * The filter field type must have a constructor that takes a single string as an argument for
+   * constructed with the comparison value string.
+   *
+   * <p>The filter field type must have a constructor that takes a single string as an argument for
    * this construction.
+   *
    * @param comparisonValueString A string representing the value of the comparison value object.
    * @param filterField The field that this filter is filtering by.
    * @return Returns the comparison value object created from the comparison value string.
@@ -94,7 +96,7 @@ class QueryFilter {
       String comparisonValueString, Field filterField) throws ServletValidationException {
     Object comparisonValueObject;
     try {
-      comparisonValueObject = 
+      comparisonValueObject =
           filterField.getType().getConstructor(String.class).newInstance(comparisonValueString);
     } catch (Exception e) {
       // TODO(Richie): Handle the exceptions more specifically.
