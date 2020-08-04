@@ -39,8 +39,8 @@ public class ProjectQuery {
    * @return Returns the list of QueryFilters.
    * @throws IOException
    * @throws ServletValidationException Throws if any of the query filter strings in the request are
-   *     invalid. See {@link com.google.opensesame.projects.QueryFilter.fromString}
-   *     for more information on how QueryFilters are parsed.
+   *     invalid. See {@link com.google.opensesame.projects.QueryFilter.fromString} for more
+   *     information on how QueryFilters are parsed.
    */
   private static List<QueryFilter> getQueryFiltersFromRequest(HttpServletRequest request)
       throws IOException, ServletValidationException {
@@ -69,7 +69,7 @@ public class ProjectQuery {
   public static Collection<ProjectEntity> queryFromRequest(HttpServletRequest request)
       throws IOException, ServletValidationException {
     String[] projectIds = request.getParameterValues(ProjectEntity.PROJECT_ID_PARAM);
-    
+
     if (projectIds != null) {
       return getProjectEntitiesByIds(projectIds);
     } else {
@@ -82,6 +82,7 @@ public class ProjectQuery {
 
   /**
    * Gets the ProjectEntities in the intersection of a list of QueryFilters.
+   *
    * @param queryFilters The list of QueryFilters.
    * @return Returns a collection of ProjectEntities in the intersection of the list of
    *     QueryFilters.
@@ -91,7 +92,7 @@ public class ProjectQuery {
     if (queryFilters.size() == 0) {
       return ofy().load().type(ProjectEntity.class).list();
     }
-    
+
     List<ProjectEntity> intermediateIntersection = null;
     for (QueryFilter queryFilter : queryFilters) {
       List<ProjectEntity> filteredProjects =
@@ -117,6 +118,7 @@ public class ProjectQuery {
   /**
    * Gets ProjectEntities from a list of project entity IDs and validates that all project entities
    * are found.
+   *
    * @param projectEntityIds The IDs of the ProjectEntities.
    * @return Returns a collection of ProjectEntities with the provided IDs.
    * @throws ServletValidationException Throws if not all ProjectEntities with the specified IDs

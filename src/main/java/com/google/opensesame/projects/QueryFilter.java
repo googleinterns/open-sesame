@@ -57,9 +57,10 @@ class QueryFilter {
 
   /**
    * Gets the Field for the filter by its name.
+   *
    * @param filterFieldName The name of the field.
    * @return Returns the field.
-   * @throws ServletValidationException Throws if the filter field name is invalid. 
+   * @throws ServletValidationException Throws if the filter field name is invalid.
    */
   private static Field getFilterFieldFromName(String filterFieldName)
       throws ServletValidationException {
