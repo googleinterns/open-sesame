@@ -16,7 +16,7 @@ class QueryFilter {
   /**
    * Parses a QueryFilter from a string.
    *
-   * <p>QueryFilter strings should be in the format "fieldName <comparator> value". Examples:
+   * <p>QueryFilter strings should be in the format "fieldName <comparator> comparisonValue". Examples:
    *
    * <blockquote>
    *
@@ -45,13 +45,14 @@ class QueryFilter {
     String[] splitFilterRequest = QueryFilterString.split(" ");
     String filterFieldName = splitFilterRequest[0];
     String comparator = splitFilterRequest[1];
-    String valueString = splitFilterRequest[2];
+    String comparisonValueString = splitFilterRequest[2];
 
     Field filterField = getFilterFieldFromName(filterFieldName);
 
-    Object valueObject = getValueObjectFromString(valueString, filterField);
+    Object comparisonValueObject = 
+        getComparisonValueObjectFromString(comparisonValueString, filterField);
 
-    return new QueryFilter(filterFieldName + " " + comparator, valueObject);
+    return new QueryFilter(filterFieldName + " " + comparator, comparisonValueObject);
   }
 
   /**
@@ -77,26 +78,28 @@ class QueryFilter {
   }
 
   /**
-   * Converts the filter value string to an object of the filter field type. 
+   * Converts the filter comparison value string into an object of the filter field's type that is
+   * constructed with the comparison value string. 
    * 
    * The filter field type must have a constructor that takes a single string as an argument for
-   * this conversion.
-   * @param valueString A string representing the value of the object.
+   * this construction.
+   * @param comparisonValueString A string representing the value of the comparison value object.
    * @param filterField The field that this filter is filtering by.
-   * @return Returns the object created from the value string.
-   * @throws ServletValidationException Throws if there is an error converting the value string into
-   *     an object.
+   * @return Returns the comparison value object created from the comparison value string.
+   * @throws ServletValidationException Throws if there is an error converting the comparison value
+   *     string into an object.
    */
-  private static Object getValueObjectFromString(String valueString, Field filterField)
-      throws ServletValidationException {
-    Object valueObject;
+  private static Object getComparisonValueObjectFromString(
+      String comparisonValueString, Field filterField) throws ServletValidationException {
+    Object comparisonValueObject;
     try {
-      valueObject = filterField.getType().getConstructor(String.class).newInstance(valueString);
+      comparisonValueObject = 
+          filterField.getType().getConstructor(String.class).newInstance(comparisonValueString);
     } catch (Exception e) {
       // TODO(Richie): Handle the exceptions more specifically.
       throw new ServletValidationException(
           "Cannot parse the comparison value '"
-              + valueString
+              + comparisonValueString
               + "' for the field '"
               + filterField.getName()
               + "'.",
@@ -104,7 +107,7 @@ class QueryFilter {
           HttpServletResponse.SC_BAD_REQUEST);
     }
 
-    return valueObject;
+    return comparisonValueObject;
   }
 
   public final String condition;
