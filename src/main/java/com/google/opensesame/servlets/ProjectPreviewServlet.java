@@ -3,6 +3,9 @@ package com.google.opensesame.servlets;
 import com.google.gson.Gson;
 import com.google.opensesame.projects.ProjectData;
 import com.google.opensesame.projects.ProjectEntity;
+import com.google.opensesame.projects.ProjectQuery;
+import com.google.opensesame.util.ErrorResponse;
+import com.google.opensesame.util.ServletValidationException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +41,13 @@ public class ProjectPreviewServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Collection<ProjectEntity> projectEntities = ProjectEntity.queryFromRequest(request, response);
+    Collection<ProjectEntity> projectEntities;
+    try {
+      projectEntities = ProjectQuery.queryFromRequest(request);
+    } catch (ServletValidationException e) {
+      ErrorResponse.sendJsonError(response, e);
+      return;
+    }
 
     if (projectEntities != null) {
       List<ProjectData> projectData = new ArrayList<ProjectData>();
