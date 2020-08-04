@@ -128,7 +128,7 @@ public class ProjectQueryTest {
     // Expect to receive only the ProjectEntities with two or more mentors.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
+    when(request.getParameterValues("filter"))
         .thenReturn(new String[] {"numMentors >= 2"});
 
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
@@ -144,7 +144,7 @@ public class ProjectQueryTest {
     // interested users.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getParameterValues(ProjectQuery.FILTER_QUERY_PARAM))
+    when(request.getParameterValues("filter"))
         .thenReturn(new String[] {"numMentors >= 2", "numInterestedUsers > 1"});
 
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
