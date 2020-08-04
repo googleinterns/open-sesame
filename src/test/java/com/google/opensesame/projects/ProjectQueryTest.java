@@ -128,8 +128,7 @@ public class ProjectQueryTest {
     // Expect to receive only the ProjectEntities with two or more mentors.
 
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getParameterValues("filter"))
-        .thenReturn(new String[] {"numMentors >= 2"});
+    when(request.getParameterValues("filter")).thenReturn(new String[] {"numMentors >= 2"});
 
     Collection<ProjectEntity> queryResult = ProjectQuery.queryFromRequest(request);
     Collection<ProjectEntity> expected = Arrays.asList(firstMockProject, secondMockProject);
