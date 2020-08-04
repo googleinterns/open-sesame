@@ -88,10 +88,6 @@ $ npm run js-lint # runs on all OpenSesame js files
 ```
 
 ## Testing
-JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest, additional functionality is added with:
-* [jest-dom](https://github.com/testing-library/jest-dom) for testing the DOM.
-* [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for testing React.
-
 The tests are also automatically run when using the `npm run dev-server` command to start a development server.
 
 ### JavaScript Testing
