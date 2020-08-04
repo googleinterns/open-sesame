@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Helper functions for querying the projects Datastore. */
 public class ProjectQuery {
-  public static final String FILTER_QUERY_PARAM = "filter";
-
   /**
    * The fields of ProjectEntity that have the @Index Objectify annotation and can be used for
    * sorting and filtering in Datastore.
@@ -46,7 +44,7 @@ public class ProjectQuery {
    */
   private static List<QueryFilter> getQueryFiltersFromRequest(HttpServletRequest request)
       throws IOException, ServletValidationException {
-    String[] filterRequests = request.getParameterValues(FILTER_QUERY_PARAM);
+    String[] filterRequests = request.getParameterValues("filter");
     if (filterRequests == null) {
       return Arrays.asList();
     }
