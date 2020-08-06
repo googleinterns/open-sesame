@@ -10,9 +10,6 @@ import org.kohsuke.github.RateLimitHandler;
 public final class GitHubGetter {
   private static GitHub gitHub = null;
 
-  /** See {@link GitHubRateLimitHandler} */
-  private static GitHubRateLimitHandler rateLimitHandler = new GitHubRateLimitHandler();
-
   /**
    * Gets the GitHub API interface or builds one if there is not one available. If credentials are
    * available in the system environment variables, the builder will connect to the GitHub API using
@@ -41,6 +38,8 @@ public final class GitHubGetter {
    */
   public static GitHub buildGitHubInterface(String clientId, String clientSecret)
       throws IOException {
+    GitHubRateLimitHandler rateLimitHandler = new GitHubRateLimitHandler();
+
     if (clientId == null || clientId.isEmpty() || clientSecret == null || clientSecret.isEmpty()) {
       System.err.println(
           "GitHub authorization is not set. Please refer to the project README to"
