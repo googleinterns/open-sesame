@@ -88,9 +88,9 @@ public final class GitHubGetter {
   }
 
   /**
-   * Causes the GitHub API to fail with a RateLimitExceededException when it has exceeded the API
-   * calls alotted to it by GitHub. Without this handler, the API would stall until its available
-   * calls are replenished.
+   * Causes requests made to the GitHub API to fail with a RateLimitExceededException when the API
+   * rate limit has been exceeded. Without this handler, requests to the API would hang until the limit
+   * has been refreshed.
    */
   private static class GitHubRateLimitHandler extends RateLimitHandler {
 
