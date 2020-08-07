@@ -85,6 +85,20 @@
       <artifactId>objectify</artifactId>
       <version>5.1.1</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>4.8.0</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-jsr107cache -->
+    <dependency>
+        <groupId>com.google.appengine</groupId>
+        <artifactId>appengine-jsr107cache</artifactId>
+        <version>1.9.81</version>
+    </dependency>
   </dependencies>
 
   <build>
