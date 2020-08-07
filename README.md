@@ -88,7 +88,7 @@ $ npm run js-lint # runs on all OpenSesame js files
 ```
 
 ## Testing
-The tests are also automatically run when using the `npm run dev-server` command to start a development server.
+The tests can be run with the command `npm test`. The tests are also automatically run when using the `npm run dev-server` command to start a development server.
 
 ### JavaScript Testing
 JavaScript unit testing is done with [Jest](https://jestjs.io/). Along with Jest, additional functionality is added with:
