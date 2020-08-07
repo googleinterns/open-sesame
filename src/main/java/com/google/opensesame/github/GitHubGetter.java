@@ -1,8 +1,11 @@
 package com.google.opensesame.github;
 
+import com.google.opensesame.util.RateLimitExceededException;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
+import org.kohsuke.github.RateLimitHandler;
 
 public final class GitHubGetter {
   private static GitHub gitHub = null;
@@ -35,14 +38,21 @@ public final class GitHubGetter {
    */
   public static GitHub buildGitHubInterface(String clientId, String clientSecret)
       throws IOException {
+    GitHubRateLimitHandler rateLimitHandler = new GitHubRateLimitHandler();
+
     if (clientId == null || clientId.isEmpty() || clientSecret == null || clientSecret.isEmpty()) {
       System.err.println(
           "GitHub authorization is not set. Please refer to the project README to"
               + " configure this. Using unauthorized GitHub API for now.");
-      return GitHub.connectAnonymously();
+
+      return new GitHubBuilder().withRateLimitHandler(rateLimitHandler).build();
     }
 
-    GitHub authenticatedGitHub = new GitHubBuilder().withPassword(clientId, clientSecret).build();
+    GitHub authenticatedGitHub =
+        new GitHubBuilder()
+            .withRateLimitHandler(rateLimitHandler)
+            .withPassword(clientId, clientSecret)
+            .build();
 
     try {
       authenticatedGitHub.checkApiUrlValidity();
@@ -51,7 +61,8 @@ public final class GitHubGetter {
       System.err.println(
           "Invalid GitHub credentials. Please refer to the project README to"
               + " configure this. Using unauthorized GitHub API for now.");
-      return GitHub.connectAnonymously();
+
+      return new GitHubBuilder().withRateLimitHandler(rateLimitHandler).build();
     }
   }
 
@@ -73,5 +84,18 @@ public final class GitHubGetter {
    */
   public static void removeGitHubMock() {
     gitHub = null;
+  }
+
+  /**
+   * Causes requests made to the GitHub API to fail with a RateLimitExceededException when the API
+   * rate limit has been exceeded. Without this handler, requests to the API would hang until the
+   * limit has been refreshed.
+   */
+  private static class GitHubRateLimitHandler extends RateLimitHandler {
+
+    @Override
+    public void onError(IOException e, HttpURLConnection uc) throws RateLimitExceededException {
+      throw new RateLimitExceededException();
+    }
   }
 }
